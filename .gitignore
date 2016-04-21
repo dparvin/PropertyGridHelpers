@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Code/PropertyGridHelpers/obj
+/Code/PropertyGridHelpers/.vs/PropertyGridHelpers/v14
+/Code/PropertyGridHelpers/PropertyGridHelpers.csproj.user
