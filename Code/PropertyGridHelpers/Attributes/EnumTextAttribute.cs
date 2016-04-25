@@ -3,7 +3,7 @@
 namespace PropertyGridHelpers.Attributes
 {
     /// <summary>
-    /// apply text to an Enum for use in a property page
+    /// Apply text to an Enum for use in a property page
     /// </summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]

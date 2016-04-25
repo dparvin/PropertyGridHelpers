@@ -10,10 +10,12 @@ namespace PropertyGridHelpers.UIEditors
     /// <summary>
     /// UITypeEditor for flag enums
     /// </summary>
-    /// <seealso cref="System.Drawing.Design.UITypeEditor" />
+    /// <seealso cref="UITypeEditor" />
     public class FlagEnumUIEditor : UITypeEditor
     {
-        // The checklistbox
+        /// <summary>
+        /// The flag enum checkbox
+        /// </summary>
         private FlagCheckedListBox flagEnumCB;
 
         /// <summary>
@@ -32,7 +34,10 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="provider">The provider.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        public override object EditValue(
+            ITypeDescriptorContext context,
+            IServiceProvider provider,
+            object value)
         {
             if (context != null
                 && context.Instance != null
@@ -59,7 +64,8 @@ namespace PropertyGridHelpers.UIEditors
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        public override UITypeEditorEditStyle GetEditStyle(
+            ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.DropDown;
         }

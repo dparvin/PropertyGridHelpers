@@ -5,7 +5,8 @@ using System.Windows.Forms;
 namespace PropertyGridHelpers.Controls
 {
     /// <summary>
-    ///
+    /// Control Combo box which is used to select multiple elements of a
+    /// flag Enum.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.CheckedListBox" />
     public class FlagCheckedListBox : CheckedListBox

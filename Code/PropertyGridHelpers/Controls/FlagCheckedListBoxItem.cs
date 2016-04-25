@@ -1,6 +1,8 @@
 ﻿namespace PropertyGridHelpers.Controls
 {
-    // Represents an item in the checklistbox
+    /// <summary>
+    /// Represents an item in the checklistbox
+    /// </summary>
     public class FlagCheckedListBoxItem
     {
         /// <summary>
@@ -15,19 +17,18 @@
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Returns a <see cref="string" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="string" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {
             return caption;
         }
 
-        // Returns true if the value corresponds to a single bit being set
         /// <summary>
-        /// Gets a value indicating whether this instance is flag.
+        /// Returns true if the value corresponds to a single bit being set
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is flag; otherwise, <c>false</c>.
@@ -40,9 +41,8 @@
             }
         }
 
-        // Returns true if this value is a member of the composite bit value
         /// <summary>
-        /// Determines whether [is member flag] [the specified composite].
+        /// Returns true if this value is a member of the composite bit value
         /// </summary>
         /// <param name="composite">The composite.</param>
         /// <returns></returns>

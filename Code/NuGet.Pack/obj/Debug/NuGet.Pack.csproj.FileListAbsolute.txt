@@ -1,0 +1,5 @@
+C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\obj\Debug\NuGet.Pack.csprojResolveAssemblyReference.cache
+C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\bin\Debug\PropertyGridHelpers.dll
+C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\bin\Debug\PropertyGridHelpers.pdb
+C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\obj\Debug\PropertyGridHelpers.dll
+C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\obj\Debug\PropertyGridHelpers.pdb

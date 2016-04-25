@@ -6,12 +6,22 @@ using System.Reflection;
 
 namespace PropertyGridHelpers.Converters
 {
+    /// <summary>
+    /// Enum Text Converter
+    /// </summary>
+    /// <remarks>
+    /// This converter is used to display specialized text in the PropertyGrid
+    /// where the text is tied to the elements of an Enum.  Use the
+    /// <see cref="EnumTextAttribute"/> to attach the text to the Enum
+    /// elements.
+    /// </remarks>
+    /// <seealso cref="System.ComponentModel.EnumConverter" />
     class EnumTextConverter : EnumConverter
-        {
-            private Type _enumType;
+    {
+        private Type _enumType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumTextConverter"/> class.
+        /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         public EnumTextConverter(Type type)
@@ -26,11 +36,12 @@ namespace PropertyGridHelpers.Converters
         /// <param name="context">The context.</param>
         /// <param name="destType">Type of the destination.</param>
         /// <returns></returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context,
+        public override bool CanConvertTo(
+                ITypeDescriptorContext context,
                 Type destType)
-            {
-                return destType == typeof(string);
-            }
+                {
+                    return destType == typeof(string);
+                }
 
         /// <summary>
         /// Converts to.
@@ -38,22 +49,24 @@ namespace PropertyGridHelpers.Converters
         /// <param name="context">The context.</param>
         /// <param name="culture">The culture.</param>
         /// <param name="value">The value.</param>
-        /// <param name="destType">Type of the dest.</param>
+        /// <param name="destType">Type of the destination.</param>
         /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context,
+        public override object ConvertTo(
+                ITypeDescriptorContext context,
                 CultureInfo culture,
-                object value, Type destType)
-            {
-                FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
-            EnumTextAttribute dna =
-                    (EnumTextAttribute)Attribute.GetCustomAttribute(
-                    fi, typeof(EnumTextAttribute));
+                object value,
+                Type destType)
+                {
+                    FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
+                EnumTextAttribute dna =
+                        (EnumTextAttribute)Attribute.GetCustomAttribute(
+                        fi, typeof(EnumTextAttribute));
 
-                if (dna != null)
-                    return dna.EnumText;
-                else
-                    return value.ToString();
-            }
+                    if (dna != null)
+                        return dna.EnumText;
+                    else
+                        return value.ToString();
+                }
 
         /// <summary>
         /// Determines whether this instance can convert from the specified context.
