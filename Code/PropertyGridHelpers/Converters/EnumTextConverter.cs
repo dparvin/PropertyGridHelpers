@@ -16,7 +16,7 @@ namespace PropertyGridHelpers.Converters
     /// elements.
     /// </remarks>
     /// <seealso cref="System.ComponentModel.EnumConverter" />
-    class EnumTextConverter : EnumConverter
+    public class EnumTextConverter : EnumConverter
     {
         private Type _enumType;
 
