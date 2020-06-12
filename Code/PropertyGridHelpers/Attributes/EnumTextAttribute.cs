@@ -5,7 +5,7 @@ namespace PropertyGridHelpers.Attributes
     /// <summary>
     /// Apply text to an Enum for use in a property page
     /// </summary>
-    /// <seealso cref="System.Attribute" />
+    /// <seealso cref="Attribute" />
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
     public sealed class EnumTextAttribute : Attribute
     {
@@ -24,6 +24,6 @@ namespace PropertyGridHelpers.Attributes
         /// <value>
         /// The Enum text.
         /// </value>
-        public string EnumText { get; private set; }
+        public string EnumText { get; }
     }
 }

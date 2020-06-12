@@ -1,7 +1,7 @@
 ﻿namespace PropertyGridHelpers.Controls
 {
     /// <summary>
-    /// Represents an item in the checklistbox
+    /// Represents an item in the CheckListBox
     /// </summary>
     public class FlagCheckedListBoxItem
     {

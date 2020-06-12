@@ -8,10 +8,10 @@ namespace PropertyGridHelpers.Controls
     /// Control Combo box which is used to select multiple elements of a
     /// flag Enum.
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.CheckedListBox" />
+    /// <seealso cref="CheckedListBox" />
     public class FlagCheckedListBox : CheckedListBox
     {
-        private Container components = null;
+        private readonly Container components = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox"/> class.
@@ -49,7 +49,7 @@ namespace PropertyGridHelpers.Controls
             //
             // FlaggedCheckedListBox
             //
-            this.CheckOnClick = true;
+            CheckOnClick = true;
 
         }
 
@@ -132,7 +132,7 @@ namespace PropertyGridHelpers.Controls
 
         }
 
-        // Updates items in the checklistbox
+        // Updates items in the CheckListBox
         // composite = The item that was checked/unchecked
         // cs = The check state of that item
         /// <summary>
@@ -166,7 +166,7 @@ namespace PropertyGridHelpers.Controls
             else
                 sum |= composite.value;
 
-            // Update all items in the checklistbox based on the final bit value
+            // Update all items in the CheckListBox based on the final bit value
             UpdateCheckedItems(sum);
 
         }
@@ -196,7 +196,7 @@ namespace PropertyGridHelpers.Controls
         Type enumType;
         Enum enumValue;
 
-        // Adds items to the checklistbox based on the members of the enum
+        // Adds items to the CheckListBox based on the members of the enum
         /// <summary>
         /// Fills the enum members.
         /// </summary>
@@ -240,11 +240,10 @@ namespace PropertyGridHelpers.Controls
             {
 
                 Items.Clear();
-                enumValue = value; // Store the current enum value
-                enumType = value.GetType(); // Store enum type
-                FillEnumMembers(); // Add items for enum members
-                ApplyEnumValue(); // Check/uncheck items depending on enum value
-
+                enumValue = value;              // Store the current enum value
+                enumType = value.GetType();     // Store enum type
+                FillEnumMembers();              // Add items for enum members
+                ApplyEnumValue();               // Check/uncheck items depending on enum value
             }
         }
     }

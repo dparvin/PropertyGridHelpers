@@ -7,11 +7,11 @@ namespace CultureInfoEditor.Converters
     /// Convert a type to another type.  Used for expandable objects.
     /// </summary>
     /// <typeparam name="T">type to convert to or from</typeparam>
-    /// <seealso cref="System.ComponentModel.ExpandableObjectConverter" />
+    /// <seealso cref="ExpandableObjectConverter" />
     public class TypeConverter<T> : ExpandableObjectConverter
     {
         /// <summary>
-        /// Determines whether this instance [can convert to] the specified context.
+        /// Determines whether this instance can convert to the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="destinationType">Type of the destination.</param>
@@ -41,9 +41,9 @@ namespace CultureInfoEditor.Converters
             System.Type destinationType)
         {
             if (destinationType == typeof(string) &&
-                 value is T)
+                 value is T t)
             {
-                T so = (T)value;
+                T so = t;
 
                 return so.ToString();
             }

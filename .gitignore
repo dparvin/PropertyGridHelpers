@@ -9,3 +9,6 @@
 /Code/PropertyGridHelpers/bin/Debug/PropertyGridHelpers.pdb
 /Code/NuGet.Pack/lib/PropertyGridHelpers.pdb
 /Code/NuGet.Pack/lib/PropertyGridHelpers.dll
+/.vs
+/Code/NuGet.Pack/obj
+/Code/PropertyGridHelpers/.vs/PropertyGridHelpers/v16

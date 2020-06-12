@@ -8,23 +8,25 @@ using System.Windows.Forms.Design;
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// UITypeEditor for flag enums
+    /// UITypeEditor for flag Enums
     /// </summary>
     /// <seealso cref="UITypeEditor" />
     public class FlagEnumUIEditor : UITypeEditor
     {
         /// <summary>
-        /// The flag enum checkbox
+        /// The flag enum CheckBox
         /// </summary>
-        private FlagCheckedListBox flagEnumCB;
+        private readonly FlagCheckedListBox flagEnumCB;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagEnumUIEditor"/> class.
         /// </summary>
         public FlagEnumUIEditor()
         {
-            flagEnumCB = new FlagCheckedListBox();
-            flagEnumCB.BorderStyle = BorderStyle.None;
+            flagEnumCB = new FlagCheckedListBox
+            {
+                BorderStyle = BorderStyle.None
+            };
         }
 
         /// <summary>
@@ -39,9 +41,9 @@ namespace PropertyGridHelpers.UIEditors
             IServiceProvider provider,
             object value)
         {
-            if (context != null
-                && context.Instance != null
-                && provider != null)
+            if (context != null &&
+                context.Instance != null &&
+                provider != null)
             {
 
                 IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));

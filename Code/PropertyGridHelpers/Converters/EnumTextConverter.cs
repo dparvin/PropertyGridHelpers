@@ -15,7 +15,7 @@ namespace PropertyGridHelpers.Converters
     /// <see cref="EnumTextAttribute"/> to attach the text to the Enum
     /// elements.
     /// </remarks>
-    /// <seealso cref="System.ComponentModel.EnumConverter" />
+    /// <seealso cref="EnumConverter" />
     public class EnumTextConverter : EnumConverter
     {
         private Type _enumType;
@@ -26,9 +26,9 @@ namespace PropertyGridHelpers.Converters
         /// <param name="type">The type.</param>
         public EnumTextConverter(Type type)
                 : base(type)
-            {
-                _enumType = type;
-            }
+        {
+            _enumType = type;
+        }
 
         /// <summary>
         /// Determines whether this instance can convert to the specified context.
@@ -39,9 +39,9 @@ namespace PropertyGridHelpers.Converters
         public override bool CanConvertTo(
                 ITypeDescriptorContext context,
                 Type destType)
-                {
-                    return destType == typeof(string);
-                }
+        {
+            return destType == typeof(string);
+        }
 
         /// <summary>
         /// Converts to.
@@ -56,17 +56,17 @@ namespace PropertyGridHelpers.Converters
                 CultureInfo culture,
                 object value,
                 Type destType)
-                {
-                    FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
-                EnumTextAttribute dna =
-                        (EnumTextAttribute)Attribute.GetCustomAttribute(
-                        fi, typeof(EnumTextAttribute));
+        {
+            FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
+            EnumTextAttribute dna =
+                    (EnumTextAttribute)Attribute.GetCustomAttribute(
+                    fi, typeof(EnumTextAttribute));
 
-                    if (dna != null)
-                        return dna.EnumText;
-                    else
-                        return value.ToString();
-                }
+            if (dna != null)
+                return dna.EnumText;
+            else
+                return value.ToString();
+        }
 
         /// <summary>
         /// Determines whether this instance can convert from the specified context.
@@ -77,9 +77,9 @@ namespace PropertyGridHelpers.Converters
         public override bool CanConvertFrom(
                 ITypeDescriptorContext context,
                 Type srcType)
-            {
-                return srcType == typeof(string);
-            }
+        {
+            return srcType == typeof(string);
+        }
 
         /// <summary>
         /// Converts from.
@@ -92,17 +92,17 @@ namespace PropertyGridHelpers.Converters
                 ITypeDescriptorContext context,
                 CultureInfo culture,
                 object value)
+        {
+            foreach (FieldInfo fi in _enumType.GetFields())
             {
-                foreach (FieldInfo fi in _enumType.GetFields())
-                {
                 EnumTextAttribute dna =
                         (EnumTextAttribute)Attribute.GetCustomAttribute(
                             fi, typeof(EnumTextAttribute));
 
-                    if ((dna != null) && ((string)value == dna.EnumText))
-                        return Enum.Parse(_enumType, fi.Name);
-                }
-                return Enum.Parse(_enumType, (string)value);
+                if ((dna != null) && ((string)value == dna.EnumText))
+                    return Enum.Parse(_enumType, fi.Name);
             }
+            return Enum.Parse(_enumType, (string)value);
         }
     }
+}
