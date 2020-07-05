@@ -12,8 +12,8 @@
         /// <param name="c">The caption.</param>
         public FlagCheckedListBoxItem(int v, string c)
         {
-            value = v;
-            caption = c;
+            Value = v;
+            Caption = c;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@
         /// </returns>
         public override string ToString()
         {
-            return caption;
+            return Caption;
         }
 
         /// <summary>
@@ -37,9 +37,25 @@
         {
             get
             {
-                return ((value & (value - 1)) == 0);
+                return ((Value & (Value - 1)) == 0);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
+        public int Value { get; }
+
+        /// <summary>
+        /// Gets the caption.
+        /// </summary>
+        /// <value>
+        /// The caption.
+        /// </value>
+        public string Caption { get; }
 
         /// <summary>
         /// Returns true if this value is a member of the composite bit value
@@ -48,11 +64,7 @@
         /// <returns></returns>
         public bool IsMemberFlag(FlagCheckedListBoxItem composite)
         {
-            return (IsFlag && ((value & composite.value) == value));
+            return (IsFlag && ((Value & composite?.Value) == Value));
         }
-
-        public int value;
-        public string caption;
     }
-
 }

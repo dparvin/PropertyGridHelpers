@@ -11,12 +11,17 @@ namespace PropertyGridHelpers.UIEditors
     /// UITypeEditor for flag Enums
     /// </summary>
     /// <seealso cref="UITypeEditor" />
-    public class FlagEnumUIEditor : UITypeEditor
+    public class FlagEnumUIEditor : UITypeEditor, IDisposable
     {
         /// <summary>
         /// The flag enum CheckBox
         /// </summary>
         private readonly FlagCheckedListBox flagEnumCB;
+
+        /// <summary>
+        /// The object is disposed
+        /// </summary>
+        private bool disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagEnumUIEditor"/> class.
@@ -51,7 +56,7 @@ namespace PropertyGridHelpers.UIEditors
                 if (edSvc != null)
                 {
 
-                    Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType);
+                    Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, System.Globalization.CultureInfo.CurrentCulture);
                     flagEnumCB.EnumValue = e;
                     edSvc.DropDownControl(flagEnumCB);
                     return flagEnumCB.EnumValue;
@@ -70,6 +75,37 @@ namespace PropertyGridHelpers.UIEditors
             ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.DropDown;
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    flagEnumCB.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~FlagEnumUIEditor()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

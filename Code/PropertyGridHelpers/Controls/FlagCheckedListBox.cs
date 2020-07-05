@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Controls
@@ -62,7 +63,9 @@ namespace PropertyGridHelpers.Controls
         /// <param name="v">The value.</param>
         /// <param name="c">The caption.</param>
         /// <returns></returns>
-        public FlagCheckedListBoxItem Add(int v, string c)
+        public FlagCheckedListBoxItem Add(
+            int v,
+            string c)
         {
             FlagCheckedListBoxItem item = new FlagCheckedListBoxItem(v, c);
             Items.Add(item);
@@ -74,19 +77,23 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public FlagCheckedListBoxItem Add(FlagCheckedListBoxItem item)
+        public FlagCheckedListBoxItem Add(
+            FlagCheckedListBoxItem item)
         {
             Items.Add(item);
             return item;
         }
 
         /// <summary>
-        /// Raises the <see cref="E:ItemCheck" /> event.
+        /// Raises the <see cref="ItemCheck" /> event.
         /// </summary>
         /// <param name="e">The <see cref="ItemCheckEventArgs"/> instance containing the event data.</param>
-        protected override void OnItemCheck(ItemCheckEventArgs e)
+        protected override void OnItemCheck(
+            ItemCheckEventArgs e)
         {
             base.OnItemCheck(e);
+
+            if (e == null) return;
 
             if (isUpdatingCheckStates)
                 return;
@@ -102,7 +109,8 @@ namespace PropertyGridHelpers.Controls
         /// Updates the checked items.
         /// </summary>
         /// <param name="value">The value.</param>
-        protected void UpdateCheckedItems(int value)
+        protected void UpdateCheckedItems(
+            int value)
         {
 
             isUpdatingCheckStates = true;
@@ -112,7 +120,7 @@ namespace PropertyGridHelpers.Controls
             {
                 FlagCheckedListBoxItem item = Items[i] as FlagCheckedListBoxItem;
 
-                if (item.value == 0)
+                if (item.Value == 0)
                 {
                     SetItemChecked(i, value == 0);
                 }
@@ -120,7 +128,7 @@ namespace PropertyGridHelpers.Controls
                 {
 
                     // If the bit for the current item is on in the bitvalue, check it
-                    if ((item.value & value) == item.value && item.value != 0)
+                    if ((item.Value & value) == item.Value && item.Value != 0)
                         SetItemChecked(i, true);
                     // Otherwise uncheck it
                     else
@@ -140,11 +148,13 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         /// <param name="composite">The composite.</param>
         /// <param name="cs">The cs.</param>
-        protected void UpdateCheckedItems(FlagCheckedListBoxItem composite, CheckState cs)
+        protected void UpdateCheckedItems(
+            FlagCheckedListBoxItem composite,
+            CheckState cs)
         {
 
             // If the value of the item is 0, call directly.
-            if (composite.value == 0)
+            if (composite?.Value == 0)
                 UpdateCheckedItems(0);
 
 
@@ -156,15 +166,15 @@ namespace PropertyGridHelpers.Controls
 
                 // If item is checked, add its value to the sum.
                 if (GetItemChecked(i))
-                    sum |= item.value;
+                    sum |= item.Value;
             }
 
             // If the item has been unchecked, remove its bits from the sum
             if (cs == CheckState.Unchecked)
-                sum = sum & (~composite.value);
+                sum &= (~composite.Value);
             // If the item has been checked, combine its bits with the sum
             else
-                sum |= composite.value;
+                sum |= composite.Value;
 
             // Update all items in the CheckListBox based on the final bit value
             UpdateCheckedItems(sum);
@@ -187,7 +197,7 @@ namespace PropertyGridHelpers.Controls
                 FlagCheckedListBoxItem item = Items[i] as FlagCheckedListBoxItem;
 
                 if (GetItemChecked(i))
-                    sum |= item.value;
+                    sum |= item.Value;
             }
 
             return sum;
@@ -205,7 +215,7 @@ namespace PropertyGridHelpers.Controls
             foreach (string name in Enum.GetNames(enumType))
             {
                 object val = Enum.Parse(enumType, name);
-                int intVal = (int)Convert.ChangeType(val, typeof(int));
+                int intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
 
                 Add(intVal, name);
             }
@@ -217,7 +227,7 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         private void ApplyEnumValue()
         {
-            int intVal = (int)Convert.ChangeType(enumValue, typeof(int));
+            int intVal = (int)Convert.ChangeType(enumValue, typeof(int), CultureInfo.CurrentCulture);
             UpdateCheckedItems(intVal);
 
         }
@@ -238,12 +248,14 @@ namespace PropertyGridHelpers.Controls
             }
             set
             {
-
-                Items.Clear();
-                enumValue = value;              // Store the current enum value
-                enumType = value.GetType();     // Store enum type
-                FillEnumMembers();              // Add items for enum members
-                ApplyEnumValue();               // Check/uncheck items depending on enum value
+                if (value != null)
+                {
+                    Items.Clear();
+                    enumValue = value;              // Store the current enum value
+                    enumType = value.GetType();     // Store enum type
+                    FillEnumMembers();              // Add items for enum members
+                    ApplyEnumValue();               // Check/uncheck items depending on enum value
+                }
             }
         }
     }

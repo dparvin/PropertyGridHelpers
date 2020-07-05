@@ -18,14 +18,17 @@ namespace PropertyGridHelpers.Converters
     /// <seealso cref="EnumConverter" />
     public class EnumTextConverter : EnumConverter
     {
-        private Type _enumType;
+        /// <summary>
+        /// The enum type
+        /// </summary>
+        private readonly Type _enumType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         public EnumTextConverter(Type type)
-                : base(type)
+            : base(type)
         {
             _enumType = type;
         }
@@ -37,8 +40,8 @@ namespace PropertyGridHelpers.Converters
         /// <param name="destType">Type of the destination.</param>
         /// <returns></returns>
         public override bool CanConvertTo(
-                ITypeDescriptorContext context,
-                Type destType)
+            ITypeDescriptorContext context,
+            Type destType)
         {
             return destType == typeof(string);
         }
@@ -52,11 +55,12 @@ namespace PropertyGridHelpers.Converters
         /// <param name="destType">Type of the destination.</param>
         /// <returns></returns>
         public override object ConvertTo(
-                ITypeDescriptorContext context,
-                CultureInfo culture,
-                object value,
-                Type destType)
+            ITypeDescriptorContext context,
+            CultureInfo culture,
+            object value,
+            Type destType)
         {
+            if (value == null) return null;
             FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
             EnumTextAttribute dna =
                     (EnumTextAttribute)Attribute.GetCustomAttribute(
@@ -75,8 +79,8 @@ namespace PropertyGridHelpers.Converters
         /// <param name="srcType">Type of the source.</param>
         /// <returns></returns>
         public override bool CanConvertFrom(
-                ITypeDescriptorContext context,
-                Type srcType)
+            ITypeDescriptorContext context,
+            Type srcType)
         {
             return srcType == typeof(string);
         }
@@ -89,9 +93,9 @@ namespace PropertyGridHelpers.Converters
         /// <param name="value">The value.</param>
         /// <returns></returns>
         public override object ConvertFrom(
-                ITypeDescriptorContext context,
-                CultureInfo culture,
-                object value)
+            ITypeDescriptorContext context,
+            CultureInfo culture,
+            object value)
         {
             foreach (FieldInfo fi in _enumType.GetFields())
             {
