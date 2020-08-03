@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
@@ -16,7 +17,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <summary>
         /// The flag enum CheckBox
         /// </summary>
-        private readonly FlagCheckedListBox flagEnumCB;
+        protected FlagCheckedListBox FlagEnumCB { get; set; }
 
         /// <summary>
         /// The object is disposed
@@ -28,7 +29,7 @@ namespace PropertyGridHelpers.UIEditors
         /// </summary>
         public FlagEnumUIEditor()
         {
-            flagEnumCB = new FlagCheckedListBox
+            FlagEnumCB = new FlagCheckedListBox
             {
                 BorderStyle = BorderStyle.None
             };
@@ -55,12 +56,10 @@ namespace PropertyGridHelpers.UIEditors
 
                 if (edSvc != null)
                 {
-
                     Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, System.Globalization.CultureInfo.CurrentCulture);
-                    flagEnumCB.EnumValue = e;
-                    edSvc.DropDownControl(flagEnumCB);
-                    return flagEnumCB.EnumValue;
-
+                    FlagEnumCB.EnumValue = e;
+                    edSvc.DropDownControl(FlagEnumCB);
+                    return FlagEnumCB.EnumValue;
                 }
             }
             return null;
@@ -87,7 +86,7 @@ namespace PropertyGridHelpers.UIEditors
             {
                 if (disposing)
                 {
-                    flagEnumCB.Dispose();
+                    FlagEnumCB.Dispose();
                 }
 
                 disposedValue = true;
@@ -101,11 +100,32 @@ namespace PropertyGridHelpers.UIEditors
         //     Dispose(disposing: false);
         // }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+    }
+
+    /// <summary>
+    /// UITypeEditor for flag Enums
+    /// </summary>
+    /// <typeparam name="T">EnumConverter to use to make the text in the dropdown list</typeparam>
+    /// <seealso cref="UITypeEditor" />
+    /// <seealso cref="IDisposable" />
+    /// <seealso cref="UITypeEditor" />
+    public class FlagEnumUIEditor<T> : FlagEnumUIEditor where T : EnumConverter, new()
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlagEnumUIEditor" /> class.
+        /// </summary>
+        public FlagEnumUIEditor() : base()
+        {
+            FlagEnumCB.Converter = new T();
         }
     }
 }

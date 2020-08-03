@@ -1,15 +1,18 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 
-namespace CultureInfoEditor.Converters
+namespace PropertyGridHelpers.Converters
 {
     /// <summary>
     /// Convert a type to another type.  Used for expandable objects.
     /// </summary>
     /// <typeparam name="T">type to convert to or from</typeparam>
     /// <seealso cref="ExpandableObjectConverter" />
-    public class TypeConverter<T> : ExpandableObjectConverter
+    public class TypeConverter<T> : ExpandableObjectConverter, IDisposable
     {
+        private bool disposedValue;
+
         /// <summary>
         /// Determines whether this instance can convert to the specified context.
         /// </summary>
@@ -18,9 +21,11 @@ namespace CultureInfoEditor.Converters
         /// <returns></returns>
         public override bool CanConvertTo(
             ITypeDescriptorContext context,
-            System.Type destinationType)
+            Type destinationType)
         {
             if (destinationType == typeof(T))
+                return true;
+            if (destinationType == typeof(string))
                 return true;
 
             return base.CanConvertTo(context, destinationType);
@@ -38,7 +43,7 @@ namespace CultureInfoEditor.Converters
             ITypeDescriptorContext context,
             CultureInfo culture,
             object value,
-            System.Type destinationType)
+            Type destinationType)
         {
             if (destinationType == typeof(string) &&
                  value is T t)
@@ -58,12 +63,48 @@ namespace CultureInfoEditor.Converters
         /// <returns></returns>
         public override bool CanConvertFrom(
             ITypeDescriptorContext context,
-            System.Type sourceType)
+            Type sourceType)
         {
             if (sourceType == typeof(string))
                 return false;
 
             return base.CanConvertFrom(context, sourceType);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~TypeConverter()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

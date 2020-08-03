@@ -1,0 +1,372 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PropertyGridHelpers</name>
+    </assembly>
+    <members>
+        <member name="T:PropertyGridHelpers.Attributes.EnumTextAttribute">
+            <summary>
+            Apply text to an Enum for use in a property page
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute"/> class.
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.EnumTextAttribute.EnumText">
+            <summary>
+            Gets the Enum text.
+            </summary>
+            <value>
+            The Enum text.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpers.Controls.FlagCheckedListBox">
+            <summary>
+            Control Combo box which is used to select multiple elements of a
+            flag Enum.
+            </summary>
+            <seealso cref="T:System.Windows.Forms.CheckedListBox" />
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBox"/> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.InitializeComponent">
+            <summary>
+            Initializes the component.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Add(System.Int32,System.String)">
+            <summary>
+            Adds the specified value.
+            </summary>
+            <param name="v">The value.</param>
+            <param name="c">The caption.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Add(PropertyGridHelpers.Controls.FlagCheckedListBoxItem)">
+            <summary>
+            Adds the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.OnItemCheck(System.Windows.Forms.ItemCheckEventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Windows.Forms.CheckedListBox.ItemCheck" /> event.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Forms.ItemCheckEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(System.Int32)">
+            <summary>
+            Updates the checked items.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(PropertyGridHelpers.Controls.FlagCheckedListBoxItem,System.Windows.Forms.CheckState)">
+            <summary>
+            Updates the checked items.
+            </summary>
+            <param name="composite">The composite.</param>
+            <param name="cs">The cs.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.GetCurrentValue">
+            <summary>
+            Gets the current value.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.FillEnumMembers">
+            <summary>
+            Fills the enum members.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.ApplyEnumValue">
+            <summary>
+            Applies the enum value.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpers.Controls.FlagCheckedListBox.EnumValue">
+            <summary>
+            Gets or sets the enum value.
+            </summary>
+            <value>
+            The enum value.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.Controls.FlagCheckedListBox.Converter">
+            <summary>
+            Gets or sets the converter.
+            </summary>
+            <value>
+            The converter.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpers.Controls.FlagCheckedListBoxItem">
+            <summary>
+            Represents an item in the CheckListBox
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.#ctor(System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBoxItem"/> class.
+            </summary>
+            <param name="v">The value.</param>
+            <param name="c">The caption.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="P:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.IsFlag">
+            <summary>
+            Returns true if the value corresponds to a single bit being set
+            </summary>
+            <value>
+              <c>true</c> if this instance is flag; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.Caption">
+            <summary>
+            Gets the caption.
+            </summary>
+            <value>
+            The caption.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.IsMemberFlag(PropertyGridHelpers.Controls.FlagCheckedListBoxItem)">
+            <summary>
+            Returns true if this value is a member of the composite bit value
+            </summary>
+            <param name="composite">The composite.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpers.Converters.EnumTextConverter">
+            <summary>
+            Enum Text Converter
+            </summary>
+            <remarks>
+            This converter is used to display specialized text in the PropertyGrid
+            where the text is tied to the elements of an Enum.  Use the
+            <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> to attach the text to the Enum
+            elements.
+            </remarks>
+            <seealso cref="T:System.ComponentModel.EnumConverter" />
+            <seealso cref="T:System.IDisposable" />
+            <seealso cref="T:System.ComponentModel.EnumConverter" />
+        </member>
+        <member name="F:PropertyGridHelpers.Converters.EnumTextConverter._enumType">
+            <summary>
+            The enum type
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumTextConverter" /> class.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Determines whether this instance can convert to the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="destType">Type of the destination.</param>
+            <returns>
+              <c>true</c> if this instance can convert to the specified context; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            Converts to an int or string from an enum.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="culture">The culture.</param>
+            <param name="value">The value.</param>
+            <param name="destType">Type of the destination.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">value is expected to be of type {_enumType}. - value</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Determines whether this instance can convert from the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="srcType">Type of the source.</param>
+            <returns>
+              <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts from String or int to Enum.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="culture">The culture.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">The value is expected to be a string or an int. - value</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.Converters.EnumTextConverter`1">
+            <summary>
+            Generic version of Enum Text Converter
+            </summary>
+            <typeparam name="T"></typeparam>
+            <seealso cref="T:System.ComponentModel.EnumConverter" />
+            <seealso cref="T:System.IDisposable" />
+            <remarks>
+            This converter is used to display specialized text in the PropertyGrid
+            where the text is tied to the elements of an Enum.  Use the
+            <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> to attach the text to the Enum
+            elements.
+            It uses the specified enum type set as a generic type for the class.
+            </remarks>
+            <seealso cref="T:System.ComponentModel.EnumConverter" />
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumTextConverter" /> class.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.Converters.TypeConverter`1">
+            <summary>
+            Convert a type to another type.  Used for expandable objects.
+            </summary>
+            <typeparam name="T">type to convert to or from</typeparam>
+            <seealso cref="T:System.ComponentModel.ExpandableObjectConverter" />
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Determines whether this instance can convert to the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="destinationType">Type of the destination.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            Converts to.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="culture">The culture.</param>
+            <param name="value">The value.</param>
+            <param name="destinationType">Type of the destination.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Determines whether this instance can convert from the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="sourceType">Type of the source.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor">
+            <summary>
+            UITypeEditor for flag Enums
+            </summary>
+            <seealso cref="T:System.Drawing.Design.UITypeEditor" />
+        </member>
+        <member name="P:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.FlagEnumCB">
+            <summary>
+            The flag enum CheckBox
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.disposedValue">
+            <summary>
+            The object is disposed
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor"/> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+            <summary>
+            Edits the value.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="provider">The provider.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the edit style.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor`1">
+            <summary>
+            UITypeEditor for flag Enums
+            </summary>
+            <typeparam name="T">EnumConverter to use to make the text in the dropdown list</typeparam>
+            <seealso cref="T:System.Drawing.Design.UITypeEditor" />
+            <seealso cref="T:System.IDisposable" />
+            <seealso cref="T:System.Drawing.Design.UITypeEditor" />
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.FlagEnumUIEditor`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor" /> class.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -85,7 +85,7 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Raises the <see cref="ItemCheck" /> event.
+        /// Raises the <see cref="CheckedListBox.ItemCheck" /> event.
         /// </summary>
         /// <param name="e">The <see cref="ItemCheckEventArgs"/> instance containing the event data.</param>
         protected override void OnItemCheck(
@@ -137,7 +137,6 @@ namespace PropertyGridHelpers.Controls
             }
 
             isUpdatingCheckStates = false;
-
         }
 
         // Updates items in the CheckListBox
@@ -152,7 +151,6 @@ namespace PropertyGridHelpers.Controls
             FlagCheckedListBoxItem composite,
             CheckState cs)
         {
-
             // If the value of the item is 0, call directly.
             if (composite?.Value == 0)
                 UpdateCheckedItems(0);
@@ -178,7 +176,6 @@ namespace PropertyGridHelpers.Controls
 
             // Update all items in the CheckListBox based on the final bit value
             UpdateCheckedItems(sum);
-
         }
 
         private bool isUpdatingCheckStates = false;
@@ -215,9 +212,10 @@ namespace PropertyGridHelpers.Controls
             foreach (string name in Enum.GetNames(enumType))
             {
                 object val = Enum.Parse(enumType, name);
+                string caption = Converter == null ? name : (string)Converter.ConvertTo(val, typeof(string));
                 int intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
 
-                Add(intVal, name);
+                Add(intVal, caption);
             }
         }
 
@@ -229,7 +227,6 @@ namespace PropertyGridHelpers.Controls
         {
             int intVal = (int)Convert.ChangeType(enumValue, typeof(int), CultureInfo.CurrentCulture);
             UpdateCheckedItems(intVal);
-
         }
 
         /// <summary>
@@ -258,5 +255,13 @@ namespace PropertyGridHelpers.Controls
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets the converter.
+        /// </summary>
+        /// <value>
+        /// The converter.
+        /// </value>
+        public EnumConverter Converter { get; set; }
     }
 }
