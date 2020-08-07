@@ -10,7 +10,13 @@ using System;
 using Xunit.Abstractions;
 #endif
 
-namespace PropertyGridHelpersTest.UIEditor
+#if NET35
+namespace PropertyGridHelpersTest.net35.UIEditor
+#elif NET452
+namespace PropertyGridHelpersTest.net452.UIEditor
+#elif NET48
+namespace PropertyGridHelpersTest.net48.UIEditor
+#endif
 {
     public class FlagEnumEditorTest
     {

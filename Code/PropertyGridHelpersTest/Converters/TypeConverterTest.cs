@@ -6,7 +6,13 @@ using PropertyGridHelpers.Converters;
 using Xunit.Abstractions;
 #endif
 
-namespace PropertyGridHelpersTest.Converters
+#if NET35
+namespace PropertyGridHelpersTest.net35.Converters
+#elif NET452
+namespace PropertyGridHelpersTest.net452.Converters
+#elif NET48
+namespace PropertyGridHelpersTest.net48.Converters
+#endif
 {
     public class TypeConverterTest
     {

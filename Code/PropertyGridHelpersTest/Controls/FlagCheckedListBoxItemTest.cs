@@ -6,7 +6,13 @@ using PropertyGridHelpers.Controls;
 using Xunit.Abstractions;
 #endif
 
-namespace PropertyGridHelpersTest.Controls
+#if NET35
+namespace PropertyGridHelpersTest.net35.Controls
+#elif NET452
+namespace PropertyGridHelpersTest.net452.Controls
+#elif NET48
+namespace PropertyGridHelpersTest.net48.Controls
+#endif
 {
     /// <summary>
     /// Tests for the flag checked list box
