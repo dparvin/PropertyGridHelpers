@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridHelpers", "Prop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridHelpersTest", "..\PropertyGridHelpersTest\PropertyGridHelpersTest.csproj", "{66B41C73-C7C0-4145-BF4F-7A066F04577B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleControls", "..\SampleControls\SampleControls.csproj", "{C6A197D6-0C14-4B95-9301-1BB3399EF2D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleControls", "..\SampleControls\SampleControls.csproj", "{C6A197D6-0C14-4B95-9301-1BB3399EF2D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleForms", "..\SampleForms\SampleForms.csproj", "{AAF17469-9EB5-4B3C-9041-CD6B200BB604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleForms", "..\SampleForms\SampleForms.csproj", "{AAF17469-9EB5-4B3C-9041-CD6B200BB604}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{01596091-344E-4427-AC94-A714B65687CE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitignore = ..\..\.gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,3 +18,6 @@
 /Code/SampleControls/obj
 /Code/SampleForms/bin
 /Code/SampleForms/obj
+*.user
+/Code/SampleControls/*.user
+/Code/SampleForms/*.user
