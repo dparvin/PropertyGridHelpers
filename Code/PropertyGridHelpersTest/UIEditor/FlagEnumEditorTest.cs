@@ -37,9 +37,9 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             {
                 Assert.Null(editor.EditValue(null, null, TestEnum.FirstEntry));
 #if NET35
-                Console.WriteLine("EditValue returned null as expected");
+                Console.WriteLine(Properties.Resources.EditValueNull);
 #else
-                Output.WriteLine("EditValue returned null as expected");
+                Output.WriteLine(Properties.Resources.EditValueNull);
 #endif
             }
         }
@@ -55,9 +55,9 @@ namespace PropertyGridHelpersTest.net48.UIEditor
 
             grid?.Dispose();
 #if NET35
-            Console.WriteLine("EditValue returned null as expected");
+            Console.WriteLine(Properties.Resources.EditValueNull);
 #else
-            Output.WriteLine("EditValue returned null as expected");
+            Output.WriteLine(Properties.Resources.EditValueNull);
 #endif
         }
 
@@ -68,9 +68,9 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
 #if NET35
-                Console.WriteLine("Editor Edit Style is set as expected.  It is set to DropDown.");
+                Console.WriteLine(Properties.Resources.EditorStyle);
 #else
-                Output.WriteLine("Editor Edit Style is set as expected.  It is set to DropDown.");
+                Output.WriteLine(Properties.Resources.EditorStyle);
 #endif
             }
         }
