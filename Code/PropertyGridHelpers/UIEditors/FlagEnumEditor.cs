@@ -56,7 +56,7 @@ namespace PropertyGridHelpers.UIEditors
 
                 if (edSvc != null)
                 {
-                    Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, System.Globalization.CultureInfo.CurrentCulture);
+                    Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, CultureInfo.CurrentCulture);
                     FlagEnumCB.EnumValue = e;
                     edSvc.DropDownControl(FlagEnumCB);
                     return FlagEnumCB.EnumValue;
