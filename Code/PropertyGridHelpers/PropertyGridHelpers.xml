@@ -33,7 +33,7 @@
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBox"/> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBox" /> class.
             </summary>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Dispose(System.Boolean)">
