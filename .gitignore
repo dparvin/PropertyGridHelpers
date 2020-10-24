@@ -2,19 +2,17 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Code/PropertyGridHelpers/obj
-/Code/PropertyGridHelpers/PropertyGridHelpers.csproj.user
-/Code/PropertyGridHelpers/bin/Debug/PropertyGridHelpers.dll
-/Code/PropertyGridHelpers/bin/Debug/PropertyGridHelpers.pdb
 /.vs
-/Code/NuGet.Pack/obj
 /Code/NuGet.Pack/bin
-/Code/PropertyGridHelpers/.vs/PropertyGridHelpers/v16
-/Code/PropertyGridHelpers/packages
+/Code/NuGet.Pack/obj
+/Code/NuGet.Pack/*.user
 /Code/PropertyGridHelpers/bin
-/Code/PropertyGridHelpersTest/obj
-/Code/PropertyGridHelpers/.vs/PropertyGridHelpers/DesignTimeBuild
+/Code/PropertyGridHelpers/obj
+/Code/PropertyGridHelpers/*.user
+/Code/PropertyGridHelpers/.vs
+/Code/PropertyGridHelpers/packages
 /Code/PropertyGridHelpersTest/bin
+/Code/PropertyGridHelpersTest/obj
 /Code/SampleControls/bin
 /Code/SampleControls/obj
 /Code/SampleForms/bin
