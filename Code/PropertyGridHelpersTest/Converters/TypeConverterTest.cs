@@ -1,7 +1,7 @@
 ﻿using Xunit;
-using System;
 using PropertyGridHelpers.Converters;
 #if NET35
+using System;
 #else
 using Xunit.Abstractions;
 #endif
@@ -14,15 +14,22 @@ namespace PropertyGridHelpersTest.net452.Converters
 namespace PropertyGridHelpersTest.net48.Converters
 #endif
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TypeConverterTest
     {
 #if NET35
 #else
-        readonly ITestOutputHelper Output;
+        readonly ITestOutputHelper OutputHelper;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="output"></param>
         public TypeConverterTest(ITestOutputHelper output)
 
         {
-            Output = output;
+            OutputHelper = output;
         }
 #endif
 
@@ -35,11 +42,7 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.Equal(string.Empty, converter.ConvertTo(null, typeof(string)));
-#if NET35
-                Console.WriteLine("ConvertTo returned null as expected");
-#else
-                Output.WriteLine("ConvertTo returned null as expected");
-#endif
+                Output("ConvertTo returned null as expected");
             }
         }
 
@@ -52,11 +55,7 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.Equal("1", converter.ConvertTo(1, typeof(string)));
-#if NET35
-                Console.WriteLine("ConvertTo returned '1' as expected");
-#else
-                Output.WriteLine("ConvertTo returned '1' as expected");
-#endif
+                Output("ConvertTo returned '1' as expected");
             }
         }
 
@@ -69,11 +68,7 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.True(converter.CanConvertTo(typeof(string)));
-#if NET35
-                Console.WriteLine("CanConvertTo returned True as expected");
-#else
-                Output.WriteLine("CanConvertTo returned True as expected");
-#endif
+                Output("CanConvertTo returned True as expected");
             }
         }
 
@@ -86,11 +81,7 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.False(converter.CanConvertFrom(typeof(string)));
-#if NET35
-                Console.WriteLine("CanConvertFrom returned False as expected");
-#else
-                Output.WriteLine("CanConvertFrom returned False as expected");
-#endif
+                Output("CanConvertFrom returned False as expected");
             }
         }
 
@@ -103,11 +94,7 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.False(converter.CanConvertTo(typeof(short)));
-#if NET35
-                Console.WriteLine("CanConvertTo returned False as expected");
-#else
-                Output.WriteLine("CanConvertTo returned False as expected");
-#endif
+                Output("CanConvertTo returned False as expected");
             }
         }
 
@@ -120,12 +107,25 @@ namespace PropertyGridHelpersTest.net48.Converters
             using (var converter = new TypeConverter<int>())
             {
                 Assert.False(converter.CanConvertFrom(typeof(short)));
-#if NET35
-                Console.WriteLine("CanConvertFrom returned False as expected");
-#else
-                Output.WriteLine("CanConvertFrom returned False as expected");
-#endif
+                Output("CanConvertFrom returned False as expected");
             }
+        }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message)
+#else
+        private void Output(string message)
+#endif
+        {
+#if NET35
+            Console.WriteLine(message);
+#else
+            OutputHelper.WriteLine(message);
+#endif
         }
     }
 }

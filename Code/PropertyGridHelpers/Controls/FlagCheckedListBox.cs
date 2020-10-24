@@ -12,10 +12,8 @@ namespace PropertyGridHelpers.Controls
     /// <seealso cref="CheckedListBox" />
     public class FlagCheckedListBox : CheckedListBox
     {
-        private readonly Container components = null;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="FlagCheckedListBox"/> class.
+        /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
         /// </summary>
         public FlagCheckedListBox()
         {
@@ -32,11 +30,6 @@ namespace PropertyGridHelpers.Controls
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                if (components != null)
-                    components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
@@ -178,7 +171,7 @@ namespace PropertyGridHelpers.Controls
             UpdateCheckedItems(sum);
         }
 
-        private bool isUpdatingCheckStates = false;
+        private bool isUpdatingCheckStates;
 
         // Gets the current bit value corresponding to all checked items
         /// <summary>

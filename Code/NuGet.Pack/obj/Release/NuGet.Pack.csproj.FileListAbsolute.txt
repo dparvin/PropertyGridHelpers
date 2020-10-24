@@ -1,4 +1,0 @@
-C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\bin\Release\PropertyGridHelpers.dll
-C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\bin\Release\PropertyGridHelpers.pdb
-C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\obj\Release\PropertyGridHelpers.dll
-C:\GitHub\dparvin.github.com\PropertyGridHelpers\Code\NuGet.Pack\obj\Release\PropertyGridHelpers.pdb

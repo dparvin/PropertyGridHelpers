@@ -8,6 +8,7 @@
 /Code/PropertyGridHelpers/bin/Debug/PropertyGridHelpers.pdb
 /.vs
 /Code/NuGet.Pack/obj
+/Code/NuGet.Pack/bin
 /Code/PropertyGridHelpers/.vs/PropertyGridHelpers/v16
 /Code/PropertyGridHelpers/packages
 /Code/PropertyGridHelpers/bin

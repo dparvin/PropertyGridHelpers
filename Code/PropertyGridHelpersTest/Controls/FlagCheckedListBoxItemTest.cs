@@ -21,7 +21,7 @@ namespace PropertyGridHelpersTest.net48.Controls
     {
 #if NET35
 #else
-        readonly ITestOutputHelper Output;
+        readonly ITestOutputHelper OutputHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBoxItemTest"/> class.
@@ -31,7 +31,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             ITestOutputHelper output)
 
         {
-            Output = output;
+            OutputHelper = output;
         }
 #endif
 
@@ -43,11 +43,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(1, "Test");
             Assert.Equal("Test", item.Caption);
-#if NET35
-            Console.WriteLine("Caption set to 'Test' as expected");
-#else
-            Output.WriteLine("Caption set to 'Test' as expected");
-#endif
+            Output("Caption set to 'Test' as expected");
         }
 
         /// <summary>
@@ -58,11 +54,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(1, "Test");
             Assert.Equal(1, item.Value);
-#if NET35
-            Console.WriteLine("Value set to 1 as expected");
-#else
-            Output.WriteLine("Value set to 1 as expected");
-#endif
+            Output("Value set to 1 as expected");
         }
 
         /// <summary>
@@ -73,11 +65,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(0, null);
             Assert.Null(item.Caption);
-#if NET35
-            Console.WriteLine("Caption set to null as expected");
-#else
-            Output.WriteLine("Caption set to null as expected");
-#endif
+            Output("Caption set to null as expected");
         }
 
         /// <summary>
@@ -88,11 +76,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(4, null);
             Assert.True(item.IsFlag);
-#if NET35
-            Console.WriteLine("IsFlag returns true as expected");
-#else
-            Output.WriteLine("IsFlag returns true as expected");
-#endif
+            Output("IsFlag returns true as expected");
         }
 
         /// <summary>
@@ -103,11 +87,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(5, null);
             Assert.False(item.IsFlag);
-#if NET35
-            Console.WriteLine("IsFlag returns false as expected");
-#else
-            Output.WriteLine("IsFlag returns false as expected");
-#endif
+            Output("IsFlag returns false as expected");
         }
 
         /// <summary>
@@ -118,11 +98,7 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(4, null);
             Assert.True(item.IsMemberFlag(new FlagCheckedListBoxItem(5, null)));
-#if NET35
-            Console.WriteLine("IsMemberFlag returns true as expected");
-#else
-            Output.WriteLine("IsMemberFlag returns true as expected");
-#endif
+            Output("IsMemberFlag returns true as expected");
         }
 
         /// <summary>
@@ -133,10 +109,23 @@ namespace PropertyGridHelpersTest.net48.Controls
         {
             var item = new FlagCheckedListBoxItem(5, null);
             Assert.False(item.IsMemberFlag(new FlagCheckedListBoxItem(4, null)));
+            Output("IsMemberFlag returns false as expected");
+        }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
 #if NET35
-            Console.WriteLine("IsMemberFlag returns false as expected");
+        private static void Output(string message)
 #else
-            Output.WriteLine("IsMemberFlag returns false as expected");
+        private void Output(string message)
+#endif
+        {
+#if NET35
+            Console.WriteLine(message);
+#else
+            OutputHelper.WriteLine(message);
 #endif
         }
     }

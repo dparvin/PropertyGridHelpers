@@ -21,7 +21,7 @@ namespace PropertyGridHelpersTest.net48.Controls
     {
 #if NET35
 #else
-        readonly ITestOutputHelper Output;
+        readonly ITestOutputHelper OutputHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBoxTest"/> class.
@@ -31,7 +31,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             ITestOutputHelper output)
 
         {
-            Output = output;
+            OutputHelper = output;
         }
 #endif
 
@@ -45,11 +45,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             {
                 list.Add(new FlagCheckedListBoxItem(1, "Test"));
                 Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
-#if NET35
-                Console.WriteLine("Caption set to 'Test' as expected");
-#else
-                Output.WriteLine("Caption set to 'Test' as expected");
-#endif
+                Output("Caption set to 'Test' as expected");
             }
         }
 
@@ -63,11 +59,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             {
                 list.Add(1, "Test");
                 Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
-#if NET35
-                Console.WriteLine("Caption set to 'Test' as expected");
-#else
-                Output.WriteLine("Caption set to 'Test' as expected");
-#endif
+                Output("Caption set to 'Test' as expected");
             }
         }
 
@@ -81,11 +73,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             {
                 list.Add(new FlagCheckedListBoxItem(1, "Test"));
                 Assert.Equal(1, ((FlagCheckedListBoxItem)list.Items[0]).Value);
-#if NET35
-                Console.WriteLine("Value set to 1 as expected");
-#else
-                Output.WriteLine("Value set to 1 as expected");
-#endif
+                Output("Value set to 1 as expected");
             }
         }
 
@@ -99,11 +87,7 @@ namespace PropertyGridHelpersTest.net48.Controls
             {
                 list.Add(1, "Test");
                 Assert.Equal(1, ((FlagCheckedListBoxItem)list.Items[0]).Value);
-#if NET35
-                Console.WriteLine("Value set to 1 as expected");
-#else
-                Output.WriteLine("Value set to 1 as expected");
-#endif
+                Output("Value set to 1 as expected");
             }
         }
 
@@ -118,12 +102,25 @@ namespace PropertyGridHelpersTest.net48.Controls
                 list.Add(1, "Test");
                 list.SetItemCheckState(0, System.Windows.Forms.CheckState.Checked);
                 Assert.Equal(1, list.GetCurrentValue());
-#if NET35
-                Console.WriteLine("Value set to 1 as expected");
-#else
-                Output.WriteLine("Value set to 1 as expected");
-#endif
+                Output("Value set to 1 as expected");
             }
+        }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message)
+#else
+        private void Output(string message)
+#endif
+        {
+#if NET35
+            Console.WriteLine(message);
+#else
+            OutputHelper.WriteLine(message);
+#endif
         }
     }
 }
