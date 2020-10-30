@@ -18,6 +18,9 @@ namespace PropertyGridHelpersTest.net452.UIEditor
 namespace PropertyGridHelpersTest.net48.UIEditor
 #endif
 {
+    /// <summary>
+    /// Tests for the <see cref="FlagEnumUIEditor"/>
+    /// </summary>
     public class FlagEnumEditorTest
     {
 #if NET35
@@ -30,12 +33,15 @@ namespace PropertyGridHelpersTest.net48.UIEditor
         }
 #endif
 
+        /// <summary>
+        /// Edits the value returns null with null entries test.
+        /// </summary>
         [Fact]
         public void EditValueReturnsNullWithNullEntriesTest()
         {
             using (var editor = new FlagEnumUIEditor())
             {
-                Assert.Null(editor.EditValue(null, null, TestEnum.FirstEntry));
+                Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
 #if NET35
                 Console.WriteLine(Properties.Resources.EditValueNull);
 #else
@@ -44,6 +50,9 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             }
         }
 
+        /// <summary>
+        /// Edits the value returns values test.
+        /// </summary>
         [Fact]
         public void EditValueReturnsValuesTest()
         {
@@ -51,7 +60,7 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             {
                 SelectedObject = new TestClass()
             };
-            ((TestClass)grid.SelectedObject).EnumValue = TestEnum.AllEntries;
+            ((TestClass)grid.SelectedObject).EnumValue = TestEnums.AllEntries;
 
             grid?.Dispose();
 #if NET35
@@ -61,6 +70,9 @@ namespace PropertyGridHelpersTest.net48.UIEditor
 #endif
         }
 
+        /// <summary>
+        /// Gets the edit style test.
+        /// </summary>
         [Fact]
         public void GetEditStyleTest()
         {
@@ -75,13 +87,25 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
         [Flags]
-        enum TestEnum
+        public enum TestEnums
         {
+            /// <summary>
+            /// The first entry
+            /// </summary>
             [EnumText("First Entry")]
             FirstEntry = 1,
+            /// <summary>
+            /// The second entry
+            /// </summary>
             [EnumText("Second Entry")]
             SecondEntry = 2,
+            /// <summary>
+            /// All entries
+            /// </summary>
             [EnumText("All Entries")]
             AllEntries = FirstEntry + SecondEntry,
         }
@@ -90,11 +114,11 @@ namespace PropertyGridHelpersTest.net48.UIEditor
         {
             public TestClass()
             {
-                EnumValue = TestEnum.FirstEntry;
+                EnumValue = TestEnums.FirstEntry;
             }
 
             [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
-            public TestEnum EnumValue { get; set; }
+            public TestEnums EnumValue { get; set; }
         }
     }
 }

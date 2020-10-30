@@ -10,6 +10,7 @@
     <Authors>David Parvin</Authors>
     <Description>Property Grid Helper objects</Description>
     <IsPackable>true</IsPackable>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

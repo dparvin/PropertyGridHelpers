@@ -107,6 +107,34 @@ namespace PropertyGridHelpersTest.net48.Controls
         }
 
         /// <summary>
+        /// Value is set correctly test.
+        /// </summary>
+        [Fact]
+        public void SetEnumValueTest()
+        {
+            using (var list = new FlagCheckedListBox())
+            {
+                list.EnumValue = Converters.EnumTextConverterTest.TestEnums.FirstEntry;
+                Assert.Equal(1, list.GetCurrentValue());
+                Output("Value set to FirstEntry as expected");
+            }
+        }
+
+        /// <summary>
+        /// Value is set correctly test.
+        /// </summary>
+        [Fact]
+        public void GetEnumValueTest()
+        {
+            using (var list = new FlagCheckedListBox())
+            {
+                list.EnumValue = Converters.EnumTextConverterTest.TestEnums.FirstEntry;
+                Assert.Equal(Converters.EnumTextConverterTest.TestEnums.FirstEntry, list.EnumValue);
+                Output("Value set to FirstEntry as expected");
+            }
+        }
+
+        /// <summary>
         /// Outputs the specified message.
         /// </summary>
         /// <param name="message">The message.</param>

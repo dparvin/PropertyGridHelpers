@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PropertyGridHelpersTest</name>
+    </assembly>
+    <members>
+        <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
+            <summary>
+            Tests for the flag checked list box
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.CaptionSetCorrectlyTest">
+            <summary>
+            Caption is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.ValueSetCorrectlyTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.NullParametersHandledCorrectlyTest">
+            <summary>
+            Null the parameters handled correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsFlagIsTrueTest">
+            <summary>
+            Determines whether IsFlag is true test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsFlagIsFalseTest">
+            <summary>
+            Determines whether IsFlag is false test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagIsTrueTest">
+            <summary>
+            Determines whether IsMemberFlag is true test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagIsFalseTest">
+            <summary>
+            Determines whether IsMemberFlag is false test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest">
+            <summary>
+            Tests for the flag checked list box
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.AddItemCaptionSetCorrectlyTest">
+            <summary>
+            Add Item Caption is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.AddValuesCaptionSetCorrectlyTest">
+            <summary>
+            Add Item Caption is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.AddItemValueSetCorrectlyTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.AddValuesValueSetCorrectlyTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.ItemCheckedTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.SetEnumValueTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.GetEnumValueTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromReturnsNullWithNullEntriesTest">
+            <summary>
+            Converts from returns null with null entries test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromReturnsStringValuesTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.CanConvertFromStringTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.CanConvertFromIntTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromReturnsIntValuesTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToReturnsNullWithNullEntriesTest">
+            <summary>
+            Converts from returns null with null entries test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToStringReturnsValuesTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToIntReturnsValuesTest">
+            <summary>
+            Converts from returns values test.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums">
+            <summary>
+            Enum to use in the tests to test flag
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums.FirstEntry">
+            <summary>
+            The first entry
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums.SecondEntry">
+            <summary>
+            The second entry
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums.AllEntries">
+            <summary>
+            All entries
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Converters.TypeConverterTest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.ConvertToReturnsEmptyStringWithNullEntriesTest">
+            <summary>
+            Converts to returns null with null entries test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.ConvertToReturnsStringWithIntEntriesTest">
+            <summary>
+            Converts to returns string with int entries test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.CanConvertToStringTest">
+            <summary>
+            Determines whether this instance can convert to string test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.CanConvertFromStringTest">
+            <summary>
+            Determines whether this instance can convert to string test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.CanConvertToShortTest">
+            <summary>
+            Determines whether this instance can convert to string test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.CanConvertFromShortTest">
+            <summary>
+            Determines whether this instance can convert to string test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest">
+            <summary>
+            Tests for the <see cref="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor"/>
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.EditValueReturnsNullWithNullEntriesTest">
+            <summary>
+            Edits the value returns null with null entries test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.EditValueReturnsValuesTest">
+            <summary>
+            Edits the value returns values test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.GetEditStyleTest">
+            <summary>
+            Gets the edit style test.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.FirstEntry">
+            <summary>
+            The first entry
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.SecondEntry">
+            <summary>
+            The second entry
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.AllEntries">
+            <summary>
+            All entries
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.EditorStyle">
+            <summary>
+              Looks up a localized string similar to Editor Edit Style is set as expected.  It is set to DropDown..
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.EditValueNull">
+            <summary>
+              Looks up a localized string similar to EditValue returned null as expected.
+            </summary>
+        </member>
+    </members>
+</doc>

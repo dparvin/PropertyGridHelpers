@@ -4,6 +4,16 @@
     <TargetFrameworks>net35;net48;net452</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
+
+    <SignAssembly>true</SignAssembly>
+
+    <AssemblyOriginatorKeyFile>PropertyGridHelpersTest.snk</AssemblyOriginatorKeyFile>
+
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
+    <DocumentationFile>C:\Projects\Repos\PropertyGridHelpers\Code\PropertyGridHelpersTest\PropertyGridHelpersTest.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

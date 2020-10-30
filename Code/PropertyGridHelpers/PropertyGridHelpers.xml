@@ -30,6 +30,7 @@
             flag Enum.
             </summary>
             <seealso cref="T:System.Windows.Forms.CheckedListBox" />
+            <seealso cref="T:System.Windows.Forms.CheckedListBox" />
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.#ctor">
             <summary>
@@ -66,7 +67,7 @@
             <summary>
             Raises the <see cref="E:System.Windows.Forms.CheckedListBox.ItemCheck" /> event.
             </summary>
-            <param name="e">The <see cref="T:System.Windows.Forms.ItemCheckEventArgs"/> instance containing the event data.</param>
+            <param name="e">The <see cref="T:System.Windows.Forms.ItemCheckEventArgs" /> instance containing the event data.</param>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(System.Int32)">
             <summary>
@@ -120,7 +121,7 @@
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.#ctor(System.Int32,System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBoxItem"/> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Controls.FlagCheckedListBoxItem" /> class.
             </summary>
             <param name="v">The value.</param>
             <param name="c">The caption.</param>
@@ -162,7 +163,9 @@
             Returns true if this value is a member of the composite bit value
             </summary>
             <param name="composite">The composite.</param>
-            <returns></returns>
+            <returns>
+              <c>true</c> if [is member flag] [the specified composite]; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="T:PropertyGridHelpers.Converters.EnumTextConverter">
             <summary>

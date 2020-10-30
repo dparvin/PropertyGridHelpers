@@ -6,7 +6,7 @@
     public class FlagCheckedListBoxItem
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FlagCheckedListBoxItem"/> class.
+        /// Initializes a new instance of the <see cref="FlagCheckedListBoxItem" /> class.
         /// </summary>
         /// <param name="v">The value.</param>
         /// <param name="c">The caption.</param>
@@ -61,7 +61,9 @@
         /// Returns true if this value is a member of the composite bit value
         /// </summary>
         /// <param name="composite">The composite.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///   <c>true</c> if [is member flag] [the specified composite]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsMemberFlag(FlagCheckedListBoxItem composite)
         {
             return (IsFlag && ((Value & composite?.Value) == Value));

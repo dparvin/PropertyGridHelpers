@@ -40,7 +40,7 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertFromReturnsNullWithNullEntriesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
                 Assert.Null(converter.ConvertFrom(null));
                 Output("ConvertFrom returned null as expected");
@@ -53,9 +53,9 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertFromReturnsStringValuesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
-                Assert.Equal(TestEnum.FirstEntry, converter.ConvertFrom("First Entry"));
+                Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom("First Entry"));
                 Output("ConvertFrom returned FirstEntry as expected");
             }
         }
@@ -66,7 +66,7 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void CanConvertFromStringTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
                 Assert.True(converter.CanConvertFrom(null, typeof(string)));
                 Output("CanConvertFrom returned true as expected");
@@ -79,7 +79,7 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void CanConvertFromIntTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
                 Assert.True(converter.CanConvertFrom(null, typeof(int)));
                 Output("CanConvertFrom returned true as expected");
@@ -92,9 +92,9 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertFromReturnsIntValuesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
-                Assert.Equal(TestEnum.FirstEntry, converter.ConvertFrom(1));
+                Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(1));
                 Output("ConvertFrom returned FirstEntry as expected");
             }
         }
@@ -105,7 +105,7 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertToReturnsNullWithNullEntriesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
                 Assert.Null(converter.ConvertTo(null, null));
                 Output("ConvertTo returned null as expected");
@@ -118,9 +118,9 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertToStringReturnsValuesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
-                Assert.Equal("First Entry", converter.ConvertTo(TestEnum.FirstEntry, typeof(string)));
+                Assert.Equal("First Entry", converter.ConvertTo(TestEnums.FirstEntry, typeof(string)));
                 Output("ConvertTo returned 'First Entry' as expected");
             }
         }
@@ -131,9 +131,9 @@ namespace PropertyGridHelpersTest.net48.Converters
         [Fact]
         public void ConvertToIntReturnsValuesTest()
         {
-            using (var converter = new EnumTextConverter<TestEnum>())
+            using (var converter = new EnumTextConverter<TestEnums>())
             {
-                Assert.Equal(1, converter.ConvertTo(TestEnum.FirstEntry, typeof(int)));
+                Assert.Equal(1, converter.ConvertTo(TestEnums.FirstEntry, typeof(int)));
                 Output("ConvertTo returned 1 as expected");
             }
         }
@@ -142,7 +142,7 @@ namespace PropertyGridHelpersTest.net48.Converters
         /// Enum to use in the tests to test flag
         /// </summary>
         [Flags]
-        enum TestEnum
+        public enum TestEnums
         {
             /// <summary>
             /// The first entry

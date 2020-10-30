@@ -9,6 +9,7 @@ namespace PropertyGridHelpers.Controls
     /// Control Combo box which is used to select multiple elements of a
     /// flag Enum.
     /// </summary>
+    /// <seealso cref="System.Windows.Forms.CheckedListBox" />
     /// <seealso cref="CheckedListBox" />
     public class FlagCheckedListBox : CheckedListBox
     {
@@ -80,7 +81,7 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Raises the <see cref="CheckedListBox.ItemCheck" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="ItemCheckEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="ItemCheckEventArgs" /> instance containing the event data.</param>
         protected override void OnItemCheck(
             ItemCheckEventArgs e)
         {
