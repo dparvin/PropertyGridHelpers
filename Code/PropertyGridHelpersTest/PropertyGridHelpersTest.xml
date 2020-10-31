@@ -85,7 +85,7 @@
             Value is set correctly test.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.GetEnumValueTest">
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.GetEnumValueTest(System.Int32)">
             <summary>
             Value is set correctly test.
             </summary>
@@ -247,6 +247,12 @@
             <summary>
             All entries
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
         </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>

@@ -32,6 +32,7 @@
     <PackageReference Include="xunit">
       <Version>1.9.2</Version>
     </PackageReference>
+    <PackageReference Include="xunit.extensions" Version="1.9.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">

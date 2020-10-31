@@ -2,6 +2,7 @@
 using System;
 using PropertyGridHelpers.Controls;
 #if NET35
+using Xunit.Extensions;
 #else
 using Xunit.Abstractions;
 #endif
@@ -123,13 +124,18 @@ namespace PropertyGridHelpersTest.net48.Controls
         /// <summary>
         /// Value is set correctly test.
         /// </summary>
-        [Fact]
-        public void GetEnumValueTest()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void GetEnumValueTest(int testValue)
         {
+            Converters.EnumTextConverterTest.TestEnums item = (Converters.EnumTextConverterTest.TestEnums)testValue;
             using (var list = new FlagCheckedListBox())
             {
-                list.EnumValue = Converters.EnumTextConverterTest.TestEnums.FirstEntry;
-                Assert.Equal(Converters.EnumTextConverterTest.TestEnums.FirstEntry, list.EnumValue);
+                list.EnumValue = item;
+                Assert.Equal(item, list.EnumValue);
                 Output("Value set to FirstEntry as expected");
             }
         }

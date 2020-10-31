@@ -25,11 +25,11 @@ namespace PropertyGridHelpersTest.net48.UIEditor
     {
 #if NET35
 #else
-        readonly ITestOutputHelper Output;
+        readonly ITestOutputHelper OutputHelper;
         public FlagEnumEditorTest(ITestOutputHelper output)
 
         {
-            Output = output;
+            OutputHelper = output;
         }
 #endif
 
@@ -42,11 +42,7 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             using (var editor = new FlagEnumUIEditor())
             {
                 Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
-#if NET35
-                Console.WriteLine(Properties.Resources.EditValueNull);
-#else
-                Output.WriteLine(Properties.Resources.EditValueNull);
-#endif
+                Output(Properties.Resources.EditValueNull);
             }
         }
 
@@ -63,11 +59,7 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             ((TestClass)grid.SelectedObject).EnumValue = TestEnums.AllEntries;
 
             grid?.Dispose();
-#if NET35
-            Console.WriteLine(Properties.Resources.EditValueNull);
-#else
-            Output.WriteLine(Properties.Resources.EditValueNull);
-#endif
+            Output(Properties.Resources.EditValueNull);
         }
 
         /// <summary>
@@ -79,11 +71,7 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             using (var editor = new FlagEnumUIEditor())
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
-#if NET35
-                Console.WriteLine(Properties.Resources.EditorStyle);
-#else
-                Output.WriteLine(Properties.Resources.EditorStyle);
-#endif
+                Output(Properties.Resources.EditorStyle);
             }
         }
 
@@ -119,6 +107,23 @@ namespace PropertyGridHelpersTest.net48.UIEditor
 
             [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
             public TestEnums EnumValue { get; set; }
+        }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message)
+#else
+        private void Output(string message)
+#endif
+        {
+#if NET35
+            Console.WriteLine(message);
+#else
+            OutputHelper.WriteLine(message);
+#endif
         }
     }
 }
