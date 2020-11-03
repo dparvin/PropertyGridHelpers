@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using PropertyGridHelpers.Attributes;
 using System;
+using PropertyGridHelpers.Converters;
 #if NET35
 #else
 using Xunit.Abstractions;
@@ -21,12 +22,12 @@ namespace PropertyGridHelpersTest.net48.UIEditor
     /// <summary>
     /// Tests for the <see cref="FlagEnumUIEditor"/>
     /// </summary>
-    public class FlagEnumEditorTest
+    public class FlagEnumUIEditorTest
     {
 #if NET35
 #else
         readonly ITestOutputHelper OutputHelper;
-        public FlagEnumEditorTest(ITestOutputHelper output)
+        public FlagEnumUIEditorTest(ITestOutputHelper output)
 
         {
             OutputHelper = output;
@@ -69,6 +70,19 @@ namespace PropertyGridHelpersTest.net48.UIEditor
         public void GetEditStyleTest()
         {
             using (var editor = new FlagEnumUIEditor())
+            {
+                Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
+                Output(Properties.Resources.EditorStyle);
+            }
+        }
+
+        /// <summary>
+        /// Edits the value test.
+        /// </summary>
+        [Fact]
+        public void EditValueTest()
+        {
+            using (var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>())
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
                 Output(Properties.Resources.EditorStyle);

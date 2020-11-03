@@ -208,47 +208,52 @@
             </summary>
             <param name="message">The message.</param>
         </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest">
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest">
             <summary>
             Tests for the <see cref="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor"/>
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.EditValueReturnsNullWithNullEntriesTest">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.EditValueReturnsNullWithNullEntriesTest">
             <summary>
             Edits the value returns null with null entries test.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.EditValueReturnsValuesTest">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.EditValueReturnsValuesTest">
             <summary>
             Edits the value returns values test.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.GetEditStyleTest">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.GetEditStyleTest">
             <summary>
             Gets the edit style test.
             </summary>
         </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.EditValueTest">
+            <summary>
+            Edits the value test.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums">
              <summary>
             
              </summary>
         </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.FirstEntry">
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums.FirstEntry">
             <summary>
             The first entry
             </summary>
         </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.SecondEntry">
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums.SecondEntry">
             <summary>
             The second entry
             </summary>
         </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.TestEnums.AllEntries">
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums.AllEntries">
             <summary>
             All entries
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumEditorTest.Output(System.String)">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.Output(System.String)">
             <summary>
             Outputs the specified message.
             </summary>
