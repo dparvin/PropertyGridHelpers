@@ -309,6 +309,26 @@
             Releases unmanaged and - optionally - managed resources.
             </summary>
         </member>
+        <member name="T:PropertyGridHelpers.UIEditors.CollectionUIEditor`1">
+            <summary>
+            Generic class for dealing with a list of items of a specific type
+            </summary>
+            <typeparam name="T">type of item in the list</typeparam>
+            <seealso cref="T:System.ComponentModel.Design.CollectionEditor" />
+            <seealso cref="T:System.ComponentModel.Design.CollectionEditor" />
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.CollectionUIEditor`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.CollectionUIEditor`1" /> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.CollectionUIEditor`1.CreateInstance(System.Type)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="itemType">Type of the item.</param>
+            <returns></returns>
+        </member>
         <member name="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor">
             <summary>
             UITypeEditor for flag Enums
