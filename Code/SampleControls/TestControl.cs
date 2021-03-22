@@ -32,28 +32,27 @@ namespace SampleControls
         [TypeConverter(typeof(EnumTextConverter<TestEnums>))]
         public TestEnums Test { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets the strings.
-        ///// </summary>
-        ///// <value>
-        ///// The strings.
-        ///// </value>
-        ///// <summary>
-        ///// Gets or sets the test.
-        ///// </summary>
-        ///// <value>
-        ///// The test.
-        ///// </value>
-        ///// <remarks>
-        ///// The <see cref="EditorAttribute"/> is used to setup the dropdown on the grid to display the data the way the
-        ///// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute"/>
-        ///// is used to set the text in the grid in a normal basis.
-        ///// </remarks>
-        //[Category("Test Items")]
-        //[Description("A test of processing a list of strings")]
-        //[DisplayName("Strings")]
-        //[Editor(typeof(PropertyGridHelpers.UIEditors.CollectionUIEditor<string>), typeof(UITypeEditor))]
-        //[TypeConverter(typeof(EnumTextConverter<TestEnums>))]
-        //public List<string> Strings { get; }
+        /// <summary>
+        /// Gets or sets the strings.
+        /// </summary>
+        /// <value>
+        /// The strings.
+        /// </value>
+        /// <summary>
+        /// Gets or sets the test.
+        /// </summary>
+        /// <value>
+        /// The test.
+        /// </value>
+        /// <remarks>
+        /// The <see cref="EditorAttribute"/> is used to setup the dropdown on the grid to display the data the way the
+        /// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute"/>
+        /// is used to set the text in the grid in a normal basis.
+        /// </remarks>
+        //[Editor(typeof(CollectionUIEditor<string>), typeof(UITypeEditor))]
+        [Category("Test Items")]
+        [Description("A test of processing a list of strings")]
+        [DisplayName("Strings")]
+        public List<string> Strings { get; }
     }
 }

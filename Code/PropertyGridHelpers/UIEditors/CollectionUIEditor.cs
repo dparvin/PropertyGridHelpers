@@ -10,7 +10,7 @@ namespace PropertyGridHelpers.UIEditors
     /// <typeparam name="T">type of item in the list</typeparam>
     /// <seealso cref="System.ComponentModel.Design.CollectionEditor" />
     /// <seealso cref="CollectionEditor" />
-    public class CollectionUIEditor<T> : CollectionEditor where T : new()
+    public class CollectionUIEditor<T> : CollectionEditor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CollectionUIEditor&lt;T&gt;" /> class.
@@ -27,7 +27,10 @@ namespace PropertyGridHelpers.UIEditors
         /// <returns></returns>
         protected override object CreateInstance(Type itemType)
         {
-            return new T();
+            if (typeof(T) == typeof(string))
+                return string.Empty;
+            else
+                return (T)Activator.CreateInstance(typeof(T));
         }
     }
 }

@@ -2,15 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net48;net452</TargetFrameworks>
-
+    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows</TargetFrameworks>
     <IsPackable>false</IsPackable>
-
     <OutputType>Library</OutputType>
-
     <SignAssembly>true</SignAssembly>
-
     <AssemblyOriginatorKeyFile>SampleControls.snk</AssemblyOriginatorKeyFile>
+    <UserSecretsId>4bf33741-fcba-4f96-99c6-71189075bbec</UserSecretsId>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
@@ -20,14 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="PropertyGridHelpers" Version="2020.10.24.2" />
+    <PackageReference Include="PropertyGridHelpers" Version="2020.11.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>

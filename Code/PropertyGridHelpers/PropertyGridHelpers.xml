@@ -67,7 +67,7 @@
             <summary>
             Raises the <see cref="E:System.Windows.Forms.CheckedListBox.ItemCheck" /> event.
             </summary>
-            <param name="e">The <see cref="T:System.Windows.Forms.ItemCheckEventArgs" /> instance containing the event data.</param>
+            <param name="ice">The <see cref="T:System.Windows.Forms.ItemCheckEventArgs" /> instance containing the event data.</param>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(System.Int32)">
             <summary>

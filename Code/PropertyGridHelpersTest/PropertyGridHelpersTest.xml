@@ -208,6 +208,22 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest.AddItemToListTest">
+            <summary>
+            Adds the item to list test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest">
             <summary>
             Tests for the <see cref="T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor"/>

@@ -15,8 +15,12 @@ using Xunit.Abstractions;
 namespace PropertyGridHelpersTest.net35.UIEditor
 #elif NET452
 namespace PropertyGridHelpersTest.net452.UIEditor
+#elif NET462
+namespace PropertyGridHelpersTest.net462.UIEditor
 #elif NET48
 namespace PropertyGridHelpersTest.net48.UIEditor
+#elif NET5_0
+namespace PropertyGridHelpersTest.net50.UIEditor
 #endif
 {
     /// <summary>
@@ -59,7 +63,7 @@ namespace PropertyGridHelpersTest.net48.UIEditor
             };
             ((TestClass)grid.SelectedObject).EnumValue = TestEnums.AllEntries;
 
-            grid?.Dispose();
+            grid.Dispose();
             Output(Properties.Resources.EditValueNull);
         }
 

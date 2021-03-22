@@ -11,8 +11,12 @@ using Xunit.Abstractions;
 namespace PropertyGridHelpersTest.net35.Converters
 #elif NET452
 namespace PropertyGridHelpersTest.net452.Converters
+#elif NET462
+namespace PropertyGridHelpersTest.net462.Converters
 #elif NET48
 namespace PropertyGridHelpersTest.net48.Converters
+#elif NET5_0
+namespace PropertyGridHelpersTest.net50.Converters
 #endif
 {
     /// <summary>

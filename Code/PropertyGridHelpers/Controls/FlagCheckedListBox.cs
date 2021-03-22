@@ -81,21 +81,21 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Raises the <see cref="CheckedListBox.ItemCheck" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="ItemCheckEventArgs" /> instance containing the event data.</param>
+        /// <param name="ice">The <see cref="ItemCheckEventArgs" /> instance containing the event data.</param>
         protected override void OnItemCheck(
-            ItemCheckEventArgs e)
+            ItemCheckEventArgs ice)
         {
-            base.OnItemCheck(e);
+            base.OnItemCheck(ice);
 
-            if (e == null) return;
+            if (ice == null) return;
 
             if (isUpdatingCheckStates)
                 return;
 
             // Get the checked/unchecked item
-            FlagCheckedListBoxItem item = Items[e.Index] as FlagCheckedListBoxItem;
+            FlagCheckedListBoxItem item = Items[ice.Index] as FlagCheckedListBoxItem;
             // Update other items
-            UpdateCheckedItems(item, e.NewValue);
+            UpdateCheckedItems(item, ice.NewValue);
         }
 
         // Checks/Unchecks items depending on the give bitvalue
