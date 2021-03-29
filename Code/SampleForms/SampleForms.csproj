@@ -2,13 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows7.0;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <OutputType>WinExe</OutputType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SampleForms.snk</AssemblyOriginatorKeyFile>
     <NeutralLanguage>en-US</NeutralLanguage>
     <UseWindowsForms>true</UseWindowsForms>
+    <Copyright>Copyright © 2016-2021</Copyright>
+    <Product>Sample Form to test PropertyGridHelpers</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)||$(Platform)'=='Debug|AnyCPU'">
@@ -18,18 +20,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>C:\Projects\Repos\PropertyGridHelpers\Code\SampleForms\SampleForms.xml</DocumentationFile>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SampleControls\SampleControls.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows7.0'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 

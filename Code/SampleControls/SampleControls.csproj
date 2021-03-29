@@ -2,13 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows7.0;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SampleControls.snk</AssemblyOriginatorKeyFile>
     <UserSecretsId>4bf33741-fcba-4f96-99c6-71189075bbec</UserSecretsId>
     <UseWindowsForms>true</UseWindowsForms>
+    <Copyright>Copyright © 2016-2021</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
@@ -21,7 +22,7 @@
     <PackageReference Include="PropertyGridHelpers" Version="2020.11.4.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows7.0'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>
