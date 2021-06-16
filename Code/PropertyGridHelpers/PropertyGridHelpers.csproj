@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows7.0;</TargetFrameworks>
+    <TargetFrameworks>net35;net452;net462;net472;net48;net5.0-windows7.0;</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>PropertyGridHelpers.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

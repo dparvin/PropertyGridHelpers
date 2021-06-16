@@ -2,10 +2,10 @@
 using System;
 
 /// <summary>
-///
+///Enum for selecting what scrollbar will show in the control
 /// </summary>
 [Flags]
-public enum TestEnums
+public enum ScrollBars
 {
     /// <summary>
     /// The none
@@ -15,16 +15,16 @@ public enum TestEnums
     /// <summary>
     /// The first entry
     /// </summary>
-    [EnumText("First Entry")]
-    FirstEntry = 1,
+    [EnumText("Vertical Scrollbar")]
+    Vertical = 1,
     /// <summary>
     /// The second entry
     /// </summary>
-    [EnumText("Second Entry")]
-    SecondEntry = 2,
+    [EnumText("Horizontal Scrollbar")]
+    Horizontal = 2,
     /// <summary>
     /// All entries
     /// </summary>
-    [EnumText("All Entries")]
-    AllEntries = FirstEntry + SecondEntry,
+    [EnumText("Both")]
+    Both = Vertical + Horizontal,
 }

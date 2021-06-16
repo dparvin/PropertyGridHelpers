@@ -22,7 +22,6 @@ namespace PropertyGridHelpers.Controls
             InitializeComponent();
 
             // TODO: Add any initialization after the InitForm call
-
         }
 
         /// <summary>
@@ -45,7 +44,6 @@ namespace PropertyGridHelpers.Controls
             // FlaggedCheckedListBox
             //
             CheckOnClick = true;
-
         }
 
         #endregion
@@ -98,7 +96,7 @@ namespace PropertyGridHelpers.Controls
             UpdateCheckedItems(item, ice.NewValue);
         }
 
-        // Checks/Unchecks items depending on the give bitvalue
+        // Checks/Unchecks items depending on the give bit value
         /// <summary>
         /// Updates the checked items.
         /// </summary>
@@ -106,7 +104,6 @@ namespace PropertyGridHelpers.Controls
         protected void UpdateCheckedItems(
             int value)
         {
-
             isUpdatingCheckStates = true;
 
             // Iterate over all items
@@ -148,7 +145,6 @@ namespace PropertyGridHelpers.Controls
             // If the value of the item is 0, call directly.
             if (composite?.Value == 0)
                 UpdateCheckedItems(0);
-
 
             // Get the total value of all checked items
             int sum = 0;

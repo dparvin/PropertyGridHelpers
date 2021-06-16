@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net48;net452;net462;net5.0-windows7.0;</TargetFrameworks>
+    <TargetFrameworks>net35;net452;net462;net472;net48;net5.0-windows7.0;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <SignAssembly>true</SignAssembly>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PropertyGridHelpers" Version="2020.11.4.1" />
+    <PackageReference Include="PropertyGridHelpers" Version="2021.3.29.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows7.0'">

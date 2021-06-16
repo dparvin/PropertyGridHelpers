@@ -3,7 +3,7 @@
 namespace SampleForms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="Form" />
     public partial class Form1 : Form
@@ -16,6 +16,11 @@ namespace SampleForms
             InitializeComponent();
 
             propertyGrid1.SelectedObject = testControl1;
+        }
+
+        private void Form1_Resize(object sender, System.EventArgs e)
+        {
+            propertyGrid1.Refresh();
         }
     }
 }

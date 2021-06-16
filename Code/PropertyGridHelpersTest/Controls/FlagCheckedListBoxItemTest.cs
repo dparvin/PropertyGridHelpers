@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using PropertyGridHelpers.Controls;
 using System;
-using PropertyGridHelpers.Controls;
+using Xunit;
 #if NET35
 #else
 using Xunit.Abstractions;
@@ -12,6 +12,8 @@ namespace PropertyGridHelpersTest.net35.Controls
 namespace PropertyGridHelpersTest.net452.Controls
 #elif NET462
 namespace PropertyGridHelpersTest.net462.Controls
+#elif NET472
+namespace PropertyGridHelpersTest.net472.Controls
 #elif NET48
 namespace PropertyGridHelpersTest.net48.Controls
 #elif NET5_0

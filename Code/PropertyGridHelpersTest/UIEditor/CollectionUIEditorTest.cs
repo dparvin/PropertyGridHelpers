@@ -13,6 +13,8 @@ namespace PropertyGridHelpersTest.net35.UIEditor
 namespace PropertyGridHelpersTest.net452.UIEditor
 #elif NET462
 namespace PropertyGridHelpersTest.net462.UIEditor
+#elif NET472
+namespace PropertyGridHelpersTest.net472.UIEditor
 #elif NET48
 namespace PropertyGridHelpersTest.net48.UIEditor
 #elif NET5_0
