@@ -14,3 +14,9 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("aaf17469-9eb5-4b3c-9041-cd6b200bb604")]
+
+#if NET35
+#else
+[assembly: AssemblyMetadata("Verify.ProjectDirectory", "C:\\Projects\\Repos\\dparvin\\PropertyGridHelpers\\Code\\SampleControls\\")]
+[assembly: AssemblyMetadata("Verify.SolutionDirectory", "C:\\Projects\\Repos\\dparvin\\PropertyGridHelpers\\Code\\PropertyGridHelpers\\")]
+#endif

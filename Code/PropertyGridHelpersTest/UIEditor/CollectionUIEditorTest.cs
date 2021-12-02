@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using PropertyGridHelpers.UIEditors;
+﻿using PropertyGridHelpers.UIEditors;
+using System;
 using Xunit;
 #if NET35
 #else
@@ -19,12 +18,14 @@ namespace PropertyGridHelpersTest.net472.UIEditor
 namespace PropertyGridHelpersTest.net48.UIEditor
 #elif NET5_0
 namespace PropertyGridHelpersTest.net50.UIEditor
+#elif NET6_0
+namespace PropertyGridHelpersTest.net60.UIEditor
 #endif
 {
     /// <summary>
     ///
     /// </summary>
-    public class CollectionUIEditorTest
+public class CollectionUIEditorTest
     {
 #if NET35
 #else
@@ -48,6 +49,7 @@ namespace PropertyGridHelpersTest.net50.UIEditor
         {
             CollectionUIEditor<string> testItem = new CollectionUIEditor<string>();
             testItem.EditValue(null, "test");
+            Output(testItem.ToString());
         }
 
         /// <summary>

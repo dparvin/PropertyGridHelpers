@@ -315,7 +315,6 @@
             </summary>
             <typeparam name="T">type of item in the list</typeparam>
             <seealso cref="T:System.ComponentModel.Design.CollectionEditor" />
-            <seealso cref="T:System.ComponentModel.Design.CollectionEditor" />
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.CollectionUIEditor`1.#ctor">
             <summary>

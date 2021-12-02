@@ -1,5 +1,6 @@
 ﻿using PropertyGridHelpers.Converters;
 using PropertyGridHelpers.UIEditors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -17,7 +18,7 @@ namespace SampleControls
             Scrollbars = ScrollBars.Both;
             Scrollbars = ScrollBars.None;
             lbl.Text = Assembly.GetAssembly(typeof(TestControl)).Location + " - " + Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion;
-            lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lbl.TextAlign = ContentAlignment.MiddleCenter;
         }
 
         ScrollBars _Scrollbars = ScrollBars.None;
@@ -111,27 +112,28 @@ namespace SampleControls
         }
 
         /// <summary>
-        /// Gets or sets the strings.
+        /// Gets or sets the test date.
         /// </summary>
         /// <value>
-        /// The strings.
+        /// The test date.
         /// </value>
-        /// <summary>
-        /// Gets or sets the test.
-        /// </summary>
-        /// <value>
-        /// The test.
-        /// </value>
+        [Category("Test Items")]
+        [Description("A test of having a DateTime field.")]
+        public DateTime TestDate { get; set; }
+
+        /// <summary>Gets or sets the strings.</summary>
+        /// <value>The strings.</value>
         /// <remarks>
-        /// The <see cref="EditorAttribute"/> is used to setup the dropdown on the grid to display the data the way the
-        /// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute"/>
+        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to display the data the way the
+        /// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute" />
         /// is used to set the text in the grid in a normal basis.
         /// </remarks>
-        //[Editor(typeof(CollectionUIEditor<string>), typeof(UITypeEditor))]
+        [Editor(typeof(CollectionUIEditor<string>), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Category("Test Items")]
         [Description("A test of processing a list of strings")]
         [DisplayName("Strings")]
-        public List<string> Strings { get; }
+        public List<string> Strings { get; set; }
 
         /// <summary>
         /// Gets or sets the background color for the control.

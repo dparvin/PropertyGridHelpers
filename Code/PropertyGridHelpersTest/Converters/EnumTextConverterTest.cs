@@ -1,9 +1,14 @@
-﻿using Xunit;
-using PropertyGridHelpers.Attributes;
-using System;
+﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
+using System;
+using Xunit;
+using System.IO;
 #if NET35
 #else
+#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+using VerifyXunit;
+using VerifyTests;
+#endif
 using Xunit.Abstractions;
 #endif
 
@@ -19,26 +24,44 @@ namespace PropertyGridHelpersTest.net472.Converters
 namespace PropertyGridHelpersTest.net48.Converters
 #elif NET5_0
 namespace PropertyGridHelpersTest.net50.Converters
+#elif NET6_0
+namespace PropertyGridHelpersTest.net60.Converters
 #endif
 {
     /// <summary>
     ///
     /// </summary>
     public class EnumTextConverterTest
+#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+        : VerifyBase
+#endif
     {
 #if NET35
 #else
         readonly ITestOutputHelper OutputHelper;
+#endif
+#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+        VerifySettings verifySettings = null;
+#endif
+
         /// <summary>
-        ///
+        /// Enum Text Converter Test
         /// </summary>
+#if NET35
+        public EnumTextConverterTest()
+#else
         /// <param name="output"></param>
         public EnumTextConverterTest(ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
 #endif
+#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+            : base()
+#endif
+        {
+#if NET35
+#else
+            OutputHelper = output;
+#endif
+        }
 
         /// <summary>
         /// Converts from returns null with null entries test.
@@ -50,6 +73,7 @@ namespace PropertyGridHelpersTest.net50.Converters
             {
                 Assert.Null(converter.ConvertFrom(null));
                 Output("ConvertFrom returned null as expected");
+                VerifyObject(converter);
             }
         }
 
@@ -181,6 +205,15 @@ namespace PropertyGridHelpersTest.net50.Converters
             Console.WriteLine(message);
 #else
             OutputHelper.WriteLine(message);
+#endif
+        }
+
+        private void VerifyObject(Object obj)
+        {
+#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+            verifySettings = new VerifySettings();
+            verifySettings.UseDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Verify\\PR\\"));
+            Verify(obj, verifySettings);
 #endif
         }
     }

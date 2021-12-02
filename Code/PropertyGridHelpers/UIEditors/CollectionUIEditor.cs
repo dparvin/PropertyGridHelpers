@@ -8,7 +8,6 @@ namespace PropertyGridHelpers.UIEditors
     /// Generic class for dealing with a list of items of a specific type
     /// </summary>
     /// <typeparam name="T">type of item in the list</typeparam>
-    /// <seealso cref="System.ComponentModel.Design.CollectionEditor" />
     /// <seealso cref="CollectionEditor" />
     public class CollectionUIEditor<T> : CollectionEditor
     {

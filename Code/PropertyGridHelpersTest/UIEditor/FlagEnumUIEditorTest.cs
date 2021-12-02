@@ -23,12 +23,14 @@ namespace PropertyGridHelpersTest.net472.UIEditor
 namespace PropertyGridHelpersTest.net48.UIEditor
 #elif NET5_0
 namespace PropertyGridHelpersTest.net50.UIEditor
+#elif NET6_0
+namespace PropertyGridHelpersTest.net60.UIEditor
 #endif
 {
     /// <summary>
     /// Tests for the <see cref="FlagEnumUIEditor"/>
     /// </summary>
-    public class FlagEnumUIEditorTest
+public class FlagEnumUIEditorTest
     {
 #if NET35
 #else
@@ -49,7 +51,7 @@ namespace PropertyGridHelpersTest.net50.UIEditor
             using (var editor = new FlagEnumUIEditor())
             {
                 Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
-                Output(Properties.Resources.EditValueNull);
+                Output(PropertyGridHelpersTest.Properties.Resources.EditValueNull);
             }
         }
 
@@ -66,7 +68,7 @@ namespace PropertyGridHelpersTest.net50.UIEditor
             ((TestClass)grid.SelectedObject).EnumValue = TestEnums.AllEntries;
 
             grid.Dispose();
-            Output(Properties.Resources.EditValueNull);
+            Output(PropertyGridHelpersTest.Properties.Resources.EditValueNull);
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace PropertyGridHelpersTest.net50.UIEditor
             using (var editor = new FlagEnumUIEditor())
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
-                Output(Properties.Resources.EditorStyle);
+                Output(PropertyGridHelpersTest.Properties.Resources.EditorStyle);
             }
         }
 
@@ -91,7 +93,7 @@ namespace PropertyGridHelpersTest.net50.UIEditor
             using (var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>())
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
-                Output(Properties.Resources.EditorStyle);
+                Output(PropertyGridHelpersTest.Properties.Resources.EditorStyle);
             }
         }
 
