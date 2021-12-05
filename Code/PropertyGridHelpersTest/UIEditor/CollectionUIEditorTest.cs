@@ -25,7 +25,7 @@ namespace PropertyGridHelpersTest.net60.UIEditor
     /// <summary>
     ///
     /// </summary>
-public class CollectionUIEditorTest
+    public class CollectionUIEditorTest
     {
 #if NET35
 #else
@@ -47,7 +47,7 @@ public class CollectionUIEditorTest
         [Fact]
         public void AddItemToListTest()
         {
-            CollectionUIEditor<string> testItem = new CollectionUIEditor<string>();
+            var testItem = new CollectionUIEditor<string>();
             testItem.EditValue(null, "test");
             Output(testItem.ToString());
         }

@@ -17,7 +17,7 @@ namespace SampleControls
             InitializeComponent();
             Scrollbars = ScrollBars.Both;
             Scrollbars = ScrollBars.None;
-            lbl.Text = Assembly.GetAssembly(typeof(TestControl)).Location + " - " + Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion;
+            lbl.Text = "The main property to test here is the ScrollBars Property. There are other properties in the that use features of the PropertyGridHelpers in the Test Items group.\n" + Assembly.GetAssembly(typeof(TestControl)).Location + " - " + Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion;
             lbl.TextAlign = ContentAlignment.MiddleCenter;
         }
 
@@ -30,9 +30,10 @@ namespace SampleControls
         /// The test.
         /// </value>
         /// <remarks>
-        /// The <see cref="EditorAttribute"/> is used to setup the drop-down on the grid to display the data the way the
-        /// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute"/>
-        /// is used to set the text in the grid in a normal basis.
+        /// The <see cref="EditorAttribute"/> is used to setup the drop-down on the grid to 
+        /// display the data the way the programmer intends the Enum to be represented.  The 
+        /// <see cref="TypeConverterAttribute"/> is used to set the text in the grid in a 
+        /// normal basis.
         /// </remarks>
         [Category("Layout")]
         [Description("Scrollbars to show for the user")]
@@ -124,22 +125,24 @@ namespace SampleControls
         /// <summary>Gets or sets the strings.</summary>
         /// <value>The strings.</value>
         /// <remarks>
-        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to display the data the way the
-        /// programmer intends the Enum to be represented.  The <see cref="TypeConverterAttribute" />
-        /// is used to set the text in the grid in a normal basis.
+        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to 
+        /// display the data the way the programmer intends the Enum to be represented.  
+        /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
+        /// a normal basis.
         /// </remarks>
         [Editor(typeof(CollectionUIEditor<string>), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Category("Test Items")]
         [Description("A test of processing a list of strings")]
         [DisplayName("Strings")]
-        public List<string> Strings { get; set; }
+        public List<string> Strings { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
         /// <value>
-        /// A <see cref="Color"/> that represents the background color of the control. The default is the value of the <see cref="Control.DefaultBackColor"/> property.
+        /// A <see cref="Color"/> that represents the background color of the control. The default 
+        /// is the value of the <see cref="Control.DefaultBackColor"/> property.
         /// </value>
         public override Color BackColor
         {
@@ -154,7 +157,8 @@ namespace SampleControls
 
         /// <summary>Gets or sets the foreground color of the control.</summary>
         /// <value>
-        /// The foreground <see cref="Color"/> of the control. The default is the value of the <see cref="Control.DefaultForeColor"/> property.
+        /// The foreground <see cref="Color"/> of the control. The default is the value of the 
+        /// <see cref="Control.DefaultForeColor"/> property.
         /// </value>
         public override Color ForeColor
         {

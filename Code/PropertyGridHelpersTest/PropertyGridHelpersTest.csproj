@@ -22,6 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -42,7 +43,7 @@
     -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Verify.Xunit">
-      <Version>11.20.1</Version>
+      <Version>14.6.6</Version>
     </PackageReference>
     <!--
     <PackageReference Include="coverlet.collector" Version="3.0.3">
@@ -57,7 +58,7 @@
     -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Verify.Xunit">
-      <Version>11.20.1</Version>
+      <Version>14.6.6</Version>
     </PackageReference>
     <!--
     <PackageReference Include="coverlet.collector" Version="3.0.3">
@@ -93,19 +94,19 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <PackageReference Include="Verify.Xunit">
-      <Version>11.20.1</Version>
+      <Version>14.6.6</Version>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <PackageReference Include="Verify.Xunit">
-      <Version>11.20.1</Version>
+      <Version>14.6.6</Version>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <PackageReference Include="Verify.Xunit">
-      <Version>11.20.1</Version>
+      <Version>14.6.6</Version>
     </PackageReference>
   </ItemGroup>
 
