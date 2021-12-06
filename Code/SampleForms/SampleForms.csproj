@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net452;net462;net472;net48;net5.0-windows7.0;net6.0-windows;</TargetFrameworks>
+    <TargetFrameworks>net35;net452;net462;net472;net48;net5.0-windows7.0;net6.0-windows7.0;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <OutputType>WinExe</OutputType>
     <SignAssembly>true</SignAssembly>
@@ -27,7 +27,7 @@
     <ProjectReference Include="..\SampleControls\SampleControls.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows7.0' AND '$(TargetFramework)' != 'net6.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net5.0-windows7.0' AND '$(TargetFramework)' != 'net6.0-windows7.0'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
