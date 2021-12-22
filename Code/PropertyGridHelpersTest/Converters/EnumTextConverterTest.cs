@@ -69,12 +69,19 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertFromReturnsNullWithNullEntriesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Null(converter.ConvertFrom(null));
                 Output("ConvertFrom returned null as expected");
                 VerifyObject(converter);
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -83,11 +90,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertFromReturnsStringValuesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom("First Entry"));
                 Output("ConvertFrom returned FirstEntry as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -96,11 +110,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void CanConvertFromStringTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.True(converter.CanConvertFrom(null, typeof(string)));
                 Output("CanConvertFrom returned true as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -109,11 +130,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void CanConvertFromIntTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.True(converter.CanConvertFrom(null, typeof(int)));
                 Output("CanConvertFrom returned true as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -122,11 +150,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertFromReturnsIntValuesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(1));
                 Output("ConvertFrom returned FirstEntry as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -135,11 +170,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertToReturnsNullWithNullEntriesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Null(converter.ConvertTo(null, null));
                 Output("ConvertTo returned null as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -148,11 +190,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertToStringReturnsValuesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Equal("First Entry", converter.ConvertTo(TestEnums.FirstEntry, typeof(string)));
                 Output("ConvertTo returned 'First Entry' as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>
@@ -161,11 +210,18 @@ namespace PropertyGridHelpersTest.net60.Converters
         [Fact]
         public void ConvertToIntReturnsValuesTest()
         {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
             using (var converter = new EnumTextConverter<TestEnums>())
             {
+#endif
                 Assert.Equal(1, converter.ConvertTo(TestEnums.FirstEntry, typeof(int)));
                 Output("ConvertTo returned 1 as expected");
+#if NET5_0_OR_GREATER
+#else
             }
+#endif
         }
 
         /// <summary>

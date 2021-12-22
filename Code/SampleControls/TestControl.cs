@@ -1,4 +1,5 @@
-﻿using PropertyGridHelpers.Converters;
+﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Converters;
 using PropertyGridHelpers.UIEditors;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace SampleControls
@@ -22,6 +24,8 @@ namespace SampleControls
         }
 
         ScrollBars _Scrollbars = ScrollBars.None;
+
+        ImageTypes _ImageTypes = ImageTypes.None;
 
         /// <summary>
         /// Gets or sets the test.
@@ -112,6 +116,65 @@ namespace SampleControls
             }
         }
 
+        [Category("Layout")]
+        [Description("Image to Add to control")]
+        [DisplayName("Image To Display")]
+        [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
+        [TypeConverter(typeof(ImageTextUIEditor<ImageTypes>))]
+        [DefaultValue(ImageTypes.None)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Bindable(true)]
+        public ImageTypes ImageTypes
+        {
+            get { return _ImageTypes; }
+            set
+            {
+                _ImageTypes = value;
+                if (value == ImageTypes.None)
+                {
+                    pictureBox1.Visible = false;
+                }
+                else
+                {
+                    pictureBox1.Image = GetImage(_ImageTypes);
+                    pictureBox1.Visible = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the image to show in the control
+        /// </summary>
+        /// <param name="imageTypes">Enum entry to select the image</param>
+        /// <returns></returns>
+        private static Image GetImage(ImageTypes imageTypes)
+        {
+            Type _enumType = typeof(ImageTypes);
+            FieldInfo fi = _enumType.GetField(Enum.GetName(typeof(ImageTypes), imageTypes));
+            EnumImageAttribute dna =
+                    (EnumImageAttribute)Attribute.GetCustomAttribute(
+                    fi, typeof(EnumImageAttribute));
+
+            if (dna != null)
+            {
+                string m = imageTypes.GetType().Module.Name;
+#if NET5_0_OR_GREATER
+                m = m[0..^4];
+#else
+                m = m.Substring(0, m.Length - 4);
+#endif
+                var rm = new ResourceManager(
+                    m + ".Properties.Resources", imageTypes.GetType().Assembly);
+
+                // Draw the image
+                Bitmap newImage = (Bitmap)rm.GetObject(dna.EnumImage);
+                newImage.MakeTransparent();
+                return newImage;
+            }
+            return null;
+        }
+
         /// <summary>
         /// Gets or sets the test date.
         /// </summary>
@@ -136,6 +199,36 @@ namespace SampleControls
         [Description("A test of processing a list of strings")]
         [DisplayName("Strings")]
         public List<string> Strings { get; set; } = new List<string>();
+
+        /// <summary>Gets or sets the strings.</summary>
+        /// <value>The strings.</value>
+        /// <remarks>
+        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to 
+        /// display the data the way the programmer intends the Enum to be represented.  
+        /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
+        /// a normal basis.
+        /// </remarks>
+        [Editor(typeof(CollectionUIEditor<decimal>), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Category("Test Items")]
+        [Description("A test of processing a list of decimals")]
+        [DisplayName("Decimals")]
+        public List<decimal> Decimals { get; set; } = new List<decimal>();
+
+        /// <summary>Gets or sets the strings.</summary>
+        /// <value>The strings.</value>
+        /// <remarks>
+        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to 
+        /// display the data the way the programmer intends the Enum to be represented.  
+        /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
+        /// a normal basis.
+        /// </remarks>
+        [Editor(typeof(CollectionUIEditor<Size>), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Category("Test Items")]
+        [Description("A test of processing a list of sizes")]
+        [DisplayName("Sizes")]
+        public List<Size> Sizes { get; set; } = new List<Size>();
 
         /// <summary>
         /// Gets or sets the background color for the control.

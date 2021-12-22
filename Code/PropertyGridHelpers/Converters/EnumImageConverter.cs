@@ -17,7 +17,7 @@ namespace PropertyGridHelpers.Converters
     /// </remarks>
     /// <seealso cref="EnumConverter" />
     /// <seealso cref="IDisposable" />
-    public class EnumTextConverter : EnumConverter, IDisposable
+    public class EnumImageConverter : EnumConverter, IDisposable
     {
         /// <summary>
         /// The enum type
@@ -29,7 +29,7 @@ namespace PropertyGridHelpers.Converters
         /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public EnumTextConverter(Type type)
+        public EnumImageConverter(Type type)
             : base(type)
         {
             _enumType = type;
@@ -187,17 +187,17 @@ namespace PropertyGridHelpers.Converters
     /// <remarks>
     /// This converter is used to display specialized text in the PropertyGrid
     /// where the text is tied to the elements of an Enum.  Use the
-    /// <see cref="EnumTextAttribute" /> to attach the text to the Enum
+    /// <see cref="EnumImageConverter" /> to attach the text to the Enum
     /// elements.
     /// It uses the specified enum type set as a generic type for the class.
     /// </remarks>
     /// <seealso cref="EnumConverter" />
-    public class EnumTextConverter<T> : EnumTextConverter where T : Enum
+    public class EnumImageConverter<T> : EnumImageConverter where T : Enum
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
+        /// Initializes a new instance of the <see cref="EnumImageConverter" /> class.
         /// </summary>
-        public EnumTextConverter()
+        public EnumImageConverter()
             : base(typeof(T))
         {
         }

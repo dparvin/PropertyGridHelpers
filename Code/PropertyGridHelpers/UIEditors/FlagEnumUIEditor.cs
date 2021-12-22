@@ -114,7 +114,7 @@ namespace PropertyGridHelpers.UIEditors
     /// <summary>
     /// UITypeEditor for flag Enums
     /// </summary>
-    /// <typeparam name="T">EnumConverter to use to make the text in the dropdown list</typeparam>
+    /// <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
     /// <seealso cref="UITypeEditor" />
     /// <seealso cref="IDisposable" />
     /// <seealso cref="UITypeEditor" />

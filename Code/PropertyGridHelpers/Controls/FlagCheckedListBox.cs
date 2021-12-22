@@ -48,7 +48,6 @@ namespace PropertyGridHelpers.Controls
 
         #endregion
 
-        // Adds an integer value and its associated description
         /// <summary>
         /// Adds the specified value.
         /// </summary>
@@ -59,7 +58,7 @@ namespace PropertyGridHelpers.Controls
             int v,
             string c)
         {
-            FlagCheckedListBoxItem item = new FlagCheckedListBoxItem(v, c);
+            var item = new FlagCheckedListBoxItem(v, c);
             Items.Add(item);
             return item;
         }
@@ -118,7 +117,7 @@ namespace PropertyGridHelpers.Controls
                 else
                 {
 
-                    // If the bit for the current item is on in the bitvalue, check it
+                    // If the bit for the current item is on in the bit value, check it
                     if ((item.Value & value) == item.Value && item.Value != 0)
                         SetItemChecked(i, true);
                     // Otherwise uncheck it
