@@ -120,7 +120,7 @@ namespace SampleControls
         [Description("Image to Add to control")]
         [DisplayName("Image To Display")]
         [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
-        [TypeConverter(typeof(ImageTextUIEditor<ImageTypes>))]
+        [TypeConverter(typeof(EnumTextConverter<ImageTypes>))]
         [DefaultValue(ImageTypes.None)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]

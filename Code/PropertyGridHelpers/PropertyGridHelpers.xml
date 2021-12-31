@@ -187,103 +187,6 @@
               <c>true</c> if [is member flag] [the specified composite]; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="T:PropertyGridHelpers.Converters.EnumImageConverter">
-            <summary>
-            Enum Text Converter
-            </summary>
-            <remarks>
-            This converter is used to display specialized text in the PropertyGrid
-            where the text is tied to the elements of an Enum.  Use the
-            <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> to attach the text to the Enum
-            elements.
-            </remarks>
-            <seealso cref="T:System.ComponentModel.EnumConverter" />
-            <seealso cref="T:System.IDisposable" />
-        </member>
-        <member name="F:PropertyGridHelpers.Converters.EnumImageConverter._enumType">
-            <summary>
-            The enum type
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumTextConverter" /> class.
-            </summary>
-            <param name="type">The type.</param>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
-            <summary>
-            Determines whether this instance can convert to the specified context.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="destType">Type of the destination.</param>
-            <returns>
-              <c>true</c> if this instance can convert to the specified context; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
-            <summary>
-            Converts to an int or string from an enum.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="culture">The culture.</param>
-            <param name="value">The value.</param>
-            <param name="destType">Type of the destination.</param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentException">value is expected to be of type {_enumType}. - value</exception>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
-            <summary>
-            Determines whether this instance can convert from the specified context.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="srcType">Type of the source.</param>
-            <returns>
-              <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
-            <summary>
-            Converts from String or int to Enum.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="culture">The culture.</param>
-            <param name="value">The value.</param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentException">The value is expected to be a string or an int. - value</exception>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.Dispose(System.Boolean)">
-            <summary>
-            Releases unmanaged and - optionally - managed resources.
-            </summary>
-            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter.Dispose">
-            <summary>
-            Releases unmanaged and - optionally - managed resources.
-            </summary>
-        </member>
-        <member name="T:PropertyGridHelpers.Converters.EnumImageConverter`1">
-            <summary>
-            Generic version of Enum Text Converter
-            </summary>
-            <typeparam name="T"></typeparam>
-            <seealso cref="T:System.ComponentModel.EnumConverter" />
-            <seealso cref="T:System.IDisposable" />
-            <remarks>
-            This converter is used to display specialized text in the PropertyGrid
-            where the text is tied to the elements of an Enum.  Use the
-            <see cref="T:PropertyGridHelpers.Converters.EnumImageConverter" /> to attach the text to the Enum
-            elements.
-            It uses the specified enum type set as a generic type for the class.
-            </remarks>
-            <seealso cref="T:System.ComponentModel.EnumConverter" />
-        </member>
-        <member name="M:PropertyGridHelpers.Converters.EnumImageConverter`1.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumImageConverter" /> class.
-            </summary>
-        </member>
         <member name="T:PropertyGridHelpers.Converters.EnumTextConverter">
             <summary>
             Enum Text Converter
@@ -522,10 +425,23 @@
             The enum type
             </summary>
         </member>
+        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor._resourcePath">
+            <summary>
+            The path to the resources where the images are stored
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.#ctor(System.Type)">
             <summary>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
             </summary>
+            <param name="type">Type of enum that is used in the process</param>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.#ctor(System.Type,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
+            </summary>
+            <param name="type">Type of enum that is used in the process</param>
+            <param name="ResourcePath">The path to the resources where the images are stored</param>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
             <summary>
@@ -563,6 +479,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor" /> class.
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor`1.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor" /> class.
+            </summary>
+            <param name="ResourcePath">The path to the resources where the images are stored</param>
         </member>
     </members>
 </doc>

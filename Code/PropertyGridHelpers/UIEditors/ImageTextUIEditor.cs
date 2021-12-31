@@ -22,13 +22,30 @@ namespace PropertyGridHelpers.UIEditors
         /// The enum type
         /// </summary>
         private readonly Type _enumType;
+        /// <summary>
+        /// The path to the resources where the images are stored
+        /// </summary>
+        private readonly string _resourcePath;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTextUIEditor"/> class.
         /// </summary>
+        /// <param name="type">Type of enum that is used in the process</param>
         public ImageTextUIEditor(Type type)
         {
             _enumType = type;
+            _resourcePath = "Properties.Resources";
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageTextUIEditor"/> class.
+        /// </summary>
+        /// <param name="type">Type of enum that is used in the process</param>
+        /// <param name="ResourcePath">The path to the resources where the images are stored</param>
+        public ImageTextUIEditor(Type type, string ResourcePath)
+        {
+            _enumType = type;
+            _resourcePath = ResourcePath;
         }
 
         /// <summary>
@@ -57,7 +74,7 @@ namespace PropertyGridHelpers.UIEditors
                 m = m.Substring(0, m.Length - 4);
 #endif
                 var rm = new ResourceManager(
-                    m + ".Properties.Resources", e.Value.GetType().Assembly);
+                    m + (string.IsNullOrEmpty(_resourcePath) ? "" : "." + _resourcePath), e.Value.GetType().Assembly);
 
                 // Draw the image
                 Bitmap newImage = (Bitmap)rm.GetObject(dna.EnumImage);
@@ -114,6 +131,14 @@ namespace PropertyGridHelpers.UIEditors
         /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
         /// </summary>
         public ImageTextUIEditor() : base(typeof(T))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
+        /// </summary>
+        /// <param name="ResourcePath">The path to the resources where the images are stored</param>
+        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath)
         {
         }
     }
