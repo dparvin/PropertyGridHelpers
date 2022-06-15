@@ -22,8 +22,6 @@ namespace PropertyGridHelpersTest.net462.Converters
 namespace PropertyGridHelpersTest.net472.Converters
 #elif NET48
 namespace PropertyGridHelpersTest.net48.Converters
-#elif NET5_0
-namespace PropertyGridHelpersTest.net50.Converters
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.Converters
 #endif

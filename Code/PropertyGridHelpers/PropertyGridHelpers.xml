@@ -216,10 +216,15 @@
             Determines whether this instance can convert to the specified context.
             </summary>
             <param name="context">The context.</param>
-            <param name="destType">Type of the destination.</param>
+            <param name="destinationType">Type of the destination.</param>
             <returns>
               <c>true</c> if this instance can convert to the specified context; otherwise, <c>false</c>.
             </returns>
+            <exception cref="T:System.ArgumentNullException">
+            context
+            or
+            destinationType
+            </exception>
         </member>
         <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
             <summary>
@@ -228,7 +233,7 @@
             <param name="context">The context.</param>
             <param name="culture">The culture.</param>
             <param name="value">The value.</param>
-            <param name="destType">Type of the destination.</param>
+            <param name="destinationType">Type of the destination.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentException">value is expected to be of type {_enumType}. - value</exception>
         </member>
@@ -237,7 +242,7 @@
             Determines whether this instance can convert from the specified context.
             </summary>
             <param name="context">The context.</param>
-            <param name="srcType">Type of the source.</param>
+            <param name="sourceType">Type of the source.</param>
             <returns>
               <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
             </returns>

@@ -17,8 +17,6 @@ namespace PropertyGridHelpersTest.net462.Controls
 namespace PropertyGridHelpersTest.net472.Controls
 #elif NET48
 namespace PropertyGridHelpersTest.net48.Controls
-#elif NET5_0
-namespace PropertyGridHelpersTest.net50.Controls
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.Controls
 #endif
@@ -26,7 +24,7 @@ namespace PropertyGridHelpersTest.net60.Controls
     /// <summary>
     /// Tests for the flag checked list box
     /// </summary>
-public class FlagCheckedListBoxTest
+    public class FlagCheckedListBoxTest
     {
 #if NET35
 #else

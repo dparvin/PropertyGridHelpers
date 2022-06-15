@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
@@ -77,7 +78,7 @@ namespace PropertyGridHelpers.UIEditors
                     m + (string.IsNullOrEmpty(_resourcePath) ? "" : "." + _resourcePath), e.Value.GetType().Assembly);
 
                 // Draw the image
-                Bitmap newImage = (Bitmap)rm.GetObject(dna.EnumImage);
+                var newImage = (Bitmap)rm.GetObject(dna.EnumImage, CultureInfo.CurrentCulture);
                 Rectangle dr = e.Bounds;
                 newImage.MakeTransparent();
                 e.Graphics.DrawImage(newImage, dr);

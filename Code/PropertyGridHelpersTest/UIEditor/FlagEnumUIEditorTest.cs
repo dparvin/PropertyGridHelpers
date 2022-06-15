@@ -21,8 +21,6 @@ namespace PropertyGridHelpersTest.net462.UIEditor
 namespace PropertyGridHelpersTest.net472.UIEditor
 #elif NET48
 namespace PropertyGridHelpersTest.net48.UIEditor
-#elif NET5_0
-namespace PropertyGridHelpersTest.net50.UIEditor
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.UIEditor
 #endif
@@ -30,7 +28,7 @@ namespace PropertyGridHelpersTest.net60.UIEditor
     /// <summary>
     /// Tests for the <see cref="FlagEnumUIEditor"/>
     /// </summary>
-public class FlagEnumUIEditorTest
+    public class FlagEnumUIEditorTest
     {
 #if NET35
 #else

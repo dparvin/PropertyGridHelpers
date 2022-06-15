@@ -39,15 +39,30 @@ namespace PropertyGridHelpers.Converters
         /// Determines whether this instance can convert to the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="destType">Type of the destination.</param>
+        /// <param name="destinationType">Type of the destination.</param>
         /// <returns>
         ///   <c>true</c> if this instance can convert to the specified context; otherwise, <c>false</c>.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// context
+        /// or
+        /// destinationType
+        /// </exception>
         public override bool CanConvertTo(
             ITypeDescriptorContext context,
-            Type destType)
+            Type destinationType)
         {
-            return destType == typeof(string) || destType == typeof(int);
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (destinationType is null)
+            {
+                throw new ArgumentNullException(nameof(destinationType));
+            }
+
+            return destinationType == typeof(string) || destinationType == typeof(int);
         }
 
         /// <summary>
@@ -56,19 +71,19 @@ namespace PropertyGridHelpers.Converters
         /// <param name="context">The context.</param>
         /// <param name="culture">The culture.</param>
         /// <param name="value">The value.</param>
-        /// <param name="destType">Type of the destination.</param>
+        /// <param name="destinationType">Type of the destination.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">value is expected to be of type {_enumType}. - value</exception>
         public override object ConvertTo(
             ITypeDescriptorContext context,
             CultureInfo culture,
             object value,
-            Type destType)
+            Type destinationType)
         {
             if (value == null) return null;
             if (value.GetType() != _enumType)
                 throw new ArgumentException($"value is expected to be of type {_enumType}.", nameof(value));
-            if (destType == typeof(string))
+            if (destinationType == typeof(string))
             {
                 FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
                 EnumTextAttribute dna =
@@ -80,7 +95,7 @@ namespace PropertyGridHelpers.Converters
                 else
                     return dna.EnumText;
             }
-            else if (destType == typeof(int))
+            else if (destinationType == typeof(int))
             {
                 return (int)value;
             }
@@ -91,15 +106,15 @@ namespace PropertyGridHelpers.Converters
         /// Determines whether this instance can convert from the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="srcType">Type of the source.</param>
+        /// <param name="sourceType">Type of the source.</param>
         /// <returns>
         ///   <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
         /// </returns>
         public override bool CanConvertFrom(
             ITypeDescriptorContext context,
-            Type srcType)
+            Type sourceType)
         {
-            return srcType == typeof(string) || srcType == typeof(int);
+            return sourceType == typeof(string) || sourceType == typeof(int);
         }
 
         /// <summary>
