@@ -9,7 +9,6 @@ namespace PropertyGridHelpers.Controls
     /// Control Combo box which is used to select multiple elements of a
     /// flag Enum.
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.CheckedListBox" />
     /// <seealso cref="CheckedListBox" />
     public class FlagCheckedListBox : CheckedListBox
     {
@@ -90,7 +89,7 @@ namespace PropertyGridHelpers.Controls
                 return;
 
             // Get the checked/unchecked item
-            FlagCheckedListBoxItem item = Items[ice.Index] as FlagCheckedListBoxItem;
+            var item = Items[ice.Index] as FlagCheckedListBoxItem;
             // Update other items
             UpdateCheckedItems(item, ice.NewValue);
         }
@@ -108,7 +107,7 @@ namespace PropertyGridHelpers.Controls
             // Iterate over all items
             for (int i = 0; i < Items.Count; i++)
             {
-                FlagCheckedListBoxItem item = Items[i] as FlagCheckedListBoxItem;
+                var item = Items[i] as FlagCheckedListBoxItem;
 
                 if (item.Value == 0)
                 {
@@ -149,7 +148,7 @@ namespace PropertyGridHelpers.Controls
             int sum = 0;
             for (int i = 0; i < Items.Count; i++)
             {
-                FlagCheckedListBoxItem item = Items[i] as FlagCheckedListBoxItem;
+                var item = Items[i] as FlagCheckedListBoxItem;
 
                 // If item is checked, add its value to the sum.
                 if (GetItemChecked(i))
@@ -158,7 +157,7 @@ namespace PropertyGridHelpers.Controls
 
             // If the item has been unchecked, remove its bits from the sum
             if (cs == CheckState.Unchecked)
-                sum &= (~composite.Value);
+                sum &= ~composite.Value;
             // If the item has been checked, combine its bits with the sum
             else
                 sum |= composite.Value;
@@ -180,7 +179,7 @@ namespace PropertyGridHelpers.Controls
 
             for (int i = 0; i < Items.Count; i++)
             {
-                FlagCheckedListBoxItem item = Items[i] as FlagCheckedListBoxItem;
+                var item = Items[i] as FlagCheckedListBoxItem;
 
                 if (GetItemChecked(i))
                     sum |= item.Value;
@@ -189,8 +188,8 @@ namespace PropertyGridHelpers.Controls
             return sum;
         }
 
-        Type enumType;
-        Enum enumValue;
+        private Type enumType;
+        private Enum enumValue;
 
         // Adds items to the CheckListBox based on the members of the enum
         /// <summary>
@@ -251,6 +250,7 @@ namespace PropertyGridHelpers.Controls
         /// <value>
         /// The converter.
         /// </value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public EnumConverter Converter { get; set; }
     }
 }

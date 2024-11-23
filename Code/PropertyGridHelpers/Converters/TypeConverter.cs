@@ -23,12 +23,7 @@ namespace PropertyGridHelpers.Converters
             ITypeDescriptorContext context,
             Type destinationType)
         {
-            if (destinationType == typeof(T))
-                return true;
-            if (destinationType == typeof(string))
-                return true;
-
-            return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(T) || destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>
@@ -65,10 +60,7 @@ namespace PropertyGridHelpers.Converters
             ITypeDescriptorContext context,
             Type sourceType)
         {
-            if (sourceType == typeof(string))
-                return false;
-
-            return base.CanConvertFrom(context, sourceType);
+            return sourceType != typeof(string) && base.CanConvertFrom(context, sourceType);
         }
 
         /// <summary>

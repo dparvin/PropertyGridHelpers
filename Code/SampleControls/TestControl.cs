@@ -23,9 +23,8 @@ namespace SampleControls
             lbl.TextAlign = ContentAlignment.MiddleCenter;
         }
 
-        ScrollBars _Scrollbars = ScrollBars.None;
-
-        ImageTypes _ImageTypes = ImageTypes.None;
+        private ScrollBars _Scrollbars = ScrollBars.None;
+        private ImageTypes _ImageTypes = ImageTypes.None;
 
         /// <summary>
         /// Gets or sets the test.
@@ -50,10 +49,7 @@ namespace SampleControls
         [Bindable(true)]
         public ScrollBars Scrollbars
         {
-            get
-            {
-                return _Scrollbars;
-            }
+            get => _Scrollbars;
             set
             {
                 if (_Scrollbars != value)
@@ -127,7 +123,7 @@ namespace SampleControls
         [Bindable(true)]
         public ImageTypes ImageTypes
         {
-            get { return _ImageTypes; }
+            get => _ImageTypes;
             set
             {
                 _ImageTypes = value;
@@ -151,7 +147,7 @@ namespace SampleControls
         private static Image GetImage(ImageTypes imageTypes)
         {
             Type _enumType = typeof(ImageTypes);
-            FieldInfo fi = _enumType.GetField(Enum.GetName(typeof(ImageTypes), imageTypes));
+            var fi = _enumType.GetField(Enum.GetName(typeof(ImageTypes), imageTypes));
             EnumImageAttribute dna =
                     (EnumImageAttribute)Attribute.GetCustomAttribute(
                     fi, typeof(EnumImageAttribute));
@@ -183,6 +179,7 @@ namespace SampleControls
         /// </value>
         [Category("Test Items")]
         [Description("A test of having a DateTime field.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public DateTime TestDate { get; set; }
 
         /// <summary>Gets or sets the strings.</summary>
@@ -237,6 +234,7 @@ namespace SampleControls
         /// A <see cref="Color"/> that represents the background color of the control. The default 
         /// is the value of the <see cref="Control.DefaultBackColor"/> property.
         /// </value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public override Color BackColor
         {
             get => base.BackColor;
@@ -253,6 +251,7 @@ namespace SampleControls
         /// The foreground <see cref="Color"/> of the control. The default is the value of the 
         /// <see cref="Control.DefaultForeColor"/> property.
         /// </value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public override Color ForeColor
         {
             get => base.ForeColor;

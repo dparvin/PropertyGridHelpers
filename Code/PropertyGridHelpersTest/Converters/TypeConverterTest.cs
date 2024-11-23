@@ -14,10 +14,14 @@ namespace PropertyGridHelpersTest.net452.Converters
 namespace PropertyGridHelpersTest.net462.Converters
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Converters
-#elif NET48
-namespace PropertyGridHelpersTest.net48.Converters
+#elif NET481
+namespace PropertyGridHelpersTest.net481.Converters
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.Converters
+#elif NET8_0
+namespace PropertyGridHelpersTest.net80.Converters
+#elif NET9_0
+namespace PropertyGridHelpersTest.net90.Converters
 #endif
 {
     /// <summary>

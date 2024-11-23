@@ -52,17 +52,9 @@ namespace PropertyGridHelpers.Converters
             ITypeDescriptorContext context,
             Type destinationType)
         {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (destinationType is null)
-            {
-                throw new ArgumentNullException(nameof(destinationType));
-            }
-
-            return destinationType == typeof(string) || destinationType == typeof(int);
+            return destinationType is null
+                ? throw new ArgumentNullException(nameof(destinationType))
+                : destinationType == typeof(string) || destinationType == typeof(int);
         }
 
         /// <summary>
@@ -86,14 +78,11 @@ namespace PropertyGridHelpers.Converters
             if (destinationType == typeof(string))
             {
                 FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
-                EnumTextAttribute dna =
+                var dna =
                         (EnumTextAttribute)Attribute.GetCustomAttribute(
                         fi, typeof(EnumTextAttribute));
 
-                if (dna == null)
-                    return value.ToString();
-                else
-                    return dna.EnumText;
+                return dna == null ? value.ToString() : (object)dna.EnumText;
             }
             else if (destinationType == typeof(int))
             {
@@ -138,7 +127,7 @@ namespace PropertyGridHelpers.Converters
             {
                 foreach (FieldInfo fi in _enumType.GetFields())
                 {
-                    EnumTextAttribute dna =
+                    var dna =
                             (EnumTextAttribute)Attribute.GetCustomAttribute(
                                 fi, typeof(EnumTextAttribute));
 

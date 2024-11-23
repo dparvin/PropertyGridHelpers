@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-#if NET462 || NET472 || NET48 || NET5_0_OR_GREATER
+#if NET462 || NET472 || NET48 || NET6_0|| NET8_0_OR_GREATER
 [assembly: AssemblyMetadata("Verify.ProjectDirectory", "C:\\PropertyGridHelpers\\Code\\PropertyGridHelpers\\")]
 [assembly: AssemblyMetadata("Verify.SolutionDirectory", "C:\\PropertyGridHelpers\\Code\\PropertyGridHelpers\\")]
 #endif

@@ -15,10 +15,14 @@ namespace PropertyGridHelpersTest.net452.Controls
 namespace PropertyGridHelpersTest.net462.Controls
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Controls
-#elif NET48
-namespace PropertyGridHelpersTest.net48.Controls
+#elif NET481
+namespace PropertyGridHelpersTest.net481.Controls
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.Controls
+#elif NET8_0
+namespace PropertyGridHelpersTest.net80.Controls
+#elif NET9_0
+namespace PropertyGridHelpersTest.net90.Controls
 #endif
 {
     /// <summary>
@@ -48,7 +52,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void AddItemCaptionSetCorrectlyTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.Add(new FlagCheckedListBoxItem(1, "Test"));
                 Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
@@ -62,7 +70,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void AddValuesCaptionSetCorrectlyTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.Add(1, "Test");
                 Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
@@ -76,7 +88,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void AddItemValueSetCorrectlyTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.Add(new FlagCheckedListBoxItem(1, "Test"));
                 Assert.Equal(1, ((FlagCheckedListBoxItem)list.Items[0]).Value);
@@ -90,7 +106,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void AddValuesValueSetCorrectlyTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.Add(1, "Test");
                 Assert.Equal(1, ((FlagCheckedListBoxItem)list.Items[0]).Value);
@@ -104,7 +124,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void ItemCheckedTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.Add(1, "Test");
                 list.SetItemCheckState(0, System.Windows.Forms.CheckState.Checked);
@@ -119,7 +143,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         [Fact]
         public void SetEnumValueTest()
         {
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.EnumValue = Converters.EnumTextConverterTest.TestEnums.FirstEntry;
                 Assert.Equal(1, list.GetCurrentValue());
@@ -138,7 +166,11 @@ namespace PropertyGridHelpersTest.net60.Controls
         public void GetEnumValueTest(int testValue)
         {
             Converters.EnumTextConverterTest.TestEnums item = (Converters.EnumTextConverterTest.TestEnums)testValue;
+#if NET8_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
             using (var list = new FlagCheckedListBox())
+#endif
             {
                 list.EnumValue = item;
                 Assert.Equal(item, list.EnumValue);

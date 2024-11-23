@@ -101,6 +101,11 @@
             
              </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.#ctor">
+            <summary>
+            Enum Text Converter Test
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromReturnsNullWithNullEntriesTest">
             <summary>
             Converts from returns null with null entries test.
@@ -169,7 +174,7 @@
         </member>
         <member name="T:PropertyGridHelpersTest.net35.Converters.TypeConverterTest">
             <summary>
-            
+            Tests for the type converter
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.ConvertToReturnsEmptyStringWithNullEntriesTest">

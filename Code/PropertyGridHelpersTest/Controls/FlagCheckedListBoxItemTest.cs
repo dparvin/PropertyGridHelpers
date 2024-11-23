@@ -14,10 +14,14 @@ namespace PropertyGridHelpersTest.net452.Controls
 namespace PropertyGridHelpersTest.net462.Controls
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Controls
-#elif NET48
-namespace PropertyGridHelpersTest.net48.Controls
+#elif NET481
+namespace PropertyGridHelpersTest.net481.Controls
 #elif NET6_0
 namespace PropertyGridHelpersTest.net60.Controls
+#elif NET8_0
+namespace PropertyGridHelpersTest.net80.Controls
+#elif NET9_0
+namespace PropertyGridHelpersTest.net90.Controls
 #endif
 {
     /// <summary>

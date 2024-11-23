@@ -37,7 +37,7 @@
         {
             get
             {
-                return ((Value & (Value - 1)) == 0);
+                return (Value & (Value - 1)) == 0;
             }
         }
 
@@ -66,7 +66,7 @@
         /// </returns>
         public bool IsMemberFlag(FlagCheckedListBoxItem composite)
         {
-            return (IsFlag && ((Value & composite?.Value) == Value));
+            return IsFlag && ((Value & composite?.Value) == Value);
         }
     }
 }

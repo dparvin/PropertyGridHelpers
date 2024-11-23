@@ -126,7 +126,7 @@ function Write-Log {
 			Specifies to not display the message to the console.
 
 		.PARAMETER ConsoleForeground
-			Specifies what color the text should be be displayed on the console. Ignored when switch 'NoConsoleOut' is specified.
+			Specifies what color the text should be displayed on the console. Ignored when switch 'NoConsoleOut' is specified.
 
 		.PARAMETER Indent
 			The number of spaces to indent the line in the log file.
@@ -255,7 +255,7 @@ Write-Log "NuGet Packager 2.0.3" -ForegroundColor Yellow
 # Make sure the nuget executable is writable
 Set-ItemProperty NuGet.exe -Name IsReadOnly -Value $false
 
-# Make sure the nupkg files are writeable and create backup
+# Make sure the nupkg files are writable and create backup
 if (Test-Path *.nupkg) {
 	Set-ItemProperty *.nupkg -Name IsReadOnly -Value $false
 

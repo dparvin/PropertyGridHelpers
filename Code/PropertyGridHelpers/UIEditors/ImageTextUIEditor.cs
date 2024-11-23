@@ -62,7 +62,7 @@ namespace PropertyGridHelpers.UIEditors
         public override void PaintValue(PaintValueEventArgs e)
         {
             FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, e.Value));
-            EnumImageAttribute dna =
+            var dna =
                     (EnumImageAttribute)Attribute.GetCustomAttribute(
                     fi, typeof(EnumImageAttribute));
 

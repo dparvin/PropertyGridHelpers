@@ -2,14 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net452;net462;net472;net48;net6.0-windows7.0;</TargetFrameworks>
+    <TargetFrameworks>net35;net452;net462;net472;net481;net6.0-windows;net8.0-windows;net9.0-windows;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SampleControls.snk</AssemblyOriginatorKeyFile>
     <UserSecretsId>4bf33741-fcba-4f96-99c6-71189075bbec</UserSecretsId>
     <UseWindowsForms>true</UseWindowsForms>
-    <Copyright>Copyright © 2016-2022</Copyright>
+    <Copyright>Copyright © 2016-2024</Copyright>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -61,27 +61,47 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net481|AnyCPU'">
     <DebugType>embedded</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net481|AnyCPU'">
     <DebugType>embedded</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows7.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
     <DebugType>embedded</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows7.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
     <DebugType>embedded</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows7.0'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0-windows' AND '$(TargetFramework)' != 'net8.0-windows' AND '$(TargetFramework)' != 'net9.0-windows'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 

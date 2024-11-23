@@ -127,7 +127,7 @@ function Write-Log {
 			Specifies to not display the message to the console.
 
 		.PARAMETER ConsoleForeground
-			Specifies what color the text should be be displayed on the console. Ignored when switch 'NoConsoleOut' is specified.
+			Specifies what color the text should be displayed on the console. Ignored when switch 'NoConsoleOut' is specified.
 
 		.PARAMETER Indent
 			The number of spaces to indent the line in the log file.

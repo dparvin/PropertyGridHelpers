@@ -10,6 +10,11 @@
             </summary>
             <seealso cref="T:System.Attribute" />
         </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class.
@@ -49,7 +54,6 @@
             Control Combo box which is used to select multiple elements of a
             flag Enum.
             </summary>
-            <seealso cref="T:System.Windows.Forms.CheckedListBox" />
             <seealso cref="T:System.Windows.Forms.CheckedListBox" />
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.#ctor">

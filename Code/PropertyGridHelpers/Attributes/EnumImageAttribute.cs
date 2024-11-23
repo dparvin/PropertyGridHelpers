@@ -12,6 +12,13 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumImageAttribute"/> class.
         /// </summary>
+        public EnumImageAttribute()
+        {
+            EnumImage = null;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumImageAttribute"/> class.
+        /// </summary>
         /// <param name="text">The text.</param>
         public EnumImageAttribute(string text)
         {

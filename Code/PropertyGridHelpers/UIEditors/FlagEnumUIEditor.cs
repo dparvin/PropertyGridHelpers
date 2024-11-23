@@ -52,11 +52,11 @@ namespace PropertyGridHelpers.UIEditors
                 provider != null)
             {
 
-                IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
 
                 if (edSvc != null)
                 {
-                    Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, CultureInfo.CurrentCulture);
+                    var e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, CultureInfo.CurrentCulture);
                     FlagEnumCB.EnumValue = e;
                     edSvc.DropDownControl(FlagEnumCB);
                     return FlagEnumCB.EnumValue;
