@@ -22,7 +22,8 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>PropertyGridHelpers.xml</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
