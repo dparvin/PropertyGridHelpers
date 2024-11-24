@@ -20,10 +20,10 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>PropertyGridHelpers.xml</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
