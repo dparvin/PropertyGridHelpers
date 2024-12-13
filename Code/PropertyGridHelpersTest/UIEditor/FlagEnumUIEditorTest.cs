@@ -22,8 +22,10 @@ namespace PropertyGridHelpersTest.net462.UIEditor
 namespace PropertyGridHelpersTest.net472.UIEditor
 #elif NET481
 namespace PropertyGridHelpersTest.net481.UIEditor
-#elif NET6_0
-namespace PropertyGridHelpersTest.net60.UIEditor
+#elif WINDOWS7_0
+namespace PropertyGridHelpersTest.net60.W7.UIEditor
+#elif WINDOWS10_0
+namespace PropertyGridHelpersTest.net60.W10.UIEditor
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.UIEditor
 #elif NET9_0
@@ -33,16 +35,12 @@ namespace PropertyGridHelpersTest.net90.UIEditor
     /// <summary>
     /// Tests for the <see cref="FlagEnumUIEditor"/>
     /// </summary>
-    public class FlagEnumUIEditorTest
+    public partial class FlagEnumUIEditorTest
     {
 #if NET35
 #else
         readonly ITestOutputHelper OutputHelper;
-        public FlagEnumUIEditorTest(ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
+        public FlagEnumUIEditorTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
         /// <summary>
@@ -51,11 +49,13 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void EditValueReturnsNullWithNullEntriesTest()
         {
+#if NET6_0_OR_GREATER
+            using var editor = new FlagEnumUIEditor();
+#else
             using (var editor = new FlagEnumUIEditor())
-            {
-                Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
-                Output(Resources.EditValueNull);
-            }
+#endif
+            Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
+            Output(Resources.EditValueNull);
         }
 
         /// <summary>
@@ -80,7 +80,11 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void GetEditStyleTest()
         {
+#if NET6_0_OR_GREATER
+            using var editor = new FlagEnumUIEditor();
+#else
             using (var editor = new FlagEnumUIEditor())
+#endif
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
                 Output(Resources.EditorStyle);
@@ -93,7 +97,11 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void EditValueTest()
         {
+#if NET6_0_OR_GREATER
+            using var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>();
+#else
             using (var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>())
+#endif
             {
                 Assert.Equal(UITypeEditorEditStyle.DropDown, editor.GetEditStyle(null));
                 Output(Resources.EditorStyle);
@@ -123,7 +131,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             AllEntries = FirstEntry + SecondEntry,
         }
 
-        private class TestClass : Component
+        private partial class TestClass : Component
         {
             public TestClass()
             {

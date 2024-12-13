@@ -16,8 +16,10 @@ namespace PropertyGridHelpersTest.net462.Converters
 namespace PropertyGridHelpersTest.net472.Converters
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Converters
-#elif NET6_0
-namespace PropertyGridHelpersTest.net60.Converters
+#elif WINDOWS7_0
+namespace PropertyGridHelpersTest.net60.W7.Converters
+#elif WINDOWS10_0
+namespace PropertyGridHelpersTest.net60.W10.Converters
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Converters
 #elif NET9_0
@@ -30,17 +32,19 @@ namespace PropertyGridHelpersTest.net90.Converters
     public class TypeConverterTest
     {
 #if NET35
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeConverterTest"/> class.
+        /// </summary>
+        public TypeConverterTest()
+        {
+        }
 #else
         readonly ITestOutputHelper OutputHelper;
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="TypeConverterTest"/> class.
         /// </summary>
-        /// <param name="output"></param>
-        public TypeConverterTest(ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
+        /// <param name="output">Test Output object</param>
+        public TypeConverterTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
         /// <summary>
@@ -49,7 +53,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsEmptyStringWithNullEntriesTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.Equal(string.Empty, converter.ConvertTo(null, typeof(string)));
                 Output("ConvertTo returned null as expected");
@@ -62,7 +70,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsStringWithIntEntriesTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.Equal("1", converter.ConvertTo(1, typeof(string)));
                 Output("ConvertTo returned '1' as expected");
@@ -75,7 +87,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertToStringTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.True(converter.CanConvertTo(typeof(string)));
                 Output("CanConvertTo returned True as expected");
@@ -88,7 +104,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertFromStringTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.False(converter.CanConvertFrom(typeof(string)));
                 Output("CanConvertFrom returned False as expected");
@@ -101,7 +121,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertToShortTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.False(converter.CanConvertTo(typeof(short)));
                 Output("CanConvertTo returned False as expected");
@@ -114,7 +138,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertFromShortTest()
         {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
             using (var converter = new TypeConverter<int>())
+#endif
             {
                 Assert.False(converter.CanConvertFrom(typeof(short)));
                 Output("CanConvertFrom returned False as expected");

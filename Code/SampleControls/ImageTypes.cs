@@ -1,5 +1,4 @@
 ﻿using PropertyGridHelpers.Attributes;
-using System;
 
 namespace SampleControls
 {

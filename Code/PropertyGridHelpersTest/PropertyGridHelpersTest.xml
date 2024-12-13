@@ -177,6 +177,11 @@
             Tests for the type converter
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.Converters.TypeConverterTest"/> class.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.ConvertToReturnsEmptyStringWithNullEntriesTest">
             <summary>
             Converts to returns null with null entries test.
@@ -214,9 +219,9 @@
             <param name="message">The message.</param>
         </member>
         <member name="T:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest">
-             <summary>
-            
-             </summary>
+            <summary>
+            Collection UI Editor Tests
+            </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest.AddItemToListTest">
             <summary>

@@ -17,6 +17,4 @@ using System.Runtime.InteropServices;
 
 #if NET35
 #else
-[assembly: AssemblyMetadata("Verify.ProjectDirectory", "C:\\Projects\\Repos\\dparvin\\PropertyGridHelpers\\Code\\SampleControls\\")]
-[assembly: AssemblyMetadata("Verify.SolutionDirectory", "C:\\Projects\\Repos\\dparvin\\PropertyGridHelpers\\Code\\PropertyGridHelpers\\")]
 #endif

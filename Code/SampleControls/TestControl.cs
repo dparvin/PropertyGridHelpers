@@ -12,8 +12,15 @@ using System.Windows.Forms;
 
 namespace SampleControls
 {
+    /// <summary>
+    /// Control used to test the functionality of the PropertyGridHelpers Library
+    /// </summary>
+    /// <seealso cref="UserControl" />
     public partial class TestControl : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestControl"/> class.
+        /// </summary>
         public TestControl()
         {
             InitializeComponent();
@@ -112,6 +119,12 @@ namespace SampleControls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the image types.
+        /// </summary>
+        /// <value>
+        /// The image types.
+        /// </value>
         [Category("Layout")]
         [Description("Image to Add to control")]
         [DisplayName("Image To Display")]

@@ -16,8 +16,10 @@ namespace PropertyGridHelpersTest.net462.UIEditor
 namespace PropertyGridHelpersTest.net472.UIEditor
 #elif NET481
 namespace PropertyGridHelpersTest.net481.UIEditor
-#elif NET6_0
-namespace PropertyGridHelpersTest.net60.UIEditor
+#elif WINDOWS7_0
+namespace PropertyGridHelpersTest.net60.W7.UIEditor
+#elif WINDOWS10_0
+namespace PropertyGridHelpersTest.net60.W10.UIEditor
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.UIEditor
 #elif NET9_0
@@ -25,7 +27,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #endif
 {
     /// <summary>
-    ///
+    /// Collection UI Editor Tests
     /// </summary>
     public class CollectionUIEditorTest
     {
@@ -36,11 +38,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// Collection UI Editor Test
         /// </summary>
         /// <param name="output">xunit output implementation</param>
-        public CollectionUIEditorTest(ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
+        public CollectionUIEditorTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
         /// <summary>

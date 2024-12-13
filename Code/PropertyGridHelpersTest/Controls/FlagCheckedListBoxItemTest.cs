@@ -16,8 +16,10 @@ namespace PropertyGridHelpersTest.net462.Controls
 namespace PropertyGridHelpersTest.net472.Controls
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Controls
-#elif NET6_0
-namespace PropertyGridHelpersTest.net60.Controls
+#elif WINDOWS7_0
+namespace PropertyGridHelpersTest.net60.W7.Controls
+#elif WINDOWS10_0
+namespace PropertyGridHelpersTest.net60.W10.Controls
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Controls
 #elif NET9_0

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.testControl1 = new SampleControls.TestControl();
@@ -53,9 +54,7 @@
             // 
             // testControl1
             // 
-            this.testControl1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.testControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.testControl1.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.testControl1.Location = new System.Drawing.Point(8, 8);
             this.testControl1.Margin = new System.Windows.Forms.Padding(2);
             this.testControl1.Name = "testControl1";
@@ -70,6 +69,7 @@
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.testControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(8);
