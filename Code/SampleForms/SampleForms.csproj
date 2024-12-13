@@ -16,7 +16,7 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
-    <ApplicationIcon>testtubeexperiment_118356.ico</ApplicationIcon>
+    <ApplicationIcon>testtube.ico</ApplicationIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -120,7 +120,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="testtubeexperiment_118356.ico" />
+    <Content Include="testtube.ico" />
   </ItemGroup>
 
   <ItemGroup>
