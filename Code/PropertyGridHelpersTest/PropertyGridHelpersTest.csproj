@@ -107,7 +107,7 @@
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
     <PackageReference Include="System.Buffers" Version="4.6.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.0"/>
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
     <PackageReference Include="System.Reflection.Metadata" Version="9.0.0" />
@@ -189,6 +189,17 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="ReportGenerator.Core">
+      <Version>5.3.11</Version>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
@@ -217,6 +228,17 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="ReportGenerator.Core">
+      <Version>5.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
@@ -245,6 +267,17 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="ReportGenerator.Core">
+      <Version>5.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
