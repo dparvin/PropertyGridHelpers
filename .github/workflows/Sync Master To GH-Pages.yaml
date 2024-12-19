@@ -15,6 +15,17 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git checkout gh-pages
+          # Check if the gh-pages branch exists
+          if git show-ref --verify --quiet refs/heads/gh-pages; then
+            # If it exists, switch to it
+            git checkout gh-pages
+          else
+            # If it doesn't exist, create it
+            git checkout --orphan gh-pages
+            git rm -rf . # Remove all files to start with a clean branch
+            git commit --allow-empty -m "Initial commit on gh-pages" # Create the initial commit
+            git push origin gh-pages
+          fi
+          # Merge master into gh-pages
           git merge master --no-edit
           git push origin gh-pages
