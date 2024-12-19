@@ -7,4 +7,6 @@ The following has been done to the project:
 * There is a sample control and form in the source code now.
 * There are some unit tests for the code, and they are able to run in every .NET framework version the library is compiled in.
 
-[Code Coverage Report](https://dparvin.github.io/PropertyGridHelpers/)
+Related Locations
+* [Code Coverage Report](https://dparvin.github.io/PropertyGridHelpers/)
+* [Publish Package](https://www.nuget.org/packages/PropertyGridHelpers)
