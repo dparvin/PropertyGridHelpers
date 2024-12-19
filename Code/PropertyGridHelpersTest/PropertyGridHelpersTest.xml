@@ -4,6 +4,21 @@
         <name>PropertyGridHelpersTest</name>
     </assembly>
     <members>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest">
+            <summary>
+            Tests for the Enum Image Attribute
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageWithTextTest">
+            <summary>
+            Get the attribute with a string test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageWithoutTextTest">
+            <summary>
+            Verify the EnumImageAttribute without any parameter.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
             <summary>
             Tests for the flag checked list box

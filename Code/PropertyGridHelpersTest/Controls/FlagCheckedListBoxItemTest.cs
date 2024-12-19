@@ -1,7 +1,7 @@
 ﻿using PropertyGridHelpers.Controls;
-using System;
 using Xunit;
 #if NET35
+using System;
 #else
 using Xunit.Abstractions;
 #endif
