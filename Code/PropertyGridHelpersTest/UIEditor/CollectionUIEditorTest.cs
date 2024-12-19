@@ -1,5 +1,6 @@
 ﻿using PropertyGridHelpers.UIEditors;
 using System;
+using System.Reflection;
 using Xunit;
 #if NET35
 #else
@@ -50,6 +51,40 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             var testItem = new CollectionUIEditor<string>();
             testItem.EditValue(null, "test");
             Output(testItem.ToString());
+        }
+
+        /// <summary>
+        /// Tests the CreateInstance method.
+        /// </summary>
+        [Fact]
+        public void CreateInstanceTest()
+        {
+            // Arrange
+            var collectionEditor = new CollectionUIEditor<string>();
+
+            // Use reflection to access the protected CreateInstance method
+            var method = typeof(CollectionUIEditor<string>).GetMethod(
+                "CreateInstance",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
+
+            Assert.NotNull(method); // Ensure the method exists
+
+            // Act
+            var result = method.Invoke(collectionEditor, new object[] { typeof(string) });
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<string>(result);
+            Assert.Equal(string.Empty, result); // Verify it returns an empty string for typeof(string)
+
+            // Test with a different type
+            var intResult = method.Invoke(collectionEditor, new object[] { typeof(int) });
+            Assert.NotNull(intResult);
+            Assert.IsType<int>(intResult);
+            Assert.Equal(0, intResult); // Default value of int
+
+            Output($"CreateInstance returned: {result} for string, {intResult} for int.");
         }
 
         /// <summary>

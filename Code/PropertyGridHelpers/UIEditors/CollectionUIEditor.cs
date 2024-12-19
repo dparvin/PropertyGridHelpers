@@ -26,7 +26,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <returns></returns>
         protected override object CreateInstance(Type itemType)
         {
-            return typeof(T) == typeof(string) ? string.Empty : (object)Activator.CreateInstance<T>();
+            return itemType == typeof(string) ? string.Empty : (object)Activator.CreateInstance(itemType);
         }
     }
 }
