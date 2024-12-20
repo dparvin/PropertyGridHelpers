@@ -186,8 +186,8 @@ namespace PropertyGridHelpers.Converters
     /// Generic version of Enum Text Converter
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="System.ComponentModel.EnumConverter" />
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="EnumConverter" />
+    /// <seealso cref="IDisposable" />
     /// <remarks>
     /// This converter is used to display specialized text in the PropertyGrid
     /// where the text is tied to the elements of an Enum.  Use the

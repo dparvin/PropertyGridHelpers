@@ -121,6 +121,11 @@
             Enum Text Converter Test
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.CanConvertToTest">
+            <summary>
+            Tests CanConvertTo method with various types
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromReturnsNullWithNullEntriesTest">
             <summary>
             Converts from returns null with null entries test.
@@ -161,6 +166,21 @@
             Converts from returns values test.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToTest">
+            <summary>
+            Tests the ConvertTo method for full coverage.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromTest">
+            <summary>
+            Tests the ConvertFrom method for full coverage.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToStringReturnsEnumNameWhenNoAttributeTest">
+            <summary>
+            Converts to string returns enum name when no attribute test.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums">
             <summary>
             Enum to use in the tests to test flag
@@ -179,6 +199,11 @@
         <member name="F:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums.AllEntries">
             <summary>
             All entries
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums.NoAttribute">
+            <summary>
+            The no attribute
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.Output(System.String)">
