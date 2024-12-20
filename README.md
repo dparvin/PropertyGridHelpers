@@ -15,12 +15,12 @@ and utilities to facilitate property manipulation within Windows Forms applicati
 To include PropertyGridHelpers in your project, add the following line to your `.csproj` or `.vbproj` file:
 
 ```xml
-<PackageReference Include="PropertyGridHelpers" Version="1.0.1" />
+<PackageReference Include="PropertyGridHelpers" Version="2024.12.20.3" />
 ```
 
 Alternatively, use the .NET CLI:
 ```bash
-  dotnet add package PropertyGridHelpers --version 1.0.1
+  dotnet add package PropertyGridHelpers --version 2024.12.20.3
 ```
 
 You can also use the built in option in Visual Studio to ```Manage Nuget Packages``` for the solution or project.
