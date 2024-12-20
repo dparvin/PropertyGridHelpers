@@ -61,7 +61,7 @@ For detailed usage and examples, refer to the [documentation](https://github.com
 Contributions are welcome! Please read the [contributing guidelines](https://github.com/dparvin/PropertyGridHelpers/blob/main/CONTRIBUTING.md) for more information.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/dparvin/PropertyGridHelpers/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/dparvin/PropertyGridHelpers/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 Special thanks to the contributors and the open-source community for their invaluable support and inspiration.
