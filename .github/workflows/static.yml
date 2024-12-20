@@ -35,11 +35,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Upload the "Pages" folder as the GitHub Pages artifact
-      - name: Upload Pages folder
+      - name: Upload 'Pages' folder as artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './Pages'
+          # Upload files from 'Coverage/Pages'
+          path: ./Coverage/Pages
+          name: github-pages
+          retention-days: 1
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
