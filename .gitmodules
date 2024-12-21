@@ -1,4 +1,4 @@
 [submodule "Coverage"]
 	path = Coverage
 	url = https://github.com/dparvin/PropertyGridHelpers.CodeCoverage
-        branch = main
+	branch = main
