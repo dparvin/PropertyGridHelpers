@@ -18,11 +18,11 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.7.2</FrameworkVersion>
-    <OutputPath>.\Help\</OutputPath>
-    <HtmlHelpName>Documentation</HtmlHelpName>
+    <OutputPath>..\..\..\PropertyGridHelpers.wiki\</OutputPath>
+    <HtmlHelpName>PropertyGridHelpers</HtmlHelpName>
     <Language>en-US</Language>
     <HelpFileFormat>Markdown</HelpFileFormat>
-    <SyntaxFilters>C#, Visual Basic, Managed C++, F#, J#, X#</SyntaxFilters>
+    <SyntaxFilters>None</SyntaxFilters>
     <PresentationStyle>Markdown</PresentationStyle>
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
@@ -35,6 +35,19 @@
       <DocumentationSource sourceFile="..\PropertyGridHelpers\PropertyGridHelpers.csproj" xmlns="" />
     </DocumentationSources>
     <ComponentConfigurations />
+    <ProjectSummary>PropertyGridHelpers is a .NET library designed to enhance and extend the functionality of the PropertyGrid control, providing custom editors, attributes, and utilities to facilitate property manipulation within Windows Forms applications.</ProjectSummary>
+    <SourceCodeBasePath>..\PropertyGridHelpers\</SourceCodeBasePath>
+    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <HelpTitle>PropertyGridHelpers Documenation</HelpTitle>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <NamingMethod>Guid</NamingMethod>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
+    <RootNamespaceTitle>PropertyGridHelpers</RootNamespaceTitle>
+    <NamespaceGrouping>True</NamespaceGrouping>
+    <MaximumGroupParts>4</MaximumGroupParts>
+    <Preliminary>False</Preliminary>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
