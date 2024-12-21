@@ -330,6 +330,41 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest">
+            <summary>
+            Class for testing the ImageTextUIEditor class
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.#ctor">
+            <summary>
+            Enum Text Converter Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Constructor_ShouldInitializeFields">
+            <summary>
+            Constructors the should initialize fields.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetPaintValueSupported_ShouldReturnTrue">
+            <summary>
+            Gets the paint value supported should return true.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage">
+            <summary>
+            Paints the value should draw image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Dispose_ShouldSetDisposedFlag">
+            <summary>
+            Disposes the should set disposed flag.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GenericConstructor_ShouldPassEnumTypeToBase">
+            <summary>
+            Generics the constructor should pass enum type to base.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
