@@ -19,3 +19,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpers.Attributes.EnumTextAttribute.#ctor(System.String)")]
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpers.Controls.FlagCheckedListBoxItem.#ctor(System.Int32,System.String)")]
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpers.Converters.EnumTextConverter.#ctor(System.Type)")]
+[assembly: SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)")]

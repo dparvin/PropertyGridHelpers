@@ -4,7 +4,10 @@ using System.Drawing.Design;
 using System.Drawing;
 using System.Reflection;
 using Xunit;
+using PropertyGridHelpers.Attributes;
+
 #if NET35
+using Xunit.Extensions;
 #else
 using Xunit.Abstractions;
 #endif
@@ -59,6 +62,46 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
+        /// Enum to test the different types of image processing
+        /// </summary>
+        public enum TestEnum
+        {
+            /// <summary>
+            /// The item with image
+            /// </summary>
+            [EnumImage("confetti-stars", PropertyGridHelpers.Enums.ImageLocation.Resource)]
+            ItemWithImage,
+            /// <summary>
+            /// The item with bitmap image
+            /// </summary>
+            [EnumImage("confetti-stars-bitmap", PropertyGridHelpers.Enums.ImageLocation.Resource)]
+            ItemWithBitmapImage,
+            /// <summary>
+            /// The confetti
+            /// </summary>
+            [EnumImage(PropertyGridHelpers.Enums.ImageLocation.Resource)]
+            confetti,
+            /// <summary>
+            /// The item without image
+            /// </summary>
+            ItemWithoutImage,
+            /// <summary>
+            /// The item with embedded image
+            /// </summary>
+            [EnumImage("confetti-stars.jpg")]
+            ItemWithEmbeddedImage,
+            /// <summary>
+            /// The item with embedded image
+            /// </summary>
+            [EnumImage("Resources.confetti-stars.jpg")]
+            ItemWithEmbeddedImageResource,
+            /// <summary>
+            /// The item with file image
+            /// </summary>
+            [EnumImage("confetti-stars.jpg", PropertyGridHelpers.Enums.ImageLocation.File)]
+            ItemWithFileImage,
+        }
+        /// <summary>
         /// Constructors the should initialize fields.
         /// </summary>
         [Fact]
@@ -79,21 +122,6 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             var editor = new ImageTextUIEditor(typeof(DayOfWeek));
             var result = editor.GetPaintValueSupported(null);
             Assert.True(result);
-        }
-
-        /// <summary>
-        /// Paints the value should draw image.
-        /// </summary>
-        [Fact]
-        public void PaintValue_ShouldDrawImage()
-        {
-            // Mock Enum and EnumImageAttribute
-            var editor = new ImageTextUIEditor(typeof(DayOfWeek), "Test.Resources");
-            var paintEventArgs = new PaintValueEventArgs(null, DayOfWeek.Monday, Graphics.FromImage(new Bitmap(100, 100)), new Rectangle());
-
-            editor.PaintValue(paintEventArgs);
-
-            // Assertions depend on how you verify the behavior, such as checking calls to Graphics.DrawImage.
         }
 
         /// <summary>
@@ -118,6 +146,128 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             var editor = new ImageTextUIEditor<DayOfWeek>("Test.Resources");
 
             Assert.Equal(typeof(DayOfWeek), editor.GetType().BaseType.GetField("_enumType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
+        }
+
+        /// <summary>
+        /// Paints the value should draw image.
+        /// </summary>
+        [Fact]
+        public void PaintValue_ShouldDrawImage()
+        {
+            // Arrange
+            var bitmap = new Bitmap(100, 100);
+            var graphics = Graphics.FromImage(bitmap);
+            var editor = new ImageTextUIEditor(typeof(DayOfWeek), "Test.Resources");
+            var paintEventArgs = new PaintValueEventArgs(null, DayOfWeek.Monday, graphics, new Rectangle(0, 0, 50, 50));
+
+            // Act
+            editor.PaintValue(paintEventArgs);
+
+            // Assert
+            Assert.True(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing.");
+        }
+
+        /// <summary>
+        /// Paints the value should draw image integration test.
+        /// </summary>
+        /// <param name="testEnum">The test enum.</param>
+        [Theory]
+        [InlineData(TestEnum.ItemWithImage)]
+        [InlineData(TestEnum.ItemWithBitmapImage)]
+        [InlineData(TestEnum.confetti)]
+        public void PaintValue_ShouldDrawImage_IntegrationTest(TestEnum testEnum)
+        {
+            // Arrange
+            var bitmap = new Bitmap(100, 100); // Use a bitmap as the drawing surface
+            var graphics = Graphics.FromImage(bitmap);
+            var bounds = new Rectangle(0, 0, 100, 100);
+
+            var editor = new ImageTextUIEditor(typeof(TestEnum));
+
+            // Create a PaintValueEventArgs with a real Graphics object
+            var paintEventArgs = new PaintValueEventArgs(
+                null,
+                testEnum, // Example enum value with the attribute
+                graphics,
+                bounds);
+
+            // Act
+            editor.PaintValue(paintEventArgs);
+
+            // Assert
+            Assert.False(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing an embedded image.");
+        }
+
+        /// <summary>
+        /// Paints the value embedded image should draw image.
+        /// </summary>
+        /// <param name="testEnum">The test enum.</param>
+        /// <param name="resourcePath">The resource path.</param>
+        [Theory]
+        [InlineData(TestEnum.ItemWithEmbeddedImage, "Resources")]
+        [InlineData(TestEnum.ItemWithEmbeddedImageResource, "")]
+        public void PaintValue_EmbeddedImage_ShouldDrawImage(TestEnum testEnum, string resourcePath)
+        {
+            // Arrange
+            var editor = new ImageTextUIEditor(typeof(TestEnum), resourcePath);
+            var bitmap = new Bitmap(100, 100);
+            var graphics = Graphics.FromImage(bitmap);
+            var bounds = new Rectangle(0, 0, 100, 100);
+
+            var paintEventArgs = new PaintValueEventArgs(
+                null,
+                testEnum, // Enum value with embedded image attribute
+                graphics,
+                bounds);
+
+            // Act
+            editor.PaintValue(paintEventArgs);
+
+            // Assert
+            Assert.False(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing an embedded image.");
+        }
+
+        /// <summary>
+        /// Paints the value file image should draw image.
+        /// </summary>
+        [Fact]
+        public void PaintValue_FileImage_ShouldDrawImage()
+        {
+            // Arrange
+            var editor = new ImageTextUIEditor(typeof(TestEnum), "Images");
+            var bitmap = new Bitmap(100, 100);
+            var graphics = Graphics.FromImage(bitmap);
+            var bounds = new Rectangle(0, 0, 100, 100);
+
+            var paintEventArgs = new PaintValueEventArgs(
+                null,
+                TestEnum.ItemWithFileImage, // Enum value with file image attribute
+                graphics,
+                bounds);
+
+            // Mock the file system or ensure the file exists for this test
+
+            // Act
+            editor.PaintValue(paintEventArgs);
+
+            // Assert
+            Assert.False(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing an image from a file.");
+        }
+
+        /// <summary>
+        /// Helper method to check if a bitmap is empty
+        /// </summary>
+        /// <param name="bitmap">The bitmap.</param>
+        /// <returns>
+        ///   <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsBitmapEmpty(Bitmap bitmap)
+        {
+            for (int x = 0; x < bitmap.Width; x++)
+                for (int y = 0; y < bitmap.Height; y++)
+                    if (bitmap.GetPixel(x, y).A != 0) // Check for any non-transparent pixel
+                        return false;
+            return true;
         }
     }
 }

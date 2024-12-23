@@ -31,6 +31,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Images\confetti-stars.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Resources\confetti-stars.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PropertyGridHelpers\PropertyGridHelpers.csproj" />
   </ItemGroup>
 
@@ -73,12 +80,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.2.1510.2205" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.3.3" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.3" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.3.3" />
+    <PackageReference Include="Moq" Version="4.17.2" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
@@ -106,6 +115,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
@@ -133,6 +143,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
@@ -160,6 +171,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.0" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="System.Memory" Version="4.6.0" />
@@ -189,6 +201,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="ReportGenerator.Core">
       <Version>5.3.11</Version>
     </PackageReference>
@@ -228,6 +241,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="ReportGenerator.Core">
       <Version>5.4.1</Version>
     </PackageReference>
@@ -267,6 +281,7 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.12.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.12.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="ReportGenerator.Core">
       <Version>5.4.1</Version>
     </PackageReference>

@@ -9,17 +9,29 @@
             Apply an image to an Enum item for use in a property page
             </summary>
             <seealso cref="T:System.Attribute" />
+            <seealso cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor" />
+            <remarks>
+            Apply this attribute to an Enum item to associate an image with the item and then apply 
+            the ImageTextUIEditor to a property in your class to display the image in a property grid.
+            </remarks>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(System.String)">
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(PropertyGridHelpers.Enums.ImageLocation)">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute" /> class.
+            </summary>
+            <param name="imageLocation">The image location.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(System.String,PropertyGridHelpers.Enums.ImageLocation)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute" /> class.
             </summary>
             <param name="text">The text.</param>
+            <param name="imageLocation">The image location.</param>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.EnumImageAttribute.EnumImage">
             <summary>
@@ -27,6 +39,14 @@
             </summary>
             <value>
             The Enum text.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.EnumImageAttribute.ImageLocation">
+            <summary>
+            Gets the image location.
+            </summary>
+            <value>
+            The image location.
             </value>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.EnumTextAttribute">
@@ -335,6 +355,26 @@
         <member name="M:PropertyGridHelpers.Converters.TypeConverter`1.Dispose">
             <summary>
             Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.Enums.ImageLocation">
+            <summary>
+            Select the location to look for the image to display
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.Enums.ImageLocation.Embedded">
+            <summary>
+            The image is an embedded resource
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.Enums.ImageLocation.Resource">
+            <summary>
+            The image is a resource in the project properties
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.Enums.ImageLocation.File">
+            <summary>
+            The image is a file in a relative path to the project
             </summary>
         </member>
         <member name="T:PropertyGridHelpers.UIEditors.CollectionUIEditor`1">

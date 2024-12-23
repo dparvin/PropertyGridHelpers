@@ -340,6 +340,46 @@
             Enum Text Converter Test
             </summary>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum">
+            <summary>
+            Enum to test the different types of image processing
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithImage">
+            <summary>
+            The item with image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithBitmapImage">
+            <summary>
+            The item with bitmap image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.confetti">
+            <summary>
+            The confetti
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithoutImage">
+            <summary>
+            The item without image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImage">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImageResource">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithFileImage">
+            <summary>
+            The item with file image
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Constructor_ShouldInitializeFields">
             <summary>
             Constructors the should initialize fields.
@@ -348,11 +388,6 @@
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetPaintValueSupported_ShouldReturnTrue">
             <summary>
             Gets the paint value supported should return true.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage">
-            <summary>
-            Paints the value should draw image.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Dispose_ShouldSetDisposedFlag">
@@ -364,6 +399,38 @@
             <summary>
             Generics the constructor should pass enum type to base.
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage">
+            <summary>
+            Paints the value should draw image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage_IntegrationTest(PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum)">
+            <summary>
+            Paints the value should draw image integration test.
+            </summary>
+            <param name="testEnum">The test enum.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_EmbeddedImage_ShouldDrawImage(PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum,System.String)">
+            <summary>
+            Paints the value embedded image should draw image.
+            </summary>
+            <param name="testEnum">The test enum.</param>
+            <param name="resourcePath">The resource path.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_FileImage_ShouldDrawImage">
+            <summary>
+            Paints the value file image should draw image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
+            <summary>
+            Helper method to check if a bitmap is empty
+            </summary>
+            <param name="bitmap">The bitmap.</param>
+            <returns>
+              <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>
@@ -379,6 +446,21 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti_stars">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti_stars_bitmap">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.Properties.Resources.EditorStyle">

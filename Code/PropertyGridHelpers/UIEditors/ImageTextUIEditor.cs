@@ -1,9 +1,11 @@
 using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Enums;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Resources;
 
@@ -61,24 +63,71 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="e">Paint Value Event Arguments</param>
         public override void PaintValue(PaintValueEventArgs e)
         {
+            // get the field info for the enum value
             FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, e.Value));
+            // get the EnumImageAttribute for the field
             var dna =
                     (EnumImageAttribute)Attribute.GetCustomAttribute(
                     fi, typeof(EnumImageAttribute));
 
             if (dna != null)
             {
+                // Get the name of the DLL or EXE where the reference object is declared
                 string m = e.Value.GetType().Module.Name;
+                string ei = dna.EnumImage;
+                if (string.IsNullOrEmpty(ei))
+                    ei = Enum.GetName(_enumType, e.Value);
+                // Remove the file extension from the name
 #if NET5_0_OR_GREATER
                 m = m[0..^4];
 #else
                 m = m.Substring(0, m.Length - 4);
 #endif
-                var rm = new ResourceManager(
-                    m + (string.IsNullOrEmpty(_resourcePath) ? "" : "." + _resourcePath), e.Value.GetType().Assembly);
+                Bitmap newImage = new Bitmap(100, 100);
+                string ResourceName;
+                switch (dna.ImageLocation)
+                {
+                    case ImageLocation.Embedded:
+                        ResourceName = $"{m}{(string.IsNullOrEmpty(_resourcePath) ? "" : $".{_resourcePath}")}.{ei}";
+                        using (var stream = e.Value.GetType().Assembly.GetManifestResourceStream(ResourceName))
+                        {
+                            newImage = (Bitmap)Image.FromStream(stream);
+                        }
+                        break;
+                    case ImageLocation.Resource:
+                        // Create a resource manager to access the resources
+                        ResourceName = $"{m}{(string.IsNullOrEmpty(_resourcePath) ? "" : $".{_resourcePath}")}";
+                        var rm = new ResourceManager(ResourceName, e.Value.GetType().Assembly);
 
-                // Draw the image
-                var newImage = (Bitmap)rm.GetObject(dna.EnumImage, CultureInfo.CurrentCulture);
+                        // Get the resource object
+                        var resource = rm.GetObject(ei, CultureInfo.CurrentCulture);
+
+                        if (resource is Bitmap bitmap)
+                            // If the resource is a Bitmap, use it directly
+                            newImage = bitmap;
+                        else if (resource is byte[] byteArray)
+                            // If the resource is a byte array, convert it to an image
+                            using (var ms = new MemoryStream(byteArray))
+                                newImage = new Bitmap(ms);
+                        else
+                            throw new InvalidOperationException($"Resource {ei} is not a valid image or byte array.");
+                        break;
+                    case ImageLocation.File:
+                        string assemblyPath;
+                        // Get the directory of the assembly containing _enumType
+#pragma warning disable SYSLIB0012 // The class is obsolete
+                        UriBuilder uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
+#pragma warning restore SYSLIB0012 // The class is obsolete
+                        assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+                        // Construct the full file path
+                        if (!string.IsNullOrEmpty(_resourcePath))
+                            assemblyPath = Path.Combine(assemblyPath, _resourcePath);
+                        ResourceName = Path.Combine(assemblyPath, ei);
+
+                        // Load the image from the file path
+                        newImage = new Bitmap(ResourceName);
+                        break;
+                }
                 Rectangle dr = e.Bounds;
                 newImage.MakeTransparent();
                 e.Graphics.DrawImage(newImage, dr);
