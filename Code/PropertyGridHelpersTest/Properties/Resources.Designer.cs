@@ -107,5 +107,14 @@ namespace PropertyGridHelpersTest.Properties {
                 return ResourceManager.GetString("EditValueNull", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stars Test Text.
+        /// </summary>
+        internal static string Stars {
+            get {
+                return ResourceManager.GetString("Stars", resourceCulture);
+            }
+        }
     }
 }

@@ -380,6 +380,26 @@
             The item with file image
             </summary>
         </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithInvalidResourceType">
+            <summary>
+            The item with invalid resource type
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems">
+            <summary>
+            Enum to test full paths to the images in the project
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item1">
+            <summary>
+            The item1
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item2">
+            <summary>
+            The item2
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Constructor_ShouldInitializeFields">
             <summary>
             Constructors the should initialize fields.
@@ -411,6 +431,16 @@
             </summary>
             <param name="testEnum">The test enum.</param>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage_WithoutResourcePath">
+            <summary>
+            Paints the value should draw image without resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage_WithoutResourcePath_ThrowsAnException">
+            <summary>
+            Paints the value should draw image without resource path.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_EmbeddedImage_ShouldDrawImage(PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum,System.String)">
             <summary>
             Paints the value embedded image should draw image.
@@ -423,6 +453,16 @@
             Paints the value file image should draw image.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.DefaultConstructor_ShouldInitializeProperly">
+            <summary>
+            Defaults the constructor should initialize properly.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldThrowInvalidOperationException_WhenResourceIsInvalid">
+            <summary>
+            Paints the value should throw invalid operation exception when resource is invalid.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
             <summary>
             Helper method to check if a bitmap is empty
@@ -431,6 +471,22 @@
             <returns>
               <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Images">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>
@@ -472,6 +528,51 @@
             <summary>
               Looks up a localized string similar to EditValue returned null as expected.
             </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Stars">
+            <summary>
+              Looks up a localized string similar to Stars Test Text.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <seealso cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor`1" />
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1.#cctor">
+            <summary>
+            Initializes the <see cref="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1"/> class.
+            </summary>
+            <exception cref="T:System.ArgumentException">T must be an enumerated type</exception>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1.TestEnumType">
+            <summary>
+            Gets the type of the test enum.
+            </summary>
+            <value>
+            The type of the test enum.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1.TestResourcePath">
+            <summary>
+            Gets the test resource path.
+            </summary>
+            <value>
+            The test resource path.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1"/> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1"/> class.
+            </summary>
+            <param name="ResourcePath">The path to the resources where the images are stored</param>
         </member>
     </members>
 </doc>

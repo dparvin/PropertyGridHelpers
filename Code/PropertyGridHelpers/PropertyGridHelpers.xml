@@ -469,12 +469,12 @@
             The object is disposed
             </summary>
         </member>
-        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor._enumType">
+        <member name="P:PropertyGridHelpers.UIEditors.ImageTextUIEditor.EnumType">
             <summary>
             The enum type
             </summary>
         </member>
-        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor._resourcePath">
+        <member name="P:PropertyGridHelpers.UIEditors.ImageTextUIEditor.ResourcePath">
             <summary>
             The path to the resources where the images are stored
             </summary>
@@ -522,7 +522,6 @@
             <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
             <seealso cref="T:System.Drawing.Design.UITypeEditor" />
             <seealso cref="T:System.IDisposable" />
-            <seealso cref="T:System.Drawing.Design.UITypeEditor" />
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor`1.#ctor">
             <summary>

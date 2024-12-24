@@ -136,4 +136,7 @@
   <data name="EditValueNull" xml:space="preserve">
     <value>EditValue returned null as expected</value>
   </data>
+  <data name="Stars" xml:space="preserve">
+    <value>Stars Test Text</value>
+  </data>
 </root>

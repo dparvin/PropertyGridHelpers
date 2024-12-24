@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Reflection;
 using Xunit;
 using PropertyGridHelpers.Attributes;
+using PropertyGridHelpersTest.Support;
 
 #if NET35
 using Xunit.Extensions;
@@ -100,7 +101,30 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             /// </summary>
             [EnumImage("confetti-stars.jpg", PropertyGridHelpers.Enums.ImageLocation.File)]
             ItemWithFileImage,
+            /// <summary>
+            /// The item with invalid resource type
+            /// </summary>
+            [EnumImage("Stars", PropertyGridHelpers.Enums.ImageLocation.Resource)]
+            ItemWithInvalidResourceType,
         }
+
+        /// <summary>
+        /// Enum to test full paths to the images in the project
+        /// </summary>
+        public enum FullPathTestItems
+        {
+            /// <summary>
+            /// The item1
+            /// </summary>
+            [EnumImage(".Properties.Resources.confetti-stars", PropertyGridHelpers.Enums.ImageLocation.Resource)]
+            Item1,
+            /// <summary>
+            /// The item2
+            /// </summary>
+            [EnumImage("Resources.confetti-stars.jpg")]
+            Item2,
+        }
+
         /// <summary>
         /// Constructors the should initialize fields.
         /// </summary>
@@ -109,8 +133,13 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         {
             var editor = new ImageTextUIEditor(typeof(DayOfWeek), "Custom.Resources");
 
-            Assert.Equal(typeof(DayOfWeek), editor.GetType().GetField("_enumType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
-            Assert.Equal("Custom.Resources", editor.GetType().GetField("_resourcePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
+#if NET35
+            Assert.Equal(typeof(DayOfWeek), editor.GetType().GetProperty("EnumType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor, null));
+            Assert.Equal("Custom.Resources", editor.GetType().GetProperty("ResourcePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor, null));
+#else
+            Assert.Equal(typeof(DayOfWeek), editor.GetType().GetProperty("EnumType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
+            Assert.Equal("Custom.Resources", editor.GetType().GetProperty("ResourcePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
+#endif
         }
 
         /// <summary>
@@ -143,9 +172,9 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void GenericConstructor_ShouldPassEnumTypeToBase()
         {
-            var editor = new ImageTextUIEditor<DayOfWeek>("Test.Resources");
+            var editor = new TestImageTextUIEditor<DayOfWeek>("Test.Resources");
 
-            Assert.Equal(typeof(DayOfWeek), editor.GetType().BaseType.GetField("_enumType", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(editor));
+            Assert.Equal(typeof(DayOfWeek), editor.TestEnumType);
         }
 
         /// <summary>
@@ -196,6 +225,60 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 
             // Assert
             Assert.False(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing an embedded image.");
+        }
+
+        /// <summary>
+        /// Paints the value should draw image without resource path.
+        /// </summary>
+        [Fact]
+        public void PaintValue_ShouldDrawImage_WithoutResourcePath()
+        {
+            // Arrange
+            var bitmap = new Bitmap(100, 100); // Use a bitmap as the drawing surface
+            var graphics = Graphics.FromImage(bitmap);
+            var bounds = new Rectangle(0, 0, 100, 100);
+
+            var editor = new ImageTextUIEditor(typeof(FullPathTestItems), "");
+
+            // Create a PaintValueEventArgs with a real Graphics object
+            var paintEventArgs = new PaintValueEventArgs(
+                null,
+                FullPathTestItems.Item2, // Example enum value with the attribute
+                graphics,
+                bounds);
+
+            // Act
+            editor.PaintValue(paintEventArgs);
+
+            // Assert
+            Assert.False(IsBitmapEmpty(bitmap), "The bitmap should not be empty after drawing an embedded image.");
+        }
+
+        /// <summary>
+        /// Paints the value should draw image without resource path.
+        /// </summary>
+        [Fact]
+        public void PaintValue_ShouldDrawImage_WithoutResourcePath_ThrowsAnException()
+        {
+            // Arrange
+            var bitmap = new Bitmap(100, 100); // Use a bitmap as the drawing surface
+            var graphics = Graphics.FromImage(bitmap);
+            var bounds = new Rectangle(0, 0, 100, 100);
+
+            var editor = new ImageTextUIEditor(typeof(FullPathTestItems), "");
+
+            // Create a PaintValueEventArgs with a real Graphics object
+            var paintEventArgs = new PaintValueEventArgs(
+                null,
+                FullPathTestItems.Item1, // Example enum value with the attribute
+                graphics,
+                bounds);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(() => editor.PaintValue(paintEventArgs));
+
+            // Verify the exception message if needed
+            Assert.Contains("Resource", exception.Message);
         }
 
         /// <summary>
@@ -255,13 +338,58 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
+        /// Defaults the constructor should initialize properly.
+        /// </summary>
+        [Fact]
+        public void DefaultConstructor_ShouldInitializeProperly()
+        {
+            // Arrange & Act
+            var editor = new TestImageTextUIEditor<TestEnum>();
+
+            // Assert
+            Assert.NotNull(editor); // Ensure the object is not null
+            Assert.Equal(typeof(TestEnum), editor.TestEnumType); // Check that the generic type is correctly set
+#if NET40_OR_GREATER || NET5_0_OR_GREATER
+            Assert.Equal("Properties.Resources", editor.TestResourcePath); // Ensure the ResourcePath is initialized to null
+#endif
+        }
+
+        /// <summary>
+        /// Paints the value should throw invalid operation exception when resource is invalid.
+        /// </summary>
+        [Fact]
+        public void PaintValue_ShouldThrowInvalidOperationException_WhenResourceIsInvalid()
+        {
+            // Arrange
+            var editor = new ImageTextUIEditor(typeof(TestEnum));
+            var bitmap = new Bitmap(100, 100);
+            var graphics = Graphics.FromImage(bitmap);
+            var mockValue = TestEnum.ItemWithInvalidResourceType; // Use any enum value.
+            var e = new PaintValueEventArgs(null, mockValue, graphics, new Rectangle(0, 0, 100, 100));
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+            {
+                editor.PaintValue(e);
+            });
+
+#if NET35
+#else
+            OutputHelper.WriteLine(exception.Message);
+            Assert.Equal($"Resource Stars is not a valid image or byte array.", exception.Message);
+#endif
+        }
+
+        #region Test Support Methods
+
+        /// <summary>
         /// Helper method to check if a bitmap is empty
         /// </summary>
         /// <param name="bitmap">The bitmap.</param>
         /// <returns>
         ///   <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
         /// </returns>
-        private bool IsBitmapEmpty(Bitmap bitmap)
+        private static bool IsBitmapEmpty(Bitmap bitmap)
         {
             for (int x = 0; x < bitmap.Width; x++)
                 for (int y = 0; y < bitmap.Height; y++)
@@ -269,5 +397,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
                         return false;
             return true;
         }
+
+        #endregion
     }
 }

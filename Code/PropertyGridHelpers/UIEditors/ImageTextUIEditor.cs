@@ -1,11 +1,13 @@
 using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Enums;
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 
@@ -24,11 +26,11 @@ namespace PropertyGridHelpers.UIEditors
         /// <summary>
         /// The enum type
         /// </summary>
-        private readonly Type _enumType;
+        protected Type EnumType { get; }
         /// <summary>
         /// The path to the resources where the images are stored
         /// </summary>
-        private readonly string _resourcePath;
+        protected string ResourcePath { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTextUIEditor"/> class.
@@ -36,8 +38,8 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="type">Type of enum that is used in the process</param>
         public ImageTextUIEditor(Type type)
         {
-            _enumType = type;
-            _resourcePath = "Properties.Resources";
+            EnumType = type;
+            ResourcePath = "Properties.Resources";
         }
 
         /// <summary>
@@ -47,8 +49,8 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="ResourcePath">The path to the resources where the images are stored</param>
         public ImageTextUIEditor(Type type, string ResourcePath)
         {
-            _enumType = type;
-            _resourcePath = ResourcePath;
+            EnumType = type;
+            this.ResourcePath = ResourcePath;
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace PropertyGridHelpers.UIEditors
         public override void PaintValue(PaintValueEventArgs e)
         {
             // get the field info for the enum value
-            FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, e.Value));
+            FieldInfo fi = EnumType.GetField(Enum.GetName(EnumType, e.Value));
             // get the EnumImageAttribute for the field
             var dna =
                     (EnumImageAttribute)Attribute.GetCustomAttribute(
@@ -76,7 +78,7 @@ namespace PropertyGridHelpers.UIEditors
                 string m = e.Value.GetType().Module.Name;
                 string ei = dna.EnumImage;
                 if (string.IsNullOrEmpty(ei))
-                    ei = Enum.GetName(_enumType, e.Value);
+                    ei = Enum.GetName(EnumType, e.Value);
                 // Remove the file extension from the name
 #if NET5_0_OR_GREATER
                 m = m[0..^4];
@@ -88,7 +90,7 @@ namespace PropertyGridHelpers.UIEditors
                 switch (dna.ImageLocation)
                 {
                     case ImageLocation.Embedded:
-                        ResourceName = $"{m}{(string.IsNullOrEmpty(_resourcePath) ? "" : $".{_resourcePath}")}.{ei}";
+                        ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}.{ei}";
                         using (var stream = e.Value.GetType().Assembly.GetManifestResourceStream(ResourceName))
                         {
                             newImage = (Bitmap)Image.FromStream(stream);
@@ -96,8 +98,17 @@ namespace PropertyGridHelpers.UIEditors
                         break;
                     case ImageLocation.Resource:
                         // Create a resource manager to access the resources
-                        ResourceName = $"{m}{(string.IsNullOrEmpty(_resourcePath) ? "" : $".{_resourcePath}")}";
+                        ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}";
                         var rm = new ResourceManager(ResourceName, e.Value.GetType().Assembly);
+
+                        // Check if the resource file exists in the assembly
+                        var resourceNames = e.Value.GetType().Assembly.GetManifestResourceNames();
+                        if (!resourceNames.Any(r => r.EndsWith($"{ResourceName}.resources", StringComparison.CurrentCulture)))
+                        {
+                            throw new InvalidOperationException(
+                                $"Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+                                $"Available resources: {string.Join(", ", resourceNames)}");
+                        }
 
                         // Get the resource object
                         var resource = rm.GetObject(ei, CultureInfo.CurrentCulture);
@@ -120,8 +131,8 @@ namespace PropertyGridHelpers.UIEditors
 #pragma warning restore SYSLIB0012 // The class is obsolete
                         assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
                         // Construct the full file path
-                        if (!string.IsNullOrEmpty(_resourcePath))
-                            assemblyPath = Path.Combine(assemblyPath, _resourcePath);
+                        if (!string.IsNullOrEmpty(ResourcePath))
+                            assemblyPath = Path.Combine(assemblyPath, ResourcePath);
                         ResourceName = Path.Combine(assemblyPath, ei);
 
                         // Load the image from the file path
@@ -174,22 +185,45 @@ namespace PropertyGridHelpers.UIEditors
     /// <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
     /// <seealso cref="UITypeEditor" />
     /// <seealso cref="IDisposable" />
-    /// <seealso cref="UITypeEditor" />
-    public class ImageTextUIEditor<T> : ImageTextUIEditor where T : Enum, new()
+#if NET35
+    public class ImageTextUIEditor<T> : ImageTextUIEditor where T : struct
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
+        /// Initializes the <see cref="ImageTextUIEditor{T}"/> class.
         /// </summary>
-        public ImageTextUIEditor() : base(typeof(T))
+        /// <exception cref="ArgumentException">T must be an enumerated type</exception>
+        static ImageTextUIEditor()
         {
+            if (!typeof(T).IsEnum)
+            {
+                throw new ArgumentException("T must be an enumerated type");
+            }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
         /// </summary>
+        public ImageTextUIEditor() : base(typeof(T)) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
+        /// </summary>
         /// <param name="ResourcePath">The path to the resources where the images are stored</param>
-        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath)
-        {
-        }
+        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath) { }
     }
+#elif NET40_OR_GREATER || NET5_0_OR_GREATER
+    public class ImageTextUIEditor<T> : ImageTextUIEditor where T : struct, Enum
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
+        /// </summary>
+        public ImageTextUIEditor() : base(typeof(T)) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
+        /// </summary>
+        /// <param name="ResourcePath">The path to the resources where the images are stored</param>
+        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath) { }
+    }
+#endif
 }
