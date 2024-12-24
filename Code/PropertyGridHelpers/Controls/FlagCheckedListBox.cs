@@ -15,22 +15,15 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
         /// </summary>
-        public FlagCheckedListBox()
-        {
+        public FlagCheckedListBox() =>
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
-
-            // TODO: Add any initialization after the InitForm call
-        }
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
+        protected override void Dispose(bool disposing) => base.Dispose(disposing);
 
         #region Component Designer generated code
 
@@ -53,9 +46,7 @@ namespace PropertyGridHelpers.Controls
         /// <param name="v">The value.</param>
         /// <param name="c">The caption.</param>
         /// <returns></returns>
-        public FlagCheckedListBoxItem Add(
-            int v,
-            string c)
+        public FlagCheckedListBoxItem Add(int v, string c)
         {
             var item = new FlagCheckedListBoxItem(v, c);
             Items.Add(item);
@@ -67,8 +58,7 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public FlagCheckedListBoxItem Add(
-            FlagCheckedListBoxItem item)
+        public FlagCheckedListBoxItem Add(FlagCheckedListBoxItem item)
         {
             Items.Add(item);
             return item;
@@ -78,8 +68,7 @@ namespace PropertyGridHelpers.Controls
         /// Raises the <see cref="CheckedListBox.ItemCheck" /> event.
         /// </summary>
         /// <param name="ice">The <see cref="ItemCheckEventArgs" /> instance containing the event data.</param>
-        protected override void OnItemCheck(
-            ItemCheckEventArgs ice)
+        protected override void OnItemCheck(ItemCheckEventArgs ice)
         {
             base.OnItemCheck(ice);
 
@@ -99,20 +88,17 @@ namespace PropertyGridHelpers.Controls
         /// Updates the checked items.
         /// </summary>
         /// <param name="value">The value.</param>
-        protected void UpdateCheckedItems(
-            int value)
+        protected void UpdateCheckedItems(int value)
         {
             isUpdatingCheckStates = true;
 
             // Iterate over all items
-            for (int i = 0; i < Items.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
                 var item = Items[i] as FlagCheckedListBoxItem;
 
                 if (item.Value == 0)
-                {
                     SetItemChecked(i, value == 0);
-                }
                 else
                 {
 
@@ -145,8 +131,8 @@ namespace PropertyGridHelpers.Controls
                 UpdateCheckedItems(0);
 
             // Get the total value of all checked items
-            int sum = 0;
-            for (int i = 0; i < Items.Count; i++)
+            var sum = 0;
+            for (var i = 0; i < Items.Count; i++)
             {
                 var item = Items[i] as FlagCheckedListBoxItem;
 
@@ -175,9 +161,9 @@ namespace PropertyGridHelpers.Controls
         /// <returns></returns>
         public int GetCurrentValue()
         {
-            int sum = 0;
+            var sum = 0;
 
-            for (int i = 0; i < Items.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
                 var item = Items[i] as FlagCheckedListBoxItem;
 
@@ -197,11 +183,11 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         private void FillEnumMembers()
         {
-            foreach (string name in Enum.GetNames(enumType))
+            foreach (var name in Enum.GetNames(enumType))
             {
-                object val = Enum.Parse(enumType, name);
-                string caption = Converter == null ? name : (string)Converter.ConvertTo(val, typeof(string));
-                int intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
+                var val = Enum.Parse(enumType, name);
+                var caption = Converter == null ? name : (string)Converter.ConvertTo(val, typeof(string));
+                var intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
 
                 Add(intVal, caption);
             }
@@ -213,7 +199,7 @@ namespace PropertyGridHelpers.Controls
         /// </summary>
         private void ApplyEnumValue()
         {
-            int intVal = (int)Convert.ChangeType(enumValue, typeof(int), CultureInfo.CurrentCulture);
+            var intVal = (int)Convert.ChangeType(enumValue, typeof(int), CultureInfo.CurrentCulture);
             UpdateCheckedItems(intVal);
         }
 
@@ -228,7 +214,7 @@ namespace PropertyGridHelpers.Controls
         {
             get
             {
-                object e = Enum.ToObject(enumType, GetCurrentValue());
+                var e = Enum.ToObject(enumType, GetCurrentValue());
                 return (Enum)e;
             }
             set

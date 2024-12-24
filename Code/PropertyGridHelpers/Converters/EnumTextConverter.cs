@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Reflection;
 
 namespace PropertyGridHelpers.Converters
 {
@@ -29,11 +28,7 @@ namespace PropertyGridHelpers.Converters
         /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public EnumTextConverter(Type type)
-            : base(type)
-        {
-            _enumType = type;
-        }
+        public EnumTextConverter(Type type) : base(type) => _enumType = type;
 
         /// <summary>
         /// Determines whether this instance can convert to the specified context.
@@ -77,7 +72,7 @@ namespace PropertyGridHelpers.Converters
                 throw new ArgumentException($"value is expected to be of type {_enumType}.", nameof(value));
             if (destinationType == typeof(string))
             {
-                FieldInfo fi = _enumType.GetField(Enum.GetName(_enumType, value));
+                var fi = _enumType.GetField(Enum.GetName(_enumType, value));
                 var dna =
                         (EnumTextAttribute)Attribute.GetCustomAttribute(
                         fi, typeof(EnumTextAttribute));
@@ -85,9 +80,7 @@ namespace PropertyGridHelpers.Converters
                 return dna == null ? value.ToString() : (object)dna.EnumText;
             }
             else if (destinationType == typeof(int))
-            {
                 return (int)value;
-            }
             return null;
         }
 
@@ -99,12 +92,8 @@ namespace PropertyGridHelpers.Converters
         /// <returns>
         ///   <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
         /// </returns>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext context,
-            Type sourceType)
-        {
-            return sourceType == typeof(string) || sourceType == typeof(int);
-        }
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
+            sourceType == typeof(string) || sourceType == typeof(int);
 
         /// <summary>
         /// Converts from String or int to Enum.
@@ -125,11 +114,10 @@ namespace PropertyGridHelpers.Converters
                 throw new ArgumentException("The value is expected to be a string or an int.", nameof(value));
             if (value.GetType() == typeof(string))
             {
-                foreach (FieldInfo fi in _enumType.GetFields())
+                foreach (var fi in _enumType.GetFields())
                 {
                     var dna =
-                            (EnumTextAttribute)Attribute.GetCustomAttribute(
-                                fi, typeof(EnumTextAttribute));
+                            (EnumTextAttribute)Attribute.GetCustomAttribute(fi, typeof(EnumTextAttribute));
 
                     if ((dna != null) && ((string)value == dna.EnumText))
                         return Enum.Parse(_enumType, fi.Name);
@@ -201,9 +189,6 @@ namespace PropertyGridHelpers.Converters
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
-        public EnumTextConverter()
-            : base(typeof(T))
-        {
-        }
+        public EnumTextConverter() : base(typeof(T)) { }
     }
 }

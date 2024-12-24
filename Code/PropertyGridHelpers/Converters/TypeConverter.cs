@@ -19,12 +19,8 @@ namespace PropertyGridHelpers.Converters
         /// <param name="context">The context.</param>
         /// <param name="destinationType">Type of the destination.</param>
         /// <returns></returns>
-        public override bool CanConvertTo(
-            ITypeDescriptorContext context,
-            Type destinationType)
-        {
-            return destinationType == typeof(T) || destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
-        }
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) =>
+            destinationType == typeof(T) || destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
 
         /// <summary>
         /// Converts to.
@@ -43,7 +39,7 @@ namespace PropertyGridHelpers.Converters
             if (destinationType == typeof(string) &&
                  value is T t)
             {
-                T so = t;
+                var so = t;
 
                 return so.ToString();
             }
@@ -56,12 +52,8 @@ namespace PropertyGridHelpers.Converters
         /// <param name="context">The context.</param>
         /// <param name="sourceType">Type of the source.</param>
         /// <returns></returns>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext context,
-            Type sourceType)
-        {
-            return sourceType != typeof(string) && base.CanConvertFrom(context, sourceType);
-        }
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
+            sourceType != typeof(string) && base.CanConvertFrom(context, sourceType);
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.

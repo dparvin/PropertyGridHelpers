@@ -22,10 +22,7 @@
         /// <returns>
         /// A <see cref="string" /> that represents this instance.
         /// </returns>
-        public override string ToString()
-        {
-            return Caption;
-        }
+        public override string ToString() => Caption;
 
         /// <summary>
         /// Returns true if the value corresponds to a single bit being set
@@ -64,9 +61,7 @@
         /// <returns>
         ///   <c>true</c> if [is member flag] [the specified composite]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsMemberFlag(FlagCheckedListBoxItem composite)
-        {
-            return IsFlag && ((Value & composite?.Value) == Value);
-        }
+        public bool IsMemberFlag(FlagCheckedListBoxItem composite) =>
+            IsFlag && ((Value & composite?.Value) == Value);
     }
 }

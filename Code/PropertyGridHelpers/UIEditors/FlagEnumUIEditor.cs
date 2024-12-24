@@ -71,10 +71,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="context">The context.</param>
         /// <returns></returns>
         public override UITypeEditorEditStyle GetEditStyle(
-            ITypeDescriptorContext context)
-        {
-            return UITypeEditorEditStyle.DropDown;
-        }
+            ITypeDescriptorContext context) => UITypeEditorEditStyle.DropDown;
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -123,9 +120,6 @@ namespace PropertyGridHelpers.UIEditors
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagEnumUIEditor" /> class.
         /// </summary>
-        public FlagEnumUIEditor() : base()
-        {
-            FlagEnumCB.Converter = new T();
-        }
+        public FlagEnumUIEditor() : base() => FlagEnumCB.Converter = new T();
     }
 }

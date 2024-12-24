@@ -77,25 +77,21 @@ namespace PropertyGridHelpers.UIEditors
                 string m = e.Value.GetType().Module.Name;
                 string ei = dna.EnumImage;
                 if (string.IsNullOrEmpty(ei))
-                {
                     ei = Enum.GetName(EnumType, e.Value);
-                }
                 // Remove the file extension from the name
 #if NET5_0_OR_GREATER
                 m = m[0..^4];
 #else
                 m = m.Substring(0, m.Length - 4);
 #endif
-                Bitmap newImage = new Bitmap(100, 100);
+                var newImage = new Bitmap(100, 100);
                 string ResourceName;
                 switch (dna.ImageLocation)
                 {
                     case ImageLocation.Embedded:
                         ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}.{ei}";
                         using (var stream = e.Value.GetType().Assembly.GetManifestResourceStream(ResourceName))
-                        {
                             newImage = (Bitmap)Image.FromStream(stream);
-                        }
                         break;
                     case ImageLocation.Resource:
                         // Create a resource manager to access the resources
@@ -115,18 +111,12 @@ namespace PropertyGridHelpers.UIEditors
                         var resource = rm.GetObject(ei, CultureInfo.CurrentCulture);
 
                         if (resource is Bitmap bitmap)
-                        {
                             // If the resource is a Bitmap, use it directly
                             newImage = bitmap;
-                        }
                         else if (resource is byte[] byteArray)
-                        {
                             // If the resource is a byte array, convert it to an image
                             using (var ms = new MemoryStream(byteArray))
-                            {
                                 newImage = new Bitmap(ms);
-                            }
-                        }
                         else
                             throw new InvalidOperationException($"Resource {ei} is not a valid image or byte array.");
                         break;
@@ -139,9 +129,7 @@ namespace PropertyGridHelpers.UIEditors
                         assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
                         // Construct the full file path
                         if (!string.IsNullOrEmpty(ResourcePath))
-                        {
                             assemblyPath = Path.Combine(assemblyPath, ResourcePath);
-                        }
 
                         ResourceName = Path.Combine(assemblyPath, ei);
 
@@ -149,7 +137,7 @@ namespace PropertyGridHelpers.UIEditors
                         newImage = new Bitmap(ResourceName);
                         break;
                 }
-                Rectangle dr = e.Bounds;
+                var dr = e.Bounds;
                 newImage.MakeTransparent();
                 e.Graphics.DrawImage(newImage, dr);
             }
@@ -205,9 +193,7 @@ namespace PropertyGridHelpers.UIEditors
         static ImageTextUIEditor()
         {
             if (!typeof(T).IsEnum)
-            {
                 throw new ArgumentException("T must be an enumerated type");
-            }
         }
 
         /// <summary>

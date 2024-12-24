@@ -13,10 +13,7 @@ namespace PropertyGridHelpers.Attributes
         /// Initializes a new instance of the <see cref="EnumTextAttribute"/> class.
         /// </summary>
         /// <param name="text">The text.</param>
-        public EnumTextAttribute(string text)
-        {
-            EnumText = text;
-        }
+        public EnumTextAttribute(string text) => EnumText = text;
 
         /// <summary>
         /// Gets the Enum text.

@@ -24,9 +24,6 @@ namespace PropertyGridHelpers.UIEditors
         /// </summary>
         /// <param name="itemType">Type of the item.</param>
         /// <returns></returns>
-        protected override object CreateInstance(Type itemType)
-        {
-            return itemType == typeof(string) ? string.Empty : (object)Activator.CreateInstance(itemType);
-        }
+        protected override object CreateInstance(Type itemType) => itemType == typeof(string) ? string.Empty : (object)Activator.CreateInstance(itemType);
     }
 }
