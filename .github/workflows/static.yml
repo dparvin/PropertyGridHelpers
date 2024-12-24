@@ -1,49 +1,32 @@
-# Deploy static content to GitHub Pages
-name: Deploy static content to Pages
+name: Update GitHub Pages on Dispatch
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches:
-      - master
+  repository_dispatch:
+    types:
+      - update-gh-pages
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
-  deploy:
+  update-pages:
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout the main repository and submodules
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive # Ensures the submodule is also checked out
+    - name: Checkout the main repository
+      uses: actions/checkout@v3
 
-      # Copy the submodule's "Pages" folder into the root directory
-      - name: Prepare Pages folder
-        run: |
-          cp -r Coverage/Pages/* .
+    - name: Clone the CodeCoverage repository
+      run: |
+        git clone https://${{ secrets.PAT_TOKEN }}@github.com/dparvin/PropertyGridHelpers.CodeCoverage.git codecoverage-repo
 
-      # Configure GitHub Pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+    - name: Copy coverage files to gh-pages
+      run: |
+        mkdir -p gh-pages
+        cp -r codecoverage-repo/* gh-pages/
 
-      - name: Upload 'Pages' folder as artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload files from 'Coverage/Pages'
-          path: ./Coverage/Pages
-          name: github-pages
-          retention-days: 1
-
-      # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: gh-pages
