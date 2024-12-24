@@ -1,7 +1,6 @@
 using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Enums;
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
@@ -78,7 +77,9 @@ namespace PropertyGridHelpers.UIEditors
                 string m = e.Value.GetType().Module.Name;
                 string ei = dna.EnumImage;
                 if (string.IsNullOrEmpty(ei))
+                {
                     ei = Enum.GetName(EnumType, e.Value);
+                }
                 // Remove the file extension from the name
 #if NET5_0_OR_GREATER
                 m = m[0..^4];
@@ -114,12 +115,18 @@ namespace PropertyGridHelpers.UIEditors
                         var resource = rm.GetObject(ei, CultureInfo.CurrentCulture);
 
                         if (resource is Bitmap bitmap)
+                        {
                             // If the resource is a Bitmap, use it directly
                             newImage = bitmap;
+                        }
                         else if (resource is byte[] byteArray)
+                        {
                             // If the resource is a byte array, convert it to an image
                             using (var ms = new MemoryStream(byteArray))
+                            {
                                 newImage = new Bitmap(ms);
+                            }
+                        }
                         else
                             throw new InvalidOperationException($"Resource {ei} is not a valid image or byte array.");
                         break;
@@ -127,12 +134,15 @@ namespace PropertyGridHelpers.UIEditors
                         string assemblyPath;
                         // Get the directory of the assembly containing _enumType
 #pragma warning disable SYSLIB0012 // The class is obsolete
-                        UriBuilder uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
+                        var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
 #pragma warning restore SYSLIB0012 // The class is obsolete
                         assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
                         // Construct the full file path
                         if (!string.IsNullOrEmpty(ResourcePath))
+                        {
                             assemblyPath = Path.Combine(assemblyPath, ResourcePath);
+                        }
+
                         ResourceName = Path.Combine(assemblyPath, ei);
 
                         // Load the image from the file path
