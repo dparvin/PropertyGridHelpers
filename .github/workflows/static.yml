@@ -26,7 +26,7 @@ jobs:
     - name: Copy coverage files to gh-pages
       run: |
         mkdir -p gh-pages
-        cp -a codecoverage-repo/pages/* gh-pages/
+        cp -a codecoverage-repo/Pages/* gh-pages/
 
     - name: List files in gh-pages
       run: ls -R gh-pages
