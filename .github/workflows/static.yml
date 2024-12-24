@@ -20,10 +20,16 @@ jobs:
       run: |
         git clone https://${{ secrets.PAT_TOKEN }}@github.com/dparvin/PropertyGridHelpers.CodeCoverage.git codecoverage-repo
 
+    - name: List files in codecoverage-repo
+      run: ls -R codecoverage-repo
+
     - name: Copy coverage files to gh-pages
       run: |
         mkdir -p gh-pages
-        cp -r codecoverage-repo/* gh-pages/
+        cp -a codecoverage-repo/pages/* gh-pages/
+
+    - name: List files in gh-pages
+      run: ls -R gh-pages
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
