@@ -35,7 +35,7 @@ jobs:
         cp -a codecoverage-repo/Pages/* gh-pages/
 
     - name: List files in gh-pages
-      run: ls -R ../../*
+      run: ls -al gh-pages
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
