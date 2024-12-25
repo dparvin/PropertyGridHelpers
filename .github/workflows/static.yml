@@ -18,7 +18,13 @@ jobs:
 
     - name: Clone the CodeCoverage repository
       run: |
-        git clone https://${{ secrets.PAT_TOKEN }}@github.com/dparvin/PropertyGridHelpers.CodeCoverage.git codecoverage-repo
+        git clone --depth 1 https://${{ secrets.PAT_TOKEN }}@github.com/dparvin/PropertyGridHelpers.CodeCoverage.git codecoverage-repo
+
+    - name: Check current commit of code coverage repository
+      run: |
+        cd codecoverage-repo
+        git log -1
+        cd ..
 
     - name: List files in codecoverage-repo
       run: ls -R codecoverage-repo
