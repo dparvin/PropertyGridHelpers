@@ -132,12 +132,16 @@ namespace PropertyGridHelpers.Controls
                     sum |= item.Value;
             }
 
-            // If the item has been unchecked, remove its bits from the sum
-            if (cs == CheckState.Unchecked)
-                sum &= ~composite.Value;
-            // If the item has been checked, combine its bits with the sum
-            else
-                sum |= composite.Value;
+            // Check if composite is null before accessing its Value
+            if (composite != null)
+            {
+                // If the item has been unchecked, remove its bits from the sum
+                if (cs == CheckState.Unchecked)
+                    sum &= ~composite.Value;
+                // If the item has been checked, combine its bits with the sum
+                else
+                    sum |= composite.Value;
+            }
 
             // Update all items in the CheckListBox based on the final bit value
             UpdateCheckedItems(sum);
