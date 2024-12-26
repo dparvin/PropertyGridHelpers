@@ -10,14 +10,12 @@ namespace PropertyGridHelpers.Controls
     /// flag Enum.
     /// </summary>
     /// <seealso cref="CheckedListBox" />
-    public class FlagCheckedListBox : CheckedListBox
+    public partial class FlagCheckedListBox : CheckedListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
         /// </summary>
-        public FlagCheckedListBox() =>
-            // This call is required by the Windows.Forms Form Designer.
-            InitializeComponent();
+        public FlagCheckedListBox() => InitializeComponent();
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -30,13 +28,7 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Initializes the component.
         /// </summary>
-        private void InitializeComponent()
-        {
-            //
-            // FlaggedCheckedListBox
-            //
-            CheckOnClick = true;
-        }
+        private void InitializeComponent() => CheckOnClick = true;
 
         #endregion
 
@@ -49,9 +41,14 @@ namespace PropertyGridHelpers.Controls
         public FlagCheckedListBoxItem Add(int v, string c)
         {
             var item = new FlagCheckedListBoxItem(v, c);
-            Items.Add(item);
+            _ = Items.Add(item);
             return item;
         }
+
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
+        public void Clear() => Items.Clear();
 
         /// <summary>
         /// Adds the specified item.
@@ -60,7 +57,7 @@ namespace PropertyGridHelpers.Controls
         /// <returns></returns>
         public FlagCheckedListBoxItem Add(FlagCheckedListBoxItem item)
         {
-            Items.Add(item);
+            _ = Items.Add(item);
             return item;
         }
 
@@ -83,12 +80,11 @@ namespace PropertyGridHelpers.Controls
             UpdateCheckedItems(item, ice.NewValue);
         }
 
-        // Checks/Unchecks items depending on the give bit value
         /// <summary>
-        /// Updates the checked items.
+        /// Checks/Unchecks items depending on the give bit value
         /// </summary>
         /// <param name="value">The value.</param>
-        protected void UpdateCheckedItems(int value)
+        protected internal void UpdateCheckedItems(int value)
         {
             isUpdatingCheckStates = true;
 
@@ -97,32 +93,27 @@ namespace PropertyGridHelpers.Controls
             {
                 var item = Items[i] as FlagCheckedListBoxItem;
 
-                if (item.Value == 0)
-                    SetItemChecked(i, value == 0);
-                else
+                switch (item.Value)
                 {
-
-                    // If the bit for the current item is on in the bit value, check it
-                    if ((item.Value & value) == item.Value && item.Value != 0)
-                        SetItemChecked(i, true);
-                    // Otherwise uncheck it
-                    else
-                        SetItemChecked(i, false);
+                    case 0:
+                        SetItemChecked(i, value == 0);
+                        break;
+                    default:
+                        // If the bit for the current item is on in the bit value, check it
+                        SetItemChecked(i, (item.Value & value) == item.Value && item.Value != 0);
+                        break;
                 }
             }
 
             isUpdatingCheckStates = false;
         }
 
-        // Updates items in the CheckListBox
-        // composite = The item that was checked/unchecked
-        // cs = The check state of that item
         /// <summary>
-        /// Updates the checked items.
+        /// Updates items in the CheckListBox
         /// </summary>
-        /// <param name="composite">The composite.</param>
-        /// <param name="cs">The cs.</param>
-        protected void UpdateCheckedItems(
+        /// <param name="composite">The item that was checked/unchecked</param>
+        /// <param name="cs">The check state of that item</param>
+        protected internal void UpdateCheckedItems(
             FlagCheckedListBoxItem composite,
             CheckState cs)
         {
@@ -177,9 +168,8 @@ namespace PropertyGridHelpers.Controls
         private Type enumType;
         private Enum enumValue;
 
-        // Adds items to the CheckListBox based on the members of the enum
         /// <summary>
-        /// Fills the enum members.
+        /// Adds items to the CheckListBox based on the members of the enum
         /// </summary>
         private void FillEnumMembers()
         {
@@ -189,7 +179,7 @@ namespace PropertyGridHelpers.Controls
                 var caption = Converter == null ? name : (string)Converter.ConvertTo(val, typeof(string));
                 var intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
 
-                Add(intVal, caption);
+                _ = Add(intVal, caption);
             }
         }
 
@@ -219,14 +209,19 @@ namespace PropertyGridHelpers.Controls
             }
             set
             {
-                if (value != null)
-                {
-                    Items.Clear();
-                    enumValue = value;              // Store the current enum value
-                    enumType = value.GetType();     // Store enum type
-                    FillEnumMembers();              // Add items for enum members
-                    ApplyEnumValue();               // Check/uncheck items depending on enum value
-                }
+#if NET30_OR_GREATER
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+#else
+                ArgumentNullException.ThrowIfNull(value);
+#endif
+                Items.Clear();
+                enumType = value.GetType();     // Store enum type
+                if (!enumType.IsDefined(typeof(FlagsAttribute), false))
+                    throw new InvalidOperationException($"Enum {enumType.Name} does not have the [Flags] attribute.");
+                enumValue = value;              // Store the current enum value
+                FillEnumMembers();              // Add items for enum members
+                ApplyEnumValue();               // Check/uncheck items depending on enum value
             }
         }
 

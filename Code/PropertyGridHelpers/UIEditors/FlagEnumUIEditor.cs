@@ -12,7 +12,7 @@ namespace PropertyGridHelpers.UIEditors
     /// UITypeEditor for flag Enums
     /// </summary>
     /// <seealso cref="UITypeEditor" />
-    public class FlagEnumUIEditor : UITypeEditor, IDisposable
+    public partial class FlagEnumUIEditor : UITypeEditor, IDisposable
     {
         /// <summary>
         /// The flag enum CheckBox
@@ -115,7 +115,7 @@ namespace PropertyGridHelpers.UIEditors
     /// <seealso cref="UITypeEditor" />
     /// <seealso cref="IDisposable" />
     /// <seealso cref="UITypeEditor" />
-    public class FlagEnumUIEditor<T> : FlagEnumUIEditor where T : EnumConverter, new()
+    public partial class FlagEnumUIEditor<T> : FlagEnumUIEditor where T : EnumConverter, new()
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagEnumUIEditor" /> class.

@@ -100,6 +100,11 @@
             <param name="c">The caption.</param>
             <returns></returns>
         </member>
+        <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Clear">
+            <summary>
+            Clears this instance.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.Add(PropertyGridHelpers.Controls.FlagCheckedListBoxItem)">
             <summary>
             Adds the specified item.
@@ -115,16 +120,16 @@
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(System.Int32)">
             <summary>
-            Updates the checked items.
+            Checks/Unchecks items depending on the give bit value
             </summary>
             <param name="value">The value.</param>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.UpdateCheckedItems(PropertyGridHelpers.Controls.FlagCheckedListBoxItem,System.Windows.Forms.CheckState)">
             <summary>
-            Updates the checked items.
+            Updates items in the CheckListBox
             </summary>
-            <param name="composite">The composite.</param>
-            <param name="cs">The cs.</param>
+            <param name="composite">The item that was checked/unchecked</param>
+            <param name="cs">The check state of that item</param>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.GetCurrentValue">
             <summary>
@@ -134,7 +139,7 @@
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.FillEnumMembers">
             <summary>
-            Fills the enum members.
+            Adds items to the CheckListBox based on the members of the enum
             </summary>
         </member>
         <member name="M:PropertyGridHelpers.Controls.FlagCheckedListBox.ApplyEnumValue">

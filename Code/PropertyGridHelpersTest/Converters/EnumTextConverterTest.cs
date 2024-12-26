@@ -326,6 +326,10 @@ namespace PropertyGridHelpersTest.net90.Converters
         public enum TestEnums
         {
             /// <summary>
+            /// The none
+            /// </summary>
+            None = 0,
+            /// <summary>
             /// The first entry
             /// </summary>
             [EnumText("First Entry")]

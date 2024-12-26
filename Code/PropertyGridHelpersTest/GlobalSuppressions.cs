@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Assertions", "xUnit2006:Do not use invalid string equality check", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageWithTextTest")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net35.Attributes")]
 [assembly: SuppressMessage("Assertions", "xUnit2006:Do not use invalid string equality check", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.CanConvertToTest")]
+[assembly: SuppressMessage("Assertions", "xUnit2006:Do not use invalid string equality check", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.AddDuplicateCaptionItems")]
 #endif
 
 #if NET452
