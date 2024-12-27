@@ -4,19 +4,21 @@
       <DataCollector friendlyName="Code Coverage">
         <Configuration>
           <Exclude>
-            <!-- Exclude assemblies by name -->
+            <!-- Exclude assemblies or modules -->
             <ModulePaths>
               <ModulePath>.*WinRT.SourceGenerator.*</ModulePath>
-              <ModulePath>.*GeneratedCode.*</ModulePath>
+              <ModulePath>.*Generator.WinRTAotSourceGenerator.*</ModulePath>
             </ModulePaths>
 
-            <!-- Exclude specific files by path -->
+            <!-- Exclude specific source files -->
             <SourceFiles>
+              <!-- General exclusion of generated files in 'obj' -->
               <SourceFile>.*\\obj\\.*</SourceFile>
-              <SourceFile>.*WinRTCCWVtable.*</SourceFile>
+              <!-- Specific exclusion for the problematic file -->
+              <SourceFile>.*\\WinRTCCWVtable\.g\.cs$</SourceFile>
             </SourceFiles>
 
-            <!-- Exclude code marked with specific attributes -->
+            <!-- Exclude files with generated code attributes -->
             <Attributes>
               <Attribute>System.CodeDom.Compiler.GeneratedCodeAttribute</Attribute>
               <Attribute>GeneratedCodeAttribute</Attribute>
