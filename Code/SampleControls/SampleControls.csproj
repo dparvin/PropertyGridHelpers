@@ -137,6 +137,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Happy.gif" />
+    <None Remove="Resources\Happy.jpg" />
+    <None Remove="Resources\Happy.png" />
+    <None Remove="Resources\Neutral.gif" />
+    <None Remove="Resources\Neutral.jpg" />
+    <None Remove="Resources\Neutral.png" />
+    <None Remove="Resources\Sad.gif" />
+    <None Remove="Resources\Sad.jpg" />
+    <None Remove="Resources\Sad.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Happy.gif" />
+    <EmbeddedResource Include="Resources\Happy.jpg" />
+    <EmbeddedResource Include="Resources\Happy.png" />
+    <EmbeddedResource Include="Resources\Neutral.gif" />
+    <EmbeddedResource Include="Resources\Neutral.jpg" />
+    <EmbeddedResource Include="Resources\Neutral.png" />
+    <EmbeddedResource Include="Resources\Sad.gif" />
+    <EmbeddedResource Include="Resources\Sad.jpg" />
+    <EmbeddedResource Include="Resources\Sad.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PropertyGridHelpers\PropertyGridHelpers.csproj" />
   </ItemGroup>
 
@@ -150,7 +174,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

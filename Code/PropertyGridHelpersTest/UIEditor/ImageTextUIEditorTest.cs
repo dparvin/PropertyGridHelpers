@@ -6,6 +6,12 @@ using System.Reflection;
 using Xunit;
 using PropertyGridHelpers.Attributes;
 using PropertyGridHelpersTest.Support;
+using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
+using System.Diagnostics;
+
+
+
 
 #if NET35
 using Xunit.Extensions;
@@ -65,6 +71,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// <summary>
         /// Enum to test the different types of image processing
         /// </summary>
+        [ResourcePath("TestEnum.Resources")]
         public enum TestEnum
         {
             /// <summary>
@@ -376,9 +383,65 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #if NET35
 #else
             OutputHelper.WriteLine(exception.Message);
-            Assert.Equal($"Resource Stars is not a valid image or byte array.", exception.Message);
+            Assert.Equal($"Resource 'PropertyGridHelpersTest.Properties.Resources.resources.Stars' is not a valid image or byte array.", exception.Message);
 #endif
         }
+
+        /// <summary>
+        /// Gets the resource path should return resource path.
+        /// </summary>
+        /// <param name="PropertyName">Name of the property.</param>
+        /// <param name="ExpectedPath">The expected path.</param>
+        [Theory]
+        [InlineData(nameof(TestItemWithImage), "TestResourcePath.Resources")]
+        [InlineData(nameof(TestItemWithBitmapImage), "TestItemWithBitmapImage.Resources")]
+        public void GetResourcePath_ShouldReturnResourcePath(string PropertyName, string ExpectedPath)
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[PropertyName];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var resourcePath = ImageTextUIEditor.GetResourcePath(context, TestItemWithImage.GetType());
+            context.OnComponentChanged();
+
+            // Assert
+#if NET35
+            Debug.WriteLine(resourcePath);
+#else
+            OutputHelper.WriteLine(resourcePath);
+            Assert.Equal(ExpectedPath, resourcePath);
+#endif
+            Assert.Null(context.Container);
+            Assert.Null(context.GetService(typeof(IContainer)));
+            Assert.True(context.OnComponentChanging());
+        }
+
+        /// <summary>
+        /// Gets or sets the test enum.
+        /// </summary>
+        /// <value>
+        /// The test enum.
+        /// </value>
+        [DynamicPathSource(nameof(TestResourcePath))]
+        public TestEnum TestItemWithImage { get; set; } = TestEnum.ItemWithImage;
+
+        /// <summary>
+        /// Gets or sets the test item with bitmap image.
+        /// </summary>
+        /// <value>
+        /// The test item with bitmap image.
+        /// </value>
+        [ResourcePath("TestItemWithBitmapImage.Resources")]
+        public TestEnum TestItemWithBitmapImage { get; set; } = TestEnum.ItemWithBitmapImage;
+
+        /// <summary>
+        /// Gets or sets the test resource path.
+        /// </summary>
+        /// <value>
+        /// The test resource path.
+        /// </value>
+        public string TestResourcePath { get; set; } = "TestResourcePath.Resources";
 
         #region Test Support Methods
 

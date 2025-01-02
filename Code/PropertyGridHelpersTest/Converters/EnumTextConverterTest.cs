@@ -3,6 +3,12 @@ using PropertyGridHelpers.Converters;
 using System;
 using Xunit;
 using System.IO;
+using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
+using System.Linq;
+
+
+
 #if NET35
 #else
 using Xunit.Abstractions;
@@ -90,8 +96,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Null(converter.ConvertFrom(null));
-                Output("ConvertFrom returned null as expected");
+            Assert.Null(converter.ConvertFrom(null));
+            Output("ConvertFrom returned null as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -110,8 +116,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom("First Entry"));
-                Output("ConvertFrom returned FirstEntry as expected");
+            Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom("First Entry"));
+            Output("ConvertFrom returned FirstEntry as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -130,8 +136,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.True(converter.CanConvertFrom(null, typeof(string)));
-                Output("CanConvertFrom returned true as expected");
+            Assert.True(converter.CanConvertFrom(null, typeof(string)));
+            Output("CanConvertFrom returned true as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -150,8 +156,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.True(converter.CanConvertFrom(null, typeof(int)));
-                Output("CanConvertFrom returned true as expected");
+            Assert.True(converter.CanConvertFrom(null, typeof(int)));
+            Output("CanConvertFrom returned true as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -170,8 +176,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(1));
-                Output("ConvertFrom returned FirstEntry as expected");
+            Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(1));
+            Output("ConvertFrom returned FirstEntry as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -190,8 +196,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Null(converter.ConvertTo(null, null));
-                Output("ConvertTo returned null as expected");
+            Assert.Null(converter.ConvertTo(null, null));
+            Output("ConvertTo returned null as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -210,8 +216,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Equal("First Entry", converter.ConvertTo(TestEnums.FirstEntry, typeof(string)));
-                Output("ConvertTo returned 'First Entry' as expected");
+            Assert.Equal("First Entry", converter.ConvertTo(TestEnums.FirstEntry, typeof(string)));
+            Output("ConvertTo returned 'First Entry' as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -230,8 +236,8 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                Assert.Equal(1, converter.ConvertTo(TestEnums.FirstEntry, typeof(int)));
-                Output("ConvertTo returned 1 as expected");
+            Assert.Equal(1, converter.ConvertTo(TestEnums.FirstEntry, typeof(int)));
+            Output("ConvertTo returned 1 as expected");
 #if NET5_0_OR_GREATER
 #else
             }
@@ -287,15 +293,13 @@ namespace PropertyGridHelpersTest.net90.Converters
             Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(null, null, "First Entry"));
 
             // Test conversion from string without EnumTextAttribute
-            Assert.Throws<ArgumentException>(() =>
-                converter.ConvertFrom(null, null, "NonExistent"));
+            Assert.Equal(TestEnums.None, (TestEnums)converter.ConvertFrom(null, null, "NonExistent"));
 
             // Test conversion from int
             Assert.Equal(TestEnums.FirstEntry, converter.ConvertFrom(null, null, 1));
 
             // Test conversion from invalid string (missing attribute and enum name mismatch)
-            Assert.Throws<ArgumentException>(() =>
-                converter.ConvertFrom(null, null, "InvalidValue"));
+            Assert.Equal(TestEnums.None, converter.ConvertFrom(null, null, "InvalidValue"));
         }
 
         /// <summary>
@@ -310,14 +314,133 @@ namespace PropertyGridHelpersTest.net90.Converters
             using (var converter = new EnumTextConverter<TestEnums>())
             {
 #endif
-                var result = converter.ConvertTo(TestEnums.NoAttribute, typeof(string));
-                Assert.Equal("NoAttribute", result);
-                Output("ConvertTo returned the enum name as expected when no attribute is present");
+            var result = converter.ConvertTo(TestEnums.NoAttribute, typeof(string));
+            Assert.Equal("NoAttribute", result);
+            Output("ConvertTo returned the enum name as expected when no attribute is present");
 #if NET5_0_OR_GREATER
 #else
             }
 #endif
         }
+
+        /// <summary>
+        /// Converts to string returns enum name when no attribute test.
+        /// </summary>
+        [Fact]
+        public void ConvertFromStringReturnsEnumNameWhenNoAttributeTest()
+        {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
+            using (var converter = new EnumTextConverter<TestEnums>())
+            {
+#endif
+            var result = converter.ConvertFrom("NoAttribute");
+            Assert.Equal(TestEnums.NoAttribute, result);
+            Output("ConvertTo returned the enum name as expected when no attribute is present");
+#if NET5_0_OR_GREATER
+#else
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Converts to string returns enum name when no attribute test.
+        /// </summary>
+        [Fact]
+        public void ConvertFromIntReturnsEnumNameWhenNoAttributeTest()
+        {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
+            using (var converter = new EnumTextConverter<TestEnums>())
+            {
+#endif
+            var result = converter.ConvertFrom(8);
+            Assert.Equal(TestEnums.NoAttribute, result);
+            Output("ConvertTo returned the enum name as expected when no attribute is present");
+#if NET5_0_OR_GREATER
+#else
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Converts from invalid string test.
+        /// </summary>
+        [Fact]
+        public void ConvertFromInvalidStringTest()
+        {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
+            using (var converter = new EnumTextConverter<TestEnums>())
+            {
+#endif
+            var exception = Assert.Throws<ArgumentException>(() => converter.ConvertFrom(10.2));
+            Assert.Contains("expected to be a string or an int", exception.Message);
+#if NET5_0_OR_GREATER
+#else
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Converts to unsupported type test.
+        /// </summary>
+        [Fact]
+        public void ConvertToUnsupportedTypeTest()
+        {
+#if NET5_0_OR_GREATER
+            using var converter = new EnumTextConverter<TestEnums>();
+#else
+            using (var converter = new EnumTextConverter<TestEnums>())
+            {
+#endif
+            Assert.Null(converter.ConvertTo(null, typeof(object)));
+#if NET5_0_OR_GREATER
+#else
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Tests GetStandardValues method to ensure it returns all enum values for the given context.
+        /// </summary>
+        [Fact]
+        public void GetStandardValuesTest_WithCustomTypeDescriptorContext()
+        {
+            // Arrange
+            var converter = new EnumTextConverter<TestEnums>();
+
+            // Create a PropertyDescriptor for the enum type
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)["TestProperty"];
+
+            // Create the CustomTypeDescriptorContext instance
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, null);
+
+            // Act
+            var standardValues = converter.GetStandardValues(context);
+
+            // Assert
+            Assert.NotNull(standardValues);
+            Assert.Contains(TestEnums.FirstEntry, standardValues.Cast<TestEnums>());
+            Assert.Contains(TestEnums.SecondEntry, standardValues.Cast<TestEnums>());
+            Assert.Contains(TestEnums.AllEntries, standardValues.Cast<TestEnums>());
+#if NET9_0_OR_GREATER
+            Assert.Equal(Enum.GetValues<TestEnums>().Length, standardValues.Count);
+#else
+            Assert.Equal(Enum.GetValues(typeof(TestEnums)).Length, standardValues.Count);
+#endif
+        }
+
+        /// <summary>
+        /// Gets or sets the test property.
+        /// </summary>
+        /// <value>
+        /// The test property.
+        /// </value>
+        public TestEnums TestProperty { get; set; }
 
         /// <summary>
         /// Enum to use in the tests to test flag

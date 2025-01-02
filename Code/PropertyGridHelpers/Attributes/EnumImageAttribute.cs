@@ -13,7 +13,7 @@ namespace PropertyGridHelpers.Attributes
     /// Apply this attribute to an Enum item to associate an image with the item and then apply 
     /// the ImageTextUIEditor to a property in your class to display the image in a property grid.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public sealed class EnumImageAttribute : Attribute
     {
         /// <summary>
@@ -52,13 +52,19 @@ namespace PropertyGridHelpers.Attributes
         /// <value>
         /// The Enum text.
         /// </value>
-        public string EnumImage { get; }
+        public string EnumImage
+        {
+            get;
+        }
         /// <summary>
         /// Gets the image location.
         /// </summary>
         /// <value>
         /// The image location.
         /// </value>
-        public ImageLocation ImageLocation { get; }
+        public ImageLocation ImageLocation
+        {
+            get;
+        }
     }
 }

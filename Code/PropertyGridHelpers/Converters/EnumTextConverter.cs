@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 
 namespace PropertyGridHelpers.Converters
 {
@@ -16,19 +17,15 @@ namespace PropertyGridHelpers.Converters
     /// </remarks>
     /// <seealso cref="EnumConverter" />
     /// <seealso cref="IDisposable" />
-    public class EnumTextConverter : EnumConverter, IDisposable
+    public partial class EnumTextConverter : EnumConverter, IDisposable
     {
-        /// <summary>
-        /// The enum type
-        /// </summary>
-        private readonly Type _enumType;
         private bool disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public EnumTextConverter(Type type) : base(type) => _enumType = type;
+        public EnumTextConverter(Type type) : base(type) { }
 
         /// <summary>
         /// Determines whether this instance can convert to the specified context.
@@ -45,12 +42,10 @@ namespace PropertyGridHelpers.Converters
         /// </exception>
         public override bool CanConvertTo(
             ITypeDescriptorContext context,
-            Type destinationType)
-        {
-            return destinationType is null
+            Type destinationType) =>
+            destinationType is null
                 ? throw new ArgumentNullException(nameof(destinationType))
                 : destinationType == typeof(string) || destinationType == typeof(int);
-        }
 
         /// <summary>
         /// Converts to an int or string from an enum.
@@ -68,11 +63,11 @@ namespace PropertyGridHelpers.Converters
             Type destinationType)
         {
             if (value == null) return null;
-            if (value.GetType() != _enumType)
-                throw new ArgumentException($"value is expected to be of type {_enumType}.", nameof(value));
+            if (value.GetType() != EnumType)
+                throw new ArgumentException($"value is expected to be of type {EnumType}.", nameof(value));
             if (destinationType == typeof(string))
             {
-                var fi = _enumType.GetField(Enum.GetName(_enumType, value));
+                var fi = EnumType.GetField(Enum.GetName(EnumType, value));
                 var dna =
                         (EnumTextAttribute)Attribute.GetCustomAttribute(
                         fi, typeof(EnumTextAttribute));
@@ -114,24 +109,55 @@ namespace PropertyGridHelpers.Converters
                 throw new ArgumentException("The value is expected to be a string or an int.", nameof(value));
             if (value.GetType() == typeof(string))
             {
-                foreach (var fi in _enumType.GetFields())
+                foreach (var fi in EnumType.GetFields())
                 {
-                    var dna =
-                            (EnumTextAttribute)Attribute.GetCustomAttribute(fi, typeof(EnumTextAttribute));
+                    var dna = (EnumTextAttribute)Attribute.GetCustomAttribute(fi, typeof(EnumTextAttribute));
 
                     if ((dna != null) && ((string)value == dna.EnumText))
-                        return Enum.Parse(_enumType, fi.Name);
+                        return Enum.Parse(EnumType, fi.Name);
+                }
+
+                if (Enum.GetNames(EnumType).Contains(value))
+                    return Enum.Parse(EnumType, (string)value);
+                else
+                {
+                    var enums = Enum.GetValues(EnumType);
+                    return enums.GetValue(0);
                 }
             }
             else if (value.GetType() == typeof(int))
             {
-                var s = Enum.GetName(_enumType, (int)value);
-                var e = Enum.Parse(_enumType, s);
+                var s = Enum.GetName(EnumType, (int)value);
+                var e = Enum.Parse(EnumType, s);
                 return e;
             }
 
-            return Enum.Parse(_enumType, (string)value);
+            return null;
         }
+
+        #region GetStandardValues ^^^^^
+
+        /// <summary>
+        /// Gets the standard values.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        {
+            // Return all enum values for the property
+            if (context?.PropertyDescriptor != null)
+            {
+                var enumType = context.PropertyDescriptor.PropertyType;
+                if (enumType.IsEnum)
+                {
+                    return new StandardValuesCollection(Enum.GetValues(enumType));
+                }
+            }
+
+            return base.GetStandardValues(context);
+        }
+
+        #endregion
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -168,27 +194,5 @@ namespace PropertyGridHelpers.Converters
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-    }
-
-    /// <summary>
-    /// Generic version of Enum Text Converter
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <seealso cref="EnumConverter" />
-    /// <seealso cref="IDisposable" />
-    /// <remarks>
-    /// This converter is used to display specialized text in the PropertyGrid
-    /// where the text is tied to the elements of an Enum.  Use the
-    /// <see cref="EnumTextAttribute" /> to attach the text to the Enum
-    /// elements.
-    /// It uses the specified enum type set as a generic type for the class.
-    /// </remarks>
-    /// <seealso cref="EnumConverter" />
-    public class EnumTextConverter<T> : EnumTextConverter where T : Enum
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
-        /// </summary>
-        public EnumTextConverter() : base(typeof(T)) { }
     }
 }

@@ -17,7 +17,10 @@ namespace PropertyGridHelpers.UIEditors
         /// <summary>
         /// The flag enum CheckBox
         /// </summary>
-        protected FlagCheckedListBox FlagEnumCB { get; set; }
+        protected FlagCheckedListBox FlagEnumCB
+        {
+            get; set;
+        }
 
         /// <summary>
         /// The object is disposed
@@ -27,13 +30,10 @@ namespace PropertyGridHelpers.UIEditors
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagEnumUIEditor"/> class.
         /// </summary>
-        public FlagEnumUIEditor()
+        public FlagEnumUIEditor() => FlagEnumCB = new FlagCheckedListBox
         {
-            FlagEnumCB = new FlagCheckedListBox
-            {
-                BorderStyle = BorderStyle.None
-            };
-        }
+            BorderStyle = BorderStyle.None
+        };
 
         /// <summary>
         /// Edits the value.
@@ -51,7 +51,6 @@ namespace PropertyGridHelpers.UIEditors
                 context.Instance != null &&
                 provider != null)
             {
-
                 var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
 
                 if (edSvc != null)
@@ -62,6 +61,7 @@ namespace PropertyGridHelpers.UIEditors
                     return FlagEnumCB.EnumValue;
                 }
             }
+
             return null;
         }
 
@@ -82,9 +82,7 @@ namespace PropertyGridHelpers.UIEditors
             if (!disposedValue)
             {
                 if (disposing)
-                {
                     FlagEnumCB.Dispose();
-                }
 
                 disposedValue = true;
             }
@@ -106,20 +104,5 @@ namespace PropertyGridHelpers.UIEditors
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-    }
-
-    /// <summary>
-    /// UITypeEditor for flag Enums
-    /// </summary>
-    /// <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
-    /// <seealso cref="UITypeEditor" />
-    /// <seealso cref="IDisposable" />
-    /// <seealso cref="UITypeEditor" />
-    public partial class FlagEnumUIEditor<T> : FlagEnumUIEditor where T : EnumConverter, new()
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FlagEnumUIEditor" /> class.
-        /// </summary>
-        public FlagEnumUIEditor() : base() => FlagEnumCB.Converter = new T();
     }
 }

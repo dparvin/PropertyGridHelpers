@@ -7,29 +7,65 @@ using System.Drawing.Design;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Resources;
 
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// UITypeEditor for an Enum with associated images
+    /// Provides a <see cref="UITypeEditor"/> for editing enumeration values that have associated images.
     /// </summary>
+    /// <remarks>
+    /// This editor is designed to display an enumeration in a UI with each value optionally associated with an image.
+    /// The editor can be customized to include additional functionality or presentation enhancements.
+    /// </remarks>
+    /// <example>
+    /// To use this editor, apply the <see cref="ImageTextUIEditor"/> to an enum property:
+    /// <code>
+    /// [Editor(typeof(ImageTextUIEditor), typeof(UITypeEditor))]
+    /// public TestEnum EnumWithImages { get; set; }
+    /// </code>
+    /// Ensure that the enum has descriptions or resources set up using the <see cref="EnumImageAttribute"/> to provide the images.
+    /// </example>
     /// <seealso cref="UITypeEditor" />
-    public class ImageTextUIEditor : UITypeEditor, IDisposable
+    public partial class ImageTextUIEditor : UITypeEditor, IDisposable
     {
+        #region Fields ^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// The object is disposed
         /// </summary>
         private bool disposedValue;
+
         /// <summary>
         /// The enum type
         /// </summary>
-        protected Type EnumType { get; }
+        protected Type EnumType
+        {
+            get;
+        }
+
         /// <summary>
         /// The path to the resources where the images are stored
         /// </summary>
-        protected string ResourcePath { get; }
+        protected string ResourcePath
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Gets the file extension.
+        /// </summary>
+        /// <value>
+        /// The file extension.
+        /// </value>
+        protected string FileExtension
+        {
+            get; private set;
+        }
+
+        #endregion
+
+        #region Constructors ^^^^^^^^^^
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTextUIEditor"/> class.
@@ -38,7 +74,7 @@ namespace PropertyGridHelpers.UIEditors
         public ImageTextUIEditor(Type type)
         {
             EnumType = type;
-            ResourcePath = "Properties.Resources";
+            ResourcePath = GetResourcePath(null, type);
         }
 
         /// <summary>
@@ -52,11 +88,20 @@ namespace PropertyGridHelpers.UIEditors
             this.ResourcePath = ResourcePath;
         }
 
+        #endregion
+
+        #region PaintValue Routines ^^^
+
         /// <summary>
         /// return that the editor will paint the items in the drop-down
         /// </summary>
         /// <param name="context">The Type Descriptor Context</param>
-        public override bool GetPaintValueSupported(ITypeDescriptorContext context) => true;
+        public override bool GetPaintValueSupported(ITypeDescriptorContext context)
+        {
+            ResourcePath = GetResourcePath(context, EnumType);
+            FileExtension = GetFileExtension(context);
+            return true;
+        }
 
         /// <summary>
         /// Paint the value in the drop-down list
@@ -64,8 +109,52 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="e">Paint Value Event Arguments</param>
         public override void PaintValue(PaintValueEventArgs e)
         {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(e);
+#else
+            if (e is null) throw new ArgumentNullException(nameof(e));
+#endif
+            var newImage = GetImageFromResource(e.Value, EnumType, ResourcePath, FileExtension, e.Bounds);
+            if (newImage != null)
+                e.Graphics.DrawImage(newImage, e.Bounds);
+        }
+
+        #endregion
+
+        #region Static Methods ^^^^^^^^
+
+        /// <summary>
+        /// Gets the image from resource.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="ResourcePath">The resource path.</param>
+        /// <param name="fileExtension"></param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+        /// $"Available resources: {string.Join(", ", resourceNames)}
+        /// or
+        /// Resource {enumImage} is not a valid image or byte array.</exception>
+        /// <exception cref="InvalidOperationException">Resource file not found in the assembly.
+        /// or
+        /// Resource is not a valid image or byte array.</exception>
+        /// <param name="bounds">The bounds of the generated image.</param>
+        public static Bitmap GetImageFromResource(
+            object Value,
+            Type enumType,
+            string ResourcePath,
+            string fileExtension,
+            Rectangle bounds)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(Value);
+            ArgumentNullException.ThrowIfNull(enumType);
+#else
+            if (Value is null) throw new ArgumentNullException(nameof(Value));
+            if (enumType is null) throw new ArgumentNullException(nameof(enumType));
+#endif
             // get the field info for the enum value
-            FieldInfo fi = EnumType.GetField(Enum.GetName(EnumType, e.Value));
+            var fi = enumType.GetField(Enum.GetName(enumType, Value));
             // get the EnumImageAttribute for the field
             var dna =
                     (EnumImageAttribute)Attribute.GetCustomAttribute(
@@ -73,75 +162,345 @@ namespace PropertyGridHelpers.UIEditors
 
             if (dna != null)
             {
-                // Get the name of the DLL or EXE where the reference object is declared
-                string m = e.Value.GetType().Module.Name;
-                string ei = dna.EnumImage;
+                var m = GetModuleName(Value);
+                var ei = dna.EnumImage;
                 if (string.IsNullOrEmpty(ei))
-                    ei = Enum.GetName(EnumType, e.Value);
-                // Remove the file extension from the name
-#if NET5_0_OR_GREATER
-                m = m[0..^4];
-#else
-                m = m.Substring(0, m.Length - 4);
-#endif
-                var newImage = new Bitmap(100, 100);
+                    ei = Enum.GetName(enumType, Value);
+                Bitmap originalImage = null;
                 string ResourceName;
                 switch (dna.ImageLocation)
                 {
                     case ImageLocation.Embedded:
-                        ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}.{ei}";
-                        using (var stream = e.Value.GetType().Assembly.GetManifestResourceStream(ResourceName))
-                            newImage = (Bitmap)Image.FromStream(stream);
+                        ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}";
+                        originalImage = GetImageFromEmbeddedResource(Value, ei, ResourceName, fileExtension);
                         break;
                     case ImageLocation.Resource:
                         // Create a resource manager to access the resources
                         ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}";
-                        var rm = new ResourceManager(ResourceName, e.Value.GetType().Assembly);
-
-                        // Check if the resource file exists in the assembly
-                        var resourceNames = e.Value.GetType().Assembly.GetManifestResourceNames();
-                        if (!resourceNames.Any(r => r.EndsWith($"{ResourceName}.resources", StringComparison.CurrentCulture)))
-                        {
-                            throw new InvalidOperationException(
-                                $"Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
-                                $"Available resources: {string.Join(", ", resourceNames)}");
-                        }
-
-                        // Get the resource object
-                        var resource = rm.GetObject(ei, CultureInfo.CurrentCulture);
-
-                        if (resource is Bitmap bitmap)
-                            // If the resource is a Bitmap, use it directly
-                            newImage = bitmap;
-                        else if (resource is byte[] byteArray)
-                            // If the resource is a byte array, convert it to an image
-                            using (var ms = new MemoryStream(byteArray))
-                                newImage = new Bitmap(ms);
-                        else
-                            throw new InvalidOperationException($"Resource {ei} is not a valid image or byte array.");
+                        originalImage = GetImageFromResourceFile(Value, ei, ResourceName, fileExtension);
                         break;
                     case ImageLocation.File:
-                        string assemblyPath;
-                        // Get the directory of the assembly containing _enumType
-#pragma warning disable SYSLIB0012 // The class is obsolete
-                        var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
-#pragma warning restore SYSLIB0012 // The class is obsolete
-                        assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
-                        // Construct the full file path
-                        if (!string.IsNullOrEmpty(ResourcePath))
-                            assemblyPath = Path.Combine(assemblyPath, ResourcePath);
-
-                        ResourceName = Path.Combine(assemblyPath, ei);
-
-                        // Load the image from the file path
-                        newImage = new Bitmap(ResourceName);
+                        originalImage = GetImageFromFile(Value, ei, ResourcePath, fileExtension);
                         break;
                 }
-                var dr = e.Bounds;
-                newImage.MakeTransparent();
-                e.Graphics.DrawImage(newImage, dr);
+
+                if (originalImage == null) return null;
+
+                // Create a new bitmap for the scaled image
+                var scaledImage = new Bitmap(bounds.Width, bounds.Height);
+
+                using (var g = Graphics.FromImage(scaledImage))
+                {
+                    g.Clear(Color.Transparent); // Optional: set background to transparent
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                    // Calculate scaled dimensions while maintaining aspect ratio
+                    var aspectRatio = (double)originalImage.Width / originalImage.Height;
+                    int targetWidth, targetHeight;
+
+                    if (bounds.Width / (double)bounds.Height > aspectRatio)
+                    {
+                        targetHeight = bounds.Height;
+                        targetWidth = (int)(targetHeight * aspectRatio);
+                    }
+                    else
+                    {
+                        targetWidth = bounds.Width;
+                        targetHeight = (int)(targetWidth / aspectRatio);
+                    }
+
+                    var offsetX = (bounds.Width - targetWidth) / 2;
+                    var offsetY = (bounds.Height - targetHeight) / 2;
+
+                    // Draw the scaled image centered in the bounds
+                    g.DrawImage(originalImage, offsetX, offsetY, targetWidth, targetHeight);
+                }
+
+                return scaledImage;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the image from embedded resource.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="ResourceItem">The resource entry to retrieve.</param>
+        /// <param name="ResourcePath">Name of the resource.</param>
+        /// <param name="fileExtension">The file extension.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">Value</exception>
+        /// <exception cref="System.ArgumentException">'{nameof(enumImage)}' cannot be null or empty. - enumImage
+        /// or
+        /// '{nameof(ResourceName)}' cannot be null or empty. - ResourceName</exception>
+        public static Bitmap GetImageFromEmbeddedResource(
+            object Value,
+            string ResourceItem,
+            string ResourcePath,
+            string fileExtension)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(Value);
+#else
+            if (Value is null) throw new ArgumentNullException(nameof(Value));
+#endif
+            if (string.IsNullOrEmpty(ResourceItem)) throw new ArgumentException($"'{nameof(ResourceItem)}' cannot be null or empty.", nameof(ResourceItem));
+            if (string.IsNullOrEmpty(ResourcePath)) throw new ArgumentException($"'{nameof(ResourcePath)}' cannot be null or empty.", nameof(ResourcePath));
+            ResourcePath = $"{ResourcePath}.{ResourceItem}";
+            if (!string.IsNullOrEmpty(fileExtension))
+                ResourcePath = $"{ResourcePath}.{fileExtension}";
+
+            Bitmap newImage = null;
+
+            using (var stream = Value.GetType().Assembly.GetManifestResourceStream(ResourcePath))
+#if NET5_0_OR_GREATER
+                if (stream is not null)
+#else
+                if (!(stream is null))
+#endif
+                    newImage = (Bitmap)Image.FromStream(stream);
+
+            return newImage;
+        }
+
+        /// <summary>
+        /// Gets the image from resource file.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="ResourceItem">The resource entry to retrieve.</param>
+        /// <param name="ResourcePath">Name of the resource.</param>
+        /// <param name="fileExtension">The file extension.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Value</exception>
+        /// <exception cref="ArgumentException">
+        /// '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+        /// or
+        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+        ///                     $"Available resources: {string.Join(", ", resourceNames)}
+        /// or
+        /// Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+        /// $"Available resources: {string.Join(", ", resourceNames)}
+        /// or
+        /// Resource {ResourceItem} is not a valid image or byte array.</exception>
+        private static Bitmap GetImageFromResourceFile(
+            object Value,
+            string ResourceItem,
+            string ResourcePath,
+            string fileExtension)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(Value);
+#else
+            if (Value is null) throw new ArgumentNullException(nameof(Value));
+#endif
+            if (string.IsNullOrEmpty(ResourceItem)) throw new ArgumentException($"'{nameof(ResourceItem)}' cannot be null or empty.", nameof(ResourceItem));
+            if (string.IsNullOrEmpty(ResourcePath)) throw new ArgumentException($"'{nameof(ResourcePath)}' cannot be null or empty.", nameof(ResourcePath));
+
+            // Check if the resource file exists in the assembly
+            var resourceNames = Value.GetType().Assembly.GetManifestResourceNames();
+            if (!resourceNames.Any(r => r.EndsWith($"{ResourcePath}.resources", StringComparison.CurrentCulture)))
+            {
+                var m = GetModuleName(Value);
+                throw new InvalidOperationException(
+                    $"Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+                    $"Available resources: {string.Join(", ", resourceNames)}");
+            }
+
+            object resource;
+
+            // Get the resource object
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                // If in design mode, use the ResourceManager to get the resource
+                var rm = new ComponentResourceManager(Value.GetType());
+                resource = rm.GetObject(ResourceItem + (string.IsNullOrEmpty(fileExtension) ? "" : "." + fileExtension), CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                // If in runtime, use the ResourceManager to get the resource
+                var rm = new ResourceManager(ResourcePath, Value.GetType().Assembly);
+                resource = rm.GetObject(ResourceItem + (string.IsNullOrEmpty(fileExtension) ? "" : "." + fileExtension), CultureInfo.CurrentCulture);
+            }
+
+            Bitmap newImage = null;
+            if (resource is Bitmap bitmap)
+                // If the resource is a Bitmap, use it directly
+                newImage = bitmap;
+            else if (resource is byte[] byteArray)
+                // If the resource is a byte array, convert it to an image
+                using (var ms = new MemoryStream(byteArray))
+                    newImage = new Bitmap(ms);
+            else
+                throw new InvalidOperationException($"Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.");
+
+            return newImage;
+        }
+
+        /// <summary>
+        /// Gets the image from file.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <param name="ResourceItem">The resource entry to retrieve.</param>
+        /// <param name="ResourcePath">The resource path.</param>
+        /// <param name="fileExtension">The file extension.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">Value</exception>
+        /// <exception cref="System.ArgumentException">
+        /// '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+        /// or
+        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
+        /// </exception>
+        /// <exception cref="ArgumentNullException">Value</exception>
+        /// <exception cref="ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+        /// or
+        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+        private static Bitmap GetImageFromFile(
+            object Value,
+            string ResourceItem,
+            string ResourcePath,
+            string fileExtension)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(Value);
+#else
+            if (Value is null) throw new ArgumentNullException(nameof(Value));
+#endif
+            if (string.IsNullOrEmpty(ResourceItem)) throw new ArgumentException($"'{nameof(ResourceItem)}' cannot be null or empty.", nameof(ResourceItem));
+            if (string.IsNullOrEmpty(ResourcePath)) throw new ArgumentException($"'{nameof(ResourcePath)}' cannot be null or empty.", nameof(ResourcePath));
+            string assemblyPath;
+            // Get the directory of the assembly containing _enumType
+#pragma warning disable SYSLIB0012 // The class is obsolete
+            var uri = new UriBuilder(Value.GetType().Assembly.CodeBase);
+#pragma warning restore SYSLIB0012 // The class is obsolete
+            assemblyPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+            // Construct the full file path
+            if (!string.IsNullOrEmpty(ResourcePath))
+                assemblyPath = Path.Combine(assemblyPath, ResourcePath);
+            if (!string.IsNullOrEmpty(fileExtension))
+                ResourceItem = $"{ResourceItem}.{fileExtension}";
+            var ResourceName = Path.Combine(assemblyPath, ResourceItem);
+
+            // Load the image from the file path
+            var newImage = new Bitmap(ResourceName);
+
+            return newImage;
+        }
+
+        /// <summary>
+        /// Gets the name of the module.
+        /// </summary>
+        /// <param name="Value">The value.</param>
+        /// <returns></returns>
+        public static string GetModuleName(object Value)
+        {
+            // Get the name of the DLL or EXE where the reference object is declared
+            var m = Value.GetType().Module.Name;
+            // Remove the file extension from the name
+#if NET5_0_OR_GREATER
+            m = m[0..^4];
+#else
+            m = m.Substring(0, m.Length - 4);
+#endif
+            return m;
+        }
+
+        /// <summary>
+        /// Gets the resource path.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static string GetResourcePath(ITypeDescriptorContext context, Type type)
+        {
+            if (context?.Instance != null && context?.PropertyDescriptor != null)
+            {
+                // Check if the property has the DynamicPathSourceAttribute
+                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
+                if (Attribute.GetCustomAttribute(propertyInfo, typeof(DynamicPathSourceAttribute)) is DynamicPathSourceAttribute dynamicPathAttr)
+                {
+                    // Find the referenced property
+                    var pathProperty = context?.Instance.GetType().GetProperty(dynamicPathAttr.PathPropertyName);
+                    if (pathProperty != null && pathProperty.PropertyType == typeof(string))
+                    {
+                        // Return the value of the referenced property
+                        return pathProperty.GetValue(context?.Instance, null) as string;
+                    }
+                }
+            }
+
+            if (context?.PropertyDescriptor != null)
+            {
+                // Retrieve the ResourcePath from the PropertyDescriptor's attributes
+                if (context.PropertyDescriptor.Attributes[typeof(ResourcePathAttribute)] is ResourcePathAttribute attribute)
+                    return attribute.ResourcePath;
+            }
+
+            var property = type.GetProperties()
+                .FirstOrDefault(prop => prop.GetCustomAttributes(typeof(ResourcePathAttribute), false).Length > 0);
+
+            if (property != null)
+            {
+                var attribute = property.GetCustomAttributes(typeof(ResourcePathAttribute), false)
+                                        .FirstOrDefault() as ResourcePathAttribute;
+
+                return attribute?.ResourcePath;
+            }
+            else
+            {
+                return "Properties.Resources";
             }
         }
+
+        /// <summary>
+        /// Gets the file extension.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static string GetFileExtension(ITypeDescriptorContext context)
+        {
+            if (context?.Instance != null && context?.PropertyDescriptor != null)
+            {
+                // Check if the property has the DynamicPathSourceAttribute
+                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
+                if (Attribute.GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute)) is FileExtensionAttribute FileExtensionAttr)
+                {
+                    // Find the referenced property
+                    var fileExtensionProperty = context?.Instance.GetType().GetProperty(FileExtensionAttr.PropertyName);
+                    if (fileExtensionProperty != null && fileExtensionProperty.PropertyType == typeof(string))
+                    {
+                        // Return the value of the referenced property
+                        return fileExtensionProperty.GetValue(context?.Instance, null) as string;
+                    }
+                    else if ((bool)(fileExtensionProperty?.PropertyType.IsEnum))
+                    {
+                        // Check if the enum value has an EnumTextAttribute
+                        var extension = fileExtensionProperty.GetValue(context?.Instance, null) as Enum;
+                        var enumField = extension.GetType().GetField(extension.ToString());
+                        if (enumField != null)
+                        {
+                            var enumTextAttr = enumField.GetCustomAttributes(typeof(EnumTextAttribute), false) as EnumTextAttribute[];
+                            if (enumTextAttr.Length > 0)
+                                return enumTextAttr[0].EnumText; // Return custom text
+                        }
+                        // Return the value of the referenced property
+                        return (string.IsNullOrEmpty(extension.ToString()) || string.Equals(extension.ToString(), "None", StringComparison.OrdinalIgnoreCase)) ? "" : extension.ToString();
+                    }
+
+                }
+            }
+
+            return string.Empty;
+        }
+
+        #endregion
+
+        #region Disposal routines ^^^^^
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -175,51 +534,7 @@ namespace PropertyGridHelpers.UIEditors
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
     }
-
-    /// <summary>
-    /// UITypeEditor for flag Enums
-    /// </summary>
-    /// <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
-    /// <seealso cref="UITypeEditor" />
-    /// <seealso cref="IDisposable" />
-#if NET35
-    public class ImageTextUIEditor<T> : ImageTextUIEditor where T : struct
-    {
-        /// <summary>
-        /// Initializes the <see cref="ImageTextUIEditor{T}"/> class.
-        /// </summary>
-        /// <exception cref="ArgumentException">T must be an enumerated type</exception>
-        static ImageTextUIEditor()
-        {
-            if (!typeof(T).IsEnum)
-                throw new ArgumentException("T must be an enumerated type");
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
-        /// </summary>
-        public ImageTextUIEditor() : base(typeof(T)) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
-        /// </summary>
-        /// <param name="ResourcePath">The path to the resources where the images are stored</param>
-        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath) { }
-    }
-#elif NET40_OR_GREATER || NET5_0_OR_GREATER
-    public class ImageTextUIEditor<T> : ImageTextUIEditor where T : struct, Enum
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
-        /// </summary>
-        public ImageTextUIEditor() : base(typeof(T)) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageTextUIEditor" /> class.
-        /// </summary>
-        /// <param name="ResourcePath">The path to the resources where the images are stored</param>
-        public ImageTextUIEditor(string ResourcePath) : base(typeof(T), ResourcePath) { }
-    }
-#endif
 }

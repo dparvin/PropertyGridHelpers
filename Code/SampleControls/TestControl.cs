@@ -1,5 +1,6 @@
 ﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
+using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpers.UIEditors;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Reflection;
-using System.Resources;
 using System.Windows.Forms;
 
 namespace SampleControls
@@ -68,52 +68,32 @@ namespace SampleControls
                             vs.Visible = false;
                             hs.Visible = false;
                             vshsPanel.Visible = false;
-                            lbl.Width = Width - lbl.Left * 2;
-                            lbl.Height = Height - lbl.Top * 2;
                             break;
                         case ScrollBars.Vertical:
                             hs.Visible = false;
                             vshsPanel.Visible = false;
                             vs.Visible = true;
-                            vs.Height = Height;
-                            vs.Top = 0;
-                            vs.Width = vshsPanel.Width;
-                            vs.Left = Width - vshsPanel.Width;
-                            lbl.Width = vs.Left - lbl.Left * 2;
-                            lbl.Height = Height - lbl.Top * 2;
                             break;
                         case ScrollBars.Horizontal:
                             vs.Visible = false;
                             vshsPanel.Visible = false;
                             hs.Visible = true;
-                            hs.Width = Width;
-                            hs.Left = 0;
-                            hs.Height = vshsPanel.Height;
-                            hs.Top = Height - vshsPanel.Height;
-                            lbl.Width = Width - lbl.Left * 2;
-                            lbl.Height = hs.Top - lbl.Top * 2;
                             break;
                         case ScrollBars.Both:
                             vs.Visible = true;
-                            vs.Height = Height - vshsPanel.Height;
-                            vs.Top = 0;
-                            vs.Width = vshsPanel.Width;
-                            vs.Left = Width - vshsPanel.Width;
                             hs.Visible = true;
-                            hs.Width = Width - vshsPanel.Width;
-                            hs.Left = 0;
-                            hs.Height = vshsPanel.Height;
-                            hs.Top = Height - vshsPanel.Height;
                             vshsPanel.Visible = true;
-                            vshsPanel.Left = Width - vshsPanel.Width;
-                            vshsPanel.Top = Height - vshsPanel.Height;
-                            lbl.Width = vs.Left - lbl.Left * 2;
-                            lbl.Height = hs.Top - lbl.Top * 2;
                             break;
                         default:
                             break;
                     }
                     ResumeLayout(false);
+                }
+                // Ensure design-time updates
+                if (DesignMode)
+                {
+                    Invalidate();
+                    Update();
                 }
                 _Scrollbars = value;
             }
@@ -126,10 +106,12 @@ namespace SampleControls
         /// The image types.
         /// </value>
         [Category("Layout")]
-        [Description("Image to Add to control")]
+        [Description("Image to add to control")]
         [DisplayName("Image To Display")]
         [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
+        [ResourcePath("Properties.Resources")]
         [TypeConverter(typeof(EnumTextConverter<ImageTypes>))]
+        [FileExtension(nameof(FileExtension))]
         [DefaultValue(ImageTypes.None)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -141,48 +123,39 @@ namespace SampleControls
             {
                 _ImageTypes = value;
                 if (value == ImageTypes.None)
-                {
                     pictureBox1.Visible = false;
-                }
                 else
                 {
-                    pictureBox1.Image = GetImage(_ImageTypes);
+                    var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(ImageTypes)];
+                    var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+                    var resourcePath = ImageTextUIEditor.GetResourcePath(context, ImageTypes.GetType());
+                    var bounds = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
+                    pictureBox1.Image = ImageTextUIEditor.GetImageFromResource(_ImageTypes, ImageTypes.GetType(), resourcePath, FileExtension == ImageFileExtension.None ? "" : FileExtension.ToString(), bounds);
                     pictureBox1.Visible = true;
+                }
+                // Ensure design-time updates
+                if (DesignMode)
+                {
+                    pictureBox1.Invalidate(); // Only redraws the PictureBox
                 }
             }
         }
 
         /// <summary>
-        /// Get the image to show in the control
+        /// Gets or sets the file extension.
         /// </summary>
-        /// <param name="imageTypes">Enum entry to select the image</param>
-        /// <returns></returns>
-        private static Image GetImage(ImageTypes imageTypes)
-        {
-            Type _enumType = typeof(ImageTypes);
-            var fi = _enumType.GetField(Enum.GetName(typeof(ImageTypes), imageTypes));
-            EnumImageAttribute dna =
-                    (EnumImageAttribute)Attribute.GetCustomAttribute(
-                    fi, typeof(EnumImageAttribute));
-
-            if (dna != null)
-            {
-                string m = imageTypes.GetType().Module.Name;
-#if NET5_0_OR_GREATER
-                m = m[0..^4];
-#else
-                m = m.Substring(0, m.Length - 4);
-#endif
-                var rm = new ResourceManager(
-                    m + ".Properties.Resources", imageTypes.GetType().Assembly);
-
-                // Draw the image
-                Bitmap newImage = (Bitmap)rm.GetObject(dna.EnumImage);
-                newImage.MakeTransparent();
-                return newImage;
-            }
-            return null;
-        }
+        /// <value>
+        /// The file extension.
+        /// </value>
+        [Category("Layout")]
+        [Description("Extension of the Image to add to control")]
+        [DisplayName("Resource image extension")]
+        [TypeConverter(typeof(EnumTextConverter<ImageFileExtension>))]
+        [DefaultValue(ImageFileExtension.None)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Bindable(true)]
+        public ImageFileExtension FileExtension { get; set; } = ImageFileExtension.png;
 
         /// <summary>
         /// Gets or sets the test date.

@@ -3,7 +3,7 @@
 namespace SampleForms
 {
     /// <summary>
-    ///
+    /// form for testing the <see cref="PropertyGridHelpers"/> library
     /// </summary>
     /// <seealso cref="Form" />
     public partial class Form1 : Form

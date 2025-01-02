@@ -4,6 +4,34 @@
         <name>PropertyGridHelpers</name>
     </assembly>
     <members>
+        <member name="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute">
+            <summary>
+            Attribute to point to a different property that contains the path to the resource
+            </summary>
+            <seealso cref="T:System.Attribute" />
+            <remarks>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute"/> class.
+            </remarks>
+            <param name="pathPropertyName">Name of the path property.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute.#ctor(System.String)">
+            <summary>
+            Attribute to point to a different property that contains the path to the resource
+            </summary>
+            <seealso cref="T:System.Attribute" />
+            <remarks>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute"/> class.
+            </remarks>
+            <param name="pathPropertyName">Name of the path property.</param>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute.PathPropertyName">
+            <summary>
+            Gets the name of the path property.
+            </summary>
+            <value>
+            The name of the path property.
+            </value>
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.EnumImageAttribute">
             <summary>
             Apply an image to an Enum item for use in a property page
@@ -67,6 +95,48 @@
             </summary>
             <value>
             The Enum text.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpers.Attributes.FileExtensionAttribute">
+            <summary>
+            File Extension Attribute for modifying the way that resources are loaded 
+            into the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.FileExtensionAttribute.#ctor(System.String)">
+            <summary>
+            File Extension Attribute for modifying the way that resources are loaded 
+            into the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.FileExtensionAttribute.PropertyName">
+            <summary>
+            Gets the name of the property.
+            </summary>
+            <value>
+            The name of the property.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
+            <summary>
+            Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
+            </summary>
+            <param name="resourcePath">The path to the resources where the images are stored</param>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.ResourcePathAttribute.#ctor(System.String)">
+            <summary>
+            Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
+            </summary>
+            <param name="resourcePath">The path to the resources where the images are stored</param>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.ResourcePathAttribute.ResourcePath">
+            <summary>
+            Gets the resource path.
+            </summary>
+            <value>
+            The resource path.
             </value>
         </member>
         <member name="T:PropertyGridHelpers.Controls.FlagCheckedListBox">
@@ -229,11 +299,6 @@
             <seealso cref="T:System.ComponentModel.EnumConverter" />
             <seealso cref="T:System.IDisposable" />
         </member>
-        <member name="F:PropertyGridHelpers.Converters.EnumTextConverter._enumType">
-            <summary>
-            The enum type
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.#ctor(System.Type)">
             <summary>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumTextConverter" /> class.
@@ -285,6 +350,13 @@
             <param name="value">The value.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentException">The value is expected to be a string or an int. - value</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the standard values.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
         </member>
         <member name="M:PropertyGridHelpers.Converters.EnumTextConverter.Dispose(System.Boolean)">
             <summary>
@@ -382,6 +454,64 @@
             The image is a file in a relative path to the project
             </summary>
         </member>
+        <member name="T:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext">
+            <summary>
+            Custom Type Descriptor Context
+            </summary>
+            <param name="propertyDescriptor">The property descriptor.</param>
+            <param name="instance">The instance.</param>
+            <seealso cref="T:System.ComponentModel.ITypeDescriptorContext" />
+        </member>
+        <member name="M:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.#ctor(System.ComponentModel.PropertyDescriptor,System.Object)">
+            <summary>
+            Custom Type Descriptor Context
+            </summary>
+            <param name="propertyDescriptor">The property descriptor.</param>
+            <param name="instance">The instance.</param>
+            <seealso cref="T:System.ComponentModel.ITypeDescriptorContext" />
+        </member>
+        <member name="P:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.Container">
+            <summary>
+            Gets the container.
+            </summary>
+            <value>
+            The container.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.Instance">
+            <summary>
+            Gets the instance.
+            </summary>
+            <value>
+            The instance.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.PropertyDescriptor">
+            <summary>
+            Gets the property descriptor.
+            </summary>
+            <value>
+            The property descriptor.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.GetService(System.Type)">
+            <summary>
+            Gets the service.
+            </summary>
+            <param name="serviceType">Type of the service.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.OnComponentChanged">
+            <summary>
+            Called when component changed.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext.OnComponentChanging">
+            <summary>
+            Called when component changing.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PropertyGridHelpers.UIEditors.CollectionUIEditor`1">
             <summary>
             Generic class for dealing with a list of items of a specific type
@@ -465,8 +595,20 @@
         </member>
         <member name="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor">
             <summary>
-            UITypeEditor for an Enum with associated images
+            Provides a <see cref="T:System.Drawing.Design.UITypeEditor"/> for editing enumeration values that have associated images.
             </summary>
+            <remarks>
+            This editor is designed to display an enumeration in a UI with each value optionally associated with an image.
+            The editor can be customized to include additional functionality or presentation enhancements.
+            </remarks>
+            <example>
+            To use this editor, apply the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> to an enum property:
+            <code>
+            [Editor(typeof(ImageTextUIEditor), typeof(UITypeEditor))]
+            public TestEnum EnumWithImages { get; set; }
+            </code>
+            Ensure that the enum has descriptions or resources set up using the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> to provide the images.
+            </example>
             <seealso cref="T:System.Drawing.Design.UITypeEditor" />
         </member>
         <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.disposedValue">
@@ -483,6 +625,14 @@
             <summary>
             The path to the resources where the images are stored
             </summary>
+        </member>
+        <member name="P:PropertyGridHelpers.UIEditors.ImageTextUIEditor.FileExtension">
+            <summary>
+            Gets the file extension.
+            </summary>
+            <value>
+            The file extension.
+            </value>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.#ctor(System.Type)">
             <summary>
@@ -508,6 +658,106 @@
             Paint the value in the drop-down list
             </summary>
             <param name="e">Paint Value Event Arguments</param>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromResource(System.Object,System.Type,System.String,System.String,System.Drawing.Rectangle)">
+            <summary>
+            Gets the image from resource.
+            </summary>
+            <param name="Value">The value.</param>
+            <param name="enumType">Type of the enum.</param>
+            <param name="ResourcePath">The resource path.</param>
+            <param name="fileExtension"></param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+            $"Available resources: {string.Join(", ", resourceNames)}
+            or
+            Resource {enumImage} is not a valid image or byte array.</exception>
+            <exception cref="T:System.InvalidOperationException">Resource file not found in the assembly.
+            or
+            Resource is not a valid image or byte array.</exception>
+            <param name="bounds">The bounds of the generated image.</param>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromEmbeddedResource(System.Object,System.String,System.String,System.String)">
+            <summary>
+            Gets the image from embedded resource.
+            </summary>
+            <param name="Value">The value.</param>
+            <param name="ResourceItem">The resource entry to retrieve.</param>
+            <param name="ResourcePath">Name of the resource.</param>
+            <param name="fileExtension">The file extension.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Value</exception>
+            <exception cref="T:System.ArgumentException">'{nameof(enumImage)}' cannot be null or empty. - enumImage
+            or
+            '{nameof(ResourceName)}' cannot be null or empty. - ResourceName</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromResourceFile(System.Object,System.String,System.String,System.String)">
+            <summary>
+            Gets the image from resource file.
+            </summary>
+            <param name="Value">The value.</param>
+            <param name="ResourceItem">The resource entry to retrieve.</param>
+            <param name="ResourcePath">Name of the resource.</param>
+            <param name="fileExtension">The file extension.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Value</exception>
+            <exception cref="T:System.ArgumentException">
+            '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+            or
+            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+                                $"Available resources: {string.Join(", ", resourceNames)}
+            or
+            Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+            $"Available resources: {string.Join(", ", resourceNames)}
+            or
+            Resource {ResourceItem} is not a valid image or byte array.</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromFile(System.Object,System.String,System.String,System.String)">
+            <summary>
+            Gets the image from file.
+            </summary>
+            <param name="Value">The value.</param>
+            <param name="ResourceItem">The resource entry to retrieve.</param>
+            <param name="ResourcePath">The resource path.</param>
+            <param name="fileExtension">The file extension.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Value</exception>
+            <exception cref="T:System.ArgumentException">
+            '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+            or
+            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
+            </exception>
+            <exception cref="T:System.ArgumentNullException">Value</exception>
+            <exception cref="T:System.ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+            or
+            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetModuleName(System.Object)">
+            <summary>
+            Gets the name of the module.
+            </summary>
+            <param name="Value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetResourcePath(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Gets the resource path.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetFileExtension(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the file extension.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.Dispose(System.Boolean)">
             <summary>

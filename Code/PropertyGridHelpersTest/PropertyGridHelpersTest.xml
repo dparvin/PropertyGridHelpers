@@ -241,6 +241,39 @@
             Converts to string returns enum name when no attribute test.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromStringReturnsEnumNameWhenNoAttributeTest">
+            <summary>
+            Converts to string returns enum name when no attribute test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromIntReturnsEnumNameWhenNoAttributeTest">
+            <summary>
+            Converts to string returns enum name when no attribute test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertFromInvalidStringTest">
+            <summary>
+            Converts from invalid string test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.ConvertToUnsupportedTypeTest">
+            <summary>
+            Converts to unsupported type test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.GetStandardValuesTest_WithCustomTypeDescriptorContext">
+            <summary>
+            Tests GetStandardValues method to ensure it returns all enum values for the given context.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestProperty">
+            <summary>
+            Gets or sets the test property.
+            </summary>
+            <value>
+            The test property.
+            </value>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Converters.EnumTextConverterTest.TestEnums">
             <summary>
             Enum to use in the tests to test flag
@@ -528,6 +561,37 @@
             Paints the value should throw invalid operation exception when resource is invalid.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetResourcePath_ShouldReturnResourcePath(System.String,System.String)">
+            <summary>
+            Gets the resource path should return resource path.
+            </summary>
+            <param name="PropertyName">Name of the property.</param>
+            <param name="ExpectedPath">The expected path.</param>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithImage">
+            <summary>
+            Gets or sets the test enum.
+            </summary>
+            <value>
+            The test enum.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithBitmapImage">
+            <summary>
+            Gets or sets the test item with bitmap image.
+            </summary>
+            <value>
+            The test item with bitmap image.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestResourcePath">
+            <summary>
+            Gets or sets the test resource path.
+            </summary>
+            <value>
+            The test resource path.
+            </value>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
             <summary>
             Helper method to check if a bitmap is empty
@@ -536,6 +600,21 @@
             <returns>
               <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Attributes.FileExtensionAttributeTest">
+            <summary>
+            File Extension Attribute Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Attributes.FileExtensionAttributeTest.Attribute_ShouldApplyToProperties">
+            <summary>
+            Attributes the should apply to properties.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Attributes.FileExtensionAttributeTest.Constructor_ShouldSetPropertyName">
+            <summary>
+            Constructors the name of the should set property.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>

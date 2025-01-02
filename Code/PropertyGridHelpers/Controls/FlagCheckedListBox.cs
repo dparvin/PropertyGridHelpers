@@ -10,7 +10,7 @@ namespace PropertyGridHelpers.Controls
     /// flag Enum.
     /// </summary>
     /// <seealso cref="CheckedListBox" />
-    public partial class FlagCheckedListBox : CheckedListBox
+    public class FlagCheckedListBox : CheckedListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
