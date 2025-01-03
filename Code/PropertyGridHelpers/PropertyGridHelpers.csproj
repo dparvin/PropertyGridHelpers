@@ -197,4 +197,8 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Projects\Repos\dparvin\PropertyGridHelpers\Code\coverlet.runsettings" Link="coverlet.runsettings" />
+  </ItemGroup>
 </Project>
