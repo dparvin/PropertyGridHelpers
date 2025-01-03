@@ -87,6 +87,7 @@ namespace SampleControls
                         default:
                             break;
                     }
+
                     ResumeLayout(false);
                 }
                 // Ensure design-time updates
@@ -95,6 +96,7 @@ namespace SampleControls
                     Invalidate();
                     Update();
                 }
+
                 _Scrollbars = value;
             }
         }
@@ -166,7 +168,10 @@ namespace SampleControls
         [Category("Test Items")]
         [Description("A test of having a DateTime field.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public DateTime TestDate { get; set; }
+        public DateTime TestDate
+        {
+            get; set;
+        }
 
         /// <summary>Gets or sets the strings.</summary>
         /// <value>The strings.</value>

@@ -11,7 +11,6 @@ using PropertyGridHelpers.Controls;
 using PropertyGridHelpersTest.Support;
 using PropertyGridHelpers.TypeDescriptors;
 
-
 #if NET35
 #else
 using Xunit.Abstractions;
@@ -44,7 +43,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
     {
 #if NET35
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
         public FlagEnumUIEditorTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
@@ -145,10 +144,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             /// <summary>
             /// Initializes a new instance of the <see cref="TestClass"/> class.
             /// </summary>
-            public TestClass()
-            {
-                EnumValue = TestEnums.FirstEntry;
-            }
+            public TestClass() => EnumValue = TestEnums.FirstEntry;
 
             /// <summary>
             /// Gets or sets the enum value.
@@ -158,7 +154,10 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             /// </value>
             [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-            public TestEnums EnumValue { get; set; }
+            public TestEnums EnumValue
+            {
+                get; set;
+            }
         }
 
         /// <summary>
@@ -185,12 +184,12 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<TestEnums>(result);
+            _ = Assert.IsType<TestEnums>(result);
             Assert.Equal(TestEnums.SecondEntry, result);
 
             // Verify that the dropDown was shown and interacted with
             Assert.NotNull(editorService.LastShownControl);
-            Assert.IsType<FlagCheckedListBox>(editorService.LastShownControl);
+            _ = Assert.IsType<FlagCheckedListBox>(editorService.LastShownControl);
             var flagListBox = (FlagCheckedListBox)editorService.LastShownControl;
             Assert.Equal(TestEnums.SecondEntry, flagListBox.EnumValue);
         }
@@ -200,16 +199,11 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)
-#else
-        private void Output(string message)
-#endif
-        {
-#if NET35
+        private static void Output(string message) =>
             Console.WriteLine(message);
 #else
+        private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-        }
     }
 }
