@@ -7,6 +7,11 @@ using PropertyGridHelpers.Attributes;
 using System;
 using PropertyGridHelpers.Converters;
 using PropertyGridHelpersTest.Properties;
+using PropertyGridHelpers.Controls;
+using PropertyGridHelpersTest.Support;
+using PropertyGridHelpers.TypeDescriptors;
+
+
 #if NET35
 #else
 using Xunit.Abstractions;
@@ -54,7 +59,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #else
             using (var editor = new FlagEnumUIEditor())
 #endif
-            Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
+                Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
             Output(Resources.EditValueNull);
         }
 
@@ -109,7 +114,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
-        ///
+        /// Test Enums
         /// </summary>
         [Flags]
         public enum TestEnums
@@ -131,16 +136,63 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             AllEntries = FirstEntry + SecondEntry,
         }
 
+        /// <summary>
+        /// class to use to help test the editor
+        /// </summary>
+        /// <seealso cref="Component" />
         private partial class TestClass : Component
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TestClass"/> class.
+            /// </summary>
             public TestClass()
             {
                 EnumValue = TestEnums.FirstEntry;
             }
 
+            /// <summary>
+            /// Gets or sets the enum value.
+            /// </summary>
+            /// <value>
+            /// The enum value.
+            /// </value>
             [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
             public TestEnums EnumValue { get; set; }
+        }
+
+        /// <summary>
+        /// Edits the value test using helper classes.
+        /// </summary>
+        [Fact]
+        public void EditValueTestUsingHelperClasses()
+        {
+            // Arrange
+            var editorService = new TestWindowsFormsEditorService();
+            var serviceProvider = new TestServiceProvider(editorService);
+            var testInstance = new FlagEnumUIEditorTest.TestClass
+            {
+                EnumValue = FlagEnumUIEditorTest.TestEnums.FirstEntry
+            };
+
+            var propertyDescriptor = TypeDescriptor.GetProperties(testInstance)["EnumValue"];
+            var context = new CustomTypeDescriptorContext(propertyDescriptor, testInstance);
+            var editor = new FlagEnumUIEditor();
+            var initialEnumValue = TestEnums.FirstEntry;
+
+            // Act
+            var result = editor.EditValue(context, serviceProvider, initialEnumValue);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<TestEnums>(result);
+            Assert.Equal(TestEnums.SecondEntry, result);
+
+            // Verify that the dropDown was shown and interacted with
+            Assert.NotNull(editorService.LastShownControl);
+            Assert.IsType<FlagCheckedListBox>(editorService.LastShownControl);
+            var flagListBox = (FlagCheckedListBox)editorService.LastShownControl;
+            Assert.Equal(TestEnums.SecondEntry, flagListBox.EnumValue);
         }
 
         /// <summary>

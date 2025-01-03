@@ -44,7 +44,10 @@
         /// <value>
         /// The value.
         /// </value>
-        public int Value { get; }
+        public int Value
+        {
+            get;
+        }
 
         /// <summary>
         /// Gets the caption.
@@ -52,7 +55,10 @@
         /// <value>
         /// The caption.
         /// </value>
-        public string Caption { get; }
+        public string Caption
+        {
+            get;
+        }
 
         /// <summary>
         /// Returns true if this value is a member of the composite bit value

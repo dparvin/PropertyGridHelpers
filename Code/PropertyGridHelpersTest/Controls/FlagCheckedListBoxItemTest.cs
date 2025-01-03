@@ -125,6 +125,82 @@ namespace PropertyGridHelpersTest.net90.Controls
         }
 
         /// <summary>
+        /// Tests IsMemberFlag returns false when IsFlag is false.
+        /// </summary>
+        [Fact]
+        public void IsMemberFlagReturnsFalseWhenIsFlagIsFalse()
+        {
+            var item = new FlagCheckedListBoxItem(5, null); // Not a flag
+            var composite = new FlagCheckedListBoxItem(7, null); // Composite value
+            Assert.False(item.IsMemberFlag(composite));
+            Output("IsMemberFlag returns false when IsFlag is false.");
+        }
+
+        /// <summary>
+        /// Tests IsMemberFlag returns false when composite is null.
+        /// </summary>
+        [Fact]
+        public void IsMemberFlagReturnsFalseWhenCompositeIsNull()
+        {
+            var item = new FlagCheckedListBoxItem(4, null); // A valid flag
+            Assert.False(item.IsMemberFlag(null));
+            Output("IsMemberFlag returns false when composite is null.");
+        }
+
+        /// <summary>
+        /// Tests IsMemberFlag returns false when composite.Value does not overlap with Value.
+        /// </summary>
+        [Fact]
+        public void IsMemberFlagReturnsFalseWhenNoOverlap()
+        {
+            var item = new FlagCheckedListBoxItem(4, null); // A valid flag
+            var composite = new FlagCheckedListBoxItem(2, null); // No overlap with 4
+            Assert.False(item.IsMemberFlag(composite));
+            Output("IsMemberFlag returns false when composite.Value does not overlap with Value.");
+        }
+
+        /// <summary>
+        /// Tests IsMemberFlag returns true when composite.Value partially overlaps with Value.
+        /// </summary>
+        [Fact]
+        public void IsMemberFlagReturnsTrueWhenPartialOverlap()
+        {
+            var item = new FlagCheckedListBoxItem(4, null); // A valid flag
+            var composite = new FlagCheckedListBoxItem(6, null); // Composite 6 = 4 + 2
+            Assert.True(item.IsMemberFlag(composite));
+            Output("IsMemberFlag returns true when composite.Value partially overlaps with Value.");
+        }
+
+        /// <summary>
+        /// Tests IsMemberFlag returns true when composite.Value fully matches Value.
+        /// </summary>
+        [Fact]
+        public void IsMemberFlagReturnsTrueWhenFullyMatches()
+        {
+            var item = new FlagCheckedListBoxItem(4, null); // A valid flag
+            var composite = new FlagCheckedListBoxItem(4, null); // Composite matches exactly
+            Assert.True(item.IsMemberFlag(composite));
+            Output("IsMemberFlag returns true when composite.Value fully matches Value.");
+        }
+
+        /// <summary>
+        /// to string test.
+        /// </summary>
+        [Fact]
+        public void ToStringTest()
+        {
+            var caption = "Test Caption";
+            var item = new FlagCheckedListBoxItem(5, caption);
+            // Act / Assert
+#if NET35
+            Assert.Equal(0, string.Compare(item.ToString(), caption));
+#else
+            Assert.Equal(item.ToString(), caption);
+#endif
+            Output("ToString() returned the caption");
+        }
+
+        /// <summary>
         /// Outputs the specified message.
         /// </summary>
         /// <param name="message">The message.</param>

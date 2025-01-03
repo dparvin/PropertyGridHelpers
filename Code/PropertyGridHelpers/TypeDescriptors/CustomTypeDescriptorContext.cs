@@ -55,7 +55,7 @@ namespace PropertyGridHelpers.TypeDescriptors
 #if NET8_0_OR_GREATER
         } = instance;
 #else
-    }
+        }
 #endif
         /// <summary>
         /// Gets the property descriptor.
@@ -69,7 +69,7 @@ namespace PropertyGridHelpers.TypeDescriptors
 #if NET8_0_OR_GREATER
         } = propertyDescriptor;
 #else
-    }
+        }
 #endif
 
         /// <summary>

@@ -21,6 +21,9 @@ namespace PropertyGridHelpers.Attributes
         /// <value>
         /// The Enum text.
         /// </value>
-        public string EnumText { get; }
+        public string EnumText
+        {
+            get;
+        }
     }
 }

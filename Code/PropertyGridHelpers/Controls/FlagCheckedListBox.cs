@@ -10,7 +10,7 @@ namespace PropertyGridHelpers.Controls
     /// flag Enum.
     /// </summary>
     /// <seealso cref="CheckedListBox" />
-    public class FlagCheckedListBox : CheckedListBox
+    public partial class FlagCheckedListBox : CheckedListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
@@ -213,7 +213,7 @@ namespace PropertyGridHelpers.Controls
             }
             set
             {
-#if NET30_OR_GREATER
+#if NET35_OR_GREATER
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
 #else
@@ -236,6 +236,9 @@ namespace PropertyGridHelpers.Controls
         /// The converter.
         /// </value>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public EnumConverter Converter { get; set; }
+        public EnumConverter Converter
+        {
+            get; set;
+        }
     }
 }

@@ -176,6 +176,23 @@ namespace PropertyGridHelpersTest.net90.Controls
         /// <summary>
         /// Value is set correctly test.
         /// </summary>
+        [Fact]
+        public void SetEnumValueNullTest()
+        {
+#if NET6_0_OR_GREATER
+            using var list = new FlagCheckedListBox();
+#else
+            using (var list = new FlagCheckedListBox())
+#endif
+            {
+                Assert.Throws<ArgumentNullException>(() => list.EnumValue = null);
+                Output("Value throws an exception as expected");
+            }
+        }
+
+        /// <summary>
+        /// Value is set correctly test.
+        /// </summary>
         [Theory]
         [InlineData(Converters.EnumTextConverterTest.TestEnums.None)]
         [InlineData(Converters.EnumTextConverterTest.TestEnums.FirstEntry)]

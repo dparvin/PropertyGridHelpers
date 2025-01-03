@@ -59,6 +59,36 @@
             Determines whether IsMemberFlag is false test.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagReturnsFalseWhenIsFlagIsFalse">
+            <summary>
+            Tests IsMemberFlag returns false when IsFlag is false.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagReturnsFalseWhenCompositeIsNull">
+            <summary>
+            Tests IsMemberFlag returns false when composite is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagReturnsFalseWhenNoOverlap">
+            <summary>
+            Tests IsMemberFlag returns false when composite.Value does not overlap with Value.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagReturnsTrueWhenPartialOverlap">
+            <summary>
+            Tests IsMemberFlag returns true when composite.Value partially overlaps with Value.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.IsMemberFlagReturnsTrueWhenFullyMatches">
+            <summary>
+            Tests IsMemberFlag returns true when composite.Value fully matches Value.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.ToStringTest">
+            <summary>
+            to string test.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest.Output(System.String)">
             <summary>
             Outputs the specified message.
@@ -106,6 +136,11 @@
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.SetEnumValueTest">
+            <summary>
+            Value is set correctly test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxTest.SetEnumValueNullTest">
             <summary>
             Value is set correctly test.
             </summary>
@@ -403,9 +438,9 @@
             </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums">
-             <summary>
-            
-             </summary>
+            <summary>
+            Test Enums
+            </summary>
         </member>
         <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums.FirstEntry">
             <summary>
@@ -420,6 +455,30 @@
         <member name="F:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestEnums.AllEntries">
             <summary>
             All entries
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestClass">
+            <summary>
+            class to use to help test the editor
+            </summary>
+            <seealso cref="T:System.ComponentModel.Component" />
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestClass.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestClass"/> class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.TestClass.EnumValue">
+            <summary>
+            Gets or sets the enum value.
+            </summary>
+            <value>
+            The enum value.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.EditValueTestUsingHelperClasses">
+            <summary>
+            Edits the value test using helper classes.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.Output(System.String)">
@@ -701,6 +760,56 @@
             Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1"/> class.
             </summary>
             <param name="ResourcePath">The path to the resources where the images are stored</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.TestServiceProvider">
+            <summary>
+            Test Service Provider
+            </summary>
+            <seealso cref="T:System.IServiceProvider" />
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestServiceProvider.#ctor(System.Windows.Forms.Design.IWindowsFormsEditorService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.Support.TestServiceProvider"/> class.
+            </summary>
+            <param name="editorService">The editor service.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestServiceProvider.GetService(System.Type)">
+            <summary>
+            Gets the service.
+            </summary>
+            <param name="serviceType">Type of the service.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Windows.Forms.Design.IWindowsFormsEditorService" />
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.LastShownControl">
+            <summary>
+            Gets the last shown control.
+            </summary>
+            <value>
+            The last shown control.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.DropDownControl(System.Windows.Forms.Control)">
+            <summary>
+            Drops down control.
+            </summary>
+            <param name="control">The control.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.CloseDropDown">
+            <summary>
+            Closes the drop down.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="dialog">The dialog.</param>
         </member>
     </members>
 </doc>
