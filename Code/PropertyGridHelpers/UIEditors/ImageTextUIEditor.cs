@@ -7,6 +7,7 @@ using System.Drawing.Design;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 
 namespace PropertyGridHelpers.UIEditors
@@ -329,15 +330,18 @@ namespace PropertyGridHelpers.UIEditors
             }
 
             Bitmap newImage = null;
-            if (resource is Bitmap bitmap)
-                // If the resource is a Bitmap, use it directly
-                newImage = bitmap;
-            else if (resource is byte[] byteArray)
-                // If the resource is a byte array, convert it to an image
-                using (var ms = new MemoryStream(byteArray))
-                    newImage = new Bitmap(ms);
-            else
-                throw new InvalidOperationException($"Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.");
+            if (resource != null)
+            {
+                if (resource is Bitmap bitmap)
+                    // If the resource is a Bitmap, use it directly
+                    newImage = bitmap;
+                else if (resource is byte[] byteArray)
+                    // If the resource is a byte array, convert it to an image
+                    using (var ms = new MemoryStream(byteArray))
+                        newImage = new Bitmap(ms);
+                else
+                    throw new InvalidOperationException($"Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.");
+            }
 
             return newImage;
         }
@@ -467,11 +471,12 @@ namespace PropertyGridHelpers.UIEditors
             if (context?.Instance != null && context?.PropertyDescriptor != null)
             {
                 // Check if the property has the DynamicPathSourceAttribute
-                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
+                var propertyInfo = context.PropertyDescriptor.ComponentType.GetProperty(context.PropertyDescriptor.Name) ??
+                    throw new InvalidOperationException($"Property '{context.PropertyDescriptor.Name}' not found on type '{context.PropertyDescriptor.ComponentType}'.");
                 if (Attribute.GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute)) is FileExtensionAttribute FileExtensionAttr)
                 {
                     // Find the referenced property
-                    var fileExtensionProperty = context?.Instance.GetType().GetProperty(FileExtensionAttr.PropertyName);
+                    var fileExtensionProperty = GetRequiredProperty(context?.Instance, FileExtensionAttr.PropertyName);
                     if (fileExtensionProperty != null && fileExtensionProperty.PropertyType == typeof(string))
                     {
                         // Return the value of the referenced property
@@ -480,7 +485,8 @@ namespace PropertyGridHelpers.UIEditors
                     else if ((bool)(fileExtensionProperty?.PropertyType.IsEnum))
                     {
                         // Check if the enum value has an EnumTextAttribute
-                        var extension = fileExtensionProperty.GetValue(context?.Instance, null) as Enum;
+                        if (!(fileExtensionProperty.GetValue(context?.Instance, null) is Enum extension))
+                            return string.Empty;
                         var enumField = extension.GetType().GetField(extension.ToString());
                         if (enumField != null)
                         {
@@ -489,13 +495,51 @@ namespace PropertyGridHelpers.UIEditors
                                 return enumTextAttr[0].EnumText; // Return custom text
                         }
                         // Return the value of the referenced property
-                        return (string.IsNullOrEmpty(extension.ToString()) || string.Equals(extension.ToString(), "None", StringComparison.OrdinalIgnoreCase)) ? "" : extension.ToString();
+                        return (string.IsNullOrEmpty(extension.ToString()) ||
+                                string.Equals(extension.ToString(), "None", StringComparison.OrdinalIgnoreCase))
+                            ? string.Empty
+                            : extension.ToString();
                     }
 
                 }
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the required public property.
+        /// </summary>
+        /// <param name="instance">The instance.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// The <see cref="PropertyInfo"/> of the property if it exists and is public.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the property is not found or is not public.
+        /// </exception>
+        private static PropertyInfo GetRequiredProperty(object instance, string propertyName)
+        {
+            var property = instance.GetType().GetProperty(propertyName, BindingFlags.Instance |
+                                                                        BindingFlags.Public |
+                                                                        BindingFlags.NonPublic);
+            if (property == null)
+            {
+                throw new InvalidOperationException(
+                    $"Property '{propertyName}' not found on type '{instance.GetType()}'.");
+            }
+
+#if NET35
+            if (property.GetGetMethod() == null)
+#else
+            if (!property.GetMethod.IsPublic)
+#endif
+            {
+                throw new InvalidOperationException(
+                    $"Property '{propertyName}' on type '{instance.GetType()}' must be public.");
+            }
+
+            return property;
         }
 
         #endregion

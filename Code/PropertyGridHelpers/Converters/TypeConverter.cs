@@ -9,7 +9,7 @@ namespace PropertyGridHelpers.Converters
     /// </summary>
     /// <typeparam name="T">type to convert to or from</typeparam>
     /// <seealso cref="ExpandableObjectConverter" />
-    public class TypeConverter<T> : ExpandableObjectConverter, IDisposable
+    public partial class TypeConverter<T> : ExpandableObjectConverter, IDisposable
     {
         private bool disposedValue;
 
@@ -43,6 +43,7 @@ namespace PropertyGridHelpers.Converters
 
                 return so.ToString();
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
 

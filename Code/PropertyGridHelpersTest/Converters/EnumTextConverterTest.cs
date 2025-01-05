@@ -1,13 +1,10 @@
 ﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
-using System;
-using Xunit;
-using System.IO;
-using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
+using System;
+using System.ComponentModel;
 using System.Linq;
-
-
+using Xunit;
 
 #if NET35
 #else
@@ -34,34 +31,43 @@ namespace PropertyGridHelpersTest.net80.Converters
 namespace PropertyGridHelpersTest.net90.Converters
 #endif
 {
+#if NET8_0_OR_GREATER
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="OutputHelper">Test Output helper</param>
+    public class EnumTextConverterTest(ITestOutputHelper OutputHelper)
+#else
     /// <summary>
     ///
     /// </summary>
     public class EnumTextConverterTest
+#endif
     {
 #if NET35
+#elif NET8_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = OutputHelper;
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
 #endif
 
+#if NET35
         /// <summary>
         /// Enum Text Converter Test
         /// </summary>
-#if NET35
         public EnumTextConverterTest()
+        {
+        }
+#elif NET8_0_OR_GREATER
 #else
+        /// <summary>
+        /// Enum Text Converter Test
+        /// </summary>
         /// <param name="output"></param>
         public EnumTextConverterTest(ITestOutputHelper output)
-#endif
-#if NET462 || NET472 || NET481 || NET5_0_OR_GREATER
-            : base()
-#endif
-        {
-#if NET35
-#else
+            : base() =>
             OutputHelper = output;
 #endif
-        }
 
         /// <summary>
         /// Tests CanConvertTo method with various types
@@ -440,7 +446,10 @@ namespace PropertyGridHelpersTest.net90.Converters
         /// <value>
         /// The test property.
         /// </value>
-        public TestEnums TestProperty { get; set; }
+        public TestEnums TestProperty
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Enum to use in the tests to test flag
@@ -478,16 +487,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)
-#else
-        private void Output(string message)
-#endif
-        {
-#if NET35
+        private static void Output(string message) =>
             Console.WriteLine(message);
 #else
+        private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-        }
     }
 }

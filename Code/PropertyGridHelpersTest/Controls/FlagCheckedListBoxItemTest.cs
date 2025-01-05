@@ -33,18 +33,14 @@ namespace PropertyGridHelpersTest.net90.Controls
     {
 #if NET35
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBoxItemTest"/> class.
         /// </summary>
         /// <param name="output">The output.</param>
         public FlagCheckedListBoxItemTest(
-            ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
+            ITestOutputHelper output) => OutputHelper = output;
 #endif
 
         /// <summary>
@@ -205,16 +201,11 @@ namespace PropertyGridHelpersTest.net90.Controls
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)
-#else
-        private void Output(string message)
-#endif
-        {
-#if NET35
+        private static void Output(string message)=>
             Console.WriteLine(message);
 #else
+        private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-        }
     }
 }

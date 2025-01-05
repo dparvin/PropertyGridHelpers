@@ -759,6 +759,19 @@
             <param name="context">The context.</param>
             <returns></returns>
         </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetRequiredProperty(System.Object,System.String)">
+            <summary>
+            Gets the required public property.
+            </summary>
+            <param name="instance">The instance.</param>
+            <param name="propertyName">Name of the property.</param>
+            <returns>
+            The <see cref="T:System.Reflection.PropertyInfo"/> of the property if it exists and is public.
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown if the property is not found or is not public.
+            </exception>
+        </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.Dispose(System.Boolean)">
             <summary>
             Releases unmanaged and - optionally - managed resources.

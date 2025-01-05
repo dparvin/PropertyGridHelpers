@@ -104,9 +104,6 @@ namespace PropertyGridHelpers.Converters
             object value)
         {
             if (value == null) return null;
-            if (!(value.GetType() == typeof(string) ||
-                  value.GetType() == typeof(int)))
-                throw new ArgumentException("The value is expected to be a string or an int.", nameof(value));
             if (value.GetType() == typeof(string))
             {
                 foreach (var fi in EnumType.GetFields())
@@ -132,7 +129,7 @@ namespace PropertyGridHelpers.Converters
                 return e;
             }
 
-            return null;
+            throw new ArgumentException("The value is expected to be a string or an int.", nameof(value));
         }
 
         #region GetStandardValues ^^^^^

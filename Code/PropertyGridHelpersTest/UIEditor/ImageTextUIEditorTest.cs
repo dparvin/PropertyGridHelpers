@@ -8,10 +8,8 @@ using PropertyGridHelpers.Attributes;
 using PropertyGridHelpersTest.Support;
 using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
-using System.Diagnostics;
-
-
-
+using System.Diagnostics.CodeAnalysis;
+using PropertyGridHelpersTest.Enums;
 
 #if NET35
 using Xunit.Extensions;
@@ -39,35 +37,41 @@ namespace PropertyGridHelpersTest.net80.UIEditor
 namespace PropertyGridHelpersTest.net90.UIEditor
 #endif
 {
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Class for testing the ImageTextUIEditor class
+    /// </summary>
+    /// <param name="output">The output.</param>
+    public class ImageTextUIEditorTest(ITestOutputHelper output)
+#else
     /// <summary>
     /// Class for testing the ImageTextUIEditor class
     /// </summary>
     public class ImageTextUIEditorTest
+#endif
     {
 #if NET35
+#elif NET8_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = output;
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
 #endif
 
+#if NET35
         /// <summary>
         /// Enum Text Converter Test
         /// </summary>
-#if NET35
-        public ImageTextUIEditorTest()
+        public ImageTextUIEditorTest() {}
+#elif NET8_0_OR_GREATER
 #else
+        /// <summary>
+        /// Enum Text Converter Test
+        /// </summary>
         /// <param name="output"></param>
         public ImageTextUIEditorTest(ITestOutputHelper output)
-#endif
-#if NET462 || NET472 || NET481 || NET5_0_OR_GREATER
-            : base()
-#endif
-        {
-#if NET35
-#else
+            : base() =>
             OutputHelper = output;
 #endif
-        }
-
         /// <summary>
         /// Enum to test the different types of image processing
         /// </summary>
@@ -375,14 +379,12 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             var e = new PaintValueEventArgs(null, mockValue, graphics, new Rectangle(0, 0, 100, 100));
 
             // Act & Assert
-            var exception = Assert.Throws<InvalidOperationException>(() =>
-            {
-                editor.PaintValue(e);
-            });
+            var exception = Assert.Throws<InvalidOperationException>(() => editor.PaintValue(e));
 
+            Output(exception.Message);
 #if NET35
+            Assert.Equal(0, string.Compare($"Resource 'PropertyGridHelpersTest.Properties.Resources.resources.Stars' is not a valid image or byte array.", exception.Message));
 #else
-            OutputHelper.WriteLine(exception.Message);
             Assert.Equal($"Resource 'PropertyGridHelpersTest.Properties.Resources.resources.Stars' is not a valid image or byte array.", exception.Message);
 #endif
         }
@@ -406,15 +408,120 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             context.OnComponentChanged();
 
             // Assert
+            Output(resourcePath);
 #if NET35
-            Debug.WriteLine(resourcePath);
+            Assert.Equal(0, string.Compare(ExpectedPath, resourcePath));
 #else
-            OutputHelper.WriteLine(resourcePath);
             Assert.Equal(ExpectedPath, resourcePath);
 #endif
             Assert.Null(context.Container);
             Assert.Null(context.GetService(typeof(IContainer)));
             Assert.True(context.OnComponentChanging());
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithImage)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = ImageTextUIEditor.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare("jpg - jpeg file", fileExtension));
+#else
+            Assert.Equal("jpg - jpeg file", fileExtension);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_StringPropertyShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithBitmapImage)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = ImageTextUIEditor.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare("jpg", fileExtension));
+#else
+            Assert.Equal("jpg", fileExtension);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ExceptionForPropertyReferencingInvalidProperty()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithResource)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var ex = Assert.Throws<InvalidOperationException>(() => ImageTextUIEditor.GetFileExtension(context));
+            // Assert
+
+            Assert.Contains("Property 'invalidPropertName' not found on type 'PropertyGridHelpersTest.", ex.Message);
+            Output(ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ExceptionForPropertyReferencingPrivateProperty()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithPrivateProperty)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var ex = Assert.Throws<InvalidOperationException>(() => ImageTextUIEditor.GetFileExtension(context));
+            // Assert
+            Assert.Contains("Property 'PrivateImageFileExtension' on type 'PropertyGridHelpersTest.", ex.Message);
+            Output(ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the file extension enum with custom enum text should return enum text.
+        /// </summary>
+        /// <param name="testExtension">The test extension.</param>
+        /// <param name="expectedValue">The expected value.</param>
+        [Theory]
+        [InlineData(ImageFileExtension.jpg, "jpg - jpeg file")]
+        [InlineData(ImageFileExtension.png, "png")]
+        public void GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(
+            ImageFileExtension testExtension,
+            string expectedValue)
+        {
+            // Arrange
+            ImageFileExtension = testExtension;
+
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = ImageTextUIEditor.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(expectedValue, fileExtension)); 
+#else
+            Assert.Equal(expectedValue, fileExtension);
+#endif
+            Output(fileExtension);
         }
 
         /// <summary>
@@ -424,8 +531,8 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// The test enum.
         /// </value>
         [DynamicPathSource(nameof(TestResourcePath))]
+        [FileExtension(nameof(ImageFileExtension))]
         public TestEnum TestItemWithImage { get; set; } = TestEnum.ItemWithImage;
-
         /// <summary>
         /// Gets or sets the test item with bitmap image.
         /// </summary>
@@ -433,8 +540,32 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// The test item with bitmap image.
         /// </value>
         [ResourcePath("TestItemWithBitmapImage.Resources")]
+        [FileExtension(nameof(ImageFileExtensionString))]
         public TestEnum TestItemWithBitmapImage { get; set; } = TestEnum.ItemWithBitmapImage;
-
+        /// <summary>
+        /// Gets or sets the test item with resource.
+        /// </summary>
+        /// <value>
+        /// The test item with resource.
+        /// </value>
+        [FileExtension("invalidPropertName")]
+        public TestEnum TestItemWithResource { get; set; } = TestEnum.confetti;
+        /// <summary>
+        /// Gets or sets the test item with resource.
+        /// </summary>
+        /// <value>
+        /// The test item with resource.
+        /// </value>
+        [FileExtension(nameof(PrivateImageFileExtension))]
+        public TestEnum TestItemWithPrivateProperty { get; set; } = TestEnum.confetti;
+        /// <summary>
+        /// Gets or sets the test item with enum.
+        /// </summary>
+        /// <value>
+        /// The test item with enum.
+        /// </value>
+        [FileExtension(nameof(ImageFileExtension))]
+        public TestEnum TestItemWithEnum { get; set; } = TestEnum.ItemWithImage;
         /// <summary>
         /// Gets or sets the test resource path.
         /// </summary>
@@ -442,7 +573,27 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// The test resource path.
         /// </value>
         public string TestResourcePath { get; set; } = "TestResourcePath.Resources";
-
+        /// <summary>
+        /// Gets or sets the file extension.
+        /// </summary>
+        /// <value>
+        /// The file extension.
+        /// </value>
+        public ImageFileExtension ImageFileExtension { get; set; } = ImageFileExtension.jpg;
+        /// <summary>
+        /// Gets or sets the image file extension string.
+        /// </summary>
+        /// <value>
+        /// The image file extension string.
+        /// </value>
+        public string ImageFileExtensionString { get; set; } = "jpg";
+        /// <summary>
+        /// Gets or sets the image file extension string.
+        /// </summary>
+        /// <value>
+        /// The image file extension string.
+        /// </value>
+        private string PrivateImageFileExtension { get; set; } = "jpg";
         #region Test Support Methods
 
         /// <summary>
@@ -454,12 +605,24 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// </returns>
         private static bool IsBitmapEmpty(Bitmap bitmap)
         {
-            for (int x = 0; x < bitmap.Width; x++)
-                for (int y = 0; y < bitmap.Height; y++)
+            for (var x = 0; x < bitmap.Width; x++)
+                for (var y = 0; y < bitmap.Height; y++)
                     if (bitmap.GetPixel(x, y).A != 0) // Check for any non-transparent pixel
                         return false;
             return true;
         }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message) =>
+            Console.WriteLine(message);
+#else
+        private void Output(string message) =>
+            OutputHelper.WriteLine(message);
+#endif
 
         #endregion
     }

@@ -4,7 +4,6 @@ using PropertyGridHelpers.Controls;
 using PropertyGridHelpers.Converters;
 using System.Windows.Forms;
 
-
 #if NET35
 using Xunit.Extensions;
 #else
@@ -38,18 +37,14 @@ namespace PropertyGridHelpersTest.net90.Controls
     {
 #if NET35
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBoxTest"/> class.
         /// </summary>
         /// <param name="output">The output.</param>
         public FlagCheckedListBoxTest(
-            ITestOutputHelper output)
-
-        {
-            OutputHelper = output;
-        }
+            ITestOutputHelper output) => OutputHelper = output;
 #endif
 
         /// <summary>
@@ -225,7 +220,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #else
             using (var list = new FlagCheckedListBox())
 #endif
-                Assert.Throws<ArgumentNullException>(() => list.Add(null));
+            Assert.Throws<ArgumentNullException>(() => list.Add(null));
         }
 
         /// <summary>
@@ -435,16 +430,11 @@ namespace PropertyGridHelpersTest.net90.Controls
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)
-#else
-        private void Output(string message)
-#endif
-        {
-#if NET35
+        private static void Output(string message) =>
             Console.WriteLine(message);
 #else
+        private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-        }
     }
 }

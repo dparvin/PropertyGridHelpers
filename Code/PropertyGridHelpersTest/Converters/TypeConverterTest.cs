@@ -29,7 +29,11 @@ namespace PropertyGridHelpersTest.net90.Converters
     /// <summary>
     /// Tests for the type converter
     /// </summary>
+#if NET8_0_OR_GREATER
+    public class TypeConverterTest(ITestOutputHelper output)
+#else
     public class TypeConverterTest
+#endif
     {
 #if NET35
         /// <summary>
@@ -38,8 +42,10 @@ namespace PropertyGridHelpersTest.net90.Converters
         public TypeConverterTest()
         {
         }
+#elif NET8_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = output;
 #else
-        readonly ITestOutputHelper OutputHelper;
+        private readonly ITestOutputHelper OutputHelper;
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeConverterTest"/> class.
         /// </summary>
@@ -78,6 +84,23 @@ namespace PropertyGridHelpersTest.net90.Converters
             {
                 Assert.Equal("1", converter.ConvertTo(1, typeof(string)));
                 Output("ConvertTo returned '1' as expected");
+            }
+        }
+
+        /// <summary>
+        /// Converts to returns string with different types test.
+        /// </summary>
+        [Fact]
+        public void ConvertToReturnsStringWithDifferentTypesTest()
+        {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
+            using (var converter = new TypeConverter<int>())
+#endif
+            {
+                Assert.Equal("1.1", converter.ConvertTo(1.1, typeof(string)));
+                Output("ConvertTo returned '1.1' as expected");
             }
         }
 
@@ -154,16 +177,11 @@ namespace PropertyGridHelpersTest.net90.Converters
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)
-#else
-        private void Output(string message)
-#endif
-        {
-#if NET35
+        private static void Output(string message) =>
             Console.WriteLine(message);
 #else
+        private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-        }
     }
 }

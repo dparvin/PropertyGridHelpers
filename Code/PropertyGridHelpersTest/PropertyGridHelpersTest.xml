@@ -365,6 +365,11 @@
             Converts to returns string with int entries test.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.ConvertToReturnsStringWithDifferentTypesTest">
+            <summary>
+            Converts to returns string with different types test.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Converters.TypeConverterTest.CanConvertToStringTest">
             <summary>
             Determines whether this instance can convert to string test.
@@ -627,6 +632,33 @@
             <param name="PropertyName">Name of the property.</param>
             <param name="ExpectedPath">The expected path.</param>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ShouldReturnFileExtension">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_StringPropertyShouldReturnFileExtension">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ExceptionForPropertyReferencingInvalidProperty">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ExceptionForPropertyReferencingPrivateProperty">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(Enums.ImageFileExtension,System.String)">
+            <summary>
+            Gets the file extension enum with custom enum text should return enum text.
+            </summary>
+            <param name="testExtension">The test extension.</param>
+            <param name="expectedValue">The expected value.</param>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithImage">
             <summary>
             Gets or sets the test enum.
@@ -643,12 +675,60 @@
             The test item with bitmap image.
             </value>
         </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithResource">
+            <summary>
+            Gets or sets the test item with resource.
+            </summary>
+            <value>
+            The test item with resource.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithPrivateProperty">
+            <summary>
+            Gets or sets the test item with resource.
+            </summary>
+            <value>
+            The test item with resource.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithEnum">
+            <summary>
+            Gets or sets the test item with enum.
+            </summary>
+            <value>
+            The test item with enum.
+            </value>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestResourcePath">
             <summary>
             Gets or sets the test resource path.
             </summary>
             <value>
             The test resource path.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtension">
+            <summary>
+            Gets or sets the file extension.
+            </summary>
+            <value>
+            The file extension.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtensionString">
+            <summary>
+            Gets or sets the image file extension string.
+            </summary>
+            <value>
+            The image file extension string.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PrivateImageFileExtension">
+            <summary>
+            Gets or sets the image file extension string.
+            </summary>
+            <value>
+            The image file extension string.
             </value>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
@@ -659,6 +739,12 @@
             <returns>
               <c>true</c> if the bitmap is empty for the specified bitmap; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
         </member>
         <member name="T:PropertyGridHelpersTest.Attributes.FileExtensionAttributeTest">
             <summary>
@@ -810,6 +896,36 @@
             Shows the dialog.
             </summary>
             <param name="dialog">The dialog.</param>
+        </member>
+        <member name="T:Enums.ImageFileExtension">
+            <summary>
+            Image File Extensions
+            </summary>
+        </member>
+        <member name="F:Enums.ImageFileExtension.None">
+            <summary>
+            The None
+            </summary>
+        </member>
+        <member name="F:Enums.ImageFileExtension.jpg">
+            <summary>
+            The JPG
+            </summary>
+        </member>
+        <member name="F:Enums.ImageFileExtension.png">
+            <summary>
+            The PNG
+            </summary>
+        </member>
+        <member name="F:Enums.ImageFileExtension.bmp">
+            <summary>
+            The BMP
+            </summary>
+        </member>
+        <member name="F:Enums.ImageFileExtension.gif">
+            <summary>
+            The GIF
+            </summary>
         </member>
     </members>
 </doc>
