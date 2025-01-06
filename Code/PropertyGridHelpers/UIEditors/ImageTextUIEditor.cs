@@ -154,19 +154,13 @@ namespace PropertyGridHelpers.UIEditors
             if (Value is null) throw new ArgumentNullException(nameof(Value));
             if (enumType is null) throw new ArgumentNullException(nameof(enumType));
 #endif
-            // get the field info for the enum value
-            var fi = enumType.GetField(Enum.GetName(enumType, Value));
             // get the EnumImageAttribute for the field
-            var dna =
-                    (EnumImageAttribute)Attribute.GetCustomAttribute(
-                    fi, typeof(EnumImageAttribute));
+            var dna = EnumImageAttribute.Get((Enum)Value);
 
             if (dna != null)
             {
                 var m = GetModuleName(Value);
-                var ei = dna.EnumImage;
-                if (string.IsNullOrEmpty(ei))
-                    ei = Enum.GetName(enumType, Value);
+                var ei = EnumImageAttribute.GetEnumImage((Enum)Value);
                 Bitmap originalImage = null;
                 string ResourceName;
                 switch (dna.ImageLocation)
@@ -195,26 +189,10 @@ namespace PropertyGridHelpers.UIEditors
                     g.Clear(Color.Transparent); // Optional: set background to transparent
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-                    // Calculate scaled dimensions while maintaining aspect ratio
-                    var aspectRatio = (double)originalImage.Width / originalImage.Height;
-                    int targetWidth, targetHeight;
-
-                    if (bounds.Width / (double)bounds.Height > aspectRatio)
-                    {
-                        targetHeight = bounds.Height;
-                        targetWidth = (int)(targetHeight * aspectRatio);
-                    }
-                    else
-                    {
-                        targetWidth = bounds.Width;
-                        targetHeight = (int)(targetWidth / aspectRatio);
-                    }
-
-                    var offsetX = (bounds.Width - targetWidth) / 2;
-                    var offsetY = (bounds.Height - targetHeight) / 2;
+                    var ts = GetTargetSizes(originalImage, bounds);
 
                     // Draw the scaled image centered in the bounds
-                    g.DrawImage(originalImage, offsetX, offsetY, targetWidth, targetHeight);
+                    g.DrawImage(originalImage, ts.OffsetX, ts.OffsetY, ts.TargetWidth, ts.TargetHeight);
                 }
 
                 return scaledImage;
@@ -540,6 +518,58 @@ namespace PropertyGridHelpers.UIEditors
             }
 
             return property;
+        }
+
+        /// <summary>
+        /// Gets the target sizes.
+        /// </summary>
+        /// <param name="originalImage">The original image.</param>
+        /// <param name="bounds">The bounds.</param>
+        /// <returns></returns>
+        public static TargetSizes GetTargetSizes(
+            Bitmap originalImage,
+            Rectangle bounds)
+        {
+            var ts = new TargetSizes();
+            var aspectRatio = (double)originalImage.Width / originalImage.Height;
+
+            if (bounds.Width / (double)bounds.Height > aspectRatio)
+            {
+                ts.TargetHeight = bounds.Height;
+                ts.TargetWidth = (int)(ts.TargetHeight * aspectRatio);
+            }
+            else
+            {
+                ts.TargetWidth = bounds.Width;
+                ts.TargetHeight = (int)(ts.TargetWidth / aspectRatio);
+            }
+
+            ts.OffsetX = (bounds.Width - ts.TargetWidth) / 2;
+            ts.OffsetY = (bounds.Height - ts.TargetHeight) / 2;
+            return ts;
+        }
+
+        /// <summary>
+        /// Target sizes for the image 
+        /// </summary>
+        public struct TargetSizes
+        {
+            /// <summary>
+            /// The target width
+            /// </summary>
+            public int TargetWidth;
+            /// <summary>
+            /// The target height
+            /// </summary>
+            public int TargetHeight;
+            /// <summary>
+            /// The offset x
+            /// </summary>
+            public int OffsetX;
+            /// <summary>
+            /// The offset y
+            /// </summary>
+            public int OffsetY;
         }
 
         #endregion

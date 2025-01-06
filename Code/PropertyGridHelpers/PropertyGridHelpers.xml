@@ -77,6 +77,27 @@
             The image location.
             </value>
         </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.GetEnumImage(System.Enum)">
+            <summary>
+            Gets the enum image.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.Exists(System.Enum)">
+            <summary>
+            Exists the specified value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.Get(System.Enum)">
+            <summary>
+            Gets the enum image attribute.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.EnumTextAttribute">
             <summary>
             Apply text to an Enum for use in a property page
@@ -96,6 +117,20 @@
             <value>
             The Enum text.
             </value>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.Exists(System.Enum)">
+            <summary>
+            Exists the specified value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.Get(System.Enum)">
+            <summary>
+            Gets the enum image attribute.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.FileExtensionAttribute">
             <summary>
@@ -771,6 +806,39 @@
             <exception cref="T:System.InvalidOperationException">
             Thrown if the property is not found or is not public.
             </exception>
+        </member>
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetTargetSizes(System.Drawing.Bitmap,System.Drawing.Rectangle)">
+            <summary>
+            Gets the target sizes.
+            </summary>
+            <param name="originalImage">The original image.</param>
+            <param name="bounds">The bounds.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes">
+            <summary>
+            Target sizes for the image 
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes.TargetWidth">
+            <summary>
+            The target width
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes.TargetHeight">
+            <summary>
+            The target height
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes.OffsetX">
+            <summary>
+            The offset x
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes.OffsetY">
+            <summary>
+            The offset y
+            </summary>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.Dispose(System.Boolean)">
             <summary>

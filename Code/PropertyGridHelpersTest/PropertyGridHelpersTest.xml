@@ -9,6 +9,21 @@
             Tests for the Enum Image Attribute
             </summary>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.TestEnum">
+            <summary>
+            Test Enum
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.TestEnum.Test1">
+            <summary>
+            The test1
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.TestEnum.Test2">
+            <summary>
+            The test2
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageWithTextTest">
             <summary>
             Get the attribute with a string test
@@ -18,6 +33,93 @@
             <summary>
             Verify the EnumImageAttribute without any parameter.
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageWithNullTest">
+            <summary>
+            Enums the image with null test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageExistsTest">
+            <summary>
+            Enums the image exists test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImageNotExistsTest">
+            <summary>
+            Enums the image not exists test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImage_GetEnumImageTest">
+            <summary>
+            Enums the image get enum image test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.EnumImage_GetEnumImageBlankTest">
+            <summary>
+            Enums the image get enum image test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumImageAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest">
+            <summary>
+            Tests for the <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute"/> class
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.TestEnum">
+            <summary>
+            Test Enum
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.TestEnum.Test1">
+            <summary>
+            The test1
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.TestEnum.Test2">
+            <summary>
+            The test2
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_GetEnumTextTest">
+            <summary>
+            Enums the text get enum text test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_GetEnumTextNoAttributeTest">
+            <summary>
+            Enums the text get enum text blank test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_GetEnumTextNullTest">
+            <summary>
+            Enums the text get enum text null test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_ExistsTest">
+            <summary>
+            Enums the text get enum text test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_NotExistsTest">
+            <summary>
+            Enums the text get enum text blank test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.EnumText_ExistsNullTest">
+            <summary>
+            Enums the text get enum text null test.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.EnumTextAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
         </member>
         <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
             <summary>
@@ -625,6 +727,17 @@
             Paints the value should throw invalid operation exception when resource is invalid.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TargetSizes_CalculatesCorrectly(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Targets the sizes calculates correctly.
+            </summary>
+            <param name="imageWidth">Width of the image.</param>
+            <param name="imageHeight">Height of the image.</param>
+            <param name="expectedWidth">The expected width.</param>
+            <param name="expectedHeight">The expected height.</param>
+            <param name="expectedOffsetX">The expected offset x.</param>
+            <param name="expectedOffsetY">The expected offset y.</param>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetResourcePath_ShouldReturnResourcePath(System.String,System.String)">
             <summary>
             Gets the resource path should return resource path.
@@ -652,7 +765,7 @@
             Gets the file extension should return file extension.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(Enums.ImageFileExtension,System.String)">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(PropertyGridHelpersTest.Enums.ImageFileExtension,System.String)">
             <summary>
             Gets the file extension enum with custom enum text should return enum text.
             </summary>
@@ -759,6 +872,36 @@
         <member name="M:PropertyGridHelpersTest.Attributes.FileExtensionAttributeTest.Constructor_ShouldSetPropertyName">
             <summary>
             Constructors the name of the should set property.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Enums.ImageFileExtension">
+            <summary>
+            Image File Extensions
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.None">
+            <summary>
+            The None
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.jpg">
+            <summary>
+            The JPG
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.png">
+            <summary>
+            The PNG
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.bmp">
+            <summary>
+            The BMP
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.gif">
+            <summary>
+            The GIF
             </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
@@ -896,36 +1039,6 @@
             Shows the dialog.
             </summary>
             <param name="dialog">The dialog.</param>
-        </member>
-        <member name="T:Enums.ImageFileExtension">
-            <summary>
-            Image File Extensions
-            </summary>
-        </member>
-        <member name="F:Enums.ImageFileExtension.None">
-            <summary>
-            The None
-            </summary>
-        </member>
-        <member name="F:Enums.ImageFileExtension.jpg">
-            <summary>
-            The JPG
-            </summary>
-        </member>
-        <member name="F:Enums.ImageFileExtension.png">
-            <summary>
-            The PNG
-            </summary>
-        </member>
-        <member name="F:Enums.ImageFileExtension.bmp">
-            <summary>
-            The BMP
-            </summary>
-        </member>
-        <member name="F:Enums.ImageFileExtension.gif">
-            <summary>
-            The GIF
-            </summary>
         </member>
     </members>
 </doc>

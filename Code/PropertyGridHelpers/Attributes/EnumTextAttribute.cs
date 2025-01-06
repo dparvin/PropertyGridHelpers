@@ -25,5 +25,25 @@ namespace PropertyGridHelpers.Attributes
         {
             get;
         }
+
+        /// <summary>
+        /// Exists the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static bool Exists(Enum value) => Get(value) != null;
+
+        /// <summary>
+        /// Gets the enum image attribute.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static EnumTextAttribute Get(Enum value)
+        {
+            if (value == null)
+                return null;
+            var field = value.GetType().GetField(Enum.GetName(value.GetType(), value));
+            return (EnumTextAttribute)GetCustomAttribute(field, typeof(EnumTextAttribute));
+        }
     }
 }

@@ -390,6 +390,40 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
+        /// Targets the sizes calculates correctly.
+        /// </summary>
+        /// <param name="imageWidth">Width of the image.</param>
+        /// <param name="imageHeight">Height of the image.</param>
+        /// <param name="expectedWidth">The expected width.</param>
+        /// <param name="expectedHeight">The expected height.</param>
+        /// <param name="expectedOffsetX">The expected offset x.</param>
+        /// <param name="expectedOffsetY">The expected offset y.</param>
+        [Theory]
+        [InlineData(100, 120, 41, 50, 4, 0)]
+        [InlineData(120, 100, 50, 41, 0, 4)]
+        public void TargetSizes_CalculatesCorrectly(
+            int imageWidth,
+            int imageHeight,
+            int expectedWidth,
+            int expectedHeight,
+            int expectedOffsetX,
+            int expectedOffsetY)
+        {
+            // Arrange
+
+            var bitmap = new Bitmap(imageWidth, imageHeight);
+            var rect = new Rectangle(0, 0, 50, 50);
+            // Act
+            var ts = ImageTextUIEditor.GetTargetSizes(bitmap, rect);
+
+            // Assert
+            Assert.Equal(expectedWidth, ts.TargetWidth);
+            Assert.Equal(expectedHeight, ts.TargetHeight);
+            Assert.Equal(expectedOffsetX, ts.OffsetX);
+            Assert.Equal(expectedOffsetY, ts.OffsetY);
+        }
+
+        /// <summary>
         /// Gets the resource path should return resource path.
         /// </summary>
         /// <param name="PropertyName">Name of the property.</param>

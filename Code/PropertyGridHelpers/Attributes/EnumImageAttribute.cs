@@ -66,5 +66,41 @@ namespace PropertyGridHelpers.Attributes
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the enum image.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string GetEnumImage(Enum value)
+        {
+            var attribute = Get(value);
+            if (attribute == null)
+                return string.Empty;
+            var result = attribute.EnumImage;
+            if (string.IsNullOrEmpty(result))
+                result = Enum.GetName(value.GetType(), value);
+            return result;
+        }
+
+        /// <summary>
+        /// Exists the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static bool Exists(Enum value) => Get(value) != null;
+
+        /// <summary>
+        /// Gets the enum image attribute.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static EnumImageAttribute Get(Enum value)
+        {
+            if (value == null)
+                return null;
+            var field = value.GetType().GetField(Enum.GetName(value.GetType(), value));
+            return (EnumImageAttribute)GetCustomAttribute(field, typeof(EnumImageAttribute));
+        }
     }
 }
