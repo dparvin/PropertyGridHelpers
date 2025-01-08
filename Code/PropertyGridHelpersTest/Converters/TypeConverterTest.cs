@@ -1,7 +1,8 @@
 ﻿using Xunit;
 using PropertyGridHelpers.Converters;
-#if NET35
 using System;
+
+#if NET35
 #else
 using Xunit.Abstractions;
 #endif
@@ -101,6 +102,23 @@ namespace PropertyGridHelpersTest.net90.Converters
             {
                 Assert.Equal("1.1", converter.ConvertTo(1.1, typeof(string)));
                 Output("ConvertTo returned '1.1' as expected");
+            }
+        }
+
+        /// <summary>
+        /// Convert to returns byte test.
+        /// </summary>
+        [Fact]
+        public void ConvertToReturnsByteTest()
+        {
+#if NET6_0_OR_GREATER
+            using var converter = new TypeConverter<int>();
+#else
+            using (var converter = new TypeConverter<int>())
+#endif
+            {
+                Assert.Throws<NotSupportedException>(() => converter.ConvertTo(2, typeof(byte)));
+                Output("ConvertTo throws an exception as expected");
             }
         }
 

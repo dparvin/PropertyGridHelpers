@@ -446,25 +446,28 @@ namespace PropertyGridHelpers.UIEditors
         /// <returns></returns>
         public static string GetFileExtension(ITypeDescriptorContext context)
         {
-            if (context?.Instance != null && context?.PropertyDescriptor != null)
+            if (context != null)
             {
-                // Check if the property has the DynamicPathSourceAttribute
-                var propertyInfo = context.PropertyDescriptor.ComponentType.GetProperty(context.PropertyDescriptor.Name) ??
-                    throw new InvalidOperationException($"Property '{context.PropertyDescriptor.Name}' not found on type '{context.PropertyDescriptor.ComponentType}'.");
-                if (Attribute.GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute)) is FileExtensionAttribute FileExtensionAttr)
+                var FileExtensionAttr = FileExtensionAttribute.Get(context);
+                if (FileExtensionAttr != null)
                 {
                     // Find the referenced property
-                    var fileExtensionProperty = GetRequiredProperty(context?.Instance, FileExtensionAttr.PropertyName);
+                    var fileExtensionProperty = GetRequiredProperty(context.Instance, FileExtensionAttr.PropertyName);
                     if (fileExtensionProperty != null && fileExtensionProperty.PropertyType == typeof(string))
                     {
                         // Return the value of the referenced property
-                        return fileExtensionProperty.GetValue(context?.Instance, null) as string;
+                        return fileExtensionProperty.GetValue(context.Instance, null) as string;
                     }
-                    else if ((bool)(fileExtensionProperty?.PropertyType.IsEnum))
+                    else if (fileExtensionProperty != null && fileExtensionProperty.PropertyType.IsEnum)
                     {
                         // Check if the enum value has an EnumTextAttribute
-                        if (!(fileExtensionProperty.GetValue(context?.Instance, null) is Enum extension))
+#if NET6_0_OR_GREATER
+                        if (fileExtensionProperty.GetValue(context.Instance, null) is not Enum extension)
                             return string.Empty;
+#else
+                        if (!(fileExtensionProperty.GetValue(context.Instance, null) is Enum extension))
+                            return string.Empty;
+#endif
                         var enumField = extension.GetType().GetField(extension.ToString());
                         if (enumField != null)
                         {

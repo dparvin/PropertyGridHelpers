@@ -2,6 +2,15 @@
 
 namespace PropertyGridHelpers.Attributes
 {
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Apply text to an Enum for use in a property page
+    /// </summary>
+    /// <seealso cref="Attribute" />
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
+    public sealed class EnumTextAttribute(string text) : Attribute
+    {
+#else
     /// <summary>
     /// Apply text to an Enum for use in a property page
     /// </summary>
@@ -14,6 +23,7 @@ namespace PropertyGridHelpers.Attributes
         /// </summary>
         /// <param name="text">The text.</param>
         public EnumTextAttribute(string text) => EnumText = text;
+#endif
 
         /// <summary>
         /// Gets the Enum text.
@@ -24,7 +34,11 @@ namespace PropertyGridHelpers.Attributes
         public string EnumText
         {
             get;
+#if NET8_0_OR_GREATER
+        } = text;
+#else
         }
+#endif
 
         /// <summary>
         /// Exists the specified value.

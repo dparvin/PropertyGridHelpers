@@ -106,9 +106,9 @@
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.#ctor(System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute"/> class.
+            Apply text to an Enum for use in a property page
             </summary>
-            <param name="text">The text.</param>
+            <seealso cref="T:System.Attribute" />
         </member>
         <member name="P:PropertyGridHelpers.Attributes.EnumTextAttribute.EnumText">
             <summary>
@@ -137,14 +137,30 @@
             File Extension Attribute for modifying the way that resources are loaded 
             into the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
             </summary>
+            <param name="propertyName">Name of the property to get the file extension from.</param>
             <seealso cref="T:System.Attribute" />
+            <remarks>
+            When this is used on a property to point to an enum that is used to get an image,
+            then this attribute points to a property that contains the file extension. This will 
+            work in conjunction with the <see cref="T:PropertyGridHelpers.Attributes.ResourcePathAttribute"/> or the
+            <see cref="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute"/> and the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> to
+            form the overall name of the resource to load.
+            </remarks>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.FileExtensionAttribute.#ctor(System.String)">
             <summary>
             File Extension Attribute for modifying the way that resources are loaded 
             into the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
             </summary>
+            <param name="propertyName">Name of the property to get the file extension from.</param>
             <seealso cref="T:System.Attribute" />
+            <remarks>
+            When this is used on a property to point to an enum that is used to get an image,
+            then this attribute points to a property that contains the file extension. This will 
+            work in conjunction with the <see cref="T:PropertyGridHelpers.Attributes.ResourcePathAttribute"/> or the
+            <see cref="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute"/> and the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> to
+            form the overall name of the resource to load.
+            </remarks>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.FileExtensionAttribute.PropertyName">
             <summary>
@@ -153,6 +169,20 @@
             <value>
             The name of the property.
             </value>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.FileExtensionAttribute.Exists(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Exists the specified value.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.FileExtensionAttribute.Get(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the File Extension Attribute from the enum value.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>

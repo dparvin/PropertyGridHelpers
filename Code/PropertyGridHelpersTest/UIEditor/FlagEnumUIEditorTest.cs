@@ -169,9 +169,9 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             // Arrange
             var editorService = new TestWindowsFormsEditorService();
             var serviceProvider = new TestServiceProvider(editorService);
-            var testInstance = new FlagEnumUIEditorTest.TestClass
+            var testInstance = new TestClass
             {
-                EnumValue = FlagEnumUIEditorTest.TestEnums.FirstEntry
+                EnumValue = TestEnums.FirstEntry
             };
 
             var propertyDescriptor = TypeDescriptor.GetProperties(testInstance)["EnumValue"];
@@ -192,6 +192,31 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             _ = Assert.IsType<FlagCheckedListBox>(editorService.LastShownControl);
             var flagListBox = (FlagCheckedListBox)editorService.LastShownControl;
             Assert.Equal(TestEnums.SecondEntry, flagListBox.EnumValue);
+        }
+
+        /// <summary>
+        /// Edits the value test using helper classes.
+        /// </summary>
+        [Fact]
+        public void EditValueTestUsingServiceReturnsNull()
+        {
+            // Arrange
+            var serviceProvider = new TestServiceProvider(null);
+            var testInstance = new TestClass
+            {
+                EnumValue = TestEnums.FirstEntry
+            };
+
+            var propertyDescriptor = TypeDescriptor.GetProperties(testInstance)["EnumValue"];
+            var context = new CustomTypeDescriptorContext(propertyDescriptor, testInstance);
+            var editor = new FlagEnumUIEditor();
+            var initialEnumValue = TestEnums.FirstEntry;
+
+            // Act
+            var result = editor.EditValue(context, serviceProvider, initialEnumValue);
+
+            // Assert
+            Assert.Null(result);
         }
 
         /// <summary>

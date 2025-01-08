@@ -27,24 +27,13 @@ namespace PropertyGridHelpersTest.Support
         /// Initializes a new instance of the <see cref="TestServiceProvider"/> class.
         /// </summary>
         /// <param name="editorService">The editor service.</param>
-        public TestServiceProvider(IWindowsFormsEditorService editorService)
-        {
-            _editorService = editorService;
-        }
+        public TestServiceProvider(IWindowsFormsEditorService editorService) => _editorService = editorService;
 #endif
         /// <summary>
         /// Gets the service.
         /// </summary>
         /// <param name="serviceType">Type of the service.</param>
         /// <returns></returns>
-        public object GetService(Type serviceType)
-        {
-            if (serviceType == typeof(IWindowsFormsEditorService))
-            {
-                return _editorService;
-            }
-
-            return null;
-        }
+        public object GetService(Type serviceType) => serviceType == typeof(IWindowsFormsEditorService) ? _editorService : (object)null;
     }
 }

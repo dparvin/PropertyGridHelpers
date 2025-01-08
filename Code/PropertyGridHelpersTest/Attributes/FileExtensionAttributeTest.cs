@@ -1,17 +1,65 @@
 ﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.TypeDescriptors;
+using System.ComponentModel;
 using Xunit;
 
-namespace PropertyGridHelpersTest.Attributes
+#if NET35
+using System;
+#else
+using Xunit.Abstractions;
+#endif
+
+#if NET35
+namespace PropertyGridHelpersTest.net35.Attributes
+#elif NET452
+namespace PropertyGridHelpersTest.net452.Attributes
+#elif NET462
+namespace PropertyGridHelpersTest.net462.Attributes
+#elif NET472
+namespace PropertyGridHelpersTest.net472.Attributes
+#elif NET481
+namespace PropertyGridHelpersTest.net481.Attributes
+#elif WINDOWS7_0
+namespace PropertyGridHelpersTest.net60.W7.Attributes
+#elif WINDOWS10_0
+namespace PropertyGridHelpersTest.net60.W10.Attributes
+#elif NET8_0
+namespace PropertyGridHelpersTest.net80.Attributes
+#elif NET9_0
+namespace PropertyGridHelpersTest.net90.Attributes
+#endif
 {
     /// <summary>
     /// File Extension Attribute Test
     /// </summary>
+#if NET8_0_OR_GREATER
+    public class FileExtensionAttributeTest(ITestOutputHelper output)
+    {
+#else
     public class FileExtensionAttributeTest
     {
+#endif
+#if NET35
+#elif NET8_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = output;
+#else
+        private readonly ITestOutputHelper OutputHelper;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumImageAttributeTest"/> class.
+        /// </summary>
+        /// <param name="output">The output.</param>
+        public FileExtensionAttributeTest(
+            ITestOutputHelper output) => OutputHelper = output;
+#endif
+
         private class TestClass
         {
             [FileExtension("TestProperty")]
-            public string MyProperty { get; set; }
+            public string MyProperty
+            {
+                get; set;
+            }
         }
 
         /// <summary>
@@ -46,6 +94,43 @@ namespace PropertyGridHelpersTest.Attributes
 
             // Assert
             Assert.Equal(0, string.Compare(propertyName, pn)); // Verify the property name
+            Output("The Property name matched as expected");
         }
+
+        /// <summary>
+        /// Exists - the property exists.
+        /// </summary>
+        [Fact]
+        public void Exists_PropertyExists()
+        {
+            var tc = new TestClass();
+            var PropertyDescriptor = TypeDescriptor.GetProperties(tc)["MyProperty"];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            Assert.True(FileExtensionAttribute.Exists(context));
+            Output("The property was found and had the attribute on it.");
+        }
+
+        /// <summary>
+        /// Exists - the property exists.
+        /// </summary>
+        [Fact]
+        public void Exists_PropertyDoesNotExists()
+        {
+            Assert.False(FileExtensionAttribute.Exists(null));
+            Output("The property was not found as expected.");
+        }
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message) =>
+            Console.WriteLine(message);
+#else
+        private void Output(string message) =>
+            OutputHelper.WriteLine(message);
+#endif
+
     }
 }
