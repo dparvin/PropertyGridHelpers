@@ -2,9 +2,10 @@
 using PropertyGridHelpers.TypeDescriptors;
 using System.ComponentModel;
 using Xunit;
+using System;
+using PropertyGridHelpersTest.Support;
 
 #if NET35
-using System;
 #else
 using Xunit.Abstractions;
 #endif
@@ -120,6 +121,31 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.False(FileExtensionAttribute.Exists(null));
             Output("The property was not found as expected.");
         }
+
+        /// <summary>
+        /// Get should throw when property does not exist.
+        /// </summary>
+        [Fact]
+        public void Get_ShouldThrow_WhenPropertyDoesNotExist()
+        {
+            //Arrange
+            const string MissingPropertyName = "MyProperty2";
+            var tc = new TestClass();
+            var PropertyDescriptor = new FakePropertyDescriptor(MissingPropertyName, typeof(TestClass), typeof(string));
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act and Assert
+            var ex = Assert.Throws<InvalidOperationException>(() => FileExtensionAttribute.Get(context));
+
+            // Verify the exception message contains the expected details
+#if NET35
+            Assert.True(ex.Message.StartsWith($"Property '{MissingPropertyName}' not found on type"));
+#else
+            Assert.StartsWith($"Property '{MissingPropertyName}' not found on type", ex.Message);
+#endif
+            Output($"Exception thrown as expected: {ex.Message}");
+        }
+
         /// <summary>
         /// Outputs the specified message.
         /// </summary>

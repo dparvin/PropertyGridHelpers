@@ -146,6 +146,11 @@
             Exists - the property exists.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.FileExtensionAttributeTest.Get_ShouldThrow_WhenPropertyDoesNotExist">
+            <summary>
+            Get should throw when property does not exist.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.FileExtensionAttributeTest.Output(System.String)">
             <summary>
             Outputs the specified message.
@@ -781,6 +786,11 @@
             Paints the value file image should draw image.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldThrowExceptionWithInvalidParameter">
+            <summary>
+            Paints the value should throw exception with invalid parameter.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.DefaultConstructor_ShouldInitializeProperly">
             <summary>
             Defaults the constructor should initialize properly.
@@ -998,6 +1008,79 @@
             <summary>
               Looks up a localized string similar to Stars Test Text.
             </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.FakePropertyDescriptor">
+            <summary>
+            A generic fake property descriptor for testing.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.#ctor(System.String,System.Type,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.Support.FakePropertyDescriptor"/> class.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <param name="componentType">The type of the component.</param>
+            <param name="propertyType">The type of the property.</param>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.FakePropertyDescriptor.ComponentType">
+            <summary>
+            Gets the type of the component.
+            </summary>
+            <value>
+            The type of the component.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.FakePropertyDescriptor.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read only.
+            </summary>
+            <value>
+              <c>true</c> if this instance is read only; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.FakePropertyDescriptor.PropertyType">
+            <summary>
+            Gets the type of the property.
+            </summary>
+            <value>
+            The type of the property.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.CanResetValue(System.Object)">
+            <summary>
+            Determines whether this instance [can reset value] the specified component.
+            </summary>
+            <param name="component">The component.</param>
+            <returns>
+              <c>true</c> if this instance [can reset value] the specified component; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.GetValue(System.Object)">
+            <summary>
+            Gets the value.
+            </summary>
+            <param name="component">The component.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.ResetValue(System.Object)">
+            <summary>
+            Resets the value.
+            </summary>
+            <param name="component">The component.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.SetValue(System.Object,System.Object)">
+            <summary>
+            Sets the value.
+            </summary>
+            <param name="component">The component.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FakePropertyDescriptor.ShouldSerializeValue(System.Object)">
+            <summary>
+            Should serialize value.
+            </summary>
+            <param name="component">The component.</param>
+            <returns></returns>
         </member>
         <member name="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1">
             <summary>

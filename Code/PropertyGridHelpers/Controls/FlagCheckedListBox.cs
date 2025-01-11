@@ -213,11 +213,11 @@ namespace PropertyGridHelpers.Controls
             }
             set
             {
-#if NET35_OR_GREATER
+#if NET5_0_OR_GREATER
+                ArgumentNullException.ThrowIfNull(value);
+#else
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
-#else
-                ArgumentNullException.ThrowIfNull(value);
 #endif
                 Items.Clear();
                 enumType = value.GetType();     // Store enum type

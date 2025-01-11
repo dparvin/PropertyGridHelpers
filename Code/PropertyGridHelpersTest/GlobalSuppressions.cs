@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.EditValueTestUsingHelperClasses")]
 [assembly: SuppressMessage("Style", "IDE0022:Use expression body for method", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.Output(System.String)")]
+[assembly: SuppressMessage("Assertions", "xUnit2009:Do not use boolean check to check for substrings", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.Attributes.FileExtensionAttributeTest.Get_ShouldThrow_WhenPropertyDoesNotExist")]
 #endif
 
 #if NET452

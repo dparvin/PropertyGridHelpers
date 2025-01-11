@@ -61,7 +61,9 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// <summary>
         /// Enum Text Converter Test
         /// </summary>
-        public ImageTextUIEditorTest() {}
+        public ImageTextUIEditorTest()
+        {
+        }
 #elif NET8_0_OR_GREATER
 #else
         /// <summary>
@@ -72,6 +74,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             : base() =>
             OutputHelper = output;
 #endif
+
         /// <summary>
         /// Enum to test the different types of image processing
         /// </summary>
@@ -349,6 +352,22 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
+        /// Paints the value should throw exception with invalid parameter.
+        /// </summary>
+        [Fact]
+        public void PaintValue_ShouldThrowExceptionWithInvalidParameter()
+        {
+            // Arrange
+            var editor = new ImageTextUIEditor(typeof(TestEnum), "Images");
+
+            // Act and Assert
+            var ex = Assert.Throws<ArgumentNullException>(() => editor.PaintValue(null));
+
+            Assert.Contains("Value cannot be null.", ex.Message);
+            Output($"Exception thrown as expected: {ex.Message}");
+        }
+
+        /// <summary>
         /// Defaults the constructor should initialize properly.
         /// </summary>
         [Fact]
@@ -551,7 +570,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 
             // Assert
 #if NET35
-            Assert.Equal(0, string.Compare(expectedValue, fileExtension)); 
+            Assert.Equal(0, string.Compare(expectedValue, fileExtension));
 #else
             Assert.Equal(expectedValue, fileExtension);
 #endif

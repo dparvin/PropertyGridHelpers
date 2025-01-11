@@ -76,7 +76,7 @@ namespace PropertyGridHelpers.Attributes
                 return null;
             var propertyInfo = context.PropertyDescriptor.ComponentType.GetProperty(context.PropertyDescriptor.Name) ??
                 throw new InvalidOperationException($"Property '{context.PropertyDescriptor.Name}' not found on type '{context.PropertyDescriptor.ComponentType}'.");
-            return (FileExtensionAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute));
+            return (FileExtensionAttribute)GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute));
         }
     }
 }
