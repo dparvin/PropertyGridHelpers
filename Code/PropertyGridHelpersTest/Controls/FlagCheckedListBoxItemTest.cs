@@ -16,10 +16,6 @@ namespace PropertyGridHelpersTest.net462.Controls
 namespace PropertyGridHelpersTest.net472.Controls
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Controls
-#elif WINDOWS7_0
-namespace PropertyGridHelpersTest.net60.W7.Controls
-#elif WINDOWS10_0
-namespace PropertyGridHelpersTest.net60.W10.Controls
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Controls
 #elif NET9_0
@@ -201,7 +197,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message)=>
+        private static void Output(string message) =>
             Console.WriteLine(message);
 #else
         private void Output(string message) =>

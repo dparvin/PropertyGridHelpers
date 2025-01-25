@@ -18,10 +18,6 @@ namespace PropertyGridHelpersTest.net462.Attributes
 namespace PropertyGridHelpersTest.net472.Attributes
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Attributes
-#elif WINDOWS7_0
-namespace PropertyGridHelpersTest.net60.W7.Attributes
-#elif WINDOWS10_0
-namespace PropertyGridHelpersTest.net60.W10.Attributes
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Attributes
 #elif NET9_0

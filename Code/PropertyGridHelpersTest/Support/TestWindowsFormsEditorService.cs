@@ -15,10 +15,6 @@ using PropertyGridHelpersTest.net462.UIEditor;
 using PropertyGridHelpersTest.net472.UIEditor;
 #elif NET481
 using PropertyGridHelpersTest.net481.UIEditor;
-#elif WINDOWS7_0
-using PropertyGridHelpersTest.net60.W7.UIEditor;
-#elif WINDOWS10_0
-using PropertyGridHelpersTest.net60.W10.UIEditor;
 #elif NET8_0
 using PropertyGridHelpersTest.net80.UIEditor;
 #elif NET9_0
@@ -39,7 +35,10 @@ namespace PropertyGridHelpersTest.Support
         /// <value>
         /// The last shown control.
         /// </value>
-        public Control LastShownControl { get; private set; }
+        public Control LastShownControl
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Drops down control.

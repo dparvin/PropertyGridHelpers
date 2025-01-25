@@ -157,6 +157,41 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest">
+            <summary>
+            Test for the Localized Category Attribute
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_ShouldReturnLocalizedString">
+            <summary>
+            Localized category attribute should return localized string.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
+            <summary>
+            Localize category attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest">
+            <summary>
+            Test for the Localized Description Attribute
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_ShouldReturnLocalizedString">
+            <summary>
+            Localized description attribute should return localized string.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest">
+            <summary>
+            Test for the Localized Description Attribute
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_ShouldReturnLocalizedString">
+            <summary>
+            Localized display name attribute should return localized string.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
             <summary>
             Tests for the flag checked list box
@@ -562,6 +597,47 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.Support.SupportTest">
+            <summary>
+            Tests for the <see cref="T:PropertyGridHelpers.Support.Support"/> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.#ctor">
+            <summary>
+            Enum Text Converter Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcesNames_WhenEnumTypeIsNull_ThrowsArgumentNullException">
+            <summary>
+            Gets the resources names when enum type is null throws argument null exception.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcesNames_WhenEnumTypeIsNotEnum_ThrowsArgumentException">
+            <summary>
+            Gets the resources names when enum type is not enum throws argument exception.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcesNames_WhenEnumTypeIsEnum_ReturnsResourceNames">
+            <summary>
+            Gets the resources names when enum type is enum returns resource names.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.CheckResourceType_WhenAssemblyIsNull_ThrowsArgumentNullException">
+            <summary>
+            Checks the resource type when assembly is null throws argument null exception.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.CheckResourceType_WhenAssemblyIsNotNull_DoesNotThrowException">
+            <summary>
+            Checks the resource type when assembly is not null does not throw exception.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.UIEditor.CollectionUIEditorTest">
             <summary>
             Collection UI Editor Tests
@@ -673,69 +749,19 @@
             Enum Text Converter Test
             </summary>
         </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum">
-            <summary>
-            Enum to test the different types of image processing
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithImage">
-            <summary>
-            The item with image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithBitmapImage">
-            <summary>
-            The item with bitmap image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.confetti">
-            <summary>
-            The confetti
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithoutImage">
-            <summary>
-            The item without image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImage">
-            <summary>
-            The item with embedded image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImageResource">
-            <summary>
-            The item with embedded image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithFileImage">
-            <summary>
-            The item with file image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithInvalidResourceType">
-            <summary>
-            The item with invalid resource type
-            </summary>
-        </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems">
-            <summary>
-            Enum to test full paths to the images in the project
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item1">
-            <summary>
-            The item1
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item2">
-            <summary>
-            The item2
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Constructor_ShouldInitializeFields">
             <summary>
             Constructors the should initialize fields.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.DefaultConstructor_ShouldInitializeProperly">
+            <summary>
+            Defaults the constructor should initialize properly.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GenericConstructor_ShouldPassEnumTypeToBase">
+            <summary>
+            Generics the constructor should pass enum type to base.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetPaintValueSupported_ShouldReturnTrue">
@@ -746,11 +772,6 @@
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.Dispose_ShouldSetDisposedFlag">
             <summary>
             Disposes the should set disposed flag.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GenericConstructor_ShouldPassEnumTypeToBase">
-            <summary>
-            Generics the constructor should pass enum type to base.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage">
@@ -791,11 +812,6 @@
             Paints the value should throw exception with invalid parameter.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.DefaultConstructor_ShouldInitializeProperly">
-            <summary>
-            Defaults the constructor should initialize properly.
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldThrowInvalidOperationException_WhenResourceIsInvalid">
             <summary>
             Paints the value should throw invalid operation exception when resource is invalid.
@@ -818,6 +834,81 @@
             </summary>
             <param name="PropertyName">Name of the property.</param>
             <param name="ExpectedPath">The expected path.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResource_ShouldReturnImage">
+            <summary>
+            Gets the image from resource should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResource_ShouldReturnNull_WhenThereIsNoImage">
+            <summary>
+            Gets the image from resource should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResource_ShouldReturnNull_WhenThereIsNoValuePassed">
+            <summary>
+            Gets the image from resource should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResource_ShouldReturnNull_WhenThereIsNoTypeIsNull">
+            <summary>
+            Gets the image from resource should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromEmbeddedResource_ShouldReturnImage">
+            <summary>
+            Gets the image from embedded resource should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromEmbeddedResource_ShouldReturnException_WhenValueIsNull">
+            <summary>
+            Gets the image from embedded resource should return null when value is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromEmbeddedResource_ShouldReturnException_WhenResourceItemEmpty">
+            <summary>
+            Gets the image from embedded resource should return exception when resource item empty.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromEmbeddedResource_ShouldReturnException_WhenResourcePathEmpty">
+            <summary>
+            Gets the image from embedded resource should return exception when resource path empty.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_ShouldReturnImage">
+            <summary>
+            Gets the image from resource file should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_InDesignMode_ShouldReturnImage">
+            <summary>
+            Gets the image from resource file in design mode should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFileWithExtension_InDesignMode_ShouldReturnImage">
+            <summary>
+            Gets the image from resource file in design mode should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_ResourceFileNotFound_ShouldThrowInvalidOperationException(System.String)">
+            <summary>
+            Gets the image from resource file resource file not found should throw invalid operation exception.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_ShouldReturnException_WhenValueIsNull">
+            <summary>
+            Gets the image from resource file should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_ShouldReturnException_WhenResourceItemIsEmpty">
+            <summary>
+            Gets the image from resource file should return exception when resource item is empty.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResourceFile_ShouldReturnException_WhenResourcePathIsEmpty">
+            <summary>
+            Gets the image from resource file should return exception when resource path is empty.
+            </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ShouldReturnFileExtension">
             <summary>
@@ -918,6 +1009,66 @@
             The image file extension string.
             </value>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum">
+            <summary>
+            Enum to test the different types of image processing
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithImage">
+            <summary>
+            The item with image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithBitmapImage">
+            <summary>
+            The item with bitmap image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.confetti">
+            <summary>
+            The confetti
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithoutImage">
+            <summary>
+            The item without image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImage">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImageResource">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithFileImage">
+            <summary>
+            The item with file image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithInvalidResourceType">
+            <summary>
+            The item with invalid resource type
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems">
+            <summary>
+            Enum to test full paths to the images in the project
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item1">
+            <summary>
+            The item1
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item2">
+            <summary>
+            The item2
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
             <summary>
             Helper method to check if a bitmap is empty
@@ -963,6 +1114,50 @@
             The GIF
             </summary>
         </member>
+        <member name="T:PropertyGridHelpersTest.Images">
+            <summary>
+            
+            </summary>
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.confetti">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.confetti_jpg">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.confetti_stars">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.confetti_stars_bitmap">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Images.Stars">
+            <summary>
+              Looks up a localized string similar to Stars.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -979,19 +1174,19 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti">
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Category_TestCategory">
             <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
+              Looks up a localized string similar to Test Category.
             </summary>
         </member>
-        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti_stars">
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Description_TestDescription">
             <summary>
-              Looks up a localized resource of type System.Byte[].
+              Looks up a localized string similar to Test Description.
             </summary>
         </member>
-        <member name="P:PropertyGridHelpersTest.Properties.Resources.confetti_stars_bitmap">
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.DisplayName_TestDisplayName">
             <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
+              Looks up a localized string similar to Test Display Name.
             </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.Properties.Resources.EditorStyle">

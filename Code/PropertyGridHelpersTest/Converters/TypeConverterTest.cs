@@ -17,10 +17,6 @@ namespace PropertyGridHelpersTest.net462.Converters
 namespace PropertyGridHelpersTest.net472.Converters
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Converters
-#elif WINDOWS7_0
-namespace PropertyGridHelpersTest.net60.W7.Converters
-#elif WINDOWS10_0
-namespace PropertyGridHelpersTest.net60.W10.Converters
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Converters
 #elif NET9_0
@@ -60,7 +56,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsEmptyStringWithNullEntriesTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -77,7 +73,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsStringWithIntEntriesTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -94,7 +90,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsStringWithDifferentTypesTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -111,7 +107,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void ConvertToReturnsByteTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -128,7 +124,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertToStringTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -145,7 +141,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertFromStringTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -162,7 +158,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertToShortTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())
@@ -179,7 +175,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         [Fact]
         public void CanConvertFromShortTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var converter = new TypeConverter<int>();
 #else
             using (var converter = new TypeConverter<int>())

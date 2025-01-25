@@ -16,7 +16,7 @@ namespace SampleForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var frm = new Form1();
 #else
             using (var frm = new Form1())

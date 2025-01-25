@@ -20,10 +20,6 @@ namespace PropertyGridHelpersTest.net462.Controls
 namespace PropertyGridHelpersTest.net472.Controls
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Controls
-#elif WINDOWS7_0
-namespace PropertyGridHelpersTest.net60.W7.Controls
-#elif WINDOWS10_0
-namespace PropertyGridHelpersTest.net60.W10.Controls
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.Controls
 #elif NET9_0
@@ -65,7 +61,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddItemCaptionSetCorrectlyTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -83,7 +79,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddValuesCaptionSetCorrectlyTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -101,7 +97,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddItemValueSetCorrectlyTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -119,7 +115,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddValuesValueSetCorrectlyTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -137,7 +133,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void ItemCheckedTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -156,7 +152,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void SetEnumValueTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -174,7 +170,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void SetEnumValueNullTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -196,7 +192,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [InlineData(Converters.EnumTextConverterTest.TestEnums.NoAttribute)]
         public void GetEnumValueTest(Converters.EnumTextConverterTest.TestEnums testValue)
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -215,12 +211,12 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddNullItemThrowsArgumentNullException()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
 #endif
-            Assert.Throws<ArgumentNullException>(() => list.Add(null));
+                Assert.Throws<ArgumentNullException>(() => list.Add(null));
         }
 
         /// <summary>
@@ -229,7 +225,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void AddDuplicateCaptionItems()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -250,7 +246,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void SetEnumValueWithoutFlagsAttribute()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -267,7 +263,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void ClearItemsTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -286,7 +282,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void HandleLargeEnumValuesTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -304,7 +300,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         [Fact]
         public void CheckedStateConsistencyTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -323,7 +319,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void UpdateCheckedItems_CallsUpdateCheckedItemsWithZero_WhenCompositeValueIsZero()
         {
             // Arrange
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -348,7 +344,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void UpdateCheckedItems_CallsUpdateCheckedItemsWithZero_WhenCompositeIsNull()
         {
             // Arrange
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -371,7 +367,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void UpdateCheckedItems_SumsValuesOfCheckedItems()
         {
             // Arrange
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())
@@ -401,7 +397,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void UpdateCheckedItems_RemovesItemBitsWhenUnchecked()
         {
             // Arrange
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var list = new FlagCheckedListBox();
 #else
             using (var list = new FlagCheckedListBox())

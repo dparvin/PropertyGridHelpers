@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace PropertyGridHelpers.UIEditors
     /// <seealso cref="UITypeEditor" />
     public partial class ImageTextUIEditor : UITypeEditor, IDisposable
     {
-        #region Fields ^^^^^^^^^^^^^^^^
+        #region Fields ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// The object is disposed
@@ -66,7 +67,7 @@ namespace PropertyGridHelpers.UIEditors
 
         #endregion
 
-        #region Constructors ^^^^^^^^^^
+        #region Constructors ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTextUIEditor"/> class.
@@ -91,7 +92,7 @@ namespace PropertyGridHelpers.UIEditors
 
         #endregion
 
-        #region PaintValue Routines ^^^
+        #region PaintValue Routines ^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// return that the editor will paint the items in the drop-down
@@ -122,7 +123,7 @@ namespace PropertyGridHelpers.UIEditors
 
         #endregion
 
-        #region Static Methods ^^^^^^^^
+        #region Static Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Gets the image from resource.
@@ -172,7 +173,7 @@ namespace PropertyGridHelpers.UIEditors
                     case ImageLocation.Resource:
                         // Create a resource manager to access the resources
                         ResourceName = $"{m}{(string.IsNullOrEmpty(ResourcePath) ? "" : $".{ResourcePath}")}";
-                        originalImage = GetImageFromResourceFile(Value, ei, ResourceName, fileExtension);
+                        originalImage = GetImageFromResourceFile(Value, ei, ResourceName, fileExtension, LicenseManager.UsageMode == LicenseUsageMode.Designtime);
                         break;
                     case ImageLocation.File:
                         originalImage = GetImageFromFile(Value, ei, ResourcePath, fileExtension);
@@ -187,7 +188,7 @@ namespace PropertyGridHelpers.UIEditors
                 using (var g = Graphics.FromImage(scaledImage))
                 {
                     g.Clear(Color.Transparent); // Optional: set background to transparent
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                     var ts = GetTargetSizes(originalImage, bounds);
 
@@ -250,28 +251,36 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="ResourceItem">The resource entry to retrieve.</param>
         /// <param name="ResourcePath">Name of the resource.</param>
         /// <param name="fileExtension">The file extension.</param>
+        /// <param name="IsInDesignMode">if set to <c>true</c> is in design mode.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Value</exception>
-        /// <exception cref="ArgumentException">
-        /// '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+        /// <exception cref="System.ArgumentNullException">Value</exception>
+        /// <exception cref="System.ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
         /// or
-        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
-        ///                     $"Available resources: {string.Join(", ", resourceNames)}
-        /// or
-        /// Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+        /// <exception cref="System.InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
         /// $"Available resources: {string.Join(", ", resourceNames)}
         /// or
-        /// Resource {ResourceItem} is not a valid image or byte array.</exception>
-        private static Bitmap GetImageFromResourceFile(
+        /// Error retrieving resource '{ResourceItem}{(string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}")}' at '{ResourcePath}' in Assembly '{Value.GetType().Assembly.GetName().Name}': {ex.Message}
+        /// or
+        /// Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
+        /// <exception cref="ArgumentNullException">Value</exception>
+        /// <exception cref="ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+        /// or
+        /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+        /// <exception cref="InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+        /// $"Available resources: {string.Join(", ", resourceNames)}
+        /// or
+        /// Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
+        /// <exception cref="InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+        /// $"Available resources: {string.Join(", ", resourceNames)}
+        /// or
+        /// Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
+        public static Bitmap GetImageFromResourceFile(
             object Value,
             string ResourceItem,
             string ResourcePath,
-            string fileExtension)
+            string fileExtension,
+            bool IsInDesignMode)
         {
 #if NET5_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(Value);
@@ -294,17 +303,24 @@ namespace PropertyGridHelpers.UIEditors
             object resource;
 
             // Get the resource object
-            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            try
             {
-                // If in design mode, use the ResourceManager to get the resource
-                var rm = new ComponentResourceManager(Value.GetType());
-                resource = rm.GetObject(ResourceItem + (string.IsNullOrEmpty(fileExtension) ? "" : "." + fileExtension), CultureInfo.CurrentCulture);
+                if (IsInDesignMode)
+                {
+                    // If in design mode, use the ResourceManager to get the resource
+                    var rm = new ComponentResourceManager(Value.GetType());
+                    resource = rm.GetObject($"{ResourceItem}{(string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}")}", CultureInfo.CurrentCulture);
+                }
+                else
+                {
+                    // If in runtime, use the ResourceManager to get the resource
+                    var rm = new ResourceManager(ResourcePath, Value.GetType().Assembly);
+                    resource = rm.GetObject($"{ResourceItem}{(string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}")}", CultureInfo.CurrentCulture);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // If in runtime, use the ResourceManager to get the resource
-                var rm = new ResourceManager(ResourcePath, Value.GetType().Assembly);
-                resource = rm.GetObject(ResourceItem + (string.IsNullOrEmpty(fileExtension) ? "" : "." + fileExtension), CultureInfo.CurrentCulture);
+                throw new InvalidOperationException($"Error retrieving resource '{ResourceItem}{(string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}")}' at '{ResourcePath}' in Assembly '{Value.GetType().Assembly.GetName().Name}': {ex.Message}", ex);
             }
 
             Bitmap newImage = null;
@@ -400,6 +416,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <returns></returns>
         public static string GetResourcePath(ITypeDescriptorContext context, Type type)
         {
+            // Check the context for a dynamic path
             if (context?.Instance != null && context?.PropertyDescriptor != null)
             {
                 // Check if the property has the DynamicPathSourceAttribute
@@ -409,20 +426,24 @@ namespace PropertyGridHelpers.UIEditors
                     // Find the referenced property
                     var pathProperty = context?.Instance.GetType().GetProperty(dynamicPathAttr.PathPropertyName);
                     if (pathProperty != null && pathProperty.PropertyType == typeof(string))
-                    {
                         // Return the value of the referenced property
                         return pathProperty.GetValue(context?.Instance, null) as string;
-                    }
                 }
             }
 
+            // Check PropertyDescriptor for ResourcePathAttribute
             if (context?.PropertyDescriptor != null)
-            {
                 // Retrieve the ResourcePath from the PropertyDescriptor's attributes
                 if (context.PropertyDescriptor.Attributes[typeof(ResourcePathAttribute)] is ResourcePathAttribute attribute)
                     return attribute.ResourcePath;
-            }
 
+            // Check if the type is an enum
+            if (type.IsEnum)
+                // Check for ResourcePathAttribute on the enum type
+                if (Attribute.GetCustomAttribute(type, typeof(ResourcePathAttribute)) is ResourcePathAttribute enumAttribute)
+                    return enumAttribute.ResourcePath;
+
+            // Check the type's properties for ResourcePathAttribute
             var property = type.GetProperties()
                 .FirstOrDefault(prop => prop.GetCustomAttributes(typeof(ResourcePathAttribute), false).Length > 0);
 
@@ -433,10 +454,8 @@ namespace PropertyGridHelpers.UIEditors
 
                 return attribute?.ResourcePath;
             }
-            else
-            {
-                return "Properties.Resources";
-            }
+
+            return "Properties.Resources";
         }
 
         /// <summary>
@@ -461,7 +480,7 @@ namespace PropertyGridHelpers.UIEditors
                     else if (fileExtensionProperty != null && fileExtensionProperty.PropertyType.IsEnum)
                     {
                         // Check if the enum value has an EnumTextAttribute
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
                         if (fileExtensionProperty.GetValue(context.Instance, null) is not Enum extension)
                             return string.Empty;
 #else
@@ -577,7 +596,7 @@ namespace PropertyGridHelpers.UIEditors
 
         #endregion
 
-        #region Disposal routines ^^^^^
+        #region Disposal routines ^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.

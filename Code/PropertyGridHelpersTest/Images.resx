@@ -117,22 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category_TestCategory" xml:space="preserve">
-    <value>Test Category</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="confetti" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Properties\Resources\confetti-stars-new-year-s-eve-background-3770911.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>Image as a bitmap</comment>
   </data>
-  <data name="Description_TestDescription" xml:space="preserve">
-    <value>Test Description</value>
+  <data name="confetti-stars" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Properties\Resources\confetti-stars-new-year-s-eve-background-3770911.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Test Image for use in testing the ImageTextUIEditor class</comment>
   </data>
-  <data name="DisplayName_TestDisplayName" xml:space="preserve">
-    <value>Test Display Name</value>
+  <data name="confetti-stars-bitmap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Properties\Resources\confetti-stars-new-year-s-eve-background-3770911.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image as a bitmap</comment>
   </data>
-  <data name="EditorStyle" xml:space="preserve">
-    <value>Editor Edit Style is set as expected.  It is set to DropDown.</value>
-  </data>
-  <data name="EditValueNull" xml:space="preserve">
-    <value>EditValue returned null as expected</value>
+  <data name="confetti.jpg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Properties\Resources\confetti-stars-new-year-s-eve-background-3770911.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Stars" xml:space="preserve">
-    <value>Stars Test Text</value>
+    <value>Stars</value>
   </data>
 </root>

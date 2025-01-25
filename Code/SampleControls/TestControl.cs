@@ -32,6 +32,7 @@ namespace SampleControls
 
         private ScrollBars _Scrollbars = ScrollBars.None;
         private ImageTypes _ImageTypes = ImageTypes.None;
+        private ImageFileExtension _FileExtension = ImageFileExtension.png;
 
         /// <summary>
         /// Gets or sets the test.
@@ -107,9 +108,9 @@ namespace SampleControls
         /// <value>
         /// The image types.
         /// </value>
-        [Category("Layout")]
-        [Description("Image to add to control")]
-        [DisplayName("Image To Display")]
+        [LocalizedCategory("Category_Layout", typeof(TestControl))]
+        [LocalizedDescription("Description_ImageToDisplay", typeof(TestControl))]
+        [LocalizedDisplayName("DisplayName_ImageToDisplay", typeof(TestControl))]
         [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
         [ResourcePath("Properties.Resources")]
         [TypeConverter(typeof(EnumTextConverter<ImageTypes>))]
@@ -123,23 +124,9 @@ namespace SampleControls
             get => _ImageTypes;
             set
             {
+                if (_ImageTypes == value) return; // Avoid unnecessary updates
                 _ImageTypes = value;
-                if (value == ImageTypes.None)
-                    pictureBox1.Visible = false;
-                else
-                {
-                    var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(ImageTypes)];
-                    var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-                    var resourcePath = ImageTextUIEditor.GetResourcePath(context, ImageTypes.GetType());
-                    var bounds = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
-                    pictureBox1.Image = ImageTextUIEditor.GetImageFromResource(_ImageTypes, ImageTypes.GetType(), resourcePath, FileExtension == ImageFileExtension.None ? "" : FileExtension.ToString(), bounds);
-                    pictureBox1.Visible = true;
-                }
-                // Ensure design-time updates
-                if (DesignMode)
-                {
-                    pictureBox1.Invalidate(); // Only redraws the PictureBox
-                }
+                UpdateImage(); // Call the shared update routine
             }
         }
 
@@ -149,15 +136,24 @@ namespace SampleControls
         /// <value>
         /// The file extension.
         /// </value>
-        [Category("Layout")]
-        [Description("Extension of the Image to add to control")]
-        [DisplayName("Resource image extension")]
+        [LocalizedCategory("Category_Layout", typeof(TestControl))]
+        [LocalizedDescription("Description_FileExtension", typeof(TestControl))]
+        [LocalizedDisplayName("DisplayName_FileExtension", typeof(TestControl))]
         [TypeConverter(typeof(EnumTextConverter<ImageFileExtension>))]
         [DefaultValue(ImageFileExtension.None)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Bindable(true)]
-        public ImageFileExtension FileExtension { get; set; } = ImageFileExtension.png;
+        public ImageFileExtension FileExtension
+        {
+            get => _FileExtension;
+            set
+            {
+                if (_FileExtension == value) return; // Avoid unnecessary updates
+                _FileExtension = value;
+                UpdateImage(); // Call the shared update routine
+            }
+        }
 
         /// <summary>
         /// Gets or sets the test date.
@@ -252,5 +248,41 @@ namespace SampleControls
                 lbl.ForeColor = value;
             }
         }
+
+        #region Support Code ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Updates the image.
+        /// </summary>
+        private void UpdateImage()
+        {
+            if (ImageTypes == ImageTypes.None)
+            {
+                pictureBox1.Visible = false;
+                pictureBox1.Image = null;
+                return;
+            }
+
+            var propertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(ImageTypes)];
+            var context = new CustomTypeDescriptorContext(propertyDescriptor, this);
+            var resourcePath = ImageTextUIEditor.GetResourcePath(context, ImageTypes.GetType());
+            var bounds = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
+
+            pictureBox1.Image = ImageTextUIEditor.GetImageFromResource(
+                ImageTypes,
+                ImageTypes.GetType(),
+                resourcePath,
+                FileExtension == ImageFileExtension.None ? "" : FileExtension.ToString(),
+                bounds);
+
+            pictureBox1.Visible = true;
+
+            if (DesignMode)
+            {
+                pictureBox1.Invalidate(); // Redraw for design-time updates
+            }
+        }
+
+        #endregion
     }
 }

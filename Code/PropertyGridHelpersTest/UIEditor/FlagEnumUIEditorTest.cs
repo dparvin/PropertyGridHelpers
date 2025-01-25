@@ -26,10 +26,6 @@ namespace PropertyGridHelpersTest.net462.UIEditor
 namespace PropertyGridHelpersTest.net472.UIEditor
 #elif NET481
 namespace PropertyGridHelpersTest.net481.UIEditor
-#elif WINDOWS7_0
-namespace PropertyGridHelpersTest.net60.W7.UIEditor
-#elif WINDOWS10_0
-namespace PropertyGridHelpersTest.net60.W10.UIEditor
 #elif NET8_0
 namespace PropertyGridHelpersTest.net80.UIEditor
 #elif NET9_0
@@ -53,7 +49,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void EditValueReturnsNullWithNullEntriesTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var editor = new FlagEnumUIEditor();
 #else
             using (var editor = new FlagEnumUIEditor())
@@ -84,7 +80,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void GetEditStyleTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var editor = new FlagEnumUIEditor();
 #else
             using (var editor = new FlagEnumUIEditor())
@@ -101,7 +97,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         [Fact]
         public void EditValueTest()
         {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
             using var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>();
 #else
             using (var editor = new FlagEnumUIEditor<EnumTextConverter<TestEnums>>())

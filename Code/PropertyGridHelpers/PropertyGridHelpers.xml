@@ -184,6 +184,54 @@
             <param name="context">The context.</param>
             <returns></returns>
         </member>
+        <member name="T:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute">
+            <summary>
+            Attribute for localized category names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.CategoryAttribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Attribute for localized category names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.CategoryAttribute" />
+        </member>
+        <member name="T:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute">
+            <summary>
+            Attribute for localized descriptions.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.DescriptionAttribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Attribute for localized descriptions.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.DescriptionAttribute" />
+        </member>
+        <member name="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute">
+            <summary>
+            Attribute for localized display names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.DisplayNameAttribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Attribute for localized display names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:System.ComponentModel.DisplayNameAttribute" />
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>
             Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
@@ -519,6 +567,38 @@
             The image is a file in a relative path to the project
             </summary>
         </member>
+        <member name="T:PropertyGridHelpers.Support.Support">
+            <summary>
+            Support Functions
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetResourcesNames(System.Type)">
+            <summary>
+            Gets the resources names.
+            </summary>
+            <param name="enumType">Type of the enum.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">enumType</exception>
+            <exception cref="T:System.ArgumentException">The provided type must be an enum. - enumType</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.CheckResourceType(System.Reflection.Assembly)">
+            <summary>
+            Checks the type of the resource.
+            </summary>
+            <param name="assembly">The assembly.</param>
+            <exception cref="T:System.ArgumentNullException">assembly</exception>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetResourceString(System.String,System.Type)">
+            <summary>
+            Gets the resource string from a resource file.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <returns>
+            Returns the text for the current culture from the resource source if it exists,
+            otherwise it returns the resource key.
+            </returns>
+        </member>
         <member name="T:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext">
             <summary>
             Custom Type Descriptor Context
@@ -756,7 +836,7 @@
             or
             '{nameof(ResourceName)}' cannot be null or empty. - ResourceName</exception>
         </member>
-        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromResourceFile(System.Object,System.String,System.String,System.String)">
+        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromResourceFile(System.Object,System.String,System.String,System.String,System.Boolean)">
             <summary>
             Gets the image from resource file.
             </summary>
@@ -764,23 +844,30 @@
             <param name="ResourceItem">The resource entry to retrieve.</param>
             <param name="ResourcePath">Name of the resource.</param>
             <param name="fileExtension">The file extension.</param>
+            <param name="IsInDesignMode">if set to <c>true</c> is in design mode.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">Value</exception>
-            <exception cref="T:System.ArgumentException">
-            '{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+            <exception cref="T:System.ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
             or
-            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath
-            </exception>
-            <exception cref="T:System.InvalidOperationException">
-            Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
-                                $"Available resources: {string.Join(", ", resourceNames)}
-            or
-            Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.
-            </exception>
-            <exception cref="T:System.InvalidOperationException">Resource file '{ResourceName}.resources' not found in assembly '{m}'. \n" +
+            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+            <exception cref="T:System.InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
             $"Available resources: {string.Join(", ", resourceNames)}
             or
-            Resource {ResourceItem} is not a valid image or byte array.</exception>
+            Error retrieving resource '{ResourceItem}{(string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}")}' at '{ResourcePath}' in Assembly '{Value.GetType().Assembly.GetName().Name}': {ex.Message}
+            or
+            Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
+            <exception cref="T:System.ArgumentNullException">Value</exception>
+            <exception cref="T:System.ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
+            or
+            '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
+            <exception cref="T:System.InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+            $"Available resources: {string.Join(", ", resourceNames)}
+            or
+            Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
+            <exception cref="T:System.InvalidOperationException">Resource file '{ResourcePath}.resources' not found in assembly '{m}'. \n" +
+            $"Available resources: {string.Join(", ", resourceNames)}
+            or
+            Resource '{ResourcePath}.resources.{ResourceItem}' is not a valid image or byte array.</exception>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetImageFromFile(System.Object,System.String,System.String,System.String)">
             <summary>

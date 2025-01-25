@@ -18,9 +18,6 @@ namespace SampleForms
             propertyGrid1.SelectedObject = testControl1;
         }
 
-        private void Form1_Resize(object sender, System.EventArgs e)
-        {
-            propertyGrid1.Refresh();
-        }
+        private void Form1_Resize(object sender, System.EventArgs e) => propertyGrid1.Refresh();
     }
 }
