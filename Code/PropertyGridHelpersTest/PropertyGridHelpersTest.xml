@@ -915,6 +915,11 @@
             Gets the file extension should return file extension.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_IntProperty_ShouldReturnFileExtension">
+            <summary>
+            Gets the file extension int property should return file extension.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_StringPropertyShouldReturnFileExtension">
             <summary>
             Gets the file extension should return file extension.
@@ -977,6 +982,14 @@
             The test item with enum.
             </value>
         </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithInt">
+            <summary>
+            Gets or sets the test item with int.
+            </summary>
+            <value>
+            The test item with int.
+            </value>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestResourcePath">
             <summary>
             Gets or sets the test resource path.
@@ -996,6 +1009,14 @@
         <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtensionString">
             <summary>
             Gets or sets the image file extension string.
+            </summary>
+            <value>
+            The image file extension string.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtensionInt">
+            <summary>
+            Gets or sets the image file extension int.
             </summary>
             <value>
             The image file extension string.
@@ -1083,6 +1104,22 @@
             Outputs the specified message.
             </summary>
             <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.EmptyResourceFile">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.EmptyResourceFile.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.EmptyResourceFile.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Enums.ImageFileExtension">
             <summary>

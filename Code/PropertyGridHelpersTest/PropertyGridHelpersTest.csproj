@@ -255,6 +255,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="EmptyResourceFile.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmptyResourceFile.resx</DependentUpon>
+    </Compile>
     <Compile Update="Images.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -268,6 +273,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="EmptyResourceFile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmptyResourceFile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Images.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Images.Designer.cs</LastGenOutput>

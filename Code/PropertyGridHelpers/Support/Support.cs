@@ -73,36 +73,16 @@ namespace PropertyGridHelpers.Support
                 using var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream != null)
                 {
-                    try
-                    {
-                        using var reader = new System.Resources.Extensions.DeserializingResourceReader(stream);
-                        foreach (var entry in reader)
-                        {
-                            if (entry is DictionaryEntry de)
-                            {
-                                Console.Write($"  -> {de.Key}: ");
-                                Console.WriteLine(de.Value?.GetType().FullName ?? "null");
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"  [Error reading resource file: {ex.Message}]");
-                    }
+                    using var reader = new System.Resources.Extensions.DeserializingResourceReader(stream);
+                    foreach (DictionaryEntry entry in reader)
+                        Console.WriteLine($"  -> {entry.Key}: {entry.Value.GetType().FullName}");
                 }
 #else
                 using (var stream = assembly.GetManifestResourceStream(resourceName))
                     if (stream != null)
                         using (var reader = new ResourceReader(stream))
                             foreach (DictionaryEntry entry in reader)
-                            {
-                                Console.Write($"  -> {entry.Key}: ");
-                                if (entry.Value != null)
-                                    // Print the type of the resource
-                                    Console.WriteLine(entry.Value.GetType().FullName);
-                                else
-                                    Console.WriteLine("null");
-                            }
+                                Console.WriteLine($"  -> {entry.Key}: {entry.Value.GetType().FullName}");
 #endif
             }
         }

@@ -699,6 +699,26 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
 
         /// <summary>
+        /// Gets the file extension int property should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_IntProperty_ShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithInt)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = ImageTextUIEditor.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(string.Empty, fileExtension));
+#else
+            Assert.Equal(string.Empty, fileExtension);
+#endif
+        }
+
+        /// <summary>
         /// Gets the file extension should return file extension.
         /// </summary>
         [Fact]
@@ -835,6 +855,15 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         public TestEnum TestItemWithEnum { get; set; } = TestEnum.ItemWithImage;
 
         /// <summary>
+        /// Gets or sets the test item with int.
+        /// </summary>
+        /// <value>
+        /// The test item with int.
+        /// </value>
+        [FileExtension(nameof(ImageFileExtensionInt))]
+        public int TestItemWithInt { get; set; } = (int)TestEnum.ItemWithImage;
+
+        /// <summary>
         /// Gets or sets the test resource path.
         /// </summary>
         /// <value>
@@ -857,6 +886,14 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// The image file extension string.
         /// </value>
         public string ImageFileExtensionString { get; set; } = "jpg";
+
+        /// <summary>
+        /// Gets or sets the image file extension int.
+        /// </summary>
+        /// <value>
+        /// The image file extension string.
+        /// </value>
+        public int ImageFileExtensionInt { get; set; } = 5;
 
         /// <summary>
         /// Gets or sets the image file extension string.

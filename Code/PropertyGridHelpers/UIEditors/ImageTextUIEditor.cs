@@ -472,12 +472,12 @@ namespace PropertyGridHelpers.UIEditors
                 {
                     // Find the referenced property
                     var fileExtensionProperty = GetRequiredProperty(context.Instance, FileExtensionAttr.PropertyName);
-                    if (fileExtensionProperty != null && fileExtensionProperty.PropertyType == typeof(string))
+                    if (fileExtensionProperty.PropertyType == typeof(string))
                     {
                         // Return the value of the referenced property
                         return fileExtensionProperty.GetValue(context.Instance, null) as string;
                     }
-                    else if (fileExtensionProperty != null && fileExtensionProperty.PropertyType.IsEnum)
+                    else if (fileExtensionProperty.PropertyType.IsEnum)
                     {
                         // Check if the enum value has an EnumTextAttribute
 #if NET5_0_OR_GREATER

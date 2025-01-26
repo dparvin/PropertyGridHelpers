@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -112,10 +113,22 @@ namespace PropertyGridHelpersTest.net90.Support
         /// Checks the resource type when assembly is not null does not throw exception.
         /// </summary>
         [Fact]
-        public void CheckResourceType_WhenAssemblyIsNotNull_DoesNotThrowException() =>
+        public void CheckResourceType_WhenAssemblyIsNotNull_DoesNotThrowException()
+        {
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+
             PropertyGridHelpers.Support.Support.CheckResourceType(typeof(SupportTest).Assembly);
 
-        #region Test Support Methods
+            var output = stringWriter.ToString();
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+            Output(output);
+
+            // Assert
+            Assert.Contains("Checking resources in assembly:", output);
+        }
+
+        #region Test Support Methods ^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Outputs the specified message.
