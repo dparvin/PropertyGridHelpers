@@ -632,6 +632,160 @@
             Checks the resource type when assembly is not null does not throw exception.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcePath_ShouldReturnResourcePath(System.String,System.String,System.String)">
+            <summary>
+            Gets the resource path should return resource path.
+            </summary>
+            <param name="PropertyName">Name of the property.</param>
+            <param name="ExpectedPath">The expected path.</param>
+            <param name="TestComment">The test comment.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcePath_NullPropertyDescriptor_ShouldReturnResourcePath">
+            <summary>
+            Gets the resource path null property descriptor should return resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcePath_NullContext_ShouldReturnResourcePath">
+            <summary>
+            Gets the resource path null context should return resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnFileExtension">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_IntProperty_ShouldReturnFileExtension">
+            <summary>
+            Gets the file extension int property should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_StringPropertyShouldReturnFileExtension">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ExceptionForPropertyReferencingInvalidProperty">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ExceptionForPropertyReferencingPrivateProperty">
+            <summary>
+            Gets the file extension should return file extension.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(PropertyGridHelpersTest.Enums.ImageFileExtension,System.String)">
+            <summary>
+            Gets the file extension enum with custom enum text should return enum text.
+            </summary>
+            <param name="testExtension">The test extension.</param>
+            <param name="expectedValue">The expected value.</param>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
+            <summary>
+            Gets or sets the test enum.
+            </summary>
+            <value>
+            The test enum.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemNonString">
+            <summary>
+            Gets or sets the test enum.
+            </summary>
+            <value>
+            The test enum.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithBitmapImage">
+            <summary>
+            Gets or sets the test item with bitmap image.
+            </summary>
+            <value>
+            The test item with bitmap image.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithResource">
+            <summary>
+            Gets or sets the test item with resource.
+            </summary>
+            <value>
+            The test item with resource.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithPrivateProperty">
+            <summary>
+            Gets or sets the test item with resource.
+            </summary>
+            <value>
+            The test item with resource.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithEnum">
+            <summary>
+            Gets or sets the test item with enum.
+            </summary>
+            <value>
+            The test item with enum.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithInt">
+            <summary>
+            Gets or sets the test item with int.
+            </summary>
+            <value>
+            The test item with int.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestResourcePath">
+            <summary>
+            Gets or sets the test resource path.
+            </summary>
+            <value>
+            The test resource path.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestResourcePathInt">
+            <summary>
+            Gets or sets the test resource path as an int to test that this type of property is skipped.
+            </summary>
+            <value>
+            The test resource path.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.ImageFileExtension">
+            <summary>
+            Gets or sets the file extension.
+            </summary>
+            <value>
+            The file extension.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.ImageFileExtensionString">
+            <summary>
+            Gets or sets the image file extension string.
+            </summary>
+            <value>
+            The image file extension string.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.ImageFileExtensionInt">
+            <summary>
+            Gets or sets the image file extension int.
+            </summary>
+            <value>
+            The image file extension string.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.PrivateImageFileExtension">
+            <summary>
+            Gets or sets the image file extension string.
+            </summary>
+            <value>
+            The image file extension string.
+            </value>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.Output(System.String)">
             <summary>
             Outputs the specified message.
@@ -779,7 +933,7 @@
             Paints the value should draw image.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage_IntegrationTest(PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum)">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_ShouldDrawImage_IntegrationTest(PropertyGridHelpersTest.Enums.TestEnum)">
             <summary>
             Paints the value should draw image integration test.
             </summary>
@@ -795,7 +949,7 @@
             Paints the value should draw image without resource path.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_EmbeddedImage_ShouldDrawImage(PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum,System.String)">
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PaintValue_EmbeddedImage_ShouldDrawImage(PropertyGridHelpersTest.Enums.TestEnum,System.String)">
             <summary>
             Paints the value embedded image should draw image.
             </summary>
@@ -827,13 +981,6 @@
             <param name="expectedHeight">The expected height.</param>
             <param name="expectedOffsetX">The expected offset x.</param>
             <param name="expectedOffsetY">The expected offset y.</param>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetResourcePath_ShouldReturnResourcePath(System.String,System.String)">
-            <summary>
-            Gets the resource path should return resource path.
-            </summary>
-            <param name="PropertyName">Name of the property.</param>
-            <param name="ExpectedPath">The expected path.</param>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromResource_ShouldReturnImage">
             <summary>
@@ -910,186 +1057,6 @@
             Gets the image from resource file should return exception when resource path is empty.
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ShouldReturnFileExtension">
-            <summary>
-            Gets the file extension should return file extension.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_IntProperty_ShouldReturnFileExtension">
-            <summary>
-            Gets the file extension int property should return file extension.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_StringPropertyShouldReturnFileExtension">
-            <summary>
-            Gets the file extension should return file extension.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ExceptionForPropertyReferencingInvalidProperty">
-            <summary>
-            Gets the file extension should return file extension.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_ExceptionForPropertyReferencingPrivateProperty">
-            <summary>
-            Gets the file extension should return file extension.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(PropertyGridHelpersTest.Enums.ImageFileExtension,System.String)">
-            <summary>
-            Gets the file extension enum with custom enum text should return enum text.
-            </summary>
-            <param name="testExtension">The test extension.</param>
-            <param name="expectedValue">The expected value.</param>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithImage">
-            <summary>
-            Gets or sets the test enum.
-            </summary>
-            <value>
-            The test enum.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithBitmapImage">
-            <summary>
-            Gets or sets the test item with bitmap image.
-            </summary>
-            <value>
-            The test item with bitmap image.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithResource">
-            <summary>
-            Gets or sets the test item with resource.
-            </summary>
-            <value>
-            The test item with resource.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithPrivateProperty">
-            <summary>
-            Gets or sets the test item with resource.
-            </summary>
-            <value>
-            The test item with resource.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithEnum">
-            <summary>
-            Gets or sets the test item with enum.
-            </summary>
-            <value>
-            The test item with enum.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestItemWithInt">
-            <summary>
-            Gets or sets the test item with int.
-            </summary>
-            <value>
-            The test item with int.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestResourcePath">
-            <summary>
-            Gets or sets the test resource path.
-            </summary>
-            <value>
-            The test resource path.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtension">
-            <summary>
-            Gets or sets the file extension.
-            </summary>
-            <value>
-            The file extension.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtensionString">
-            <summary>
-            Gets or sets the image file extension string.
-            </summary>
-            <value>
-            The image file extension string.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.ImageFileExtensionInt">
-            <summary>
-            Gets or sets the image file extension int.
-            </summary>
-            <value>
-            The image file extension string.
-            </value>
-        </member>
-        <member name="P:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.PrivateImageFileExtension">
-            <summary>
-            Gets or sets the image file extension string.
-            </summary>
-            <value>
-            The image file extension string.
-            </value>
-        </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum">
-            <summary>
-            Enum to test the different types of image processing
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithImage">
-            <summary>
-            The item with image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithBitmapImage">
-            <summary>
-            The item with bitmap image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.confetti">
-            <summary>
-            The confetti
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithoutImage">
-            <summary>
-            The item without image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImage">
-            <summary>
-            The item with embedded image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithEmbeddedImageResource">
-            <summary>
-            The item with embedded image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithFileImage">
-            <summary>
-            The item with file image
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithInvalidResourceType">
-            <summary>
-            The item with invalid resource type
-            </summary>
-        </member>
-        <member name="T:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems">
-            <summary>
-            Enum to test full paths to the images in the project
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item1">
-            <summary>
-            The item1
-            </summary>
-        </member>
-        <member name="F:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.FullPathTestItems.Item2">
-            <summary>
-            The item2
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
             <summary>
             Helper method to check if a bitmap is empty
@@ -1121,6 +1088,21 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="T:PropertyGridHelpersTest.Enums.FullPathTestItems">
+            <summary>
+            Enum to test full paths to the images in the project
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.FullPathTestItems.Item1">
+            <summary>
+            The item1
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.FullPathTestItems.Item2">
+            <summary>
+            The item2
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.Enums.ImageFileExtension">
             <summary>
             Image File Extensions
@@ -1149,6 +1131,51 @@
         <member name="F:PropertyGridHelpersTest.Enums.ImageFileExtension.gif">
             <summary>
             The GIF
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Enums.TestEnum">
+            <summary>
+            Enum to test the different types of image processing
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithImage">
+            <summary>
+            The item with image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithBitmapImage">
+            <summary>
+            The item with bitmap image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.confetti">
+            <summary>
+            The confetti
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithoutImage">
+            <summary>
+            The item without image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithEmbeddedImage">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithEmbeddedImageResource">
+            <summary>
+            The item with embedded image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithFileImage">
+            <summary>
+            The item with file image
+            </summary>
+        </member>
+        <member name="F:PropertyGridHelpersTest.Enums.TestEnum.ItemWithInvalidResourceType">
+            <summary>
+            The item with invalid resource type
             </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Images">

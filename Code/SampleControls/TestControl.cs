@@ -1,5 +1,6 @@
 ﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
+using PropertyGridHelpers.Support;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpers.UIEditors;
 using System;
@@ -265,7 +266,7 @@ namespace SampleControls
 
             var propertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(ImageTypes)];
             var context = new CustomTypeDescriptorContext(propertyDescriptor, this);
-            var resourcePath = ImageTextUIEditor.GetResourcePath(context, ImageTypes.GetType());
+            var resourcePath = Support.GetResourcePath(context, ImageTypes.GetType());
             var bounds = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
 
             pictureBox1.Image = ImageTextUIEditor.GetImageFromResource(

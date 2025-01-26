@@ -599,6 +599,39 @@
             otherwise it returns the resource key.
             </returns>
         </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetResourcePath(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Gets the resource path.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+            <remarks>
+            This routine looks for a <see cref="T:PropertyGridHelpers.Attributes.DynamicPathSourceAttribute"/> on 
+            the property or a <see cref="T:PropertyGridHelpers.Attributes.ResourcePathAttribute"/> on the property 
+            or enum type.
+            </remarks>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetFileExtension(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the file extension.
+            </summary>
+            <param name="context">The context.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetRequiredProperty(System.Object,System.String)">
+            <summary>
+            Gets the required public property.
+            </summary>
+            <param name="instance">The instance.</param>
+            <param name="propertyName">Name of the property.</param>
+            <returns>
+            The <see cref="T:System.Reflection.PropertyInfo"/> of the property if it exists and is public.
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown if the property is not found or is not public.
+            </exception>
+        </member>
         <member name="T:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext">
             <summary>
             Custom Type Descriptor Context
@@ -895,34 +928,6 @@
             </summary>
             <param name="Value">The value.</param>
             <returns></returns>
-        </member>
-        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetResourcePath(System.ComponentModel.ITypeDescriptorContext,System.Type)">
-            <summary>
-            Gets the resource path.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="type">The type.</param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetFileExtension(System.ComponentModel.ITypeDescriptorContext)">
-            <summary>
-            Gets the file extension.
-            </summary>
-            <param name="context">The context.</param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetRequiredProperty(System.Object,System.String)">
-            <summary>
-            Gets the required public property.
-            </summary>
-            <param name="instance">The instance.</param>
-            <param name="propertyName">Name of the property.</param>
-            <returns>
-            The <see cref="T:System.Reflection.PropertyInfo"/> of the property if it exists and is public.
-            </returns>
-            <exception cref="T:System.InvalidOperationException">
-            Thrown if the property is not found or is not public.
-            </exception>
         </member>
         <member name="M:PropertyGridHelpers.UIEditors.ImageTextUIEditor.GetTargetSizes(System.Drawing.Bitmap,System.Drawing.Rectangle)">
             <summary>

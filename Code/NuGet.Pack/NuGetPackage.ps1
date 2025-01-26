@@ -7,7 +7,7 @@ $global:ExitCode = 1
 
 function Write-Log {
 
-	#region Parameters
+	#region Parameters ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 		[cmdletbinding()]
 		Param(

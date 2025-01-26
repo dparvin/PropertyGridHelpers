@@ -132,7 +132,7 @@ namespace PropertyGridHelpers.Converters
             throw new ArgumentException("The value is expected to be a string or an int.", nameof(value));
         }
 
-        #region GetStandardValues ^^^^^
+        #region GetStandardValues ^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Gets the standard values.

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PropertyGridHelpers.Attributes;
+using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -100,6 +102,138 @@ namespace PropertyGridHelpers.Support
         {
             var resourceManager = new ResourceManager(resourceSource);
             return resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
+        }
+
+        /// <summary>
+        /// Gets the resource path.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This routine looks for a <see cref="DynamicPathSourceAttribute"/> on 
+        /// the property or a <see cref="ResourcePathAttribute"/> on the property 
+        /// or enum type.
+        /// </remarks>
+        public static string GetResourcePath(ITypeDescriptorContext context, Type type)
+        {
+            // Check the context for a dynamic path
+            if (context?.Instance != null && context.PropertyDescriptor != null)
+            {
+                // Check if the property has the DynamicPathSourceAttribute
+                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
+                if (Attribute.GetCustomAttribute(propertyInfo, typeof(DynamicPathSourceAttribute)) is DynamicPathSourceAttribute dynamicPathAttr)
+                {
+                    // Find the referenced property
+                    var pathProperty = context.Instance.GetType().GetProperty(dynamicPathAttr.PathPropertyName);
+                    if (pathProperty.PropertyType == typeof(string))
+                        // Return the value of the referenced property
+                        return pathProperty.GetValue(context.Instance, null) as string;
+                }
+            }
+
+            // Check PropertyDescriptor for ResourcePathAttribute (only directly applied attributes)
+            if (context?.Instance != null && context.PropertyDescriptor != null)
+            {
+                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
+                if (propertyInfo != null)
+                {
+                    // Get attributes directly applied to the property
+                    var propertyAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ResourcePathAttribute));
+                    if (propertyAttributes.FirstOrDefault() is ResourcePathAttribute directPropertyAttribute)
+                        return directPropertyAttribute.ResourcePath;
+                }
+            }
+
+            // Check if the type is an enum
+            if (type.IsEnum)
+                // Check for ResourcePathAttribute on the enum type
+                if (Attribute.GetCustomAttribute(type, typeof(ResourcePathAttribute)) is ResourcePathAttribute enumAttribute)
+                    return enumAttribute.ResourcePath;
+
+            // Default resource path
+            return "Properties.Resources";
+        }
+
+        /// <summary>
+        /// Gets the file extension.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static string GetFileExtension(ITypeDescriptorContext context)
+        {
+            if (context != null)
+            {
+                var FileExtensionAttr = FileExtensionAttribute.Get(context);
+                if (FileExtensionAttr != null)
+                {
+                    // Find the referenced property
+                    var fileExtensionProperty = GetRequiredProperty(context.Instance, FileExtensionAttr.PropertyName);
+                    if (fileExtensionProperty.PropertyType == typeof(string))
+                    {
+                        // Return the value of the referenced property
+                        return fileExtensionProperty.GetValue(context.Instance, null) as string;
+                    }
+                    else if (fileExtensionProperty.PropertyType.IsEnum)
+                    {
+                        // Check if the enum value has an EnumTextAttribute
+#if NET5_0_OR_GREATER
+                        if (fileExtensionProperty.GetValue(context.Instance, null) is not Enum extension)
+                            return string.Empty;
+#else
+                        if (!(fileExtensionProperty.GetValue(context.Instance, null) is Enum extension))
+                            return string.Empty;
+#endif
+                        var enumField = extension.GetType().GetField(extension.ToString());
+                        if (enumField != null)
+                        {
+                            var enumTextAttr = enumField.GetCustomAttributes(typeof(EnumTextAttribute), false) as EnumTextAttribute[];
+                            if (enumTextAttr.Length > 0)
+                                return enumTextAttr[0].EnumText; // Return custom text
+                        }
+                        // Return the value of the referenced property
+                        return (string.IsNullOrEmpty(extension.ToString()) ||
+                                string.Equals(extension.ToString(), "None", StringComparison.OrdinalIgnoreCase))
+                            ? string.Empty
+                            : extension.ToString();
+                    }
+
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the required public property.
+        /// </summary>
+        /// <param name="instance">The instance.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// The <see cref="PropertyInfo"/> of the property if it exists and is public.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the property is not found or is not public.
+        /// </exception>
+        private static PropertyInfo GetRequiredProperty(object instance, string propertyName)
+        {
+            var property = instance.GetType().GetProperty(propertyName, BindingFlags.Instance |
+                                                                        BindingFlags.Public |
+                                                                        BindingFlags.NonPublic) ??
+                           throw new InvalidOperationException(
+                    $"Property '{propertyName}' not found on type '{instance.GetType()}'.");
+
+#if NET35
+            if (property.GetGetMethod() == null)
+#else
+            if (!property.GetMethod.IsPublic)
+#endif
+            {
+                throw new InvalidOperationException(
+                    $"Property '{propertyName}' on type '{instance.GetType()}' must be public.");
+            }
+
+            return property;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using PropertyGridHelpers.Controls;
 using PropertyGridHelpers.Converters;
 using System.Windows.Forms;
+using PropertyGridHelpersTest.Enums;
 
 #if NET35
 using Xunit.Extensions;
@@ -216,7 +217,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #else
             using (var list = new FlagCheckedListBox())
 #endif
-                Assert.Throws<ArgumentNullException>(() => list.Add(null));
+            Assert.Throws<ArgumentNullException>(() => list.Add(null));
         }
 
         /// <summary>
@@ -252,8 +253,8 @@ namespace PropertyGridHelpersTest.net90.Controls
             using (var list = new FlagCheckedListBox())
 #endif
             {
-                list.Converter = new EnumTextConverter(typeof(UIEditor.ImageTextUIEditorTest.TestEnum));
-                Assert.Throws<InvalidOperationException>(() => list.EnumValue = UIEditor.ImageTextUIEditorTest.TestEnum.ItemWithoutImage);
+                list.Converter = new EnumTextConverter(typeof(TestEnum));
+                Assert.Throws<InvalidOperationException>(() => list.EnumValue = TestEnum.ItemWithoutImage);
             }
         }
 
