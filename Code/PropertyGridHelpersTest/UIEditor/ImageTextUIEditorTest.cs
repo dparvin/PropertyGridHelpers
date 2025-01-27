@@ -637,6 +637,80 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         }
         #endregion
 
+        #region GetImageFromFile Tests ^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the image from file should return image.
+        /// </summary>
+        [Fact]
+        public void GetImageFromFile_ShouldReturnImage()
+        {
+            // Arrange
+            // Act
+            var image = ImageTextUIEditor.GetImageFromFile(TestEnum.ItemWithImage, "confetti-stars", "Images", "jpg");
+            // Assert
+            Assert.NotNull(image);
+            Assert.NotEqual(0, image.Width);
+            Assert.NotEqual(0, image.Height);
+        }
+
+        /// <summary>
+        /// Gets the image from file without separate extension should return image.
+        /// </summary>
+        [Fact]
+        public void GetImageFromFile_withoutSeparateExtension_ShouldReturnImage()
+        {
+            // Arrange
+            // Act
+            var image = ImageTextUIEditor.GetImageFromFile(TestEnum.ItemWithImage, "confetti-stars.jpg", "Images", "");
+            // Assert
+            Assert.NotNull(image);
+            Assert.NotEqual(0, image.Width);
+            Assert.NotEqual(0, image.Height);
+        }
+
+        /// <summary>
+        /// Gets the image from file should throw exception with missing resource path.
+        /// </summary>
+        [Fact]
+        public void GetImageFromFile_ShouldThrowExceptionWithMissingValue()
+        {
+            // Arrange
+            // Act
+            var ex = Assert.Throws<ArgumentNullException>(() => ImageTextUIEditor.GetImageFromFile(null, "confetti-stars", "Images", "jpg"));
+            Output(ex.Message);
+            // Assert
+            Assert.Contains("Value cannot be null.", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the image from file should throw exception with missing resource path.
+        /// </summary>
+        [Fact]
+        public void GetImageFromFile_ShouldThrowExceptionWithMissingResourcePath()
+        {
+            // Arrange
+            // Act
+            var image = Assert.Throws<ArgumentException>(() => ImageTextUIEditor.GetImageFromFile(TestEnum.ItemWithImage, "confetti-stars", "", "jpg"));
+            // Assert
+            Assert.Contains("' cannot be null or empty.", image.Message);
+        }
+
+        /// <summary>
+        /// Gets the image from file should throw exception with missing resource item.
+        /// </summary>
+        [Fact]
+        public void GetImageFromFile_ShouldThrowExceptionWithMissingResourceItem()
+        {
+            // Arrange
+            // Act
+            var image = Assert.Throws<ArgumentException>(() => ImageTextUIEditor.GetImageFromFile(TestEnum.ItemWithImage, "", "Image", "jpg"));
+            // Assert
+            Assert.Contains("' cannot be null or empty.", image.Message);
+        }
+
+        #endregion
+
         #region Test Support Methods ^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>

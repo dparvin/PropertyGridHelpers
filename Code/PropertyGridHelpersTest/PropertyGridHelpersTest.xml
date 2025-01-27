@@ -1057,6 +1057,31 @@
             Gets the image from resource file should return exception when resource path is empty.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromFile_ShouldReturnImage">
+            <summary>
+            Gets the image from file should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromFile_withoutSeparateExtension_ShouldReturnImage">
+            <summary>
+            Gets the image from file without separate extension should return image.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromFile_ShouldThrowExceptionWithMissingValue">
+            <summary>
+            Gets the image from file should throw exception with missing resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromFile_ShouldThrowExceptionWithMissingResourcePath">
+            <summary>
+            Gets the image from file should throw exception with missing resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.GetImageFromFile_ShouldThrowExceptionWithMissingResourceItem">
+            <summary>
+            Gets the image from file should throw exception with missing resource item.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.UIEditor.ImageTextUIEditorTest.IsBitmapEmpty(System.Drawing.Bitmap)">
             <summary>
             Helper method to check if a bitmap is empty

@@ -8,7 +8,6 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Resources;
 
 namespace PropertyGridHelpers.UIEditors
@@ -358,7 +357,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <exception cref="ArgumentException">'{nameof(ResourceItem)}' cannot be null or empty. - ResourceItem
         /// or
         /// '{nameof(ResourcePath)}' cannot be null or empty. - ResourcePath</exception>
-        private static Bitmap GetImageFromFile(
+        public static Bitmap GetImageFromFile(
             object Value,
             string ResourceItem,
             string ResourcePath,
