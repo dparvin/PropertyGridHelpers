@@ -1,5 +1,4 @@
 ﻿using PropertyGridHelpers.Attributes;
-using System.Linq;
 using Xunit;
 using System;
 
@@ -25,12 +24,34 @@ namespace PropertyGridHelpersTest.net80.Attributes
 namespace PropertyGridHelpersTest.net90.Attributes
 #endif
 {
+#if NET35
     /// <summary>
     /// Test for the Localized Description Attribute
     /// </summary>
     public class LocalizedDisplayNameAttributeTest
     {
-        private static readonly Type ResourceSource = typeof(PropertyGridHelpersTest.Properties.Resources);
+#elif NET8_0_OR_GREATER
+    /// <summary>
+    /// Test for the Localized Description Attribute
+    /// </summary>
+    /// <param name="output">system to use to output information to test runner</param>
+    public class LocalizedDisplayNameAttributeTest(ITestOutputHelper output)
+    {
+        private readonly ITestOutputHelper OutputHelper = output;
+#else
+    /// <summary>
+    /// Test for the Localized Description Attribute
+    /// </summary>
+    public class LocalizedDisplayNameAttributeTest
+    {
+        private readonly ITestOutputHelper OutputHelper;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttributeTest"/> class.
+        /// </summary>
+        /// <param name="output">system to use to output information to test runner</param>
+        public LocalizedDisplayNameAttributeTest(ITestOutputHelper output) => OutputHelper = output;
+#endif
+        private static readonly Type ResourceSource = typeof(Properties.Resources);
 
         /// <summary>
         /// Localized display name attribute should return localized string.
@@ -52,6 +73,41 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #else
             Assert.Equal(displayNameValue, attribute.DisplayName);
 #endif
+            Output($"The returned DisplayName is: {attribute.DisplayName}");
         }
+
+        /// <summary>
+        /// Localize category attribute invalid resource key should return key as fallback.
+        /// </summary>
+        [Fact]
+        public void LocalizedDisplayNameAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
+        {
+            // Arrange
+            const string invalidKey = "Invalid_Key";
+
+            // Act
+            var attribute = new LocalizedDisplayNameAttribute(invalidKey, ResourceSource);
+
+            // Assert
+            Assert.NotNull(attribute);
+#if NET35
+            Assert.Equal(0, string.Compare(invalidKey, attribute.DisplayName)); // Fallback behavior
+#else
+            Assert.Equal(invalidKey, attribute.DisplayName); // Fallback behavior
+#endif
+            Output($"The returned DisplayName is: {attribute.DisplayName}");
+        }
+
+        /// <summary>
+        /// Outputs the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+#if NET35
+        private static void Output(string message) =>
+            Console.WriteLine(message);
+#else
+        private void Output(string message) =>
+            OutputHelper.WriteLine(message);
+#endif
     }
 }

@@ -1,6 +1,12 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
 using System;
+using System.Runtime.CompilerServices;
+using Xunit.Extensions;
+using System.Threading;
+
+
+
 
 #if NET35
 using System.Diagnostics;
@@ -26,75 +32,79 @@ namespace PropertyGridHelpersTest.net90.Attributes
 {
 #if NET35
     /// <summary>
-    /// Test for the Localized Category Attribute
+    /// Test for the Localized Enum Text Attribute
     /// </summary>
-    public class LocalizedCategoryAttributeTest
+    public class LocalizedEnumTextAttributeTest
     {
 #elif NET8_0_OR_GREATER
     /// <summary>
-    /// Test for the Localized Category Attribute
+    /// Test for the Localized Enum Text Attribute
     /// </summary>
     /// <param name="output">system to use to output information to test runner</param>
-    public class LocalizedCategoryAttributeTest(ITestOutputHelper output)
+    public class LocalizedEnumTextAttributeTest(ITestOutputHelper output)
     {
         private readonly ITestOutputHelper OutputHelper = output;
 #else
     /// <summary>
-    /// Test for the Localized Category Attribute
+    /// Test for the Localized Enum Text Attribute
     /// </summary>
-    public class LocalizedCategoryAttributeTest
+    public class LocalizedEnumTextAttributeTest
     {
         private readonly ITestOutputHelper OutputHelper;
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizedCategoryAttributeTest"/> class.
+        /// Initializes a new instance of the <see cref="LocalizedEnumTextAttributeTest"/> class.
         /// </summary>
         /// <param name="output">system to use to output information to test runner</param>
-        public LocalizedCategoryAttributeTest(ITestOutputHelper output) => OutputHelper = output;
+        public LocalizedEnumTextAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
-        private const string ResourceKey = "Category_TestCategory";
-        private const string ResourceValue = "Test Category";
+        private const string ResourceKey = "Test_Item";
         private static readonly Type ResourceSource = typeof(Properties.Resources);
 
         /// <summary>
-        /// Localized category attribute should return localized string.
+        /// Localized Enum Text attribute should return localized string.
         /// </summary>
-        [Fact]
-        public void LocalizedCategoryAttribute_ShouldReturnLocalizedString()
+        [Theory]
+        [InlineData("Test Item", "en-US")]
+        [InlineData("Élément de test", "fr-CA")]
+        [InlineData("Élément de test", "fr")]
+        [InlineData("Elemento de prueba", "es")]
+        public void LocalizedEnumTextAttribute_ShouldReturnLocalizedString(string ResourceValue, string selectedCulture)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(selectedCulture);
             // Act
-            var attribute = new LocalizedCategoryAttribute(ResourceKey, ResourceSource);
+            var attribute = new LocalizedEnumTextAttribute(ResourceKey, ResourceSource);
 
             // Assert
             Assert.NotNull(attribute);
 #if NET35
-            Assert.Equal(0, string.Compare(ResourceValue, attribute.Category));
+            Assert.Equal(0, string.Compare(ResourceValue, attribute.EnumText));
 #else
-            Assert.Equal(ResourceValue, attribute.Category);
+            Assert.Equal(ResourceValue, attribute.EnumText);
 #endif
-            Output($"The returned Category is: {attribute.Category}");
+            Output($"The returned EnumText is: {attribute.EnumText}");
         }
 
         /// <summary>
-        /// Localize category attribute invalid resource key should return key as fallback.
+        /// Localize Enum Text attribute invalid resource key should return key as fallback.
         /// </summary>
         [Fact]
-        public void LocalizedCategoryAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
+        public void LocalizedEnumTextAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
         {
             // Arrange
             const string invalidKey = "Invalid_Key";
 
             // Act
-            var attribute = new LocalizedCategoryAttribute(invalidKey, ResourceSource);
+            var attribute = new LocalizedEnumTextAttribute(invalidKey, ResourceSource);
 
             // Assert
             Assert.NotNull(attribute);
 #if NET35
-            Assert.Equal(0, string.Compare(invalidKey, attribute.Category)); // Fallback behavior
+            Assert.Equal(0, string.Compare(invalidKey, attribute.EnumText)); // Fallback behavior
 #else
-            Assert.Equal(invalidKey, attribute.Category); // Fallback behavior
+            Assert.Equal(invalidKey, attribute.EnumText); // Fallback behavior
 #endif
-            Output($"The returned Category is: {attribute.Category}");
+            Output($"The returned EnumText is: {attribute.EnumText}");
         }
 
         /// <summary>

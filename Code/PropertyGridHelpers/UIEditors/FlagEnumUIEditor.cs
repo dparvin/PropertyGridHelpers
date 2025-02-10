@@ -49,16 +49,23 @@ namespace PropertyGridHelpers.UIEditors
         {
             if (context != null &&
                 context.Instance != null &&
-                provider != null)
+                provider != null &&
+                context.PropertyDescriptor != null)
             {
-                var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                var propertyType = context.PropertyDescriptor.PropertyType;
 
-                if (edSvc != null)
+                // Ensure it's an Enum and has the [Flags] attribute
+                if (propertyType.IsEnum && Attribute.IsDefined(propertyType, typeof(FlagsAttribute)))
                 {
-                    var e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType, CultureInfo.CurrentCulture);
-                    FlagEnumCB.EnumValue = e;
-                    edSvc.DropDownControl(FlagEnumCB);
-                    return FlagEnumCB.EnumValue;
+                    var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+
+                    if (edSvc != null)
+                    {
+                        var e = (Enum)Convert.ChangeType(value, propertyType, CultureInfo.CurrentCulture);
+                        FlagEnumCB.EnumValue = e;
+                        edSvc.DropDownControl(FlagEnumCB);
+                        return FlagEnumCB.EnumValue;
+                    }
                 }
             }
 

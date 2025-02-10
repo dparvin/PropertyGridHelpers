@@ -232,6 +232,22 @@
             <param name="resourceSource">The resource source.</param>
             <seealso cref="T:System.ComponentModel.DisplayNameAttribute" />
         </member>
+        <member name="T:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute">
+            <summary>
+            Attribute for localized display names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute.#ctor(System.String,System.Type)">
+            <summary>
+            Attribute for localized display names.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+            <param name="resourceSource">The resource source.</param>
+            <seealso cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>
             Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class

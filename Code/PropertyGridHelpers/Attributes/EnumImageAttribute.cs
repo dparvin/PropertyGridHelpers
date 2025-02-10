@@ -14,7 +14,7 @@ namespace PropertyGridHelpers.Attributes
     /// the ImageTextUIEditor to a property in your class to display the image in a property grid.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public sealed class EnumImageAttribute : Attribute
+    public class EnumImageAttribute : Attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumImageAttribute"/> class.

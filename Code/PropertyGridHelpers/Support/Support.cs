@@ -197,7 +197,6 @@ namespace PropertyGridHelpers.Support
                             ? string.Empty
                             : extension.ToString();
                     }
-
                 }
             }
 

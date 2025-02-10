@@ -106,11 +106,29 @@ namespace PropertyGridHelpersTest.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string NullValueString {
+            get {
+                return ResourceManager.GetString("NullValueString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stars Test Text.
         /// </summary>
         internal static string Stars {
             get {
                 return ResourceManager.GetString("Stars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Item.
+        /// </summary>
+        internal static string Test_Item {
+            get {
+                return ResourceManager.GetString("Test_Item", resourceCulture);
             }
         }
     }

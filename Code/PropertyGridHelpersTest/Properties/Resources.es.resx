@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,28 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category_TestCategory" xml:space="preserve">
-    <value>Test Category</value>
-  </data>
   <data name="Description_TestDescription" xml:space="preserve">
-    <value>Test Description</value>
+    <value>Descripción de prueba</value>
+  </data>
+  <data name="Category_TestCategory" xml:space="preserve">
+    <value>Categoría de prueba</value>
   </data>
   <data name="DisplayName_TestDisplayName" xml:space="preserve">
-    <value>Test Display Name</value>
+    <value>Nombre de pantalla de prueba</value>
   </data>
   <data name="EditorStyle" xml:space="preserve">
-    <value>Editor Edit Style is set as expected.  It is set to DropDown.</value>
+    <value>El estilo del editor está configurado como se esperaba. Está configurado en desplegable.</value>
   </data>
   <data name="EditValueNull" xml:space="preserve">
-    <value>EditValue returned null as expected</value>
-  </data>
-  <data name="NullValueString" xml:space="preserve">
-    <value />
+    <value>EditValue devolvió null como se esperaba</value>
   </data>
   <data name="Stars" xml:space="preserve">
-    <value>Stars Test Text</value>
+    <value>Texto de prueba de estrellas</value>
   </data>
   <data name="Test_Item" xml:space="preserve">
-    <value>Test Item</value>
+    <value>Elemento de prueba</value>
   </data>
 </root>

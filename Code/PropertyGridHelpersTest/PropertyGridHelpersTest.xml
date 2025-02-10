@@ -172,6 +172,12 @@
             Localize category attribute invalid resource key should return key as fallback.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest">
             <summary>
             Test for the Localized Description Attribute
@@ -182,6 +188,17 @@
             Localized description attribute should return localized string.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
+            <summary>
+            Localize description attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest">
             <summary>
             Test for the Localized Description Attribute
@@ -191,6 +208,38 @@
             <summary>
             Localized display name attribute should return localized string.
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
+            <summary>
+            Localize category attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest">
+            <summary>
+            Test for the Localized Enum Text Attribute
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_ShouldReturnLocalizedString(System.String,System.String)">
+            <summary>
+            Localized Enum Text attribute should return localized string.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
+            <summary>
+            Localize Enum Text attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
         </member>
         <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
             <summary>
@@ -681,6 +730,11 @@
             </summary>
             <param name="testExtension">The test extension.</param>
             <param name="expectedValue">The expected value.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNotEnumInstance">
+            <summary>
+            Gets the file extension should return empty string when enum property is not enum instance.
+            </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
             <summary>
@@ -1288,9 +1342,19 @@
               Looks up a localized string similar to EditValue returned null as expected.
             </summary>
         </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.NullValueString">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
         <member name="P:PropertyGridHelpersTest.Properties.Resources.Stars">
             <summary>
               Looks up a localized string similar to Stars Test Text.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Test_Item">
+            <summary>
+              Looks up a localized string similar to Test Item.
             </summary>
         </member>
         <member name="T:PropertyGridHelpersTest.Support.FakePropertyDescriptor">

@@ -132,4 +132,10 @@
   <data name="DisplayName_ImageToDisplay" xml:space="preserve">
     <value>Image To Display</value>
   </data>
+  <data name="Horizontal_Scrollbar" xml:space="preserve">
+    <value>Horizontal Scrollbar</value>
+  </data>
+  <data name="Vertical_Scrollbar" xml:space="preserve">
+    <value>Vertical Scrollbar</value>
+  </data>
 </root>

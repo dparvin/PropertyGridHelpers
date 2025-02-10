@@ -7,16 +7,16 @@ namespace PropertyGridHelpers.Attributes
     /// Apply text to an Enum for use in a property page
     /// </summary>
     /// <seealso cref="Attribute" />
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
-    public sealed class EnumTextAttribute(string text) : Attribute
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class EnumTextAttribute(string text) : Attribute
     {
 #else
     /// <summary>
     /// Apply text to an Enum for use in a property page
     /// </summary>
     /// <seealso cref="Attribute" />
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
-    public sealed class EnumTextAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class EnumTextAttribute : Attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTextAttribute"/> class.

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,27 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Category_TestCategory" xml:space="preserve">
-    <value>Test Category</value>
+    <value>Catégorie de test</value>
   </data>
   <data name="Description_TestDescription" xml:space="preserve">
-    <value>Test Description</value>
+    <value>Description du test</value>
   </data>
   <data name="DisplayName_TestDisplayName" xml:space="preserve">
-    <value>Test Display Name</value>
+    <value>Nom d'affichage du test</value>
   </data>
   <data name="EditorStyle" xml:space="preserve">
-    <value>Editor Edit Style is set as expected.  It is set to DropDown.</value>
+    <value>Le style de l'éditeur est défini comme prévu. Il est défini sur déroulant.</value>
   </data>
   <data name="EditValueNull" xml:space="preserve">
-    <value>EditValue returned null as expected</value>
-  </data>
-  <data name="NullValueString" xml:space="preserve">
-    <value />
+    <value>EditValue a retourné null comme prévu</value>
   </data>
   <data name="Stars" xml:space="preserve">
-    <value>Stars Test Text</value>
+    <value>Texte du test des étoiles</value>
   </data>
   <data name="Test_Item" xml:space="preserve">
-    <value>Test Item</value>
+    <value>Élément de test</value>
   </data>
 </root>

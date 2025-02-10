@@ -10,6 +10,7 @@ using Xunit;
 using Xunit.Extensions;
 #else
 using Xunit.Abstractions;
+using Xunit.Sdk;
 #endif
 
 #if NET35
@@ -354,6 +355,28 @@ namespace PropertyGridHelpersTest.net90.Support
             Assert.Equal(expectedValue, fileExtension);
 #endif
             Output(fileExtension);
+        }
+
+        /// <summary>
+        /// Gets the file extension should return empty string when enum property is not enum instance.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNotEnumInstance()
+        {
+            // Arrange
+            ImageFileExtension = ImageFileExtension.png;
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(ImageFileExtension.ToString(), result));
+#else
+            Assert.Equal(ImageFileExtension.ToString(), result);
+#endif
         }
 
         #endregion
