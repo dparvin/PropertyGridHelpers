@@ -32,7 +32,7 @@
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Internals, Protected, SealedProtected, EditorBrowsableNever, NonBrowsable</VisibleItems>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\PropertyGridHelpers\PropertyGridHelpers.csproj" xmlns="" />
+      <DocumentationSource sourceFile="..\PropertyGridHelpers\PropertyGridHelpers.csproj" />
     </DocumentationSources>
     <ComponentConfigurations />
     <ProjectSummary>PropertyGridHelpers is a .NET library designed to enhance and extend the functionality of the PropertyGrid control, providing custom editors, attributes, and utilities to facilitate property manipulation within Windows Forms applications.</ProjectSummary>

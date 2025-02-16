@@ -248,6 +248,12 @@
             <param name="resourceSource">The resource source.</param>
             <seealso cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />
         </member>
+        <member name="T:PropertyGridHelpers.Attributes.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.Attributes namespace contains attributes used 
+            in the user's project to better utilize PropertyGridHelpers. 
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>
             Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
@@ -415,6 +421,11 @@
               <c>true</c> if [is member flag] [the specified composite]; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="T:PropertyGridHelpers.Controls.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.Controls namespace contains controls used in the property grid.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpers.Converters.EnumTextConverter">
             <summary>
             Enum Text Converter
@@ -519,6 +530,12 @@
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Converters.EnumTextConverter" /> class.
             </summary>
         </member>
+        <member name="T:PropertyGridHelpers.Converters.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.Converters namespace contains type converters 
+            used in displaying data in the property grid.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpers.Converters.TypeConverter`1">
             <summary>
             Convert a type to another type.  Used for expandable objects.
@@ -581,6 +598,19 @@
         <member name="F:PropertyGridHelpers.Enums.ImageLocation.File">
             <summary>
             The image is a file in a relative path to the project
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.Enums.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.Enums namespace contains enumerations 
+            used in converters, Attributes and UIEditors in the 
+            PropertyGridHelpers component.
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpers.Support.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.Support namespace contains classes that 
+            support processes provided by PropertyGridHelpers.
             </summary>
         </member>
         <member name="T:PropertyGridHelpers.Support.Support">
@@ -705,6 +735,13 @@
             Called when component changing.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpers.TypeDescriptors.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.TypeDescriptors namespace contains type 
+            descriptors that can be used to help call routines in the Support 
+            namespace
+            </summary>
         </member>
         <member name="T:PropertyGridHelpers.UIEditors.CollectionUIEditor`1">
             <summary>
@@ -1007,6 +1044,12 @@
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor" /> class.
             </summary>
             <param name="ResourcePath">The path to the resources where the images are stored</param>
+        </member>
+        <member name="T:PropertyGridHelpers.UIEditors.NamespaceDoc">
+            <summary>
+            The PropertyGridHelpers.UIEditors namespace contains UI editors that
+            provide a lot of helpful functionality for the property grid.
+            </summary>
         </member>
     </members>
 </doc>

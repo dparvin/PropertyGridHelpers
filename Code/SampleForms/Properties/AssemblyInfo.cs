@@ -1,11 +1,18 @@
 ﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+[assembly: AssemblyCompany("David Parvin")]
+[assembly: AssemblyCopyright("Copyright © 2016-2025")]
+[assembly: AssemblyDescription("PropertyGridHelpers Sample Control")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 #if NET8_0_OR_GREATER
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 #endif
