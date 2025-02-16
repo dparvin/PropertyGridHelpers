@@ -1,14 +1,10 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
 using System;
-using System.Runtime.CompilerServices;
-using Xunit.Extensions;
 using System.Threading;
 
-
-
-
 #if NET35
+using Xunit.Extensions;
 using System.Diagnostics;
 #else
 using Xunit.Abstractions;

@@ -1,4 +1,6 @@
-﻿using PropertyGridHelpers.Attributes;
+﻿// Ignore Spelling: Nullable
+
+using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpersTest.Enums;
 using System;
@@ -228,6 +230,51 @@ namespace PropertyGridHelpersTest.net90.Support
 #endif
         }
 
+        /// <summary>
+        /// Gets the resource path null property should return resource path.
+        /// </summary>
+        [Fact]
+        public void GetResourcePath_NullProperty_ShouldReturnResourcePath()
+        {
+            // Arrange
+            NullableTestItemWithEnum = null;
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(NullableTestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var resourcePath = PropertyGridHelpers.Support.Support.GetResourcePath(context, PropertyDescriptor.PropertyType);
+
+            // Assert
+            Output(resourcePath);
+#if NET35
+            Assert.Equal(0, string.Compare("Images", resourcePath));
+#else
+            Assert.Equal("Images", resourcePath);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the resource path not covered property should return default resource path.
+        /// </summary>
+        [Fact]
+        public void GetResourcePath_NotCoveredProperty_ShouldReturnDefaultResourcePath()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestResourcePathInt)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var resourcePath = PropertyGridHelpers.Support.Support.GetResourcePath(context, PropertyDescriptor.PropertyType);
+
+            // Assert
+            Output(resourcePath);
+#if NET35
+            Assert.Equal(0, string.Compare("Properties.Resources", resourcePath));
+#else
+            Assert.Equal("Properties.Resources", resourcePath);
+#endif
+        }
+
         #endregion
 
         #region GetFileExtension Tests ^^^^^^^^^^^^^^^^^^^^
@@ -335,6 +382,7 @@ namespace PropertyGridHelpersTest.net90.Support
         [Theory]
         [InlineData(ImageFileExtension.jpg, "jpg - jpeg file")]
         [InlineData(ImageFileExtension.png, "png")]
+        [InlineData(ImageFileExtension.None, "")]
         public void GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(
             ImageFileExtension testExtension,
             string expectedValue)
@@ -376,6 +424,28 @@ namespace PropertyGridHelpersTest.net90.Support
             Assert.Equal(0, string.Compare(ImageFileExtension.ToString(), result));
 #else
             Assert.Equal(ImageFileExtension.ToString(), result);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return empty string when enum property is null.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNull()
+        {
+            // Arrange
+            NullableImageFileExtension = null;
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(NullableTestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(String.Empty, result));
+#else
+            Assert.Equal(String.Empty, result);
 #endif
         }
 
@@ -441,6 +511,15 @@ namespace PropertyGridHelpersTest.net90.Support
         public TestEnum TestItemWithEnum { get; set; } = TestEnum.ItemWithImage;
 
         /// <summary>
+        /// Gets or sets the test item with enum.
+        /// </summary>
+        /// <value>
+        /// The test item with enum.
+        /// </value>
+        [FileExtension(nameof(NullableImageFileExtension))]
+        public TestEnum? NullableTestItemWithEnum { get; set; } = TestEnum.ItemWithImage;
+
+        /// <summary>
         /// Gets or sets the test item with int.
         /// </summary>
         /// <value>
@@ -472,6 +551,14 @@ namespace PropertyGridHelpersTest.net90.Support
         /// The file extension.
         /// </value>
         public ImageFileExtension ImageFileExtension { get; set; } = ImageFileExtension.jpg;
+
+        /// <summary>
+        /// Gets or sets the nullable image file extension.
+        /// </summary>
+        /// <value>
+        /// The nullable image file extension.
+        /// </value>
+        public ImageFileExtension? NullableImageFileExtension { get; set; } = ImageFileExtension.jpg;
 
         /// <summary>
         /// Gets or sets the image file extension string.

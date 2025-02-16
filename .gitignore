@@ -6,6 +6,7 @@
 /Code/NuGet.Pack/bin
 /Code/NuGet.Pack/obj
 /Code/NuGet.Pack/*.user
+/Code/NuGet.Pack/*.log
 /Code/PropertyGridHelpers/bin
 /Code/PropertyGridHelpers/obj
 /Code/PropertyGridHelpers/*.user

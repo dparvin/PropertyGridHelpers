@@ -146,11 +146,16 @@ namespace PropertyGridHelpers.Support
             }
 
             // Check if the type is an enum
-            if (type.IsEnum)
-                // Check for ResourcePathAttribute on the enum type
-                if (Attribute.GetCustomAttribute(type, typeof(ResourcePathAttribute)) is ResourcePathAttribute enumAttribute)
-                    return enumAttribute.ResourcePath;
+            if (type.IsEnum ||
+                (Nullable.GetUnderlyingType(type) is Type underlyingType && underlyingType.IsEnum))
+            {
+                // Determine the actual enum type to inspect for the attribute.
+                var enumType = type.IsEnum ? type : Nullable.GetUnderlyingType(type);
 
+                // Check for ResourcePathAttribute on the enum type
+                if (Attribute.GetCustomAttribute(enumType, typeof(ResourcePathAttribute)) is ResourcePathAttribute enumAttribute)
+                    return enumAttribute.ResourcePath;
+            }
             // Default resource path
             return "Properties.Resources";
         }
@@ -174,16 +179,17 @@ namespace PropertyGridHelpers.Support
                         // Return the value of the referenced property
                         return fileExtensionProperty.GetValue(context.Instance, null) as string;
                     }
-                    else if (fileExtensionProperty.PropertyType.IsEnum)
+                    else if (fileExtensionProperty.PropertyType.IsEnum ||
+                             (Nullable.GetUnderlyingType(fileExtensionProperty.PropertyType) is Type underlyingType && underlyingType.IsEnum))
                     {
-                        // Check if the enum value has an EnumTextAttribute
-#if NET5_0_OR_GREATER
-                        if (fileExtensionProperty.GetValue(context.Instance, null) is not Enum extension)
+                        // Get the property value.
+                        var rawValue = fileExtensionProperty.GetValue(context.Instance, null);
+                        if (rawValue == null)
+                            // If the value is null, return an empty string (or handle as needed).
                             return string.Empty;
-#else
-                        if (!(fileExtensionProperty.GetValue(context.Instance, null) is Enum extension))
-                            return string.Empty;
-#endif
+
+                        // At this point rawValue should be an enum value.
+                        var extension = (Enum)rawValue;
                         var enumField = extension.GetType().GetField(extension.ToString());
                         if (enumField != null)
                         {

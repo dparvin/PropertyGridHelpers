@@ -699,6 +699,16 @@
             Gets the resource path null context should return resource path.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcePath_NullProperty_ShouldReturnResourcePath">
+            <summary>
+            Gets the resource path null property should return resource path.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourcePath_NotCoveredProperty_ShouldReturnDefaultResourcePath">
+            <summary>
+            Gets the resource path not covered property should return default resource path.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnFileExtension">
             <summary>
             Gets the file extension should return file extension.
@@ -734,6 +744,11 @@
         <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNotEnumInstance">
             <summary>
             Gets the file extension should return empty string when enum property is not enum instance.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNull">
+            <summary>
+            Gets the file extension should return empty string when enum property is null.
             </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
@@ -784,6 +799,14 @@
             The test item with enum.
             </value>
         </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.NullableTestItemWithEnum">
+            <summary>
+            Gets or sets the test item with enum.
+            </summary>
+            <value>
+            The test item with enum.
+            </value>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithInt">
             <summary>
             Gets or sets the test item with int.
@@ -814,6 +837,14 @@
             </summary>
             <value>
             The file extension.
+            </value>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.NullableImageFileExtension">
+            <summary>
+            Gets or sets the nullable image file extension.
+            </summary>
+            <value>
+            The nullable image file extension.
             </value>
         </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.ImageFileExtensionString">

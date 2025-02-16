@@ -9,11 +9,14 @@
     <IsTestProject>true</IsTestProject>
     <Authors>David Parvin</Authors>
     <Description>Tests for Property Grid Helper objects</Description>
-    <Copyright>Copyright © 2016-2022</Copyright>
+    <Copyright>Copyright © 2016-2025</Copyright>
     <Product>Property Grid Helpers Test</Product>
     <IsPackable>false</IsPackable>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">

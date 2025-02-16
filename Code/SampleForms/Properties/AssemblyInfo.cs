@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+#if NET8_0_OR_GREATER
+[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -14,7 +17,3 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("aaf17469-9eb5-4b3c-9041-cd6b200bb604")]
-
-#if NET35
-#else
-#endif
