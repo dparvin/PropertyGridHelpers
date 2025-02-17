@@ -99,7 +99,7 @@ namespace PropertyGridHelpersTest.net90.Support
         [Fact]
         public void GetResourcesNames_WhenEnumTypeIsEnum_ReturnsResourceNames()
         {
-            var resourceNames = PropertyGridHelpers.Support.Support.GetResourcesNames(typeof(Enums.ImageFileExtension));
+            var resourceNames = PropertyGridHelpers.Support.Support.GetResourcesNames(typeof(ImageFileExtension));
             Assert.NotNull(resourceNames);
             Output("Resource Names:");
             foreach (var resourceName in resourceNames)

@@ -4,23 +4,47 @@ namespace PropertyGridHelpers.Attributes
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Attribute to point to a different property that contains the path to the resource
+    /// Specifies that another property dynamically provides the path to the resources 
+    /// used to display this property in the PropertyGrid.
     /// </summary>
     /// <seealso cref="Attribute" />
     /// <remarks>
-    /// Initializes a new instance of the <see cref="DynamicPathSourceAttribute"/> class.
+    /// Typically used for properties of an Enum type in a PropertyGrid, where the enum values 
+    /// are shown in a dropdown and mapped to resources that provide user-friendly display text.
+    /// The referenced property contains the path to these resources, allowing the user of the
+    /// property to specify which resource set to use for what is displayed.
     /// </remarks>
-    /// <param name="pathPropertyName">Name of the path property.</param>
+    /// <example>
+    /// <code>
+    /// [DynamicPathSource(nameof(ResourcePath))]
+    /// public MyEnum DisplayProperty { get; set; }
+    /// 
+    /// public string ResourcePath { get; set; } = "MyNamespace.Resources";
+    /// </code>
+    /// </example>
+    /// <param name="pathPropertyName">The name of the property containing the resource path.</param>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class DynamicPathSourceAttribute(string pathPropertyName) : Attribute
 #else
     /// <summary>
-    /// Attribute to point to a different property that contains the path to the resource
+    /// Specifies that another property dynamically provides the path to the resources 
+    /// used to display this property in the PropertyGrid.
     /// </summary>
     /// <seealso cref="Attribute" />
     /// <remarks>
-    /// Initializes a new instance of the <see cref="DynamicPathSourceAttribute"/> class.
+    /// Typically used for properties of an Enum type in a PropertyGrid, where the enum values 
+    /// are shown in a dropdown and mapped to resources that provide user-friendly display text.
+    /// The referenced property contains the path to these resources, allowing the user of the
+    /// property to specify which resource set to use for what is displayed.
     /// </remarks>
+    /// <example>
+    /// <code>
+    /// [DynamicPathSource(nameof(ResourcePath))]
+    /// public MyEnum DisplayProperty { get; set; }
+    /// 
+    /// public string ResourcePath { get; set; } = "MyNamespace.Resources";
+    /// </code>
+    /// </example>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class DynamicPathSourceAttribute : Attribute
 #endif

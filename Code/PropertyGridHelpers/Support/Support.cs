@@ -6,21 +6,27 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Support
 {
     /// <summary>
-    /// Support Functions
+    /// Functions used to Support the processes provided by the PropertyGridHelpers library.
     /// </summary>
     public static class Support
     {
         /// <summary>
-        /// Gets the resources names.
+        /// Gets the resources names from the assembly where the enum is located.
         /// </summary>
         /// <param name="enumType">Type of the enum.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">enumType</exception>
-        /// <exception cref="ArgumentException">The provided type must be an enum. - enumType</exception>
+        /// <returns>
+        /// Returns a string array containing the names of all resources in 
+        /// the assembly where the passed in enum type is located.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when the parameter <paramref name="enumType"/> is null</exception>
+        /// <exception cref="ArgumentException">Throw when the parameter <paramref name="enumType"/> is not an Enum type</exception>
+        /// <!-- IntelliSense Only -->
+        /// See <see href="https://github.com/dparvin/PropertyGridHelpers/wiki/73ec243d-2005-9d6b-8d20-bfc12895eec6">PropertyHelpers Wiki</see>.
         public static string[] GetResourcesNames(Type enumType)
         {
 #if NET5_0_OR_GREATER
@@ -43,10 +49,42 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Checks the type of the resource.
+        /// Analyzes the resources embedded within a given assembly and prints details 
+        /// about their type and structure.
         /// </summary>
-        /// <param name="assembly">The assembly.</param>
-        /// <exception cref="ArgumentNullException">assembly</exception>
+        /// <param name="assembly">The assembly to inspect for embedded resources.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="assembly"/> is <c>null</c>.
+        /// </exception>
+        /// <remarks>
+        /// This method examines the specified <paramref name="assembly"/> and identifies:
+        /// <list type="bullet">
+        ///     <item><description>Embedded resources.</description></item>
+        ///     <item><description>Compiled resource files (<c>.resources</c> files).</description></item>
+        /// </list>
+        ///
+        /// The results are written to the standard output (console).
+        ///
+        /// <para><b>Example Output:</b></para>
+        /// <pre>
+        /// Checking resources in assembly:
+        ///
+        /// Embedded Resources:
+        /// - MyNamespace.MyResource.txt (Embedded Resource)
+        ///
+        /// Resource Files:
+        /// - MyNamespace.Strings.resources (Resource File)
+        ///   -> WelcomeMessage: System.String
+        ///   -> AppVersion: System.Int32
+        /// </pre>
+        ///
+        /// <para>If a compiled resource file (<c>.resources</c>) is found, this method also
+        /// attempts to deserialize its contents and print the key-value pairs along with
+        /// their data types.</para>
+        ///
+        /// <para><b>Note:</b> This method is intended primarily for debugging and inspection purposes.
+        /// It may not be suitable for use in production applications.</para>
+        /// </remarks>
         public static void CheckResourceType(Assembly assembly)
         {
 #if NET5_0_OR_GREATER
@@ -90,14 +128,30 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Gets the resource string from a resource file.
+        /// Retrieves a localized string from a resource file based on the specified resource key.
         /// </summary>
-        /// <param name="resourceKey">The resource key.</param>
-        /// <param name="resourceSource">The resource source.</param>
+        /// <param name="resourceKey">The key identifying the resource string.</param>
+        /// <param name="resourceSource">The type of the resource class that contains the resource file.</param>
         /// <returns>
-        /// Returns the text for the current culture from the resource source if it exists,
-        /// otherwise it returns the resource key.
+        /// The localized string corresponding to <paramref name="resourceKey"/> from the specified 
+        /// <paramref name="resourceSource"/> for the current culture. If the key is not found, 
+        /// the method returns the resource key itself.
         /// </returns>
+        /// <remarks>
+        /// This method uses a <see cref="ResourceManager"/> to retrieve the localized string
+        /// based on the current culture. If the resource key does not exist in the specified resource file, 
+        /// the method returns the key itself instead of throwing an exception.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.
+        /// </exception>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
+        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
+        /// </code>
+        /// </example>
         public static string GetResourceString(string resourceKey, Type resourceSource)
         {
             var resourceManager = new ResourceManager(resourceSource);
@@ -105,16 +159,43 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Gets the resource path.
+        /// Determines the resource path based on the specified property or related data type.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
+        /// <param name="context">
+        /// The type descriptor context, which provides metadata about the property and its container.
+        /// </param>
+        /// <param name="type">
+        /// The data type associated with the resource, typically an enum or a property type.
+        /// </param>
+        /// <returns>
+        /// A string containing the resource path based on the provided property or type.
+        /// If no applicable attributes are found, the method returns the default resource path: 
+        /// <c>"Properties.Resources"</c>.
+        /// </returns>
         /// <remarks>
-        /// This routine looks for a <see cref="DynamicPathSourceAttribute"/> on 
-        /// the property or a <see cref="ResourcePathAttribute"/> on the property 
-        /// or enum type.
+        /// This method searches for the resource path using the following order of precedence:
+        /// <list type="number">
+        ///   <item>If the property has a <see cref="DynamicPathSourceAttribute"/>, it retrieves the path 
+        ///         from the referenced property specified in the attribute.</item>
+        ///   <item>If the property has a <see cref="ResourcePathAttribute"/>, it uses the specified path.</item>
+        ///   <item>If the type (or its underlying nullable type) is an enumeration and has a 
+        ///         <see cref="ResourcePathAttribute"/>, it uses the path defined by the attribute.</item>
+        ///   <item>If none of the above conditions are met, it defaults to <c>"Properties.Resources"</c>.</item>
+        /// </list>
         /// </remarks>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// [ResourcePath("Custom.Resources")]
+        /// public enum MyEnum { Value1, Value2 }
+        ///
+        /// string path = GetResourcePath(null, typeof(MyEnum));
+        /// Console.WriteLine(path); // Outputs: "Custom.Resources"
+        /// </code>
+        /// </example>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="type"/> is <c>null</c>.
+        /// </exception>
         public static string GetResourcePath(ITypeDescriptorContext context, Type type)
         {
             // Check the context for a dynamic path
@@ -161,10 +242,52 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Gets the file extension.
+        /// Retrieves the file extension associated with a property, if specified.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">
+        /// The type descriptor context, which provides metadata about the property and its container.
+        /// </param>
+        /// <returns>
+        /// A string containing the file extension for the resource. 
+        /// If no valid extension is found, returns an empty string.
+        /// </returns>
+        /// <remarks>
+        /// This method determines the file extension based on the following order of precedence:
+        /// <list type="number">
+        ///   <item>Checks if the property has a <see cref="FileExtensionAttribute"/> and retrieves the value 
+        ///         of the property it references.</item>
+        ///   <item>If the referenced property is a string, its value is returned.</item>
+        ///   <item>If the referenced property is an enumeration:
+        ///     <list type="bullet">
+        ///       <item>Returns the enum's string representation, unless it is <c>None</c>, in which case an empty string is returned.</item>
+        ///       <item>If the enum field has an <see cref="EnumTextAttribute"/>, returns its custom text value.</item>
+        ///       <item>If the enum field has a <see cref="LocalizedEnumTextAttribute"/>, returns its localized text value.</item>
+        ///     </list>
+        ///   </item>
+        ///   <item>If no matching attributes are found, the method returns an empty string.</item>
+        /// </list>
+        /// 
+        /// Normally a user would not call this method directly, but it is 
+        /// used by the UIEditors to load values into the <see cref="PropertyGrid" />.
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the referenced property is not found or is not public.
+        /// </exception>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// [FileExtension(nameof(FileType))]
+        /// public string FileName { get; set; } = "example";
+        /// 
+        /// public string FileType { get; set; } = "xml";
+        ///
+        /// var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(FileName)];
+        /// var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+        /// 
+        /// string extension = GetFileExtension(context);
+        /// Console.WriteLine(extension); // Outputs: "xml"
+        /// </code>
+        /// </example>
         public static string GetFileExtension(ITypeDescriptorContext context)
         {
             if (context != null)
