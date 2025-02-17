@@ -57,104 +57,176 @@
             </value>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.EnumImageAttribute">
-            <summary>
-            Apply an image to an Enum item for use in a property page
-            </summary>
-            <seealso cref="T:System.Attribute" />
-            <seealso cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor" />
-            <remarks>
-            Apply this attribute to an Enum item to associate an image with the item and then apply 
-            the ImageTextUIEditor to a property in your class to display the image in a property grid.
-            </remarks>
+             <summary>
+             Associates an image with an Enum field for display in a property grid.
+             </summary>
+             <remarks>
+             This attribute allows an Enum field to have an associated image, which can be used
+             in UI components such as property grids. The image is identified by a text-based key 
+             and can be stored as an embedded resource or in an external location.
+             
+             To display the image in a property grid, apply this attribute to the Enum items and 
+             use <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> as the UI editor for the corresponding property.
+             </remarks>
+             <example>
+             <code>
+             public enum Status
+             {
+                 [EnumImage("PendingIcon.png")]
+                 Pending,
+            
+                 [EnumImage("ApprovedIcon.png")]
+                 Approved,
+            
+                 [EnumImage("RejectedIcon.png", ImageLocation.External)]
+                 Rejected
+             }
+             </code>
+             </example>
+             <seealso cref="T:System.Attribute"/>
+             <seealso cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class
+            with default values (null image, embedded location).
             </summary>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(PropertyGridHelpers.Enums.ImageLocation)">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute" /> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class
+            with the specified image location.
             </summary>
-            <param name="imageLocation">The image location.</param>
+            <param name="imageLocation">The storage location of the image (embedded or external).</param>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.#ctor(System.String,PropertyGridHelpers.Enums.ImageLocation)">
             <summary>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute" /> class.
+            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> class
+            with a specified image identifier and location.
             </summary>
-            <param name="text">The text.</param>
-            <param name="imageLocation">The image location.</param>
+            <param name="text">The name or resource key of the image.</param>
+            <param name="imageLocation">The storage location of the image (default: embedded).</param>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.EnumImageAttribute.EnumImage">
             <summary>
-            Gets the name of the image associated with the Enum item.
+            Gets the name or resource key of the image associated with the Enum item.
             </summary>
             <value>
-            The Enum text.
+            The name or resource key of the image associated with the Enum item.
             </value>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.EnumImageAttribute.ImageLocation">
             <summary>
-            Gets the image location.
+            Gets the storage location of the associated image.
             </summary>
             <value>
-            The image location.
+            The storage location of the associated image.
             </value>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.GetEnumImage(System.Enum)">
             <summary>
-            Gets the enum image.
+            Retrieves the name of the image associated with a given Enum value.
             </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
+            <param name="value">The Enum value.</param>
+            <returns>The image name if found, otherwise the Enum name.</returns>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.Exists(System.Enum)">
             <summary>
-            Exists the specified value.
+            Determines whether an <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> exists for the given Enum value.
             </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
+            <param name="value">The Enum value.</param>
+            <returns><c>true</c> if an image attribute is associated with the value; otherwise, <c>false</c>.</returns>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumImageAttribute.Get(System.Enum)">
             <summary>
-            Gets the enum image attribute.
+            Retrieves the <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> associated with a given Enum value.
             </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
+            <param name="value">The Enum value.</param>
+            <returns>The corresponding <see cref="T:PropertyGridHelpers.Attributes.EnumImageAttribute"/> instance, or <c>null</c> if none is found.</returns>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.EnumTextAttribute">
             <summary>
-            Apply text to an Enum for use in a property page
+            Specifies a user-friendly text representation for an Enum field,
+            primarily for display in a property grid or UI elements.
             </summary>
             <seealso cref="T:System.Attribute" />
+            <param name="text">The display text for the Enum field.</param>
+            <remarks>
+            This attribute can be applied to individual Enum fields to provide a
+            custom display text. This is useful when showing Enum values in a
+            PropertyGrid, dropdowns, or UI components where a more descriptive
+            label is needed instead of the raw Enum name.
+            </remarks>
+            <example>
+            <code>
+            public enum Status
+            {
+                [EnumText("Pending Approval")]
+                Pending,
+            
+                [EnumText("Approved")]
+                Approved,
+            
+                [EnumText("Rejected")]
+                Rejected
+            }
+            </code>
+            </example>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.#ctor(System.String)">
             <summary>
-            Apply text to an Enum for use in a property page
+            Specifies a user-friendly text representation for an Enum field,
+            primarily for display in a property grid or UI elements.
             </summary>
             <seealso cref="T:System.Attribute" />
+            <param name="text">The display text for the Enum field.</param>
+            <remarks>
+            This attribute can be applied to individual Enum fields to provide a
+            custom display text. This is useful when showing Enum values in a
+            PropertyGrid, dropdowns, or UI components where a more descriptive
+            label is needed instead of the raw Enum name.
+            </remarks>
+            <example>
+            <code>
+            public enum Status
+            {
+                [EnumText("Pending Approval")]
+                Pending,
+            
+                [EnumText("Approved")]
+                Approved,
+            
+                [EnumText("Rejected")]
+                Rejected
+            }
+            </code>
+            </example>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.EnumTextAttribute.EnumText">
             <summary>
-            Gets the Enum text.
+            Gets the custom text associated with the Enum field.
             </summary>
             <value>
-            The Enum text.
+            The custom text associated with the Enum field.
             </value>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.Exists(System.Enum)">
             <summary>
-            Exists the specified value.
+            Determines whether the specified Enum value has an associated <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />.
             </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
+            <param name="value">The Enum value to check.</param>
+            <returns>
+              <c>true</c> if the attribute is applied to the Enum field; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.EnumTextAttribute.Get(System.Enum)">
             <summary>
-            Gets the enum image attribute.
+            Retrieves the <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> applied to the specified Enum field.
             </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
+            <param name="value">The Enum value to retrieve the attribute for.</param>
+            <returns>
+            The associated <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />, or <c>null</c> if not found.
+            </returns>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.FileExtensionAttribute">
             <summary>
@@ -210,73 +282,184 @@
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute">
             <summary>
-            Attribute for localized category names.
+            Attribute for specifying a localized category name for a property or event.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
+            <param name="resourceSource">The type that contains the resource manager for retrieving localized strings.</param>
+            <remarks>
+            This attribute allows category names displayed in property grids to be localized
+            by retrieving the category name from a resource file.
+            </remarks>
             <seealso cref="T:System.ComponentModel.CategoryAttribute" />
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute.#ctor(System.String,System.Type)">
             <summary>
-            Attribute for localized category names.
+            Attribute for specifying a localized category name for a property or event.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
+            <param name="resourceSource">The type that contains the resource manager for retrieving localized strings.</param>
+            <remarks>
+            This attribute allows category names displayed in property grids to be localized
+            by retrieving the category name from a resource file.
+            </remarks>
             <seealso cref="T:System.ComponentModel.CategoryAttribute" />
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute">
             <summary>
-            Attribute for localized descriptions.
+            Specifies a localized description for a property, event, or other member in a class.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
+            <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
+            <remarks>
+            This attribute retrieves the description text from a resource file, allowing descriptions to be localized.
+            Apply this attribute to a member, providing the resource key and the resource source type containing the localization.
+            </remarks>
+            <example>
+            <code>
+            [LocalizedDescription("PropertyName_Description", typeof(Resources))]
+            public int PropertyName { get; set; }
+            </code>
+            </example>
             <seealso cref="T:System.ComponentModel.DescriptionAttribute" />
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute.#ctor(System.String,System.Type)">
             <summary>
-            Attribute for localized descriptions.
+            Specifies a localized description for a property, event, or other member in a class.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
+            <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
+            <remarks>
+            This attribute retrieves the description text from a resource file, allowing descriptions to be localized.
+            Apply this attribute to a member, providing the resource key and the resource source type containing the localization.
+            </remarks>
+            <example>
+            <code>
+            [LocalizedDescription("PropertyName_Description", typeof(Resources))]
+            public int PropertyName { get; set; }
+            </code>
+            </example>
             <seealso cref="T:System.ComponentModel.DescriptionAttribute" />
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute">
             <summary>
-            Attribute for localized display names.
+            Specifies a localized display name for a property, event, or other
+            member in a class.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
+            <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
             <seealso cref="T:System.ComponentModel.DisplayNameAttribute" />
+            <remarks>
+            This attribute retrieves the display name text from a resource file,
+            allowing names to be localized. Apply this attribute to a member,
+            providing the resource key and the resource source type containing
+            the localization.
+            </remarks>
+            <example>
+              <code>
+            [LocalizedDisplayName("PropertyName_DisplayName", typeof(Resources))]
+            public int PropertyName { get; set; }
+              </code>
+            </example>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute.#ctor(System.String,System.Type)">
             <summary>
-            Attribute for localized display names.
+            Specifies a localized display name for a property, event, or other
+            member in a class.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
+            <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
             <seealso cref="T:System.ComponentModel.DisplayNameAttribute" />
+            <remarks>
+            This attribute retrieves the display name text from a resource file,
+            allowing names to be localized. Apply this attribute to a member,
+            providing the resource key and the resource source type containing
+            the localization.
+            </remarks>
+            <example>
+              <code>
+            [LocalizedDisplayName("PropertyName_DisplayName", typeof(Resources))]
+            public int PropertyName { get; set; }
+              </code>
+            </example>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute">
             <summary>
-            Attribute for localized display names.
+            Specifies a localized text representation for an Enum field, 
+            retrieving the display text from a resource file.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
             <seealso cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />
+            <param name="resourceKey">The key identifying the localized text in the resource file.</param>
+            <param name="resourceSource">The type that contains the resource manager.</param>
+            <remarks>
+            This attribute extends <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> to support localization.
+            Instead of providing a static string, it fetches the text from a resource file
+            using a specified resource key and source type.
+            This is useful when displaying Enum values in UI components that require
+            translated text based on the application's culture settings.
+            
+            The localized strings should be defined in the resource file (e.g., `Resources.resx`).
+            </remarks>
+            <example>
+            <code>
+            public enum Status
+            {
+                [LocalizedEnumText("PendingApproval", typeof(Resources))]
+                Pending,
+                
+                [LocalizedEnumText("Approved", typeof(Resources))]
+                Approved,
+                
+                [LocalizedEnumText("Rejected", typeof(Resources))]
+                Rejected
+            }
+            </code>
+            </example>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute.#ctor(System.String,System.Type)">
             <summary>
-            Attribute for localized display names.
+            Specifies a localized text representation for an Enum field, 
+            retrieving the display text from a resource file.
             </summary>
-            <param name="resourceKey">The resource key.</param>
-            <param name="resourceSource">The resource source.</param>
             <seealso cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" />
+            <param name="resourceKey">The key identifying the localized text in the resource file.</param>
+            <param name="resourceSource">The type that contains the resource manager.</param>
+            <remarks>
+            This attribute extends <see cref="T:PropertyGridHelpers.Attributes.EnumTextAttribute" /> to support localization.
+            Instead of providing a static string, it fetches the text from a resource file
+            using a specified resource key and source type.
+            This is useful when displaying Enum values in UI components that require
+            translated text based on the application's culture settings.
+            
+            The localized strings should be defined in the resource file (e.g., `Resources.resx`).
+            </remarks>
+            <example>
+            <code>
+            public enum Status
+            {
+                [LocalizedEnumText("PendingApproval", typeof(Resources))]
+                Pending,
+                
+                [LocalizedEnumText("Approved", typeof(Resources))]
+                Approved,
+                
+                [LocalizedEnumText("Rejected", typeof(Resources))]
+                Rejected
+            }
+            </code>
+            </example>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.NamespaceDoc">
             <summary>
-            The PropertyGridHelpers.Attributes namespace contains attributes used 
-            in the user's project to better utilize PropertyGridHelpers. 
+            Provides attributes that extend the functionality of property grids 
+            in the user's project.
             </summary>
+            <remarks>
+            The <c>PropertyGridHelpers.Attributes</c> namespace contains custom 
+            attributes designed to enhance the usage of property grids. These 
+            attributes support localization, image integration, and improved 
+            metadata handling, allowing for more flexible and user-friendly 
+            property grid displays.
+            </remarks>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>
