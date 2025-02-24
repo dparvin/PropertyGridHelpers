@@ -67,6 +67,17 @@ namespace PropertyGridHelpersTest
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Test Category.
+        /// </summary>
+        internal static string Category_TestCategory
+        {
+            get
+            {
+                return ResourceManager.GetString("Category_TestCategory", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] confetti

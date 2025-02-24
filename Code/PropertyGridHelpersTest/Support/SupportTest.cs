@@ -449,6 +449,25 @@ namespace PropertyGridHelpersTest.net90.Support
 #endif
         }
 
+        /// <summary>
+        /// Should the return the key with no resource path.
+        /// </summary>
+        [Fact]
+        public void ShouldReturnTheKey_withNoResourcePath()
+        {
+            // Act
+            var attribute = new LocalizedCategoryAttribute("SomeInvalidKey");
+
+            // Assert
+            Assert.NotNull(attribute);
+#if NET35
+            Assert.Equal(0, string.Compare("SomeInvalidKey", attribute.Category));
+#else
+            Assert.Equal("SomeInvalidKey", attribute.Category);
+#endif
+            Output($"The returned Category is: {attribute.Category}");
+        }
+
         #endregion
 
         #region Test objects ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

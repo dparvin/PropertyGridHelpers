@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -20,8 +21,8 @@ namespace PropertyGridHelpers.Attributes
     /// </code>
     /// </example>
     /// <seealso cref="DescriptionAttribute" />
-    public class LocalizedDescriptionAttribute(string resourceKey, Type resourceSource) :
-        DescriptionAttribute(Support.Support.GetResourceString(resourceKey, resourceSource))
+    public class LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null) :
+        DescriptionAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
     }
 #else
@@ -46,8 +47,8 @@ namespace PropertyGridHelpers.Attributes
         /// public int PropertyName { get; set; }
         /// </code>
         /// </example>
-        public LocalizedDescriptionAttribute(string resourceKey, Type resourceSource)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource)) { }
+        public LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null)
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
     }
 #endif
 }

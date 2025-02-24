@@ -3,6 +3,7 @@ using Xunit;
 using System;
 
 #if NET35
+using Xunit.Extensions;
 using System.Diagnostics;
 #else
 using Xunit.Abstractions;
@@ -57,6 +58,18 @@ namespace PropertyGridHelpersTest.net90.Attributes
         private static readonly Type ResourceSource = typeof(Properties.Resources);
 
         /// <summary>
+        /// Gets or sets the test property.
+        /// </summary>
+        /// <value>
+        /// The test property.
+        /// </value>
+        [ResourcePath("Images")]
+        public string TestProperty
+        {
+            get; set;
+        } = "SomeValue";
+
+        /// <summary>
         /// Localized category attribute should return localized string.
         /// </summary>
         [Fact]
@@ -71,6 +84,31 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(0, string.Compare(ResourceValue, attribute.Category));
 #else
             Assert.Equal(ResourceValue, attribute.Category);
+#endif
+            Output($"The returned Category is: {attribute.Category}");
+        }
+
+        /// <summary>
+        /// Localized the category attribute should return localized string with resource path.
+        /// </summary>
+        /// <param name="resKey">The resource key.</param>
+        /// <param name="expectedValue">The expected value.</param>
+        [Theory]
+        [InlineData(ResourceKey, "Test Category")]
+        [InlineData(ResourceKey + "2", ResourceKey + "2")]
+        public void LocalizedCategoryAttribute_ShouldReturnLocalizedString_WithResourcePath(
+            string resKey,
+            string expectedValue)
+        {
+            // Act
+            var attribute = new LocalizedCategoryAttribute(resKey);
+
+            // Assert
+            Assert.NotNull(attribute);
+#if NET35
+            Assert.Equal(0, string.Compare(expectedValue, attribute.Category));
+#else
+            Assert.Equal(expectedValue, attribute.Category);
 #endif
             Output($"The returned Category is: {attribute.Category}");
         }

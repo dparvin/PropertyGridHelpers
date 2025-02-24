@@ -120,4 +120,7 @@
   <data name="Stars" xml:space="preserve">
     <value>Étoiles</value>
   </data>
+  <data name="Category_TestCategory" xml:space="preserve">
+    <value>Catégorie de test</value>
+  </data>
 </root>

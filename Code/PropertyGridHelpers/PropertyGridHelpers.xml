@@ -463,23 +463,50 @@
         </member>
         <member name="T:PropertyGridHelpers.Attributes.ResourcePathAttribute">
             <summary>
-            Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
+            Specifies a resource path for use with the 
+            <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
             </summary>
-            <param name="resourcePath">The path to the resources where the images are stored</param>
+            <param name="resourcePath">The path to the resource.</param>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <remarks>
+            This attribute is applied to properties or enum values to specify 
+            the resource path that the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> 
+            should use when displaying images.
+            </remarks>
         </member>
-        <member name="M:PropertyGridHelpers.Attributes.ResourcePathAttribute.#ctor(System.String)">
+        <member name="M:PropertyGridHelpers.Attributes.ResourcePathAttribute.#ctor(System.String,System.String)">
             <summary>
-            Attribute to give parameters to the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class
+            Specifies a resource path for use with the 
+            <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> class.
             </summary>
-            <param name="resourcePath">The path to the resources where the images are stored</param>
+            <param name="resourcePath">The path to the resource.</param>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <remarks>
+            This attribute is applied to properties or enum values to specify 
+            the resource path that the <see cref="T:PropertyGridHelpers.UIEditors.ImageTextUIEditor"/> 
+            should use when displaying images.
+            </remarks>
         </member>
         <member name="P:PropertyGridHelpers.Attributes.ResourcePathAttribute.ResourcePath">
             <summary>
-            Gets the resource path.
+            Gets the resource path associated with the property or enum value.
             </summary>
             <value>
-            The resource path.
+            A string representing the resource path.
             </value>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.ResourcePathAttribute.ResourceAssembly">
+            <summary>
+            Gets the resource assembly.
+            </summary>
+            <value>
+            The resource assembly.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpers.Attributes.ResourcePathAttribute.GetAssembly">
+            <summary>
+            Resolves the assembly object from the stored assembly name.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpers.Controls.FlagCheckedListBox">
             <summary>
@@ -878,32 +905,45 @@
              It may not be suitable for use in production applications.</para>
              </remarks>
         </member>
-        <member name="M:PropertyGridHelpers.Support.Support.GetResourceString(System.String,System.Type)">
+        <member name="M:PropertyGridHelpers.Support.Support.GetResourceString(System.String,System.Type,System.Diagnostics.StackFrame)">
             <summary>
             Retrieves a localized string from a resource file based on the specified resource key.
             </summary>
             <param name="resourceKey">The key identifying the resource string.</param>
             <param name="resourceSource">The type of the resource class that contains the resource file.</param>
+            <param name="frame">The frame.</param>
             <returns>
-            The localized string corresponding to <paramref name="resourceKey"/> from the specified 
-            <paramref name="resourceSource"/> for the current culture. If the key is not found, 
+            The localized string corresponding to <paramref name="resourceKey" /> from the specified
+            <paramref name="resourceSource" /> for the current culture. If the key is not found,
             the method returns the resource key itself.
             </returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="resourceKey" /> or <paramref name="resourceSource" /> is <c>null</c>.</exception>
             <remarks>
-            This method uses a <see cref="T:System.Resources.ResourceManager"/> to retrieve the localized string
-            based on the current culture. If the resource key does not exist in the specified resource file, 
+            This method uses a <see cref="T:System.Resources.ResourceManager" /> to retrieve the localized string
+            based on the current culture. If the resource key does not exist in the specified resource file,
             the method returns the key itself instead of throwing an exception.
             </remarks>
-            <exception cref="T:System.ArgumentNullException">
-            Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.
-            </exception>
             <example>
             Example usage:
             <code>
             string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
             Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
-            </code>
-            </example>
+            </code></example>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.GetResourceTypeFromCaller(System.Diagnostics.StackFrame,System.String@)">
+            <summary>
+            Gets the resource type from caller.
+            </summary>
+            <param name="frame">The frame.</param>
+            <param name="resourcePath">The resource path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpers.Support.Support.FindPropertyForAttribute(System.Diagnostics.StackFrame)">
+            <summary>
+            Finds the property for attribute.
+            </summary>
+            <param name="frame">The frame.</param>
+            <returns></returns>
         </member>
         <member name="M:PropertyGridHelpers.Support.Support.GetResourcePath(System.ComponentModel.ITypeDescriptorContext,System.Type)">
              <summary>

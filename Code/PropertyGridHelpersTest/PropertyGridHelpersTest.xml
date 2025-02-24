@@ -162,10 +162,25 @@
             Test for the Localized Category Attribute
             </summary>
         </member>
+        <member name="P:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.TestProperty">
+            <summary>
+            Gets or sets the test property.
+            </summary>
+            <value>
+            The test property.
+            </value>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_ShouldReturnLocalizedString">
             <summary>
             Localized category attribute should return localized string.
             </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_ShouldReturnLocalizedString_WithResourcePath(System.String,System.String)">
+            <summary>
+            Localized the category attribute should return localized string with resource path.
+            </summary>
+            <param name="resKey">The resource key.</param>
+            <param name="expectedValue">The expected value.</param>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
             <summary>
@@ -751,6 +766,11 @@
             Gets the file extension should return empty string when enum property is null.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.ShouldReturnTheKey_withNoResourcePath">
+            <summary>
+            Should the return the key with no resource path.
+            </summary>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
             <summary>
             Gets or sets the test enum.
@@ -1307,6 +1327,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PropertyGridHelpersTest.Images.Category_TestCategory">
+            <summary>
+              Looks up a localized string similar to Test Category.
+            </summary>
+        </member>
         <member name="P:PropertyGridHelpersTest.Images.confetti">
             <summary>
               Looks up a localized resource of type System.Byte[].
@@ -1381,6 +1406,11 @@
         <member name="P:PropertyGridHelpersTest.Properties.Resources.Stars">
             <summary>
               Looks up a localized string similar to Stars Test Text.
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.Test_Category">
+            <summary>
+              Looks up a localized string similar to Test Category.
             </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.Properties.Resources.Test_Item">
@@ -1459,6 +1489,59 @@
             Should serialize value.
             </summary>
             <param name="component">The component.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest">
+            <summary>
+            Test for the FindPropertyForAttribute method
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_ShouldReturnNull_WhenDeclaringTypeIsNull">
+            <summary>
+            Finds the property for attribute should return null when declaring type is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_ShouldReturnNull_WhenNoMatchingPropertyExists">
+            <summary>
+            Finds the property for attribute should return null when no matching property exists.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_NullFrame_ReturnsNull">
+            <summary>
+            Finds the property for attribute null frame returns null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.CallFindPropertyForAttribute(System.Diagnostics.StackFrame)">
+            <summary>
+            Helper method to call private static method via reflection
+            </summary>
+            <param name="frame">The frame.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes">
+            <summary>
+            Helper class without ResourcePathAttribute on properties
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes.SomeProperty">
+            <summary>
+            Gets or sets some property.
+            </summary>
+            <value>
+            Some property.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes.SomeMethod">
+            <summary>
+            Some method to test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.GetStackFrameFromMethod(System.Type,System.String)">
+            <summary>
+            Helper to get stack frame from a specific method
+            </summary>
+            <param name="type">The type.</param>
+            <param name="methodName">Name of the method.</param>
             <returns></returns>
         </member>
         <member name="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1">

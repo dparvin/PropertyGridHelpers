@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -132,30 +133,99 @@ namespace PropertyGridHelpers.Support
         /// </summary>
         /// <param name="resourceKey">The key identifying the resource string.</param>
         /// <param name="resourceSource">The type of the resource class that contains the resource file.</param>
+        /// <param name="frame">The frame.</param>
         /// <returns>
-        /// The localized string corresponding to <paramref name="resourceKey"/> from the specified 
-        /// <paramref name="resourceSource"/> for the current culture. If the key is not found, 
+        /// The localized string corresponding to <paramref name="resourceKey" /> from the specified
+        /// <paramref name="resourceSource" /> for the current culture. If the key is not found,
         /// the method returns the resource key itself.
         /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey" /> or <paramref name="resourceSource" /> is <c>null</c>.</exception>
         /// <remarks>
-        /// This method uses a <see cref="ResourceManager"/> to retrieve the localized string
-        /// based on the current culture. If the resource key does not exist in the specified resource file, 
+        /// This method uses a <see cref="ResourceManager" /> to retrieve the localized string
+        /// based on the current culture. If the resource key does not exist in the specified resource file,
         /// the method returns the key itself instead of throwing an exception.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.
-        /// </exception>
         /// <example>
         /// Example usage:
         /// <code>
         /// string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
         /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
-        /// </code>
-        /// </example>
-        public static string GetResourceString(string resourceKey, Type resourceSource)
+        /// </code></example>
+        public static string GetResourceString(string resourceKey, Type resourceSource, StackFrame frame)
         {
-            var resourceManager = new ResourceManager(resourceSource);
-            return resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
+            ResourceManager resourceManager;
+            if (resourceSource == null)
+            {
+                var resourcePath = string.Empty;
+                // Try to determine the member this attribute is applied to
+                var resourceAssembly = GetResourceTypeFromCaller(frame, ref resourcePath);
+                resourceManager = new ResourceManager(resourcePath, resourceAssembly);
+            }
+            else
+                resourceManager = new ResourceManager(resourceSource);
+            try
+            {
+                return resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
+            }
+            catch (MissingManifestResourceException)
+            {
+                return resourceKey; // Fallback if resource file is missing
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource type from caller.
+        /// </summary>
+        /// <param name="frame">The frame.</param>
+        /// <param name="resourcePath">The resource path.</param>
+        /// <returns></returns>
+        private static Assembly GetResourceTypeFromCaller(StackFrame frame, ref string resourcePath)
+        {
+            var property = FindPropertyForAttribute(frame);
+            if (property == null) return null;
+            ResourcePathAttribute resourcePathAttribute = null;
+#if NET35
+            var resourcePathAttributes = property.GetCustomAttributes(typeof(ResourcePathAttribute), false);
+            if (resourcePathAttributes.Length > 0)
+                resourcePathAttribute = (ResourcePathAttribute)resourcePathAttributes[0];
+#else
+            resourcePathAttribute = property.GetCustomAttribute<ResourcePathAttribute>();
+#endif
+            if (resourcePathAttribute == null) return null;
+            var namespacePrefix = property?.DeclaringType.Assembly.GetName().Name;
+            resourcePath = !string.IsNullOrEmpty(namespacePrefix) ? $"{namespacePrefix}.{resourcePathAttribute.ResourcePath}" : resourcePathAttribute.ResourcePath;
+            return resourcePathAttribute.ResourceAssembly != null ?
+                   resourcePathAttribute.GetAssembly() :
+                   property.Module.Assembly;
+        }
+
+        /// <summary>
+        /// Finds the property for attribute.
+        /// </summary>
+        /// <param name="frame">The frame.</param>
+        /// <returns></returns>
+        internal static PropertyInfo FindPropertyForAttribute(StackFrame frame)
+        {
+            if (frame == null) return null;
+
+            var method = frame.GetMethod();
+            var declaringType = method?.DeclaringType;
+            if (declaringType == null) return null;
+
+            // Scan all properties of the declaring type
+            foreach (var property in declaringType.GetProperties())
+            {
+#if NET35
+                var attributes = property.GetCustomAttributes(typeof(ResourcePathAttribute), false);
+                if (attributes.Length > 0)
+#else
+                var attributes = property.GetCustomAttributes<ResourcePathAttribute>();
+                if (attributes.Any())
+#endif
+                    return property;
+            }
+
+            return null; // No match found
         }
 
         /// <summary>

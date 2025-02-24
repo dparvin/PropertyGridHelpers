@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -23,8 +24,8 @@ namespace PropertyGridHelpers.Attributes
     /// public int PropertyName { get; set; }
     ///   </code>
     /// </example>
-    public class LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource) :
-        DisplayNameAttribute(Support.Support.GetResourceString(resourceKey, resourceSource))
+    public class LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource = null) :
+        DisplayNameAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
     }
 #else
@@ -52,8 +53,8 @@ namespace PropertyGridHelpers.Attributes
         /// public int PropertyName { get; set; }
         ///   </code>
         /// </example>
-        public LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource)) { }
+        public LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource = null)
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
     }
 #endif
 }

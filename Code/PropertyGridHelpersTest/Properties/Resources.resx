@@ -138,6 +138,9 @@
   <data name="Stars" xml:space="preserve">
     <value>Stars Test Text</value>
   </data>
+  <data name="Test_Category" xml:space="preserve">
+    <value>Test Category</value>
+  </data>
   <data name="Test_Item" xml:space="preserve">
     <value>Test Item</value>
   </data>

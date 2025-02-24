@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -34,8 +35,8 @@ namespace PropertyGridHelpers.Attributes
     /// }
     /// </code>
     /// </example>
-    public class LocalizedEnumTextAttribute(string resourceKey, Type resourceSource) :
-        EnumTextAttribute(Support.Support.GetResourceString(resourceKey, resourceSource))
+    public class LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null) :
+        EnumTextAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
     }
 #else
@@ -80,8 +81,8 @@ namespace PropertyGridHelpers.Attributes
         /// localization resources, typically the auto-generated `Resources` class from
         /// a `.resx` file.
         /// </remarks>
-        public LocalizedEnumTextAttribute(string resourceKey, Type resourceSource)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource)) { }
+        public LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null)
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
     }
 #endif
 }

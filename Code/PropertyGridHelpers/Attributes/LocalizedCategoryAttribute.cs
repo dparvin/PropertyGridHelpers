@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -14,8 +15,8 @@ namespace PropertyGridHelpers.Attributes
     /// by retrieving the category name from a resource file.
     /// </remarks>
     /// <seealso cref="CategoryAttribute" />
-    public class LocalizedCategoryAttribute(string resourceKey, Type resourceSource) :
-        CategoryAttribute(Support.Support.GetResourceString(resourceKey, resourceSource))
+    public class LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null) :
+        CategoryAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
     }
 #else
@@ -37,8 +38,8 @@ namespace PropertyGridHelpers.Attributes
         /// <remarks>
         /// The constructor fetches the localized category name using the specified resource key and resource source.
         /// </remarks>
-        public LocalizedCategoryAttribute(string resourceKey, Type resourceSource)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource)) { }
+        public LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null)
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
     }
 #endif
 }

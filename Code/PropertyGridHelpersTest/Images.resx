@@ -136,4 +136,8 @@
   <data name="Stars" xml:space="preserve">
     <value>Stars</value>
   </data>
+  <data name="Category_TestCategory" xml:space="preserve">
+    <value>Test Category</value>
+    <comment>category used in tests</comment>
+  </data>
 </root>
