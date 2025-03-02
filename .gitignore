@@ -10,6 +10,7 @@
 /Code/PropertyGridHelpers/bin
 /Code/PropertyGridHelpers/obj
 /Code/PropertyGridHelpers/*.user
+/Code/PropertyGridHelpers/.cr
 /Code/PropertyGridHelpers/.vs
 /Code/PropertyGridHelpers/packages
 /Code/PropertyGridHelpersTest/bin

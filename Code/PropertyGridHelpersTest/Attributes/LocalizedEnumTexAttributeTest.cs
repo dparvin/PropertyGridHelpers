@@ -104,6 +104,28 @@ namespace PropertyGridHelpersTest.net90.Attributes
         }
 
         /// <summary>
+        /// Localized category attribute remembers resource key.
+        /// </summary>
+        [Fact]
+        public void LocalizedEnumTextAttribute_Remembers_ResourceKey()
+        {
+            // Arrange
+            const string Some_Resource_Key = "SOME_RESOURCE_KEY";
+
+            // Act
+            var attribute = new LocalizedEnumTextAttribute(Some_Resource_Key, ResourceSource);
+
+            // Assert
+            Assert.NotNull(attribute);
+#if NET35
+            Assert.Equal(0, string.Compare(Some_Resource_Key, attribute.ResourceKey));
+#else
+            Assert.Equal(Some_Resource_Key, attribute.ResourceKey); 
+#endif
+            Output($"The returned Category resource key is: {attribute.ResourceKey}");
+        }
+
+        /// <summary>
         /// Outputs the specified message.
         /// </summary>
         /// <param name="message">The message.</param>

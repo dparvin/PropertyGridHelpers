@@ -187,6 +187,11 @@
             Localize category attribute invalid resource key should return key as fallback.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_Remembers_ResourceKey">
+            <summary>
+            Localized category attribute remembers resource key.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.Output(System.String)">
             <summary>
             Outputs the specified message.
@@ -206,6 +211,11 @@
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
             <summary>
             Localize description attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_Remembers_ResourceKey">
+            <summary>
+            Localized description attribute remembers resource key.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.Output(System.String)">
@@ -229,6 +239,11 @@
             Localize category attribute invalid resource key should return key as fallback.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_Remembers_ResourceKey">
+            <summary>
+            Localized category attribute remembers resource key.
+            </summary>
+        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.Output(System.String)">
             <summary>
             Outputs the specified message.
@@ -248,6 +263,11 @@
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
             <summary>
             Localize Enum Text attribute invalid resource key should return key as fallback.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_Remembers_ResourceKey">
+            <summary>
+            Localized category attribute remembers resource key.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.Output(System.String)">

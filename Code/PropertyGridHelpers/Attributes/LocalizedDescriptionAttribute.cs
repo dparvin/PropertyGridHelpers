@@ -24,6 +24,10 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null) :
         DescriptionAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
+        /// <summary>
+        /// Gets the resource key used to retrieve the localized description.
+        /// </summary>
+        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
@@ -37,6 +41,14 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {
         /// <summary>
+        /// Gets the resource key used to retrieve the localized description.
+        /// </summary>
+        public string ResourceKey
+        {
+            get;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedDescriptionAttribute"/> class.
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
@@ -48,7 +60,8 @@ namespace PropertyGridHelpers.Attributes
         /// </code>
         /// </example>
         public LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
+            ResourceKey = resourceKey;
     }
 #endif
 }

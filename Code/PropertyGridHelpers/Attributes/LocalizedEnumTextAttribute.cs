@@ -38,6 +38,10 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null) :
         EnumTextAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
+        /// <summary>
+        /// Gets the resource key used to retrieve the localized enum text.
+        /// </summary>
+        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
@@ -72,6 +76,14 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedEnumTextAttribute : EnumTextAttribute
     {
         /// <summary>
+        /// Gets the resource key used to retrieve the localized enum text.
+        /// </summary>
+        public string ResourceKey
+        {
+            get;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute" /> class.
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
@@ -82,7 +94,8 @@ namespace PropertyGridHelpers.Attributes
         /// a `.resx` file.
         /// </remarks>
         public LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
+            ResourceKey = resourceKey;
     }
 #endif
 }

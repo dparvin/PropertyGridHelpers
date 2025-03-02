@@ -304,6 +304,11 @@
             </remarks>
             <seealso cref="T:System.ComponentModel.CategoryAttribute" />
         </member>
+        <member name="P:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute.ResourceKey">
+            <summary>
+            Gets the resource key used to retrieve the localized category name.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute">
             <summary>
             Specifies a localized description for a property, event, or other member in a class.
@@ -339,6 +344,11 @@
             </code>
             </example>
             <seealso cref="T:System.ComponentModel.DescriptionAttribute" />
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute.ResourceKey">
+            <summary>
+            Gets the resource key used to retrieve the localized description.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute">
             <summary>
@@ -381,6 +391,11 @@
             public int PropertyName { get; set; }
               </code>
             </example>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute.ResourceKey">
+            <summary>
+            Gets the resource key used to retrieve the localized display name.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute">
             <summary>
@@ -447,6 +462,11 @@
             }
             </code>
             </example>
+        </member>
+        <member name="P:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute.ResourceKey">
+            <summary>
+            Gets the resource key used to retrieve the localized enum text.
+            </summary>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.NamespaceDoc">
             <summary>

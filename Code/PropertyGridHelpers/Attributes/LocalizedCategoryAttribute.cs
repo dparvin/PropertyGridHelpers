@@ -18,6 +18,10 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null) :
         CategoryAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
     {
+        /// <summary>
+        /// Gets the resource key used to retrieve the localized category name.
+        /// </summary>
+        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
@@ -31,6 +35,14 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedCategoryAttribute : CategoryAttribute
     {
         /// <summary>
+        /// Gets the resource key used to retrieve the localized category name.
+        /// </summary>
+        public string ResourceKey
+        {
+            get;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute"/> class.
         /// </summary>
         /// <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
@@ -39,7 +51,8 @@ namespace PropertyGridHelpers.Attributes
         /// The constructor fetches the localized category name using the specified resource key and resource source.
         /// </remarks>
         public LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) { }
+            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
+            ResourceKey = resourceKey;
     }
 #endif
 }
