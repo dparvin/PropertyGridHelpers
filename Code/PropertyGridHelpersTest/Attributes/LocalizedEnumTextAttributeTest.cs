@@ -54,55 +54,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public LocalizedEnumTextAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
-        private const string ResourceKey = "Test_Item";
-        private static readonly Type ResourceSource = typeof(Properties.Resources);
-
-        /// <summary>
-        /// Localized Enum Text attribute should return localized string.
-        /// </summary>
-        [Theory]
-        [InlineData("Test Item", "en-US")]
-        [InlineData("Élément de test", "fr-CA")]
-        [InlineData("Élément de test", "fr")]
-        [InlineData("Elemento de prueba", "es")]
-        public void LocalizedEnumTextAttribute_ShouldReturnLocalizedString(string ResourceValue, string selectedCulture)
-        {
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(selectedCulture);
-            // Act
-            var attribute = new LocalizedEnumTextAttribute(ResourceKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(ResourceValue, attribute.EnumText));
-#else
-            Assert.Equal(ResourceValue, attribute.EnumText);
-#endif
-            Output($"The returned EnumText is: {attribute.EnumText}");
-        }
-
-        /// <summary>
-        /// Localize Enum Text attribute invalid resource key should return key as fallback.
-        /// </summary>
-        [Fact]
-        public void LocalizedEnumTextAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
-        {
-            // Arrange
-            const string invalidKey = "Invalid_Key";
-
-            // Act
-            var attribute = new LocalizedEnumTextAttribute(invalidKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(invalidKey, attribute.EnumText)); // Fallback behavior
-#else
-            Assert.Equal(invalidKey, attribute.EnumText); // Fallback behavior
-#endif
-            Output($"The returned EnumText is: {attribute.EnumText}");
-        }
-
         /// <summary>
         /// Localized category attribute remembers resource key.
         /// </summary>
@@ -113,7 +64,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             const string Some_Resource_Key = "SOME_RESOURCE_KEY";
 
             // Act
-            var attribute = new LocalizedEnumTextAttribute(Some_Resource_Key, ResourceSource);
+            var attribute = new LocalizedEnumTextAttribute(Some_Resource_Key);
 
             // Assert
             Assert.NotNull(attribute);

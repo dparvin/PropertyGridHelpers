@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -9,65 +7,52 @@ namespace PropertyGridHelpers.Attributes
     /// Specifies a localized display name for a property, event, or other
     /// member in a class.
     /// </summary>
-    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
-    /// <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
-    /// <seealso cref="DisplayNameAttribute" />
+    /// <seealso cref="LocalizedTextAttribute" />
     /// <remarks>
-    /// This attribute retrieves the display name text from a resource file,
-    /// allowing names to be localized. Apply this attribute to a member,
-    /// providing the resource key and the resource source type containing
-    /// the localization.
+    /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttribute" /> class.
     /// </remarks>
+    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
     /// <example>
     ///   <code>
-    /// [LocalizedDisplayName("PropertyName_DisplayName", typeof(Resources))]
+    /// [LocalizedDisplayName("PropertyName_DisplayName")]
     /// public int PropertyName { get; set; }
-    ///   </code>
+    /// </code>
     /// </example>
-    public class LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource = null) :
-        DisplayNameAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedDisplayNameAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized display name.
-        /// </summary>
-        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
     /// Specifies a localized display name for a property, event, or other
     /// member in a class.
     /// </summary>
-    /// <seealso cref="DisplayNameAttribute" />
+    /// <seealso cref="LocalizedTextAttribute" />
     /// <remarks>
-    /// This attribute retrieves the display name text from a resource file,
-    /// allowing names to be localized. Apply this attribute to a member,
-    /// providing the resource key and the resource source type containing
-    /// the localization.
+    /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttribute" /> class.
     /// </remarks>
-    public class LocalizedDisplayNameAttribute : DisplayNameAttribute
+    /// <example>
+    ///   <code>
+    /// [LocalizedDisplayName("PropertyName_DisplayName")]
+    /// public int PropertyName { get; set; }
+    /// </code>
+    /// </example>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedDisplayNameAttribute : LocalizedTextAttribute
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized display name.
-        /// </summary>
-        public string ResourceKey
-        {
-            get;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttribute" /> class.
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
-        /// <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
         /// <example>
         ///   <code>
-        /// [LocalizedDisplayName("PropertyName_DisplayName", typeof(Resources))]
+        /// [LocalizedDisplayName("PropertyName_DisplayName")]
         /// public int PropertyName { get; set; }
-        ///   </code>
+        /// </code>
         /// </example>
-        public LocalizedDisplayNameAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
-            ResourceKey = resourceKey;
+        public LocalizedDisplayNameAttribute(string resourceKey) : base(resourceKey)
+        {
+        }
     }
 #endif
 }

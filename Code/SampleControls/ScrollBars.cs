@@ -17,12 +17,12 @@ namespace SampleControls
         /// <summary>
         /// The Vertical Scrollbar
         /// </summary>
-        [LocalizedEnumText("Vertical_Scrollbar", typeof(TestControl))]
+        [LocalizedEnumText("Vertical_Scrollbar")]
         Vertical = 1,
         /// <summary>
         /// The Horizontal Scrollbar
         /// </summary>
-        [LocalizedEnumText("Horizontal_Scrollbar", typeof(TestControl))]
+        [LocalizedEnumText("Horizontal_Scrollbar")]
         Horizontal = 2,
         /// <summary>
         /// Both a horizontal scrollbar and a vertical scrollbar

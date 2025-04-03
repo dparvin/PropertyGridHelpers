@@ -120,17 +120,50 @@
   <data name="Category_Layout" xml:space="preserve">
     <value>Diseño</value>
   </data>
+  <data name="Category_TestItems" xml:space="preserve">
+    <value>Elementos de prueba</value>
+  </data>
+  <data name="Description_DateTime" xml:space="preserve">
+    <value>Una prueba con un campo de fecha y hora.</value>
+  </data>
+  <data name="Description_Decimals" xml:space="preserve">
+    <value>Una prueba para procesar una lista de decimales.</value>
+  </data>
   <data name="Description_FileExtension" xml:space="preserve">
-    <value>Extensión de la imagen para agregar al control</value>
+    <value>Extensión de la imagen para agregar al control.</value>
   </data>
   <data name="Description_ImageToDisplay" xml:space="preserve">
-    <value>Imagen para agregar al control</value>
+    <value>Imagen para agregar al control.</value>
+  </data>
+  <data name="Description_Scrollbar" xml:space="preserve">
+    <value>Barras de desplazamiento para el usuario.</value>
+  </data>
+  <data name="Description_Sizes" xml:space="preserve">
+    <value>Una prueba para procesar una lista de tamaños.</value>
+  </data>
+  <data name="Discription_Strings" xml:space="preserve">
+    <value>Una prueba para procesar una lista de cadenas.</value>
+  </data>
+  <data name="DisplayName_DateTime" xml:space="preserve">
+    <value>Fecha de prueba</value>
+  </data>
+  <data name="DisplayName_Decimals" xml:space="preserve">
+    <value>Lista de decimales de prueba</value>
   </data>
   <data name="DisplayName_FileExtension" xml:space="preserve">
     <value>Extensión de imagen de recurso</value>
   </data>
   <data name="DisplayName_ImageToDisplay" xml:space="preserve">
     <value>Imagen a mostrar</value>
+  </data>
+  <data name="DisplayName_Scrollbar" xml:space="preserve">
+    <value>Barras de desplazamiento</value>
+  </data>
+  <data name="DisplayName_Sizes" xml:space="preserve">
+    <value>Lista de tamaños de prueba</value>
+  </data>
+  <data name="DisplayName_Strings" xml:space="preserve">
+    <value>Lista de cadenas de prueba</value>
   </data>
   <data name="Horizontal_Scrollbar" xml:space="preserve">
     <value>Barra de desplazamiento horizontal</value>

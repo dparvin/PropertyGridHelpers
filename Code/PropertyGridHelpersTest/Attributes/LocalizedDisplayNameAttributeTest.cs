@@ -54,51 +54,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         private static readonly Type ResourceSource = typeof(Properties.Resources);
 
         /// <summary>
-        /// Localized display name attribute should return localized string.
-        /// </summary>
-        [Fact]
-        public void LocalizedDisplayNameAttribute_ShouldReturnLocalizedString()
-        {
-            // Arrange
-            const string displayNameKey = "DisplayName_TestDisplayName";
-            const string displayNameValue = "Test Display Name";
-
-            // Act
-            var attribute = new LocalizedDisplayNameAttribute(displayNameKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(displayNameValue, attribute.DisplayName));
-#else
-            Assert.Equal(displayNameValue, attribute.DisplayName);
-#endif
-            Output($"The returned DisplayName is: {attribute.DisplayName}");
-        }
-
-        /// <summary>
-        /// Localize category attribute invalid resource key should return key as fallback.
-        /// </summary>
-        [Fact]
-        public void LocalizedDisplayNameAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
-        {
-            // Arrange
-            const string invalidKey = "Invalid_Key";
-
-            // Act
-            var attribute = new LocalizedDisplayNameAttribute(invalidKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(invalidKey, attribute.DisplayName)); // Fallback behavior
-#else
-            Assert.Equal(invalidKey, attribute.DisplayName); // Fallback behavior
-#endif
-            Output($"The returned DisplayName is: {attribute.DisplayName}");
-        }
-
-        /// <summary>
         /// Localized category attribute remembers resource key.
         /// </summary>
         [Fact]
@@ -108,7 +63,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             const string Some_Resource_Key = "SOME_RESOURCE_KEY";
 
             // Act
-            var attribute = new LocalizedDisplayNameAttribute(Some_Resource_Key, ResourceSource);
+            var attribute = new LocalizedDisplayNameAttribute(Some_Resource_Key);
 
             // Assert
             Assert.NotNull(attribute);

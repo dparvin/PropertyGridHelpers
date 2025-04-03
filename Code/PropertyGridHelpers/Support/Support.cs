@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Support
@@ -133,7 +134,7 @@ namespace PropertyGridHelpers.Support
         /// </summary>
         /// <param name="resourceKey">The key identifying the resource string.</param>
         /// <param name="resourceSource">The type of the resource class that contains the resource file.</param>
-        /// <param name="frame">The frame.</param>
+        /// <param name="resourceProperty">The resource property.</param>
         /// <returns>
         /// The localized string corresponding to <paramref name="resourceKey" /> from the specified
         /// <paramref name="resourceSource" /> for the current culture. If the key is not found,
@@ -151,18 +152,19 @@ namespace PropertyGridHelpers.Support
         /// string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
         /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
         /// </code></example>
-        public static string GetResourceString(string resourceKey, Type resourceSource, StackFrame frame)
+        public static string GetResourceString(string resourceKey, Type resourceSource, string resourceProperty = "")
         {
             ResourceManager resourceManager;
             if (resourceSource == null)
             {
                 var resourcePath = string.Empty;
-                // Try to determine the member this attribute is applied to
-                var resourceAssembly = GetResourceTypeFromCaller(frame, ref resourcePath);
+                // Get the assembly and resource path
+                var resourceAssembly = GetResourceTypeFromCaller(resourceSource, resourceProperty, ref resourcePath);
                 resourceManager = new ResourceManager(resourcePath, resourceAssembly);
             }
             else
                 resourceManager = new ResourceManager(resourceSource);
+
             try
             {
                 return resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
@@ -176,56 +178,51 @@ namespace PropertyGridHelpers.Support
         /// <summary>
         /// Gets the resource type from caller.
         /// </summary>
-        /// <param name="frame">The frame.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="resourceProperty">The resource property.</param>
         /// <param name="resourcePath">The resource path.</param>
         /// <returns></returns>
-        private static Assembly GetResourceTypeFromCaller(StackFrame frame, ref string resourcePath)
+        internal static Assembly GetResourceTypeFromCaller(Type targetType, string resourceProperty, ref string resourcePath)
         {
-            var property = FindPropertyForAttribute(frame);
-            if (property == null) return null;
             ResourcePathAttribute resourcePathAttribute = null;
-#if NET35
-            var resourcePathAttributes = property.GetCustomAttributes(typeof(ResourcePathAttribute), false);
-            if (resourcePathAttributes.Length > 0)
-                resourcePathAttribute = (ResourcePathAttribute)resourcePathAttributes[0];
-#else
-            resourcePathAttribute = property.GetCustomAttribute<ResourcePathAttribute>();
-#endif
-            if (resourcePathAttribute == null) return null;
-            var namespacePrefix = property?.DeclaringType.Assembly.GetName().Name;
-            resourcePath = !string.IsNullOrEmpty(namespacePrefix) ? $"{namespacePrefix}.{resourcePathAttribute.ResourcePath}" : resourcePathAttribute.ResourcePath;
-            return resourcePathAttribute.ResourceAssembly != null ?
-                   resourcePathAttribute.GetAssembly() :
-                   property.Module.Assembly;
-        }
+            PropertyInfo property = null;
 
-        /// <summary>
-        /// Finds the property for attribute.
-        /// </summary>
-        /// <param name="frame">The frame.</param>
-        /// <returns></returns>
-        internal static PropertyInfo FindPropertyForAttribute(StackFrame frame)
-        {
-            if (frame == null) return null;
-
-            var method = frame.GetMethod();
-            var declaringType = method?.DeclaringType;
-            if (declaringType == null) return null;
-
-            // Scan all properties of the declaring type
-            foreach (var property in declaringType.GetProperties())
+            // Check if attribute is on the property
+            if (!string.IsNullOrEmpty(resourceProperty))
             {
+                property = targetType.GetProperty(resourceProperty);
+                if (property != null)
+                {
 #if NET35
-                var attributes = property.GetCustomAttributes(typeof(ResourcePathAttribute), false);
-                if (attributes.Length > 0)
+                    var attributes = property.GetCustomAttributes(typeof(ResourcePathAttribute), false);
+                    if (attributes.Length > 0)
+                        resourcePathAttribute = (ResourcePathAttribute)attributes[0];
 #else
-                var attributes = property.GetCustomAttributes<ResourcePathAttribute>();
-                if (attributes.Any())
+                    resourcePathAttribute = property.GetCustomAttribute<ResourcePathAttribute>();
 #endif
-                    return property;
+                }
             }
 
-            return null; // No match found
+            // If no property-level attribute, check the class-level attribute
+            if (resourcePathAttribute == null)
+            {
+#if NET35
+                var attributes = targetType.GetCustomAttributes(typeof(ResourcePathAttribute), false);
+                if (attributes.Length > 0)
+                    resourcePathAttribute = (ResourcePathAttribute)attributes[0];
+#else
+                resourcePathAttribute = targetType.GetCustomAttribute<ResourcePathAttribute>();
+#endif
+            }
+
+            if (resourcePathAttribute == null) return null;
+
+            var namespacePrefix = targetType.Assembly.GetName().Name;
+            resourcePath = !string.IsNullOrEmpty(namespacePrefix) ? $"{namespacePrefix}.{resourcePathAttribute.ResourcePath}" : resourcePathAttribute.ResourcePath;
+
+            return !string.IsNullOrEmpty(resourcePathAttribute.ResourceAssembly) ?
+                   resourcePathAttribute.GetAssembly() :
+                   targetType.Assembly;
         }
 
         /// <summary>
@@ -432,6 +429,16 @@ namespace PropertyGridHelpers.Support
             }
 
             return property;
+        }
+
+        /// <summary>
+        /// Sets the language.
+        /// </summary>
+        /// <param name="language">The language.</param>
+        public static void SetLanguage(string language)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
         }
     }
 }

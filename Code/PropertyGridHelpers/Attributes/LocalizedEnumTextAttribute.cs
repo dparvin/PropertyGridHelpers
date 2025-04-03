@@ -1,101 +1,77 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Specifies a localized text representation for an Enum field, 
+    /// Specifies a localized text representation for an Enum field,
     /// retrieving the display text from a resource file.
     /// </summary>
-    /// <seealso cref="EnumTextAttribute" />
-    /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
-    /// <param name="resourceSource">The type that contains the resource manager.</param>
-    /// <remarks>
-    /// This attribute extends <see cref="EnumTextAttribute" /> to support localization.
-    /// Instead of providing a static string, it fetches the text from a resource file
-    /// using a specified resource key and source type.
-    /// This is useful when displaying Enum values in UI components that require
-    /// translated text based on the application's culture settings.
-    /// 
-    /// The localized strings should be defined in the resource file (e.g., `Resources.resx`).
-    /// </remarks>
+    /// <seealso cref="LocalizedTextAttribute" />
     /// <example>
     /// <code>
     /// public enum Status
     /// {
-    ///     [LocalizedEnumText("PendingApproval", typeof(Resources))]
+    ///     [LocalizedEnumText("PendingApproval")]
     ///     Pending,
     ///     
-    ///     [LocalizedEnumText("Approved", typeof(Resources))]
+    ///     [LocalizedEnumText("Approved")]
     ///     Approved,
     ///     
-    ///     [LocalizedEnumText("Rejected", typeof(Resources))]
+    ///     [LocalizedEnumText("Rejected")]
     ///     Rejected
     /// }
     /// </code>
     /// </example>
-    public class LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null) :
-        EnumTextAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute" /> class.
+    /// </remarks>
+    /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
+    /// <example>
+    ///   <code>
+    /// [LocalizedEnumText("PropertyName_EnumText")]
+    /// public int PropertyName { get; set; }
+    ///   </code>
+    /// </example>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
+    public class LocalizedEnumTextAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized enum text.
-        /// </summary>
-        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
     /// Specifies a localized text representation for an Enum field,
     /// retrieving the display text from a resource file.
     /// </summary>
-    /// <seealso cref="EnumTextAttribute" />
-    /// <remarks>
-    /// This attribute extends <see cref="EnumTextAttribute" /> to support localization.
-    /// Instead of providing a static string, it fetches the text from a resource file
-    /// using a specified resource key and source type.
-    /// This is useful when displaying Enum values in UI components that require
-    /// translated text based on the application's culture settings.
-    /// 
-    /// The localized strings should be defined in the resource file (e.g., `Resources.resx`).
-    /// </remarks>
+    /// <seealso cref="LocalizedTextAttribute" />
     /// <example>
-    /// <code>
+    ///   <code>
     /// public enum Status
     /// {
-    ///     [LocalizedEnumText("PendingApproval", typeof(Resources))]
-    ///     Pending,
-    ///     
-    ///     [LocalizedEnumText("Approved", typeof(Resources))]
-    ///     Approved,
-    ///     
-    ///     [LocalizedEnumText("Rejected", typeof(Resources))]
-    ///     Rejected
+    /// [LocalizedEnumText("PendingApproval")]
+    /// Pending,
+    /// [LocalizedEnumText("Approved")]
+    /// Approved,
+    /// [LocalizedEnumText("Rejected")]
+    /// Rejected
     /// }
     /// </code>
     /// </example>
-    public class LocalizedEnumTextAttribute : EnumTextAttribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
+    public class LocalizedEnumTextAttribute : LocalizedTextAttribute
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized enum text.
-        /// </summary>
-        public string ResourceKey
-        {
-            get;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute" /> class.
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
-        /// <param name="resourceSource">The type that contains the resource manager.</param>
-        /// <remarks>
-        /// The <paramref name="resourceSource" /> should be a class that provides access to
-        /// localization resources, typically the auto-generated `Resources` class from
-        /// a `.resx` file.
-        /// </remarks>
-        public LocalizedEnumTextAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
-            ResourceKey = resourceKey;
+        /// <example>
+        ///   <code>
+        /// [LocalizedEnumText("PropertyName_EnumText")]
+        /// public int PropertyName { get; set; }
+        ///   </code>
+        /// </example>
+        public LocalizedEnumTextAttribute(string resourceKey) : base(resourceKey)
+        {
+        }
     }
 #endif
 }

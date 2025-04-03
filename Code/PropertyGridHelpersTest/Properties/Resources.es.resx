@@ -135,6 +135,9 @@
   <data name="Stars" xml:space="preserve">
     <value>Texto de prueba de estrellas</value>
   </data>
+  <data name="TestKey" xml:space="preserve">
+    <value>LocalizedValue</value>
+  </data>
   <data name="Test_Category" xml:space="preserve">
     <value>Categoría de prueba</value>
   </data>

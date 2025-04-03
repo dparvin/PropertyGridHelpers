@@ -52,53 +52,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public LocalizedDescriptionAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
-        private static readonly Type ResourceSource = typeof(Properties.Resources);
-
-        /// <summary>
-        /// Localized description attribute should return localized string.
-        /// </summary>
-        [Fact]
-        public void LocalizedDescriptionAttribute_ShouldReturnLocalizedString()
-        {
-            // Arrange
-            const string descriptionKey = "Description_TestDescription";
-            const string descriptionValue = "Test Description";
-
-            // Act
-            var attribute = new LocalizedDescriptionAttribute(descriptionKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(descriptionValue, attribute.Description));
-#else
-            Assert.Equal(descriptionValue, attribute.Description);
-#endif
-            Output($"The returned Description is: {attribute.Description}");
-        }
-
-        /// <summary>
-        /// Localize description attribute invalid resource key should return key as fallback.
-        /// </summary>
-        [Fact]
-        public void LocalizedDescriptionAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
-        {
-            // Arrange
-            const string invalidKey = "Invalid_Key";
-
-            // Act
-            var attribute = new LocalizedDescriptionAttribute(invalidKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(invalidKey, attribute.Description)); // Fallback behavior
-#else
-            Assert.Equal(invalidKey, attribute.Description); // Fallback behavior
-#endif
-            Output($"The returned Description is: {attribute.Description}");
-        }
-
         /// <summary>
         /// Localized description attribute remembers resource key.
         /// </summary>
@@ -109,7 +62,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             const string Some_Resource_Key = "SOME_RESOURCE_KEY";
 
             // Act
-            var attribute = new LocalizedDescriptionAttribute(Some_Resource_Key, ResourceSource);
+            var attribute = new LocalizedDescriptionAttribute(Some_Resource_Key);
 
             // Assert
             Assert.NotNull(attribute);

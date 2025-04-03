@@ -140,5 +140,14 @@ namespace PropertyGridHelpersTest.Properties {
                 return ResourceManager.GetString("Test_Item", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LocalizedValue.
+        /// </summary>
+        internal static string TestKey {
+            get {
+                return ResourceManager.GetString("TestKey", resourceCulture);
+            }
+        }
     }
 }

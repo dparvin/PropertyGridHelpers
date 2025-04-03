@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using PropertyGridHelpers.Support;
+using System.Windows.Forms;
 
 namespace SampleForms
 {
@@ -14,6 +15,8 @@ namespace SampleForms
         public Form1()
         {
             InitializeComponent();
+
+            Support.SetLanguage("fr");
 
             propertyGrid1.SelectedObject = testControl1;
         }

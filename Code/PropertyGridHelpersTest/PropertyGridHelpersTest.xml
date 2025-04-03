@@ -162,31 +162,6 @@
             Test for the Localized Category Attribute
             </summary>
         </member>
-        <member name="P:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.TestProperty">
-            <summary>
-            Gets or sets the test property.
-            </summary>
-            <value>
-            The test property.
-            </value>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_ShouldReturnLocalizedString">
-            <summary>
-            Localized category attribute should return localized string.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_ShouldReturnLocalizedString_WithResourcePath(System.String,System.String)">
-            <summary>
-            Localized the category attribute should return localized string with resource path.
-            </summary>
-            <param name="resKey">The resource key.</param>
-            <param name="expectedValue">The expected value.</param>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
-            <summary>
-            Localize category attribute invalid resource key should return key as fallback.
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedCategoryAttributeTest.LocalizedCategoryAttribute_Remembers_ResourceKey">
             <summary>
             Localized category attribute remembers resource key.
@@ -201,16 +176,6 @@
         <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest">
             <summary>
             Test for the Localized Description Attribute
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_ShouldReturnLocalizedString">
-            <summary>
-            Localized description attribute should return localized string.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
-            <summary>
-            Localize description attribute invalid resource key should return key as fallback.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDescriptionAttributeTest.LocalizedDescriptionAttribute_Remembers_ResourceKey">
@@ -229,16 +194,6 @@
             Test for the Localized Description Attribute
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_ShouldReturnLocalizedString">
-            <summary>
-            Localized display name attribute should return localized string.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
-            <summary>
-            Localize category attribute invalid resource key should return key as fallback.
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedDisplayNameAttributeTest.LocalizedDisplayNameAttribute_Remembers_ResourceKey">
             <summary>
             Localized category attribute remembers resource key.
@@ -255,22 +210,103 @@
             Test for the Localized Enum Text Attribute
             </summary>
         </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_ShouldReturnLocalizedString(System.String,System.String)">
-            <summary>
-            Localized Enum Text attribute should return localized string.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback">
-            <summary>
-            Localize Enum Text attribute invalid resource key should return key as fallback.
-            </summary>
-        </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.LocalizedEnumTextAttribute_Remembers_ResourceKey">
             <summary>
             Localized category attribute remembers resource key.
             </summary>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedEnumTextAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest">
+            <summary>
+            Localized Text Attribute Test
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestLocalizedTextAttribute">
+            <summary>
+            Test Localized Text Attribute
+            </summary>
+            <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
+            <remarks>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestLocalizedTextAttribute"/> class.
+            </remarks>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestLocalizedTextAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestLocalizedTextAttribute"/> class.
+            </summary>
+            <param name="resourceKey">The resource key.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClass">
+            <summary>
+            Test Class
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClass.TestProperty">
+            <summary>
+            Gets or sets the test property.
+            </summary>
+            <value>
+            The test property.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClassNoResource">
+            <summary>
+            Test Class No Resource
+            </summary>
+            <remarks>
+            Test class with NO ResourcePathAttribute
+            </remarks>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClassNoResource.TestProperty">
+            <summary>
+            Gets or sets the test property.
+            </summary>
+            <value>
+            The test property.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClassMissingResource">
+            <summary>
+            Test Class Missing Resource
+            </summary>
+            <remarks>
+            Test class with a ResourcePathAttribute whose value does not correspond to a valid resource type.
+            </remarks>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.TestClassMissingResource.TestProperty">
+            <summary>
+            Gets or sets the test property.
+            </summary>
+            <value>
+            The test property.
+            </value>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.Constructor_SetsResourceKey">
+            <summary>
+            Constructors the sets resource key.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.GetLocalizedText_ReturnsLocalizedString">
+            <summary>
+            Gets the localized text returns localized string.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.GetLocalizedText_ThrowsException_WhenResourcePathAttributeMissing">
+            <summary>
+            Gets the localized text throws exception when resource path attribute missing.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.GetLocalizedText_ThrowsException_WhenResourceTypeNotFound">
+            <summary>
+            Gets the localized text throws exception when resource type not found.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.LocalizedTextAttributeTest.Output(System.String)">
             <summary>
             Outputs the specified message.
             </summary>
@@ -681,6 +717,123 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest">
+            <summary>
+            Localized Property Descriptor Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest"/> class.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.Category_ReturnsLocalizedValue_WhenAttributeExists">
+            <summary>
+            Categories the returns localized value when attribute exists.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.Description_ReturnsLocalizedValue_WhenAttributeExists">
+            <summary>
+            Descriptions the returns localized value when attribute exists.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.DisplayName_ReturnsLocalizedValue_WhenAttributeExists">
+            <summary>
+            Displays the name returns localized value when attribute exists.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.CanResetValue_DelegatesToBaseProperty">
+            <summary>
+            Determines whether this instance [can reset value delegates to base property].
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetValue_DelegatesToBaseProperty">
+            <summary>
+            Gets the value delegates to base property.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.IsReadOnly_DelegatesToBaseProperty">
+            <summary>
+            Determines whether is read only delegates to base property.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.ResetValue_DelegatesToBaseProperty">
+            <summary>
+            Resets the value delegates to base property.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.SetValue_DelegatesToBaseProperty">
+            <summary>
+            Sets the value delegates to base property.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.ShouldSerializeValue_DelegatesToBaseProperty">
+            <summary>
+            Should the serialize value delegates to base property.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetLocalizedString_ReturnsLocalizedString_WhenResourceIsAvailable">
+            <summary>
+            Gets the localized string returns localized string when resource is available.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetLocalizedString_ReturnsDefaultValue_WhenKeyDoesNotExist">
+            <summary>
+            Gets the localized string returns default value when key does not exist.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetLocalizedString_ReturnsDefaultValue_WhenResourceFileIsMissing">
+            <summary>
+            Gets the localized string returns default value when resource file is missing.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetResourceTypeFromProperty_ReturnsCustomAssembly_WhenResourceAssemblyIsSet">
+            <summary>
+            Gets the resource type from property returns custom assembly when resource assembly is set.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.GetResourceTypeFromProperty_ReturnsComponentAssembly_WhenResourceAssemblyIsEmpty">
+            <summary>
+            Gets the resource type from property returns component assembly when resource assembly is empty.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.LocalizedPropertyDescriptor_Properties_ReturnExpectedValues">
+            <summary>
+            Localizeds the property descriptor properties return expected values.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.TestClass">
+            <summary>
+            Test Class
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.TestClass.LocalizedProperty">
+            <summary>
+            Gets or sets the localized property.
+            </summary>
+            <value>
+            The localized property.
+            </value>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.TestClass2">
+            <summary>
+            Test Class
+            </summary>
+        </member>
+        <member name="P:PropertyGridHelpersTest.net35.PropertyDescriptors.LocalizedPropertyDescriptorTest.TestClass2.LocalizedProperty">
+            <summary>
+            Gets or sets the localized property.
+            </summary>
+            <value>
+            The localized property.
+            </value>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Support.SupportTest">
             <summary>
             Tests for the <see cref="T:PropertyGridHelpers.Support.Support"/> class.
@@ -784,11 +937,6 @@
         <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNull">
             <summary>
             Gets the file extension should return empty string when enum property is null.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.ShouldReturnTheKey_withNoResourcePath">
-            <summary>
-            Should the return the key with no resource path.
             </summary>
         </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
@@ -912,6 +1060,88 @@
             </value>
         </member>
         <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest">
+            <summary>
+            Localized Type Description Provider Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest.Constructor_SetsBaseProvider">
+            <summary>
+            Constructors the sets base provider.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest.DefaultConstructor_UsesObjectType">
+            <summary>
+            Defaults the type of the constructor uses object.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest.GetTypeDescriptor_ThrowsArgumentNullException_WhenObjectTypeIsNull">
+            <summary>
+            Gets the type descriptor throws argument null exception when object type is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest.GetTypeDescriptor_ReturnsLocalizedTypeDescriptor">
+            <summary>
+            Gets the type descriptor returns localized type descriptor.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptionProviders.LocalizedTypeDescriptionProviderTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest">
+            <summary>
+            Localized Type Descriptor Test
+            </summary>
+        </member>
+        <member name="T:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.MockCustomTypeDescriptor">
+            <summary>
+            Mock Custom Type Descriptor
+            </summary>
+            <seealso cref="T:System.ComponentModel.CustomTypeDescriptor" />
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.MockCustomTypeDescriptor.#ctor(System.ComponentModel.PropertyDescriptorCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.MockCustomTypeDescriptor"/> class.
+            </summary>
+            <param name="properties">The properties.</param>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.MockCustomTypeDescriptor.GetProperties(System.Attribute[])">
+            <summary>
+            Gets the properties.
+            </summary>
+            <param name="attributes">The attributes.</param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.MockCustomTypeDescriptor.GetProperties">
+            <summary>
+            Gets the properties.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.Constructor_SetsParentDescriptor">
+            <summary>
+            Constructors the sets parent descriptor.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.GetProperties_ReturnsLocalizedPropertyDescriptors">
+            <summary>
+            Gets the properties returns localized property descriptors.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.GetProperties_WithAttributes_ReturnsLocalizedPropertyDescriptors">
+            <summary>
+            Gets the properties with attributes returns localized property descriptors.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.TypeDescriptors.LocalizedTypeDescriptorTest.Output(System.String)">
             <summary>
             Outputs the specified message.
             </summary>
@@ -1438,6 +1668,11 @@
               Looks up a localized string similar to Test Item.
             </summary>
         </member>
+        <member name="P:PropertyGridHelpersTest.Properties.Resources.TestKey">
+            <summary>
+              Looks up a localized string similar to LocalizedValue.
+            </summary>
+        </member>
         <member name="T:PropertyGridHelpersTest.Support.FakePropertyDescriptor">
             <summary>
             A generic fake property descriptor for testing.
@@ -1509,59 +1744,6 @@
             Should serialize value.
             </summary>
             <param name="component">The component.</param>
-            <returns></returns>
-        </member>
-        <member name="T:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest">
-            <summary>
-            Test for the FindPropertyForAttribute method
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_ShouldReturnNull_WhenDeclaringTypeIsNull">
-            <summary>
-            Finds the property for attribute should return null when declaring type is null.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_ShouldReturnNull_WhenNoMatchingPropertyExists">
-            <summary>
-            Finds the property for attribute should return null when no matching property exists.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.FindPropertyForAttribute_NullFrame_ReturnsNull">
-            <summary>
-            Finds the property for attribute null frame returns null.
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.CallFindPropertyForAttribute(System.Diagnostics.StackFrame)">
-            <summary>
-            Helper method to call private static method via reflection
-            </summary>
-            <param name="frame">The frame.</param>
-            <returns></returns>
-        </member>
-        <member name="T:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes">
-            <summary>
-            Helper class without ResourcePathAttribute on properties
-            </summary>
-        </member>
-        <member name="P:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes.SomeProperty">
-            <summary>
-            Gets or sets some property.
-            </summary>
-            <value>
-            Some property.
-            </value>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.TestClassWithoutAttributes.SomeMethod">
-            <summary>
-            Some method to test
-            </summary>
-        </member>
-        <member name="M:PropertyGridHelpersTest.Support.FindPropertyForAttributeTest.GetStackFrameFromMethod(System.Type,System.String)">
-            <summary>
-            Helper to get stack frame from a specific method
-            </summary>
-            <param name="type">The type.</param>
-            <param name="methodName">Name of the method.</param>
             <returns></returns>
         </member>
         <member name="T:PropertyGridHelpersTest.Support.TestImageTextUIEditor`1">

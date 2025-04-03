@@ -110,7 +110,7 @@ namespace PropertyGridHelpers.Converters
                 {
                     var dna = (EnumTextAttribute)Attribute.GetCustomAttribute(fi, typeof(EnumTextAttribute));
 
-                    if ((dna != null) && ((string)value == dna.EnumText))
+                    if ((dna != null) && (string.Equals((string)value, dna.EnumText, StringComparison.Ordinal)))
                         return Enum.Parse(EnumType, fi.Name);
                 }
 

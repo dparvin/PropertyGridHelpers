@@ -1,6 +1,7 @@
 ﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
 using PropertyGridHelpers.Support;
+using PropertyGridHelpers.TypeDescriptionProviders;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpers.UIEditors;
 using System;
@@ -17,6 +18,8 @@ namespace SampleControls
     /// Control used to test the functionality of the PropertyGridHelpers Library
     /// </summary>
     /// <seealso cref="UserControl" />
+    [ResourcePath(nameof(TestControl))]
+    [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
     public partial class TestControl : UserControl
     {
         /// <summary>
@@ -27,7 +30,7 @@ namespace SampleControls
             InitializeComponent();
             Scrollbars = ScrollBars.Both;
             Scrollbars = ScrollBars.None;
-            lbl.Text = "The main property to test here is the ScrollBars Property. There are other properties in the that use features of the PropertyGridHelpers in the Test Items group.\n" + Assembly.GetAssembly(typeof(TestControl)).Location + " - " + Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion;
+            lbl.Text = $"The main property to test here is the ScrollBars Property. There are other properties in the that use features of the PropertyGridHelpers in the Test Items group.\n{Assembly.GetAssembly(typeof(TestControl)).Location} - {Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion}";
             lbl.TextAlign = ContentAlignment.MiddleCenter;
         }
 
@@ -47,9 +50,9 @@ namespace SampleControls
         /// <see cref="TypeConverterAttribute"/> is used to set the text in the grid in a 
         /// normal basis.
         /// </remarks>
-        [Category("Layout")]
-        [Description("Scrollbars to show for the user")]
-        [DisplayName("Scroll Bars")]
+        [LocalizedCategory("Category_Layout")]
+        [LocalizedDescription("Description_Scrollbar")]
+        [LocalizedDisplayName("DisplayName_Scrollbar")]
         [Editor(typeof(FlagEnumUIEditor<EnumTextConverter<ScrollBars>>), typeof(UITypeEditor))]
         [TypeConverter(typeof(EnumTextConverter<ScrollBars>))]
         [DefaultValue(ScrollBars.None)]
@@ -109,9 +112,9 @@ namespace SampleControls
         /// <value>
         /// The image types.
         /// </value>
-        [LocalizedCategory("Category_Layout", typeof(TestControl))]
-        [LocalizedDescription("Description_ImageToDisplay", typeof(TestControl))]
-        [LocalizedDisplayName("DisplayName_ImageToDisplay", typeof(TestControl))]
+        [LocalizedCategory("Category_Layout")]
+        [LocalizedDescription("Description_ImageToDisplay")]
+        [LocalizedDisplayName("DisplayName_ImageToDisplay")]
         [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
         [ResourcePath("Properties.Resources")]
         [TypeConverter(typeof(EnumTextConverter<ImageTypes>))]
@@ -137,9 +140,9 @@ namespace SampleControls
         /// <value>
         /// The file extension.
         /// </value>
-        [LocalizedCategory("Category_Layout", typeof(TestControl))]
-        [LocalizedDescription("Description_FileExtension", typeof(TestControl))]
-        [LocalizedDisplayName("DisplayName_FileExtension", typeof(TestControl))]
+        [LocalizedCategory("Category_Layout")]
+        [LocalizedDescription("Description_FileExtension")]
+        [LocalizedDisplayName("DisplayName_FileExtension")]
         [TypeConverter(typeof(EnumTextConverter<ImageFileExtension>))]
         [DefaultValue(ImageFileExtension.None)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -162,8 +165,9 @@ namespace SampleControls
         /// <value>
         /// The test date.
         /// </value>
-        [Category("Test Items")]
-        [Description("A test of having a DateTime field.")]
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_DateTime")]
+        [LocalizedDisplayName("DisplayName_DateTime")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public DateTime TestDate
         {
@@ -178,11 +182,11 @@ namespace SampleControls
         /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
         /// a normal basis.
         /// </remarks>
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Discription_Strings")]
+        [LocalizedDisplayName("DisplayName_Strings")]
         [Editor(typeof(CollectionUIEditor<string>), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Category("Test Items")]
-        [Description("A test of processing a list of strings")]
-        [DisplayName("Strings")]
         public List<string> Strings { get; set; } = new List<string>();
 
         /// <summary>Gets or sets the strings.</summary>
@@ -193,11 +197,11 @@ namespace SampleControls
         /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
         /// a normal basis.
         /// </remarks>
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_Decimals")]
+        [LocalizedDisplayName("DisplayName_Decimals")]
         [Editor(typeof(CollectionUIEditor<decimal>), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Category("Test Items")]
-        [Description("A test of processing a list of decimals")]
-        [DisplayName("Decimals")]
         public List<decimal> Decimals { get; set; } = new List<decimal>();
 
         /// <summary>Gets or sets the strings.</summary>
@@ -208,11 +212,11 @@ namespace SampleControls
         /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
         /// a normal basis.
         /// </remarks>
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_Sizes")]
+        [LocalizedDisplayName("DisplayName_Sizes")]
         [Editor(typeof(CollectionUIEditor<Size>), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Category("Test Items")]
-        [Description("A test of processing a list of sizes")]
-        [DisplayName("Sizes")]
         public List<Size> Sizes { get; set; } = new List<Size>();
 
         /// <summary>

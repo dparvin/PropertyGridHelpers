@@ -53,88 +53,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public LocalizedCategoryAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
-        private const string ResourceKey = "Category_TestCategory";
-        private const string ResourceValue = "Test Category";
-        private static readonly Type ResourceSource = typeof(Properties.Resources);
-
-        /// <summary>
-        /// Gets or sets the test property.
-        /// </summary>
-        /// <value>
-        /// The test property.
-        /// </value>
-        [ResourcePath("Images")]
-        public string TestProperty
-        {
-            get; set;
-        } = "SomeValue";
-
-        /// <summary>
-        /// Localized category attribute should return localized string.
-        /// </summary>
-        [Fact]
-        public void LocalizedCategoryAttribute_ShouldReturnLocalizedString()
-        {
-            // Act
-            var attribute = new LocalizedCategoryAttribute(ResourceKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(ResourceValue, attribute.Category));
-#else
-            Assert.Equal(ResourceValue, attribute.Category);
-#endif
-            Output($"The returned Category is: {attribute.Category}");
-        }
-
-        /// <summary>
-        /// Localized the category attribute should return localized string with resource path.
-        /// </summary>
-        /// <param name="resKey">The resource key.</param>
-        /// <param name="expectedValue">The expected value.</param>
-        [Theory]
-        [InlineData(ResourceKey, "Test Category")]
-        [InlineData(ResourceKey + "2", ResourceKey + "2")]
-        public void LocalizedCategoryAttribute_ShouldReturnLocalizedString_WithResourcePath(
-            string resKey,
-            string expectedValue)
-        {
-            // Act
-            var attribute = new LocalizedCategoryAttribute(resKey);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(expectedValue, attribute.Category));
-#else
-            Assert.Equal(expectedValue, attribute.Category);
-#endif
-            Output($"The returned Category is: {attribute.Category}");
-        }
-
-        /// <summary>
-        /// Localize category attribute invalid resource key should return key as fallback.
-        /// </summary>
-        [Fact]
-        public void LocalizedCategoryAttribute_InvalidResourceKey_ShouldReturnKeyAsFallback()
-        {
-            // Arrange
-            const string invalidKey = "Invalid_Key";
-
-            // Act
-            var attribute = new LocalizedCategoryAttribute(invalidKey, ResourceSource);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(invalidKey, attribute.Category)); // Fallback behavior
-#else
-            Assert.Equal(invalidKey, attribute.Category); // Fallback behavior
-#endif
-            Output($"The returned Category is: {attribute.Category}");
-        }
-
         /// <summary>
         /// Localized category attribute remembers resource key.
         /// </summary>
@@ -145,7 +63,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             const string Some_Resource_Key = "SOME_RESOURCE_KEY";
 
             // Act
-            var attribute = new LocalizedCategoryAttribute(Some_Resource_Key, ResourceSource);
+            var attribute = new LocalizedCategoryAttribute(Some_Resource_Key);
 
             // Assert
             Assert.NotNull(attribute);

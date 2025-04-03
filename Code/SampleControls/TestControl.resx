@@ -120,17 +120,50 @@
   <data name="Category_Layout" xml:space="preserve">
     <value>Layout</value>
   </data>
+  <data name="Category_TestItems" xml:space="preserve">
+    <value>Test Items</value>
+  </data>
+  <data name="Description_DateTime" xml:space="preserve">
+    <value>A test of having a DateTime field.</value>
+  </data>
+  <data name="Description_Decimals" xml:space="preserve">
+    <value>A test of processing a list of decimals.</value>
+  </data>
   <data name="Description_FileExtension" xml:space="preserve">
-    <value>Extension of the Image to add to control</value>
+    <value>Extension of the Image to add to control.</value>
   </data>
   <data name="Description_ImageToDisplay" xml:space="preserve">
-    <value>Image to add to control</value>
+    <value>Image to add to control.</value>
+  </data>
+  <data name="Description_Scrollbar" xml:space="preserve">
+    <value>Scrollbars to show for the user.</value>
+  </data>
+  <data name="Description_Sizes" xml:space="preserve">
+    <value>A test of processing a list of sizes.</value>
+  </data>
+  <data name="Discription_Strings" xml:space="preserve">
+    <value>A test of processing a list of strings.</value>
+  </data>
+  <data name="DisplayName_DateTime" xml:space="preserve">
+    <value>Test Date</value>
+  </data>
+  <data name="DisplayName_Decimals" xml:space="preserve">
+    <value>Test List of Decimals</value>
   </data>
   <data name="DisplayName_FileExtension" xml:space="preserve">
     <value>Resource image extension</value>
   </data>
   <data name="DisplayName_ImageToDisplay" xml:space="preserve">
     <value>Image To Display</value>
+  </data>
+  <data name="DisplayName_Scrollbar" xml:space="preserve">
+    <value>Scroll Bars</value>
+  </data>
+  <data name="DisplayName_Sizes" xml:space="preserve">
+    <value>Test List of Sizes</value>
+  </data>
+  <data name="DisplayName_Strings" xml:space="preserve">
+    <value>Test List of Strings</value>
   </data>
   <data name="Horizontal_Scrollbar" xml:space="preserve">
     <value>Horizontal Scrollbar</value>

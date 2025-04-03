@@ -21,6 +21,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0022:Use expression body for method", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.UIEditor.FlagEnumUIEditorTest.Output(System.String)")]
 [assembly: SuppressMessage("Assertions", "xUnit2009:Do not use boolean check to check for substrings", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net35.Attributes.FileExtensionAttributeTest.Get_ShouldThrow_WhenPropertyDoesNotExist")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net35.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net35.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net35.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net35.TypeDescriptors")]
 #endif
 
 #if NET452
@@ -30,6 +33,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net452.Attributes")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net452.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net452.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net452.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net452.TypeDescriptors")]
 #endif
 
 #if NET462
@@ -39,6 +45,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net462.Attributes")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net462.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net462.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net462.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net462.TypeDescriptors")]
 #endif
 
 #if NET472
@@ -48,6 +57,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net472.Attributes")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net472.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net472.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net472.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net472.TypeDescriptors")]
 #endif
 
 #if NET481
@@ -57,6 +69,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net481.Attributes")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net481.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net481.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net481.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net481.TypeDescriptors")]
 #endif
 
 #if NET8_0
@@ -72,6 +87,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.TypeDescriptors")]
 #endif
 
 #if NET9_0
@@ -87,4 +105,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.Support.TestWindowsFormsEditorService.ShowDialog(System.Windows.Forms.Form)")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net90.Support")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net90.TypeDescriptionProviders")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net90.PropertyDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net90.TypeDescriptors")]
 #endif

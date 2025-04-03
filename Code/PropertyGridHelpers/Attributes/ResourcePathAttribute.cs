@@ -15,7 +15,7 @@ namespace PropertyGridHelpers.Attributes
     /// the resource path that the <see cref="UIEditors.ImageTextUIEditor"/> 
     /// should use when displaying images.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Class, AllowMultiple = false)]
     public class ResourcePathAttribute(string resourcePath, string resourceAssembly = null) : Attribute
 #else
     /// <summary>
@@ -27,7 +27,7 @@ namespace PropertyGridHelpers.Attributes
     /// the resource path that the <see cref="UIEditors.ImageTextUIEditor"/> 
     /// should use when displaying images.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Class, AllowMultiple = false)]
     public class ResourcePathAttribute : Attribute
 #endif
     {

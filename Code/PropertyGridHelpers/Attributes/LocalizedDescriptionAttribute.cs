@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -8,26 +6,23 @@ namespace PropertyGridHelpers.Attributes
     /// <summary>
     /// Specifies a localized description for a property, event, or other member in a class.
     /// </summary>
-    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
-    /// <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
     /// <remarks>
-    /// This attribute retrieves the description text from a resource file, allowing descriptions to be localized.
-    /// Apply this attribute to a member, providing the resource key and the resource source type containing the localization.
+    /// This attribute holds the key to the resource entry to get the description text from a resource file, allowing 
+    /// descriptions to be localized. Apply this attribute to a member, providing the resource key.  It is expected
+    /// to work together with the <see cref="ResourcePathAttribute"/> to figure out where to get the resource string
+    /// from
     /// </remarks>
+    /// <seealso cref="Attribute" />
+    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
     /// <example>
-    /// <code>
-    /// [LocalizedDescription("PropertyName_Description", typeof(Resources))]
+    ///   <code>
+    /// [LocalizedDescription("PropertyName_Description")]
     /// public int PropertyName { get; set; }
     /// </code>
     /// </example>
-    /// <seealso cref="DescriptionAttribute" />
-    public class LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null) :
-        DescriptionAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedDescriptionAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized description.
-        /// </summary>
-        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
@@ -37,31 +32,23 @@ namespace PropertyGridHelpers.Attributes
     /// This attribute retrieves the description text from a resource file, allowing descriptions to be localized.
     /// Apply this attribute to a member, providing the resource key and the resource source type containing the localization.
     /// </remarks>
-    /// <seealso cref="DescriptionAttribute" />
-    public class LocalizedDescriptionAttribute : DescriptionAttribute
+    /// <seealso cref="Attribute" />
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedDescriptionAttribute : LocalizedTextAttribute
     {
         /// <summary>
-        /// Gets the resource key used to retrieve the localized description.
-        /// </summary>
-        public string ResourceKey
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizedDescriptionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="LocalizedDescriptionAttribute" /> class.
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
-        /// <param name="resourceSource">The type of the resource file where the localized string is stored.</param>
         /// <example>
-        /// <code>
-        /// [LocalizedDescription("PropertyName_Description", typeof(Resources))]
+        ///   <code>
+        /// [LocalizedDescription("PropertyName_Description")]
         /// public int PropertyName { get; set; }
         /// </code>
         /// </example>
-        public LocalizedDescriptionAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
-            ResourceKey = resourceKey;
+        public LocalizedDescriptionAttribute(string resourceKey) : base(resourceKey)
+        {
+        }
     }
 #endif
 }

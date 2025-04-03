@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -8,20 +6,27 @@ namespace PropertyGridHelpers.Attributes
     /// <summary>
     /// Attribute for specifying a localized category name for a property or event.
     /// </summary>
-    /// <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
-    /// <param name="resourceSource">The type that contains the resource manager for retrieving localized strings.</param>
     /// <remarks>
     /// This attribute allows category names displayed in property grids to be localized
     /// by retrieving the category name from a resource file.
     /// </remarks>
-    /// <seealso cref="CategoryAttribute" />
-    public class LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null) :
-        CategoryAttribute(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1)))
+    /// <seealso cref="LocalizedTextAttribute" />
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute" /> class.
+    /// </remarks>
+    /// <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
+    /// <example>
+    ///   <code>
+    /// [LocalizedCategory("PropertyName_Category")]
+    /// public int PropertyName { get; set; }
+    ///   </code>
+    /// </example>
+    /// <remarks>
+    /// The constructor fetches the localized category name using the specified resource key.
+    /// </remarks>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedCategoryAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-        /// <summary>
-        /// Gets the resource key used to retrieve the localized category name.
-        /// </summary>
-        public string ResourceKey { get; } = resourceKey;
     }
 #else
     /// <summary>
@@ -31,28 +36,32 @@ namespace PropertyGridHelpers.Attributes
     /// This attribute allows category names displayed in property grids to be localized
     /// by retrieving the category name from a resource file.
     /// </remarks>
-    /// <seealso cref="CategoryAttribute" />
-    public class LocalizedCategoryAttribute : CategoryAttribute
+    /// <seealso cref="LocalizedTextAttribute" />
+    /// <example>
+    ///   <code>
+    /// [LocalizedCategory("PropertyName_Category")]
+    /// public int PropertyName { get; set; }
+    ///   </code>
+    /// </example>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    public class LocalizedCategoryAttribute : LocalizedTextAttribute
     {
         /// <summary>
-        /// Gets the resource key used to retrieve the localized category name.
-        /// </summary>
-        public string ResourceKey
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute"/> class.
+        /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute" /> class.
         /// </summary>
         /// <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
-        /// <param name="resourceSource">The type that contains the resource manager for retrieving localized strings.</param>
+        /// <example>
+        ///   <code>
+        /// [LocalizedCategory("PropertyName_Category")]
+        /// public int PropertyName { get; set; }
+        ///   </code>
+        /// </example>
         /// <remarks>
-        /// The constructor fetches the localized category name using the specified resource key and resource source.
+        /// The constructor fetches the localized category name using the specified resource key.
         /// </remarks>
-        public LocalizedCategoryAttribute(string resourceKey, Type resourceSource = null)
-            : base(Support.Support.GetResourceString(resourceKey, resourceSource, new StackTrace().GetFrame(1))) =>
-            ResourceKey = resourceKey;
+        public LocalizedCategoryAttribute(string resourceKey) : base(resourceKey)
+        {
+        }
     }
 #endif
 }
