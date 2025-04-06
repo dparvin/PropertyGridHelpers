@@ -1,9 +1,7 @@
 ﻿using PropertyGridHelpers.PropertyDescriptors;
 using PropertyGridHelpers.TypeDescriptors;
-using PropertyGridHelpers.UIEditors;
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using Xunit;
 #if NET35
 #else

@@ -5,9 +5,7 @@ using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpersTest.Enums;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using Xunit;
 
 #if NET35
@@ -466,7 +464,7 @@ namespace PropertyGridHelpersTest.net90.Support
         public void GetResourceString_ThrowsArgumentNullException_WhenResourceSourceIsNull()
         {
             // Arrange
-            string key = "TestKey";
+            var key = "TestKey";
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() =>

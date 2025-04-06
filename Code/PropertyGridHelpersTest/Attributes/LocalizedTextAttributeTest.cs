@@ -1,6 +1,4 @@
-﻿using Moq;
-using PropertyGridHelpers.Attributes;
-using PropertyGridHelpers;
+﻿using PropertyGridHelpers.Attributes;
 using System;
 using Xunit;
 #if NET35

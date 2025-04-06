@@ -134,6 +134,7 @@
   </data>
   <data name="NullValueString" xml:space="preserve">
     <value />
+    <comment>This resource is intentionally left blank for testing purposes</comment>
   </data>
   <data name="Stars" xml:space="preserve">
     <value>Stars Test Text</value>
