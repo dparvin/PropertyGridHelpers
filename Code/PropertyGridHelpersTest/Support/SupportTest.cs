@@ -71,6 +71,8 @@ namespace PropertyGridHelpersTest.net90.Support
             OutputHelper = output;
 #endif
 
+        #region GetResourcesNames Tests ^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Gets the resources names when enum type is null throws argument null exception.
         /// </summary>
@@ -140,6 +142,8 @@ namespace PropertyGridHelpersTest.net90.Support
             // Assert
             Assert.Contains("Checking resources in assembly:", output);
         }
+
+        #endregion
 
         #region GetResourcePath Tests ^^^^^^^^^^^^^^^^^^^^^
 
@@ -448,6 +452,92 @@ namespace PropertyGridHelpersTest.net90.Support
             Assert.Equal(0, string.Compare(String.Empty, result));
 #else
             Assert.Equal(String.Empty, result);
+#endif
+        }
+
+        #endregion
+
+        #region GetResourceString Tests ^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the resource string throws argument null exception when resource source is null.
+        /// </summary>
+        [Fact]
+        public void GetResourceString_ThrowsArgumentNullException_WhenResourceSourceIsNull()
+        {
+            // Arrange
+            string key = "TestKey";
+
+            // Act & Assert
+            var ex = Assert.Throws<ArgumentNullException>(() =>
+                PropertyGridHelpers.Support.Support.GetResourceString(key, null));
+
+#if NET8_0_OR_GREATER
+            Assert.Equal("resourceSource", ex.ParamName);
+#else
+            Assert.Equal("resourceSource", ex.ParamName, StringComparer.OrdinalIgnoreCase);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the resource string throws argument null exception when resource key is null.
+        /// </summary>
+        [Fact]
+        public void GetResourceString_ThrowsArgumentNullException_WhenResourceKeyIsNull()
+        {
+            // Arrange
+
+            // Act & Assert
+            var ex = Assert.Throws<ArgumentNullException>(() =>
+                PropertyGridHelpers.Support.Support.GetResourceString("", null));
+
+#if NET8_0_OR_GREATER
+            Assert.Equal("resourceKey", ex.ParamName);
+#else
+            Assert.Equal("resourceKey", ex.ParamName, StringComparer.OrdinalIgnoreCase);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the resource string returns key when resource key does not exist.
+        /// </summary>
+        [Fact]
+        public void GetResourceString_ReturnsKey_WhenResourceKeyDoesNotExist()
+        {
+            // Arrange
+            var missingKey = "ThisKeyDoesNotExist";
+            var resourceSource = typeof(Properties.Resources); // replace with your known .resx class
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetResourceString(missingKey, resourceSource);
+
+            // Assert
+#if NET8_0_OR_GREATER
+            Assert.Equal(missingKey, result);
+#else
+            Assert.Equal(missingKey, result, StringComparer.OrdinalIgnoreCase);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the resource string returns key when missing manifest resource exception is thrown.
+        /// </summary>
+        [Fact]
+        public void GetResourceString_ReturnsKey_WhenMissingManifestResourceExceptionIsThrown()
+        {
+            // Arrange
+            var key = "AnyKey";
+            var fakeResourceSource = typeof(PropertyGridHelpers.Support.Support); // does not have associated .resx
+            PropertyGridHelpers.Support.Support.SetLanguage("es");
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetResourceString(key, fakeResourceSource);
+
+            // Assert
+#if NET8_0_OR_GREATER
+            Assert.Equal(key, result);
+#else
+            Assert.Equal(key, result, StringComparer.OrdinalIgnoreCase);
 #endif
         }
 

@@ -939,6 +939,26 @@
             Gets the file extension should return empty string when enum property is null.
             </summary>
         </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourceString_ThrowsArgumentNullException_WhenResourceSourceIsNull">
+            <summary>
+            Gets the resource string throws argument null exception when resource source is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourceString_ThrowsArgumentNullException_WhenResourceKeyIsNull">
+            <summary>
+            Gets the resource string throws argument null exception when resource key is null.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourceString_ReturnsKey_WhenResourceKeyDoesNotExist">
+            <summary>
+            Gets the resource string returns key when resource key does not exist.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Support.SupportTest.GetResourceString_ReturnsKey_WhenMissingManifestResourceExceptionIsThrown">
+            <summary>
+            Gets the resource string returns key when missing manifest resource exception is thrown.
+            </summary>
+        </member>
         <member name="P:PropertyGridHelpersTest.net35.Support.SupportTest.TestItemWithImage">
             <summary>
             Gets or sets the test enum.

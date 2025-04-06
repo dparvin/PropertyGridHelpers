@@ -55,7 +55,7 @@ namespace PropertyGridHelpers.Attributes
 
             // Get the namespace of the target type itself
             // Extract the root namespace (first segment of the namespace)
-            var rootNamespace = targetType.Namespace?.Split('.')[0];
+            var rootNamespace = targetType.Namespace.Split('.')[0];
 
             // Combine the assembly namespace with the resource path
             var fullResourcePath = $"{rootNamespace}.{resourcePathAttr.ResourcePath}";
