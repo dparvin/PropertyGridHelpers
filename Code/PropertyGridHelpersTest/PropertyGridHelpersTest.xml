@@ -312,6 +312,27 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="T:PropertyGridHelpersTest.net35.Attributes.ResourcePathAttributeTest">
+            <summary>
+            Resource Path Attribute Test
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.ResourcePathAttributeTest.GetAssembly_ReturnsExecutingAssembly_WhenResourceAssemblyIsNullOrEmpty">
+            <summary>
+            Gets the assembly returns executing assembly when resource assembly is null or empty.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.ResourcePathAttributeTest.GetAssembly_LoadsSpecifiedAssembly_WhenResourceAssemblyIsProvided">
+            <summary>
+            Gets the assembly loads specified assembly when resource assembly is provided.
+            </summary>
+        </member>
+        <member name="M:PropertyGridHelpersTest.net35.Attributes.ResourcePathAttributeTest.Output(System.String)">
+            <summary>
+            Outputs the specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="T:PropertyGridHelpersTest.net35.Controls.FlagCheckedListBoxItemTest">
             <summary>
             Tests for the flag checked list box

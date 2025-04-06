@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -51,7 +50,6 @@ namespace PropertyGridHelpers.Attributes
             var resourcePathAttr = (ResourcePathAttribute)GetCustomAttribute(targetType, typeof(ResourcePathAttribute)) ?? throw new InvalidOperationException($"ResourcePathAttribute not found on {targetType.FullName}");
 
             Console.WriteLine($"ResourcePath: {resourcePathAttr.ResourcePath}");
-
 
             // Get the namespace of the target type itself
             // Extract the root namespace (first segment of the namespace)

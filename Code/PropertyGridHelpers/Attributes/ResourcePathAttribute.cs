@@ -77,7 +77,7 @@ namespace PropertyGridHelpers.Attributes
         /// Resolves the assembly object from the stored assembly name.
         /// </summary>
         public Assembly GetAssembly() => string.IsNullOrEmpty(ResourceAssembly) ?
-                                         Assembly.GetExecutingAssembly() :
+                                         Assembly.GetCallingAssembly() :
                                          Assembly.Load(ResourceAssembly);
     }
 }
