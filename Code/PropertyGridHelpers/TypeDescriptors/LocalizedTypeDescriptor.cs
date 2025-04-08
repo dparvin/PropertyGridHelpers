@@ -6,7 +6,7 @@ namespace PropertyGridHelpers.TypeDescriptors
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Localized Type Descriptor
+    /// Type Descriptor used to localize property names, categories and descriptions.
     /// </summary>
     /// <seealso cref="CustomTypeDescriptor" />
     /// <remarks>
@@ -17,7 +17,7 @@ namespace PropertyGridHelpers.TypeDescriptors
     {
 #else
     /// <summary>
-    /// Localized Type Descriptor
+    /// Type Descriptor used to localize property names, categories and descriptions.
     /// </summary>
     /// <seealso cref="CustomTypeDescriptor" />
     public class LocalizedTypeDescriptor : CustomTypeDescriptor
@@ -31,16 +31,22 @@ namespace PropertyGridHelpers.TypeDescriptors
 #endif
 
         /// <summary>
-        /// Gets the properties.
+        /// Gets the properties of the referenced class.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// a <see cref="PropertyDescriptorCollection" /> with the properties of the object.
+        /// </returns>
         public override PropertyDescriptorCollection GetProperties() => GetProperties(null);
 
         /// <summary>
         /// Gets the properties.
         /// </summary>
-        /// <param name="attributes">The attributes.</param>
-        /// <returns></returns>
+        /// <param name="attributes">
+        /// The array of attributes used to find the properties that use one or more of them.
+        /// </param>
+        /// <returns>
+        /// a <see cref="PropertyDescriptorCollection" /> with the properties of the object.
+        /// </returns>
         public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             var baseProps = base.GetProperties(attributes);

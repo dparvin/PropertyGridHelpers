@@ -1452,7 +1452,7 @@
         </member>
         <member name="T:PropertyGridHelpers.TypeDescriptors.LocalizedTypeDescriptor">
             <summary>
-            Localized Type Descriptor
+            Type Descriptor used to localize property names, categories and descriptions.
             </summary>
             <seealso cref="T:System.ComponentModel.CustomTypeDescriptor" />
             <remarks>
@@ -1462,7 +1462,7 @@
         </member>
         <member name="M:PropertyGridHelpers.TypeDescriptors.LocalizedTypeDescriptor.#ctor(System.ComponentModel.ICustomTypeDescriptor)">
             <summary>
-            Localized Type Descriptor
+            Type Descriptor used to localize property names, categories and descriptions.
             </summary>
             <seealso cref="T:System.ComponentModel.CustomTypeDescriptor" />
             <remarks>
@@ -1472,16 +1472,22 @@
         </member>
         <member name="M:PropertyGridHelpers.TypeDescriptors.LocalizedTypeDescriptor.GetProperties">
             <summary>
-            Gets the properties.
+            Gets the properties of the referenced class.
             </summary>
-            <returns></returns>
+            <returns>
+            a <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> with the properties of the object.
+            </returns>
         </member>
         <member name="M:PropertyGridHelpers.TypeDescriptors.LocalizedTypeDescriptor.GetProperties(System.Attribute[])">
             <summary>
             Gets the properties.
             </summary>
-            <param name="attributes">The attributes.</param>
-            <returns></returns>
+            <param name="attributes">
+            The array of attributes used to find the properties that use one or more of them.
+            </param>
+            <returns>
+            a <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> with the properties of the object.
+            </returns>
         </member>
         <member name="T:PropertyGridHelpers.TypeDescriptors.NamespaceDoc">
             <summary>
