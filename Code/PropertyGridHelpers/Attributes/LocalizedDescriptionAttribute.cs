@@ -15,10 +15,27 @@ namespace PropertyGridHelpers.Attributes
     /// <seealso cref="Attribute" />
     /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
     /// <example>
-    ///   <code>
-    /// [LocalizedDescription("PropertyName_Description")]
-    /// public int PropertyName { get; set; }
-    /// </code>
+    ///   <code language="csharp">
+    ///       [ResourcePath(nameof(TestControl))]
+    ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+    ///       public partial class TestControl : UserControl
+    ///       {
+    ///           [LocalizedCategory("Category_Layout")]
+    ///           [LocalizedDescription("Description_Scrollbar")]
+    ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+    ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+    ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+    ///           [DefaultValue(ScrollBars.None)]
+    ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    ///           [EditorBrowsable(EditorBrowsableState.Always)]
+    ///           [Bindable(true)]
+    ///           public ScrollBars Scrollbars
+    ///           {
+    ///               get => _Scrollbars;
+    ///               set => _Scrollbars = value;
+    ///           }
+    ///       }
+    ///   </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
     public class LocalizedDescriptionAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
@@ -41,10 +58,27 @@ namespace PropertyGridHelpers.Attributes
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
         /// <example>
-        ///   <code>
-        /// [LocalizedDescription("PropertyName_Description")]
-        /// public int PropertyName { get; set; }
-        /// </code>
+        ///   <code language="csharp">
+        ///       [ResourcePath(nameof(TestControl))]
+        ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+        ///       public partial class TestControl : UserControl
+        ///       {
+        ///           [LocalizedCategory("Category_Layout")]
+        ///           [LocalizedDescription("Description_Scrollbar")]
+        ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+        ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+        ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+        ///           [DefaultValue(ScrollBars.None)]
+        ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        ///           [EditorBrowsable(EditorBrowsableState.Always)]
+        ///           [Bindable(true)]
+        ///           public ScrollBars Scrollbars
+        ///           {
+        ///               get => _Scrollbars;
+        ///               set => _Scrollbars = value;
+        ///           }
+        ///       }
+        ///   </code>
         /// </example>
         public LocalizedDescriptionAttribute(string resourceKey) : base(resourceKey)
         {

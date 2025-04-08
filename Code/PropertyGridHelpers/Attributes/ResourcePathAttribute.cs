@@ -25,8 +25,33 @@ namespace PropertyGridHelpers.Attributes
     /// <remarks>
     /// This attribute is applied to properties or enum values to specify 
     /// the resource path that the <see cref="UIEditors.ImageTextUIEditor"/> 
-    /// should use when displaying images.
+    /// should use when displaying images.  It can also be applied to classes
+    /// for use with the <see cref="TypeDescriptionProviders.LocalizedTypeDescriptionProvider"/> to 
+    /// specify the resource path for localized text for the Categories, Descriptions and Display names.
     /// </remarks>
+    /// <example>
+    ///   <code language="csharp">
+    ///       [ResourcePath(nameof(TestControl))]
+    ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+    ///       public partial class TestControl : UserControl
+    ///       {
+    ///           [LocalizedCategory("Category_Layout")]
+    ///           [LocalizedDescription("Description_Scrollbar")]
+    ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+    ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+    ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+    ///           [DefaultValue(ScrollBars.None)]
+    ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    ///           [EditorBrowsable(EditorBrowsableState.Always)]
+    ///           [Bindable(true)]
+    ///           public ScrollBars Scrollbars
+    ///           {
+    ///               get => _Scrollbars;
+    ///               set => _Scrollbars = value;
+    ///           }
+    ///       }
+    ///   </code>
+    /// </example>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Class, AllowMultiple = false)]
     public class ResourcePathAttribute : Attribute
 #endif

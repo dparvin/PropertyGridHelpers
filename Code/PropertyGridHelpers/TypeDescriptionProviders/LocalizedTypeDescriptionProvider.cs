@@ -8,11 +8,34 @@ namespace PropertyGridHelpers.TypeDescriptionProviders
     /// <summary>
     /// Localized Type Description Provider
     /// </summary>
+    /// <param name="type">The type.</param>
     /// <seealso cref="TypeDescriptionProvider" />
     /// <remarks>
     /// Initializes a new instance of the <see cref="LocalizedTypeDescriptionProvider"/> class.
     /// </remarks>
-    /// <param name="type">The type.</param>
+    /// <example>
+    ///   <code language="csharp">
+    ///       [ResourcePath(nameof(TestControl))]
+    ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+    ///       public partial class TestControl : UserControl
+    ///       {
+    ///           [LocalizedCategory("Category_Layout")]
+    ///           [LocalizedDescription("Description_Scrollbar")]
+    ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+    ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+    ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+    ///           [DefaultValue(ScrollBars.None)]
+    ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    ///           [EditorBrowsable(EditorBrowsableState.Always)]
+    ///           [Bindable(true)]
+    ///           public ScrollBars Scrollbars
+    ///           {
+    ///               get => _Scrollbars;
+    ///               set => _Scrollbars = value;
+    ///           }
+    ///       }
+    ///   </code>
+    /// </example>
     public class LocalizedTypeDescriptionProvider(Type type) :
         TypeDescriptionProvider(TypeDescriptor.GetProvider(type))
     {
@@ -28,6 +51,29 @@ namespace PropertyGridHelpers.TypeDescriptionProviders
     /// Localized Type Description Provider
     /// </summary>
     /// <seealso cref="TypeDescriptionProvider" />
+    /// <example>
+    ///   <code language="csharp">
+    ///       [ResourcePath(nameof(TestControl))]
+    ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+    ///       public partial class TestControl : UserControl
+    ///       {
+    ///           [LocalizedCategory("Category_Layout")]
+    ///           [LocalizedDescription("Description_Scrollbar")]
+    ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+    ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+    ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+    ///           [DefaultValue(ScrollBars.None)]
+    ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    ///           [EditorBrowsable(EditorBrowsableState.Always)]
+    ///           [Bindable(true)]
+    ///           public ScrollBars Scrollbars
+    ///           {
+    ///               get => _Scrollbars;
+    ///               set => _Scrollbars = value;
+    ///           }
+    ///       }
+    ///   </code>
+    /// </example>
     public class LocalizedTypeDescriptionProvider :
         TypeDescriptionProvider
     {

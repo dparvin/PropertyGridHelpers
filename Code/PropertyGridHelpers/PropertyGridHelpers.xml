@@ -284,47 +284,71 @@
             <summary>
             Attribute for specifying a localized category name for a property or event.
             </summary>
+            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
             <remarks>
             This attribute allows category names displayed in property grids to be localized
-            by retrieving the category name from a resource file.
+            by retrieving the category name from a resource file.  If your class has a <see cref="T:PropertyGridHelpers.Attributes.ResourcePathAttribute" />
+            applied to it, the resource key will be looked up in the resource file specified by that attribute.
             </remarks>
-            <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
-            <remarks>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute" /> class.
-            </remarks>
-            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
             <example>
-              <code>
-            [LocalizedCategory("PropertyName_Category")]
-            public int PropertyName { get; set; }
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
               </code>
             </example>
-            <remarks>
-            The constructor fetches the localized category name using the specified resource key.
-            </remarks>
+            <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute.#ctor(System.String)">
             <summary>
             Attribute for specifying a localized category name for a property or event.
             </summary>
+            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
             <remarks>
             This attribute allows category names displayed in property grids to be localized
-            by retrieving the category name from a resource file.
+            by retrieving the category name from a resource file.  If your class has a <see cref="T:PropertyGridHelpers.Attributes.ResourcePathAttribute" />
+            applied to it, the resource key will be looked up in the resource file specified by that attribute.
             </remarks>
-            <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
-            <remarks>
-            Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.LocalizedCategoryAttribute" /> class.
-            </remarks>
-            <param name="resourceKey">The key used to retrieve the localized category name from the resource file.</param>
             <example>
-              <code>
-            [LocalizedCategory("PropertyName_Category")]
-            public int PropertyName { get; set; }
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
               </code>
             </example>
-            <remarks>
-            The constructor fetches the localized category name using the specified resource key.
-            </remarks>
+            <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute">
             <summary>
@@ -339,10 +363,27 @@
             <seealso cref="T:System.Attribute" />
             <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <example>
-              <code>
-            [LocalizedDescription("PropertyName_Description")]
-            public int PropertyName { get; set; }
-            </code>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
             </example>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedDescriptionAttribute.#ctor(System.String)">
@@ -358,10 +399,27 @@
             <seealso cref="T:System.Attribute" />
             <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <example>
-              <code>
-            [LocalizedDescription("PropertyName_Description")]
-            public int PropertyName { get; set; }
-            </code>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
             </example>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute">
@@ -370,15 +428,32 @@
             member in a class.
             </summary>
             <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <remarks>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute" /> class.
             </remarks>
-            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <example>
-              <code>
-            [LocalizedDisplayName("PropertyName_DisplayName")]
-            public int PropertyName { get; set; }
-            </code>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
             </example>
         </member>
         <member name="M:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute.#ctor(System.String)">
@@ -387,15 +462,32 @@
             member in a class.
             </summary>
             <seealso cref="T:PropertyGridHelpers.Attributes.LocalizedTextAttribute" />
+            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <remarks>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.Attributes.LocalizedDisplayNameAttribute" /> class.
             </remarks>
-            <param name="resourceKey">The key identifying the localized string in the resource file.</param>
             <example>
-              <code>
-            [LocalizedDisplayName("PropertyName_DisplayName")]
-            public int PropertyName { get; set; }
-            </code>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
             </example>
         </member>
         <member name="T:PropertyGridHelpers.Attributes.LocalizedEnumTextAttribute">
@@ -997,6 +1089,18 @@
             <param name="component">The component.</param>
             <returns></returns>
         </member>
+        <member name="T:PropertyGridHelpers.PropertyDescriptors.NamespaceDoc">
+            <summary>
+            Provides objects to describe the meta data for a property
+            </summary>
+            <remarks>
+            These classes are used to provide additional information about 
+            properties in the classes that they are applied to.  They are 
+            usually applied automatically by a TypeDescriptorProvider.
+            </remarks>
+            <seealso cref="N:PropertyGridHelpers.TypeDescriptionProviders"/>
+            <seealso cref="N:PropertyGridHelpers.Attributes"/>
+        </member>
         <member name="T:PropertyGridHelpers.Support.NamespaceDoc">
             <summary>
             The PropertyGridHelpers.Support namespace contains classes that 
@@ -1197,21 +1301,67 @@
             <summary>
             Localized Type Description Provider
             </summary>
+            <param name="type">The type.</param>
             <seealso cref="T:System.ComponentModel.TypeDescriptionProvider" />
             <remarks>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.TypeDescriptionProviders.LocalizedTypeDescriptionProvider"/> class.
             </remarks>
-            <param name="type">The type.</param>
+            <example>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
+            </example>
         </member>
         <member name="M:PropertyGridHelpers.TypeDescriptionProviders.LocalizedTypeDescriptionProvider.#ctor(System.Type)">
             <summary>
             Localized Type Description Provider
             </summary>
+            <param name="type">The type.</param>
             <seealso cref="T:System.ComponentModel.TypeDescriptionProvider" />
             <remarks>
             Initializes a new instance of the <see cref="T:PropertyGridHelpers.TypeDescriptionProviders.LocalizedTypeDescriptionProvider"/> class.
             </remarks>
-            <param name="type">The type.</param>
+            <example>
+              <code language="csharp">
+                  [ResourcePath(nameof(TestControl))]
+                  [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+                  public partial class TestControl : UserControl
+                  {
+                      [LocalizedCategory("Category_Layout")]
+                      [LocalizedDescription("Description_Scrollbar")]
+                      [LocalizedDisplayName("DisplayName_Scrollbar")]
+                      [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+                      [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+                      [DefaultValue(ScrollBars.None)]
+                      [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+                      [EditorBrowsable(EditorBrowsableState.Always)]
+                      [Bindable(true)]
+                      public ScrollBars Scrollbars
+                      {
+                          get => _Scrollbars;
+                          set => _Scrollbars = value;
+                      }
+                  }
+              </code>
+            </example>
         </member>
         <member name="M:PropertyGridHelpers.TypeDescriptionProviders.LocalizedTypeDescriptionProvider.#ctor">
             <summary>
@@ -1226,6 +1376,21 @@
             <param name="instance">The instance.</param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">objectType</exception>
+        </member>
+        <member name="T:PropertyGridHelpers.TypeDescriptionProviders.NamespaceDoc">
+            <summary>
+            Provides objects to describe the meta data for all the properties in 
+            the class where it is applied.
+            </summary>
+            <remarks>
+            This namespace contains type description providers and related classes 
+            that extend or customize how types and their properties are represented 
+            within property grids. It is primarily used to support enhanced 
+            design-time and runtime experiences by providing metadata such as 
+            property visibility, display names, categories, and descriptions.
+            </remarks>
+            <seealso cref="N:PropertyGridHelpers.Attributes"/>
+            <seealso cref="N:PropertyGridHelpers.PropertyDescriptors"/> 
         </member>
         <member name="T:PropertyGridHelpers.TypeDescriptors.CustomTypeDescriptorContext">
             <summary>

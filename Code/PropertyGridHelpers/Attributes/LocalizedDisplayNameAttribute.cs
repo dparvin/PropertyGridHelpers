@@ -8,15 +8,32 @@ namespace PropertyGridHelpers.Attributes
     /// member in a class.
     /// </summary>
     /// <seealso cref="LocalizedTextAttribute" />
+    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
     /// <remarks>
     /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttribute" /> class.
     /// </remarks>
-    /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
     /// <example>
-    ///   <code>
-    /// [LocalizedDisplayName("PropertyName_DisplayName")]
-    /// public int PropertyName { get; set; }
-    /// </code>
+    ///   <code language="csharp">
+    ///       [ResourcePath(nameof(TestControl))]
+    ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+    ///       public partial class TestControl : UserControl
+    ///       {
+    ///           [LocalizedCategory("Category_Layout")]
+    ///           [LocalizedDescription("Description_Scrollbar")]
+    ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+    ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+    ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+    ///           [DefaultValue(ScrollBars.None)]
+    ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    ///           [EditorBrowsable(EditorBrowsableState.Always)]
+    ///           [Bindable(true)]
+    ///           public ScrollBars Scrollbars
+    ///           {
+    ///               get => _Scrollbars;
+    ///               set => _Scrollbars = value;
+    ///           }
+    ///       }
+    ///   </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
     public class LocalizedDisplayNameAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
@@ -31,12 +48,6 @@ namespace PropertyGridHelpers.Attributes
     /// <remarks>
     /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttribute" /> class.
     /// </remarks>
-    /// <example>
-    ///   <code>
-    /// [LocalizedDisplayName("PropertyName_DisplayName")]
-    /// public int PropertyName { get; set; }
-    /// </code>
-    /// </example>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
     public class LocalizedDisplayNameAttribute : LocalizedTextAttribute
     {
@@ -45,10 +56,27 @@ namespace PropertyGridHelpers.Attributes
         /// </summary>
         /// <param name="resourceKey">The key identifying the localized string in the resource file.</param>
         /// <example>
-        ///   <code>
-        /// [LocalizedDisplayName("PropertyName_DisplayName")]
-        /// public int PropertyName { get; set; }
-        /// </code>
+        ///   <code language="csharp">
+        ///       [ResourcePath(nameof(TestControl))]
+        ///       [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
+        ///       public partial class TestControl : UserControl
+        ///       {
+        ///           [LocalizedCategory("Category_Layout")]
+        ///           [LocalizedDescription("Description_Scrollbar")]
+        ///           [LocalizedDisplayName("DisplayName_Scrollbar")]
+        ///           [Editor(typeof(FlagEnumUIEditor&lt;EnumTextConverter&lt;ScrollBars&gt;&gt;), typeof(UITypeEditor))]
+        ///           [TypeConverter(typeof(EnumTextConverter&lt;ScrollBars&gt;))]
+        ///           [DefaultValue(ScrollBars.None)]
+        ///           [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        ///           [EditorBrowsable(EditorBrowsableState.Always)]
+        ///           [Bindable(true)]
+        ///           public ScrollBars Scrollbars
+        ///           {
+        ///               get => _Scrollbars;
+        ///               set => _Scrollbars = value;
+        ///           }
+        ///       }
+        ///   </code>
         /// </example>
         public LocalizedDisplayNameAttribute(string resourceKey) : base(resourceKey)
         {
