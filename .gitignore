@@ -22,3 +22,4 @@
 *.user
 /Code/SampleControls/*.user
 /Code/SampleForms/*.user
+/Code/Sandcastle/*.log
