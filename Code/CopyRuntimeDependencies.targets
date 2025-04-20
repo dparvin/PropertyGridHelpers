@@ -1,0 +1,22 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyRuntimeDependencies" AfterTargets="Build">
+
+    <PropertyGroup>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <!-- This item group captures everything resolved by MSBuild -->
+    <ItemGroup>
+      <AllResolvedAssemblies Include="@(ReferencePath);@(RuntimeCopyLocalItems)" />
+    </ItemGroup>
+
+    <Message Text="Copying runtime dependencies..." Importance="High" />
+
+    <Copy SourceFiles="@(AllResolvedAssemblies)"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true"
+          Retries="3"
+          RetryDelayMilliseconds="100" />
+
+  </Target>
+</Project>

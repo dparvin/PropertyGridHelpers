@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyEverythingUseful" AfterTargets="Build">
+
+    <!-- Get the published items -->
+    <ItemGroup>
+      <ResolvedFiles Include="@(PublishItemsOutputGroup)" />
+    </ItemGroup>
+
+    <Message Text="Running CopyEverythingUseful target..." Importance="High" />
+
+    <Copy SourceFiles="@(ResolvedFiles->'%(FullPath)')"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true"
+          Retries="3"
+          RetryDelayMilliseconds="100" />
+
+  </Target>
+</Project>

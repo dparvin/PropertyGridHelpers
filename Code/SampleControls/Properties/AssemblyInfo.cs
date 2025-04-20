@@ -6,8 +6,15 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyCompany("David Parvin")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 [assembly: AssemblyCopyright("Copyright © 2016-2025")]
-[assembly: AssemblyDescription("PropertyGridHelpers Sample Control")]
+[assembly: AssemblyDescription("PropertyGridHelpers Sample Controls")]
+[assembly: AssemblyProduct("Property Grid Helper Sample Controls")]
+[assembly: AssemblyTitle("SampleControls")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyFileVersion("1.0.0.1")]

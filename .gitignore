@@ -23,3 +23,5 @@
 /Code/SampleControls/*.user
 /Code/SampleForms/*.user
 /Code/Sandcastle/*.log
+/Code/PropertyGridHelpers.DocStub/bin
+/Code/PropertyGridHelpers.DocStub/obj

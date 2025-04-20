@@ -48,7 +48,8 @@ namespace PropertyGridHelpersTest.net90.TypeDescriptionProviders
         /// Localized Property Descriptor Test
         /// </summary>
         /// <param name="output">xunit output implementation</param>
-        public LocalizedTypeDescriptionProviderTest(ITestOutputHelper output) => OutputHelper = output;
+        public LocalizedTypeDescriptionProviderTest(ITestOutputHelper output) =>
+            OutputHelper = output;
 #endif
 #endif
 

@@ -62,7 +62,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// <summary>
         /// Enum Text Converter Test
         /// </summary>
-        /// <param name="output"></param>
+        /// <param name="output">xunit output implementation</param>
         public ImageTextUIEditorTest(ITestOutputHelper output)
             : base() =>
             OutputHelper = output;

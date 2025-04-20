@@ -31,9 +31,6 @@ namespace PropertyGridHelpersTest.net80.Support
 namespace PropertyGridHelpersTest.net90.Support
 #endif
 {
-    /// <summary>
-    /// Tests for the <see cref="PropertyGridHelpers.Support.Support"/> class.
-    /// </summary>
 #if NET8_0_OR_GREATER
     /// <summary>
     /// Class for testing the ImageTextUIEditor class
@@ -41,6 +38,9 @@ namespace PropertyGridHelpersTest.net90.Support
     /// <param name="output">The output.</param>
     public class SupportTest(ITestOutputHelper output)
 #else
+    /// <summary>
+    /// Tests for the <see cref="PropertyGridHelpers.Support.Support"/> class.
+    /// </summary>
     public class SupportTest
 #endif
     {

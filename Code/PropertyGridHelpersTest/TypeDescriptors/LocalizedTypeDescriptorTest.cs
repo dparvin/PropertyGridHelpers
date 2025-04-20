@@ -24,13 +24,17 @@ namespace PropertyGridHelpersTest.net80.TypeDescriptors
 namespace PropertyGridHelpersTest.net90.TypeDescriptors
 #endif
 {
+#if NET8_0_OR_GREATER
     /// <summary>
     /// Localized Type Descriptor Test
     /// </summary>
-#if NET8_0_OR_GREATER
+    /// <param name="output">xunit output implementation</param>
     public class LocalizedTypeDescriptorTest(ITestOutputHelper output)
     {
 #else
+    /// <summary>
+    /// Localized Type Descriptor Test
+    /// </summary>
     public class LocalizedTypeDescriptorTest
     {
 #endif
@@ -45,18 +49,34 @@ namespace PropertyGridHelpersTest.net90.TypeDescriptors
         /// Localized Property Descriptor Test
         /// </summary>
         /// <param name="output">xunit output implementation</param>
-        public LocalizedTypeDescriptorTest(ITestOutputHelper output) => OutputHelper = output;
+        public LocalizedTypeDescriptorTest(ITestOutputHelper output) =>
+            OutputHelper = output;
 #endif
 #endif
 
         #region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+        /// <summary>
+        /// Test Class
+        /// </summary>
         private class TestClass
         {
+            /// <summary>
+            /// Gets or sets the property1.
+            /// </summary>
+            /// <value>
+            /// The property1.
+            /// </value>
             public string Property1
             {
                 get; set;
             }
+            /// <summary>
+            /// Gets or sets the property2.
+            /// </summary>
+            /// <value>
+            /// The property2.
+            /// </value>
             public int Property2
             {
                 get; set;

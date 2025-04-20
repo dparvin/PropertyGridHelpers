@@ -1,0 +1,19 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyLocalAllDependencies" AfterTargets="Build">
+
+    <!-- Works for SDK-style and older-style project references -->
+    <ItemGroup>
+      <ResolvedCopyLocalFiles Include="@(ReferenceCopyLocalPaths)" />
+      <ResolvedCopyLocalFiles Include="@(RuntimeCopyLocalItems->WithMetadataValue('CopyLocal','true'))" />
+    </ItemGroup>
+
+    <Message Text="Running CopyLocalAllDependencies target..." Importance="High" />
+
+    <Copy SourceFiles="@(ResolvedCopyLocalFiles)"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true"
+          Retries="3"
+          RetryDelayMilliseconds="100" />
+
+  </Target>
+</Project>

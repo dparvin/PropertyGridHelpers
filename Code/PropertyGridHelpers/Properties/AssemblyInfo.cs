@@ -7,11 +7,16 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyCompany("David Parvin")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 [assembly: AssemblyCopyright("Copyright © 2016-2025")]
 [assembly: AssemblyDescription("Property Grid Helper objects")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: AssemblyProduct("Property Grid Helpers")]
 [assembly: AssemblyTitle("PropertyGridHelpers")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: AssemblyVersion("1.0.0.1")]
 [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 #if NET8_0_OR_GREATER

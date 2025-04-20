@@ -33,14 +33,19 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #endif
 {
     /// <summary>
-    /// Tests for the <see cref="FlagEnumUIEditor"/>
+    /// Tests for the <see cref="FlagEnumUIEditor" />
     /// </summary>
     public partial class FlagEnumUIEditorTest
     {
 #if NET35
 #else
         private readonly ITestOutputHelper OutputHelper;
-        public FlagEnumUIEditorTest(ITestOutputHelper output) => OutputHelper = output;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlagEnumUIEditorTest"/> class.
+        /// </summary>
+        /// <param name="output">xunit output implementation</param>
+        public FlagEnumUIEditorTest(ITestOutputHelper output) =>
+            OutputHelper = output;
 #endif
 
         /// <summary>
