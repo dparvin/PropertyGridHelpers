@@ -1,4 +1,4 @@
-﻿#if NET461_OR_GREATER
+﻿#if NET461_OR_GREATER || NET5_0_OR_GREATER
 using XmlDocMarkdown.Core;
 #else
 using System;
@@ -16,7 +16,7 @@ namespace PropertyGridHelpers.DocStub
         /// </summary>
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args) =>
-#if NET461_OR_GREATER
+#if NET461_OR_GREATER || NET5_0_OR_GREATER
             XmlDocMarkdownApp.Run(args);
 #else
             throw new NotImplementedException("This is a stub for the PropertyGridHelpers project.");
