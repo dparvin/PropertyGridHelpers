@@ -254,6 +254,24 @@ namespace SampleControls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the resource path.
+        /// </summary>
+        /// <value>
+        /// The resource path.
+        /// </value>
+        [AllowBlank(includeItem: true, resourceItem: "Blank_ResourcePath")]
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_ResourcePath")]
+        [LocalizedDisplayName("DisplayName_ResourcePath")]
+        [Editor(typeof(ResourcePathEditor), typeof(UITypeEditor))]
+        [TypeConverter(typeof(OnlySelectableTypeConverter))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string ResourcePath
+        {
+            get; set;
+        }
+
         #region Support Code ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>

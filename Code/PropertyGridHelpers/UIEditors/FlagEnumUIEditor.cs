@@ -57,9 +57,7 @@ namespace PropertyGridHelpers.UIEditors
                 // Ensure it's an Enum and has the [Flags] attribute
                 if (propertyType.IsEnum && Attribute.IsDefined(propertyType, typeof(FlagsAttribute)))
                 {
-                    var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-
-                    if (edSvc != null)
+                    if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService edSvc)
                     {
                         var e = (Enum)Convert.ChangeType(value, propertyType, CultureInfo.CurrentCulture);
                         FlagEnumCB.EnumValue = e;
