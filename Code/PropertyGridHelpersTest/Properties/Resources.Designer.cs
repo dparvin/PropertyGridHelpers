@@ -61,6 +61,15 @@ namespace PropertyGridHelpersTest.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -- None --.
+        /// </summary>
+        internal static string Blank_Entry {
+            get {
+                return ResourceManager.GetString("Blank_Entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test Category.
         /// </summary>
         internal static string Category_TestCategory {

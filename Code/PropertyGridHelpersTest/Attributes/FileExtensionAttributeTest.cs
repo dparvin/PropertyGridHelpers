@@ -126,7 +126,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         {
             //Arrange
             const string MissingPropertyName = "MyProperty2";
-            var tc = new TestClass();
             var PropertyDescriptor = new FakePropertyDescriptor(MissingPropertyName, typeof(TestClass), typeof(string));
             var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
 

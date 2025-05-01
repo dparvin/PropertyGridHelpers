@@ -82,6 +82,7 @@ namespace PropertyGridHelpers.Attributes
 #else
         }
 #endif
+
         /// <summary>
         /// Gets the allow blank attribute.
         /// </summary>
@@ -92,6 +93,7 @@ namespace PropertyGridHelpers.Attributes
             var prop = context?.PropertyDescriptor;
             return prop?.Attributes.OfType<AllowBlankAttribute>().FirstOrDefault();
         }
+
         /// <summary>
         /// Determines whether blank is allowed in the specified context.
         /// </summary>
@@ -117,7 +119,7 @@ namespace PropertyGridHelpers.Attributes
                 return string.Empty;
 
             // Check for AllowBlankAttribute on the property
-            var allowBlankAttr = AllowBlankAttribute.GetAllowBlankAttribute(context);
+            var allowBlankAttr = GetAllowBlankAttribute(context);
             if (allowBlankAttr == null || !allowBlankAttr.Allow)
                 return string.Empty;
 
@@ -136,7 +138,10 @@ namespace PropertyGridHelpers.Attributes
                 {
                     if (!string.IsNullOrEmpty(baseName))
                     {
-                        var manager = new ComponentResourceManager(context.Instance.GetType().Assembly.GetType(baseName));
+                        var rootNamespace = context.Instance.GetType().Namespace.Split('.')[0];
+                        var fullResourcePath = $"{rootNamespace}.{baseName}";
+
+                        var manager = new ComponentResourceManager(context.Instance.GetType().Assembly.GetType(fullResourcePath));
                         var localized = manager.GetString(allowBlankAttr.ResourceItem, CultureInfo.CurrentCulture);
                         if (!string.IsNullOrEmpty(localized))
                             return localized;

@@ -19,7 +19,7 @@ namespace PropertyGridHelpers.Support
         /// <returns></returns>
         public IList<string> ExtractBaseNames(string assemblyPrefix, string[] resourceNames)
         {
-            var resourceExtension = ".resources";
+            const string resourceExtension = ".resources";
             var resourceExtensionLength = resourceExtension.Length;
             var baseNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
