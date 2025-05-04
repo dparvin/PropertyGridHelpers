@@ -7,21 +7,48 @@ namespace PropertyGridHelpers.Attributes
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Attribute to allow blank values for properties.
+    /// Specifies whether a blank (empty) value is allowed for a property, typically used in dropdown editors.
     /// </summary>
     /// <param name="allow">if set to <c>true</c> allow blank values in the property.</param>
     /// <param name="includeItem">if set to <c>true</c> include item in the dropdown to indicate blank.</param>
     /// <param name="resourceItem">The resource item to use for displaying the blank item (Leaves it empty when this is not provided).</param>
-    /// <seealso cref="Attribute" />
+    /// <remarks>
+    /// This attribute is used in conjunction with editors like <see cref="ResourcePathEditor"/> and converters
+    /// like <see cref="OnlySelectableTypeConverter"/> to optionally include a blank entry in the list of selectable values.
+    /// </remarks>
+    /// <example>
+    /// <code language="csharp">
+    /// [AllowBlank(includeItem: true, resourceItem: "Blank_DisplayText")]
+    /// [Editor(typeof(ResourcePathEditor), typeof(UITypeEditor))]
+    /// [TypeConverter(typeof(OnlySelectableTypeConverter))]
+    /// public string ResourcePath { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="Attribute"/>
+    /// <seealso cref="ResourcePathEditor"/>
+    /// <seealso cref="OnlySelectableTypeConverter"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class AllowBlankAttribute(bool allow = true, bool includeItem = false, string resourceItem = "") : Attribute
     {
 #else
-
     /// <summary>
-    /// Attribute to allow blank values for properties.
+    /// Specifies whether a blank (empty) value is allowed for a property, typically used in dropdown editors.
     /// </summary>
-    /// <seealso cref="Attribute" />
+    /// <remarks>
+    /// This attribute is used in conjunction with editors like <see cref="ResourcePathEditor"/> and converters
+    /// like <see cref="OnlySelectableTypeConverter"/> to optionally include a blank entry in the list of selectable values.
+    /// </remarks>
+    /// <example>
+    /// <code language="csharp">
+    /// [AllowBlank(includeItem: true, resourceItem: "Blank_DisplayText")]
+    /// [Editor(typeof(ResourcePathEditor), typeof(UITypeEditor))]
+    /// [TypeConverter(typeof(OnlySelectableTypeConverter))]
+    /// public string ResourcePath { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="Attribute"/>
+    /// <seealso cref="ResourcePathEditor"/>
+    /// <seealso cref="OnlySelectableTypeConverter"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class AllowBlankAttribute : Attribute
     {

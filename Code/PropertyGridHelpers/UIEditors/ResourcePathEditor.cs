@@ -1,4 +1,5 @@
 ﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Converters;
 using PropertyGridHelpers.Support;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,29 @@ using System.Windows.Forms.Design;
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// Provides a UITypeEditor for selecting resource paths dynamically.
+    /// Provides a <see cref="UITypeEditor"/> that enables selection of embedded resource paths
+    /// from a dropdown list in the PropertyGrid.
     /// </summary>
-    /// <seealso cref="UITypeEditor" />
+    /// <remarks>
+    /// This editor dynamically retrieves available resource paths from the owning assembly and
+    /// presents them as selectable values. It is commonly used in conjunction with the
+    /// <see cref="OnlySelectableTypeConverter"/> to restrict editing to valid, predefined options
+    /// and to prevent users from manually typing arbitrary values.
+    /// </remarks>
+    /// <example>
+    /// <code language="csharp">
+    /// [AllowBlank(includeItem: true, resourceItem: "Blank_ResourcePath")]
+    /// [LocalizedCategory("Category_TestItems")]
+    /// [LocalizedDescription("Description_ResourcePath")]
+    /// [LocalizedDisplayName("DisplayName_ResourcePath")]
+    /// [Editor(typeof(ResourcePathEditor), typeof(UITypeEditor))]
+    /// [TypeConverter(typeof(OnlySelectableTypeConverter))]
+    /// public string ResourcePath { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="UITypeEditor"/>
+    /// <seealso cref="OnlySelectableTypeConverter"/>
+    /// <seealso cref="AllowBlankAttribute"/>
     public class ResourcePathEditor : UITypeEditor
     {
         private readonly IResourceBaseNameExtractor _extractor;
