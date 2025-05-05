@@ -30,7 +30,7 @@ namespace PropertyGridHelpers.Support
                     var baseName = name[..^resourceExtensionLength];
 
                     if (baseName.StartsWith(assemblyPrefix, StringComparison.OrdinalIgnoreCase))
-                        baseName = baseName[assemblyPrefix.Length..];
+                        baseName = baseName[assemblyPrefix.Length..].TrimStart('.');
 
                     _ = baseNames.Add(baseName);
                 }

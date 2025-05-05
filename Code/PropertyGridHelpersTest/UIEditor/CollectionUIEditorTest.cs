@@ -1,8 +1,8 @@
 ﻿using PropertyGridHelpers.UIEditors;
-using System;
 using System.Reflection;
 using Xunit;
 #if NET35
+using System;
 #else
 using Xunit.Abstractions;
 #endif
@@ -31,12 +31,15 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #if NET35
 #else
         private readonly ITestOutputHelper OutputHelper;
+
         /// <summary>
         /// Collection UI Editor Test
         /// </summary>
         /// <param name="output">xunit output implementation</param>
         public CollectionUIEditorTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
+
+        #region Unit Tests ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
         /// Adds the item to list test.
@@ -90,6 +93,8 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 
             Output($"CreateInstance returned: {result} for string, {intResult} for int.");
         }
+
+        #endregion
 
         /// <summary>
         /// Outputs the specified message.

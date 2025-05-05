@@ -57,7 +57,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="extractor">The extractor.</param>
         /// <exception cref="System.ArgumentNullException">extractor</exception>
         private ResourcePathEditor(IResourceBaseNameExtractor extractor) =>
-            _extractor = extractor ?? throw new ArgumentNullException(nameof(extractor));
+            _extractor = extractor;
 
         /// <summary>
         /// Edits the value.

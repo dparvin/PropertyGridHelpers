@@ -31,7 +31,7 @@ namespace PropertyGridHelpers.Support
                     var baseName = name.Substring(0, name.Length - resourceExtensionLength);
 
                     if (baseName.StartsWith(assemblyPrefix, StringComparison.OrdinalIgnoreCase))
-                        baseName = baseName.Substring(assemblyPrefix.Length);
+                        baseName = baseName.Substring(assemblyPrefix.Length).TrimStart('.');
 
                     _ = baseNames.Add(baseName);
                 }
