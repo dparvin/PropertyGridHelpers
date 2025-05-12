@@ -1,21 +1,60 @@
-﻿using System;
+﻿using PropertyGridHelpers.Support;
+using PropertyGridHelpers.UIEditors;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Drawing.Design;
 
 namespace PropertyGridHelpers.Controls
 {
     /// <summary>
-    /// Control Combo box which is used to select multiple elements of a
-    /// flag Enum.
+    /// A custom <see cref="CheckedListBox"/> control designed for editing 
+    /// properties backed by [Flags] enumerations. It presents each enum value 
+    /// as a checkbox, allowing users to select multiple values that combine 
+    /// into a composite flag.
+    ///
+    /// This control is typically hosted in a drop-down editor (e.g., 
+    /// <see cref="UITypeEditor"/>) using <see cref="DropDownVisualizer{TControl}"/> 
+    /// to support property editing within a <see cref="PropertyGrid"/>.
     /// </summary>
-    /// <seealso cref="CheckedListBox" />
-    public partial class FlagCheckedListBox : CheckedListBox
+    /// <remarks>
+    /// When the associated enum is set via the <see cref="EnumValue"/> property,
+    /// the control automatically populates with all defined enum values and 
+    /// checks those corresponding to the current composite value.
+    /// As checkboxes are toggled, the internal representation is updated accordingly.
+    ///
+    /// This control assumes that the enum is decorated with the 
+    /// <see cref="FlagsAttribute"/>; an exception will be thrown otherwise.
+    /// 
+    /// Optional display customization is supported via a custom 
+    /// <see cref="EnumConverter"/> assigned to 
+    /// <see cref="Converter"/>.
+    /// </remarks>
+    /// <example>
+    /// Typical usage:
+    /// <code>
+    /// [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
+    /// public MyFlagsEnum FlagsProperty { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="CheckedListBox"/>
+    /// <seealso cref="IDropDownEditorControl"/>
+    /// <seealso cref="DropDownVisualizer{TControl}"/>
+    /// <seealso cref="FlagEnumUIEditor"/>
+    /// <seealso cref="FlagEnumUIEditor{T}"/>
+    public partial class FlagCheckedListBox
+        : CheckedListBox, IDropDownEditorControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
         /// </summary>
         public FlagCheckedListBox() => InitializeComponent();
+
+        /// <summary>
+        /// Event raised when the user indicates they are done editing.
+        /// </summary>
+        public event EventHandler ValueCommitted = delegate { };
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -198,10 +237,45 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Gets or sets the enum value.
+        /// Gets or sets the current enum value represented by the checked items
+        /// in the list. This property serves as the main interface for binding 
+        /// a flags-based enum to the control.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When setting this property, the control performs the following:
+        /// </para>
+        /// <list type="bullet">
+        ///   <item><description>Verifies the provided value is a valid enum marked with the <see cref="FlagsAttribute"/>.</description></item>
+        ///   <item><description>Clears any existing items in the list.</description></item>
+        ///   <item><description>Populates the list with all members of the enum type.</description></item>
+        ///   <item><description>Automatically checks the items corresponding to the current flags set in the value.</description></item>
+        /// </list>
+        /// <para>
+        /// When getting this property, it returns the composite enum value 
+        /// corresponding to the checked items.
+        /// </para>
+        /// <para>
+        /// You must set this property to initialize the control's content. 
+        /// Attempting to use the control without setting a valid enum value 
+        /// will result in incorrect or empty state.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the provided value is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the value is not an enum or is not decorated with the <see cref="FlagsAttribute"/>.
+        /// </exception>
+        /// <example>
+        /// <code>
+        /// var listBox = new FlagCheckedListBox();
+        /// listBox.EnumValue = MyFlagsEnum.OptionA | MyFlagsEnum.OptionC;
+        /// var selected = listBox.EnumValue; // Returns combined enum value
+        /// </code>
+        /// </example>
         /// <value>
-        /// The enum value.
+        /// A <see cref="Enum"/> value representing the checked state of the control.
         /// </value>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Enum EnumValue
@@ -219,10 +293,11 @@ namespace PropertyGridHelpers.Controls
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
 #endif
+                enumType = value.GetType();
+
+                if (!Attribute.IsDefined(enumType, typeof(FlagsAttribute)))
+                    throw new ArgumentException($"Enum type '{enumType.Name}' must be an enum and have the [Flags] attribute.", nameof(value));
                 Items.Clear();
-                enumType = value.GetType();     // Store enum type
-                if (!enumType.IsDefined(typeof(FlagsAttribute), false))
-                    throw new InvalidOperationException($"Enum {enumType.Name} does not have the [Flags] attribute.");
                 enumValue = value;              // Store the current enum value
                 FillEnumMembers();              // Add items for enum members
                 ApplyEnumValue();               // Check/uncheck items depending on enum value
@@ -230,15 +305,46 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Gets or sets the converter.
+        /// Gets or sets the <see cref="EnumConverter"/> used to control how the enum 
+        /// values are displayed in the list.
         /// </summary>
+        /// <remarks>
+        /// This property allows you to provide a custom converter that defines 
+        /// how enum values are rendered in the UI—for example, displaying localized 
+        /// or user-friendly names instead of the raw enum identifiers.
+        /// 
+        /// If no converter is set, the enum field names are used as-is.
+        /// This is especially useful when the enum values are annotated with custom 
+        /// attributes (e.g., <c>EnumTextAttribute</c>) and you want those descriptions 
+        /// to be shown in the UI.
+        /// 
+        /// This property should be assigned before setting <see cref="EnumValue"/>,
+        /// as it affects how the list is populated.
+        /// </remarks>
         /// <value>
-        /// The converter.
+        /// A custom <see cref="EnumConverter"/> instance for customizing enum display.
         /// </value>
+        /// <example>
+        /// <code>
+        /// var listBox = new FlagCheckedListBox();
+        /// listBox.Converter = new EnumTextConverter(typeof(MyFlagsEnum));
+        /// listBox.EnumValue = MyFlagsEnum.OptionA | MyFlagsEnum.OptionB;
+        /// </code>
+        /// </example>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public EnumConverter Converter
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the value to be edited.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public object Value
+        {
+            get => EnumValue;
+            set => EnumValue = value is Enum e ? e : throw new ArgumentException("Value must be an enum");
         }
     }
 }

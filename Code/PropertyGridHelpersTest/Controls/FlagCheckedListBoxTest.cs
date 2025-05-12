@@ -217,7 +217,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #else
             using (var list = new FlagCheckedListBox())
 #endif
-            Assert.Throws<ArgumentNullException>(() => list.Add(null));
+                Assert.Throws<ArgumentNullException>(() => list.Add(null));
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #endif
             {
                 list.Converter = new EnumTextConverter(typeof(TestEnum));
-                Assert.Throws<InvalidOperationException>(() => list.EnumValue = TestEnum.ItemWithoutImage);
+                Assert.Throws<ArgumentException>(() => list.EnumValue = TestEnum.ItemWithoutImage);
             }
         }
 
@@ -420,6 +420,21 @@ namespace PropertyGridHelpersTest.net90.Controls
                 // Only Option1 (1) should remain checked, so the sum is 1
                 Assert.Equal(1, list.GetCurrentValue());
             }
+        }
+
+        /// <summary>
+        /// Values the setter throws if not enum.
+        /// </summary>
+        [Fact]
+        public void Value_Setter_ThrowsIfNotEnum()
+        {
+            var control = new FlagCheckedListBox();
+            var ex = Assert.Throws<ArgumentException>(() => control.Value = "NotAnEnum");
+#if NET35
+            Assert.Equal(0, string.Compare("Value must be an enum", ex.Message));
+#else
+            Assert.Equal("Value must be an enum", ex.Message);
+#endif
         }
 
         /// <summary>

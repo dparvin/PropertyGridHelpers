@@ -1,113 +1,43 @@
 ﻿using PropertyGridHelpers.Controls;
-using System;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.Globalization;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// UITypeEditor for flag Enums
+    /// A reusable <see cref="UITypeEditor"/> for editing [Flags]-decorated enums 
+    /// in a <see cref="PropertyGrid"/> using a drop-down checklist.
     /// </summary>
-    /// <seealso cref="UITypeEditor" />
-    public partial class FlagEnumUIEditor : UITypeEditor, IDisposable
+    /// <remarks>
+    /// This editor hosts a <see cref="FlagCheckedListBox"/> inside a drop-down 
+    /// and is intended for use with enumerations marked with the 
+    /// <see cref="System.FlagsAttribute"/>. The drop-down allows users to 
+    /// select multiple values by checking corresponding options.
+    ///
+    /// The control handles bitwise logic internally, updating the composite
+    /// enum value based on the user's selection.
+    ///
+    /// Example usage:
+    /// <code>
+    /// [Editor(typeof(FlagEnumUIEditor), typeof(UITypeEditor))]
+    /// public MyFlagsEnum Options { get; set; }
+    /// </code>
+    ///
+    /// To customize the display text for enum values, consider using
+    /// <see cref="FlagEnumUIEditor{T}"/> with an <see cref="EnumConverter"/>.
+    /// </remarks>
+    /// <seealso cref="DropDownVisualizer{TControl}"/>
+    /// <seealso cref="FlagCheckedListBox"/>
+    /// <seealso cref="System.FlagsAttribute"/>
+    /// <seealso cref="UITypeEditor"/>
+    public partial class FlagEnumUIEditor : DropDownVisualizer<FlagCheckedListBox>
     {
         /// <summary>
-        /// The flag enum CheckBox
+        /// Initializes a new instance of the <see cref="FlagEnumUIEditor"/> class,
+        /// configuring the drop-down checklist style.
         /// </summary>
-        protected FlagCheckedListBox FlagEnumCB
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// The object is disposed
-        /// </summary>
-        private bool disposedValue;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FlagEnumUIEditor"/> class.
-        /// </summary>
-        public FlagEnumUIEditor() => FlagEnumCB = new FlagCheckedListBox
-        {
-            BorderStyle = BorderStyle.None
-        };
-
-        /// <summary>
-        /// Edits the value.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="provider">The provider.</param>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        public override object EditValue(
-            ITypeDescriptorContext context,
-            IServiceProvider provider,
-            object value)
-        {
-            if (context != null &&
-                context.Instance != null &&
-                provider != null &&
-                context.PropertyDescriptor != null)
-            {
-                var propertyType = context.PropertyDescriptor.PropertyType;
-
-                // Ensure it's an Enum and has the [Flags] attribute
-                if (propertyType.IsEnum && Attribute.IsDefined(propertyType, typeof(FlagsAttribute)))
-                {
-                    if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService edSvc)
-                    {
-                        var e = (Enum)Convert.ChangeType(value, propertyType, CultureInfo.CurrentCulture);
-                        FlagEnumCB.EnumValue = e;
-                        edSvc.DropDownControl(FlagEnumCB);
-                        return FlagEnumCB.EnumValue;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the edit style.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public override UITypeEditorEditStyle GetEditStyle(
-            ITypeDescriptorContext context) => UITypeEditorEditStyle.DropDown;
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                    FlagEnumCB.Dispose();
-
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~FlagEnumUIEditor()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+        public FlagEnumUIEditor() : base() =>
+            DropDownControl.BorderStyle = BorderStyle.None;
     }
 }

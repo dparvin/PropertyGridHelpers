@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="CalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="TestControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

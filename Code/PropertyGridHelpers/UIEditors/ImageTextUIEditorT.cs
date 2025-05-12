@@ -1,14 +1,47 @@
-﻿using System;
+﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Converters;
+using System;
 using System.Drawing.Design;
 
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// UITypeEditor for flag Enums
+    /// A generic <see cref="UITypeEditor"/> that displays an enumeration with both images and localized text in a drop-down list.
     /// </summary>
-    /// <typeparam name="T">EnumConverter to use to make the text in the drop-down list</typeparam>
-    /// <seealso cref="UITypeEditor" />
-    /// <seealso cref="IDisposable" />
+    /// <typeparam name="T">
+    /// The enumeration type to be edited. This must be a value type constrained to an <see cref="Enum"/> (except on .NET Framework 3.5).
+    /// </typeparam>
+    /// <remarks>
+    /// This class extends <see cref="ImageTextUIEditor"/> and uses the specified generic enum type <typeparamref name="T"/> 
+    /// to simplify application and enforce type safety. It supports localized display names via <see cref="LocalizedEnumTextAttribute"/> 
+    /// and image rendering via <see cref="EnumImageAttribute"/>.
+    /// <para>
+    /// This editor is useful for properties where both textual meaning and visual context help the user choose the correct value.
+    /// </para>
+    /// </remarks>
+    /// <example>
+    /// To use this editor for an enum named <c>ButtonStyle</c>, define your enum with attributes:
+    /// <code>
+    /// public enum ButtonStyle
+    /// {
+    ///     [EnumText("Flat"), EnumImage("FlatIcon")]
+    ///     Flat,
+    ///     [EnumText("Raised"), EnumImage("RaisedIcon")]
+    ///     Raised,
+    ///     [EnumText("3D"), EnumImage("ThreeDIcon")]
+    ///     ThreeD
+    /// }
+    /// </code>
+    /// Then apply the editor to your property:
+    /// <code>
+    /// [Editor(typeof(ImageTextUIEditor&lt;ButtonStyle&gt;), typeof(UITypeEditor))]
+    /// public ButtonStyle Style { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="ImageTextUIEditor"/>
+    /// <seealso cref="EnumImageAttribute"/>
+    /// <seealso cref="LocalizedEnumTextAttribute"/>
+    /// <seealso cref="EnumTextConverter"/>
 #if NET35
     public partial class ImageTextUIEditor<T> : ImageTextUIEditor where T : struct
     {

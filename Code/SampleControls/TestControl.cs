@@ -189,14 +189,8 @@ namespace SampleControls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public List<string> Strings { get; set; } = new List<string>();
 
-        /// <summary>Gets or sets the strings.</summary>
-        /// <value>The strings.</value>
-        /// <remarks>
-        /// The <see cref="EditorAttribute" /> is used to setup the drop down on the grid to 
-        /// display the data the way the programmer intends the Enum to be represented.  
-        /// The <see cref="TypeConverterAttribute" /> is used to set the text in the grid in 
-        /// a normal basis.
-        /// </remarks>
+        /// <summary>Gets or sets the decimals.</summary>
+        /// <value>The list of decimals.</value>
         [LocalizedCategory("Category_TestItems")]
         [LocalizedDescription("Description_Decimals")]
         [LocalizedDisplayName("DisplayName_Decimals")]
@@ -218,6 +212,15 @@ namespace SampleControls
         [Editor(typeof(CollectionUIEditor<Size>), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public List<Size> Sizes { get; set; } = new List<Size>();
+
+        /// <summary>Gets or sets the decimals.</summary>
+        /// <value>The list of decimals.</value>
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_Decimal")]
+        [LocalizedDisplayName("DisplayName_Decimal")]
+        [Editor(typeof(DropDownVisualizer<CalculatorControl>), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public decimal DecimalValue { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the background color for the control.
