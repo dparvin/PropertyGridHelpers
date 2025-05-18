@@ -275,6 +275,36 @@ namespace SampleControls
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the drive path.
+        /// </summary>
+        /// <value>
+        /// The drive path.
+        /// </value>
+        [LocalizedCategory("Category_TestItems")]
+        [AutoCompleteSetup(AutoCompleteSource.FileSystem)]
+        [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string FileSystemPath
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the custom color.
+        /// </summary>
+        /// <value>
+        /// The name of the custom color.
+        /// </value>
+        [LocalizedCategory("Category_TestItems")]
+        [AutoCompleteSetup("Red", "Green", "Blue", "Yellow")]
+        [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string CustomColorName
+        {
+            get; set;
+        }
+
         #region Support Code ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>

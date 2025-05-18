@@ -9,7 +9,7 @@ using System.Windows.Forms.Design;
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// A reusable drop-down UITypeEditor that hosts a custom Windows Forms 
+    /// A reusable drop-down <see cref="UITypeEditor"/> that hosts a custom Windows Forms 
     /// control to edit a property value.
     /// </summary>
     /// <typeparam name="TControl">
