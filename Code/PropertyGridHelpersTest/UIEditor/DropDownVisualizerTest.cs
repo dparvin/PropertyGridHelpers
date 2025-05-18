@@ -31,14 +31,25 @@ namespace PropertyGridHelpersTest.net80.UIEditor
 namespace PropertyGridHelpersTest.net90.UIEditor
 #endif
 {
+#if NET5_0_OR_GREATER
+    /// <summary>
+    /// Tests for the <see cref="DropDownVisualizer{TControl}" />
+    /// </summary>
+    /// <param name="output">xunit output implementation</param>
+    public class DropDownVisualizerTest(ITestOutputHelper output)
+#else
     /// <summary>
     /// Tests for the <see cref="DropDownVisualizer{TControl}" />
     /// </summary>
     public class DropDownVisualizerTest
+#endif
     {
 #if NET35
+#elif NET5_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = output;
 #else
         private readonly ITestOutputHelper OutputHelper;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DropDownVisualizerTest"/> class.
         /// </summary>
