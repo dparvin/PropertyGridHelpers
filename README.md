@@ -68,4 +68,4 @@ Special thanks to the contributors and the open-source community for their inval
 
 ### Related Locations
 * [Code Coverage Report](https://dparvin.github.io/PropertyGridHelpers/)
-* [Publish Package](https://www.nuget.org/packages/PropertyGridHelpers)
+* [Published Package](https://www.nuget.org/packages/PropertyGridHelpers)
