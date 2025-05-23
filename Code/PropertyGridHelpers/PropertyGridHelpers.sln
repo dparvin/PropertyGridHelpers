@@ -18,7 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\CopyEverythingUseful.targets = ..\CopyEverythingUseful.targets
 		..\CopyLocalAllDependencies.targets = ..\CopyLocalAllDependencies.targets
 		..\CopyRuntimeDependencies.targets = ..\CopyRuntimeDependencies.targets
-		coverlet.runsettings = coverlet.runsettings
+		..\coverlet-diagnostics.runsettings = ..\coverlet-diagnostics.runsettings
+		..\coverlet.runsettings = ..\coverlet.runsettings
 		..\..\LICENSE = ..\..\LICENSE
 		..\..\README.md = ..\..\README.md
 		..\SharedFrameworks.targets = ..\SharedFrameworks.targets
@@ -61,8 +62,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ConfirmAddLanguageFile = True
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {711A7FB2-2E31-4E79-B487-65AFDEEFD595}
+		RESX_SortFileContentOnSave = True
+		RESX_ConfirmAddLanguageFile = True
 	EndGlobalSection
 EndGlobal

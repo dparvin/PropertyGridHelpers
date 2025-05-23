@@ -1,7 +1,7 @@
 ﻿<RunSettings>
   <DataCollectionRunSettings>
     <DataCollectors>
-      <DataCollector friendlyName="Code Coverage">
+      <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
           <Exclude>
             <!-- Exclude assemblies or modules -->
@@ -24,6 +24,9 @@
               <Attribute>GeneratedCodeAttribute</Attribute>
             </Attributes>
           </Exclude>
+          <Include>
+            <ModulePath>.*PropertyGridHelpers.*</ModulePath>
+          </Include>
         </Configuration>
       </DataCollector>
     </DataCollectors>

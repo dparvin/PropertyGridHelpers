@@ -3,14 +3,12 @@ using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpers.UIEditors;
 using PropertyGridHelpersTest.Controls;
 using PropertyGridHelpersTest.Support;
-using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Reflection;
 using System.Windows.Forms.Design;
 using Xunit;
 
 #if NET35
+using System;
 #else
 using Xunit.Abstractions;
 #endif
