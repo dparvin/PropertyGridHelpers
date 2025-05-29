@@ -39,6 +39,7 @@ namespace PropertyGridHelpers.DocStub
             get; set;
         }
 
+        private string summary;
         /// <summary>
         /// Gets or sets the summary.
         /// </summary>
@@ -47,9 +48,11 @@ namespace PropertyGridHelpers.DocStub
         /// </value>
         public string Summary
         {
-            get; set;
+            get => summary;
+            set => summary = SanitizeMultilineText(value);
         }
 
+        private string remarks;
         /// <summary>
         /// Gets or sets the remarks.
         /// </summary>
@@ -58,7 +61,8 @@ namespace PropertyGridHelpers.DocStub
         /// </value>
         public string Remarks
         {
-            get; set;
+            get => remarks;
+            set => remarks = SanitizeMultilineText(value);
         }
 
         /// <summary>
@@ -123,6 +127,21 @@ namespace PropertyGridHelpers.DocStub
                     Console.WriteLine($"✔ Updated {markdownFile}");
                 }
             }
+        }
+
+        /// <summary>
+        /// Sanitizes the multi-line text.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns></returns>
+        private static string SanitizeMultilineText(string text)
+        {
+            var lines = text
+                .Replace("\r\n", "\n") // Normalize line endings
+                .Split('\n')
+                .Select(line => line.TrimStart());
+
+            return string.Join("\n", lines);
         }
 
         /// <summary>
