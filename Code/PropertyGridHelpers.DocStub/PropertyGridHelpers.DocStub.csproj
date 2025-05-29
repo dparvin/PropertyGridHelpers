@@ -1,4 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <UseReducedFrameworks>true</UseReducedFrameworks>
+  </PropertyGroup>
   <Import Project="..\SharedFrameworks.targets" />
 
   <PropertyGroup>

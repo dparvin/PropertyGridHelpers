@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "PropertyGridHelpers.DocStub": {
+      "commandName": "Project",
+      "commandLineArgs": "PropertyGridHelpers.dll ../../../../../docs-md/net472 --source https://github.com/dparvin/PropertyGridHelpers/tree/master/Code/PropertyGridHelpers --visibility public --namespace-pages\r\n",
+      "workingDirectory": "C:\\Projects\\Repos\\dparvin\\PropertyGridHelpers\\Code\\PropertyGridHelpers.DocStub\\bin\\Debug\\net472"
+    }
+  }
+}

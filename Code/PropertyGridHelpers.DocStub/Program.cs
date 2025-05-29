@@ -24,12 +24,14 @@ namespace PropertyGridHelpers.DocStub
         /// Defines the entry point of the application.
         /// </summary>
         /// <param name="args">The arguments.</param>
-        public static void Main(string[] args) =>
+        public static void Main(string[] args)
+        {
 #if NET461_OR_GREATER || NET5_0_OR_GREATER
             XmlDocMarkdownApp.Run(args);
+            (new UpdateDocumentation(args)).UpdateFiles();
 #else
             throw new NotImplementedException("This is a stub for the PropertyGridHelpers project.");
 #endif
-
+        }
     }
 }
