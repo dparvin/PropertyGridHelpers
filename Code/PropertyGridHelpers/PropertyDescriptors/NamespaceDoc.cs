@@ -13,7 +13,7 @@ namespace PropertyGridHelpers.PropertyDescriptors
     /// <seealso cref="TypeDescriptionProviders"/>
     /// <seealso cref="Attributes"/>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }

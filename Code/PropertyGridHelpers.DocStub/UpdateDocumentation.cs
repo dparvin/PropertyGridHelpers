@@ -115,7 +115,7 @@ namespace PropertyGridHelpers.DocStub
             }
 
             insertLines.Add(""); // Ensure spacing before the table
-            insertLines.Add("| public type | description |");
+            insertLines.Add("| Namespace Name | description |");
             insertLines.Add("| --- | --- |");
             foreach (var nsDoc in namespaceDocs
                 .Where(n => !string.Equals(n.NamespaceName, DllName, StringComparison.OrdinalIgnoreCase))
@@ -123,7 +123,7 @@ namespace PropertyGridHelpers.DocStub
             {
                 // Escape pipe characters for markdown
                 var summaryEscaped = nsDoc.Summary?.Replace("|", "\\|").Trim() ?? "";
-                insertLines.Add($"| Namespace [{nsDoc.NamespaceName}]({nsDoc.NamespaceName}Namespace.md) | {summaryEscaped} |");
+                insertLines.Add($"| [{nsDoc.NamespaceName}]({nsDoc.NamespaceName}Namespace.md) | {summaryEscaped} |");
             }
 
             insertLines.Add(""); // Final newline

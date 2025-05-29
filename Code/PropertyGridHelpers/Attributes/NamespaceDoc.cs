@@ -14,7 +14,7 @@ namespace PropertyGridHelpers.Attributes
     /// property grid displays.
     /// </remarks>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }

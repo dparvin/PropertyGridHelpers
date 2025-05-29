@@ -8,7 +8,7 @@ namespace PropertyGridHelpers.TypeDescriptors
     /// namespace
     /// </summary>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }

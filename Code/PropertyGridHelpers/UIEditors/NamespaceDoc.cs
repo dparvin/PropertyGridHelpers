@@ -7,7 +7,7 @@ namespace PropertyGridHelpers.UIEditors
     /// provide a lot of helpful functionality for the property grid.
     /// </summary>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }

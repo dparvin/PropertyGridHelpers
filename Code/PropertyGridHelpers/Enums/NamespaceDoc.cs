@@ -8,7 +8,7 @@ namespace PropertyGridHelpers.Enums
     /// PropertyGridHelpers component.
     /// </summary>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }

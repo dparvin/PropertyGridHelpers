@@ -124,7 +124,7 @@ namespace PropertyGridHelpers.DocStub
                     lines.InsertRange(insertIndex, insertLines);
 
                     File.WriteAllLines(markdownFile, lines);
-                    Console.WriteLine($"✔ Updated {markdownFile}");
+                    Console.WriteLine($"✔ Updated {markdownFile}\n\n");
                 }
             }
         }
@@ -136,12 +136,38 @@ namespace PropertyGridHelpers.DocStub
         /// <returns></returns>
         private static string SanitizeMultilineText(string text)
         {
-            var lines = text
-                .Replace("\r\n", "\n") // Normalize line endings
-                .Split('\n')
-                .Select(line => line.TrimStart());
+            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
 
-            return string.Join("\n", lines);
+            var lines = text
+                .Replace(Environment.NewLine, "\n") // Normalize line endings
+                .Split('\n')
+                .Select(line => line.Trim());
+
+            var result = new List<string>();
+            var paragraphBuilder = new List<string>();
+
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    // End of paragraph
+                    if (paragraphBuilder.Count > 0)
+                    {
+                        result.Add(string.Join(" ", paragraphBuilder));
+                        paragraphBuilder.Clear();
+                    }
+
+                    result.Add(string.Empty); // Preserve blank line
+                }
+                else
+                    paragraphBuilder.Add(line);
+            }
+
+            // Flush final paragraph
+            if (paragraphBuilder.Count > 0)
+                result.Add(string.Join(" ", paragraphBuilder));
+
+            return string.Join("\n", result);
         }
 
         /// <summary>

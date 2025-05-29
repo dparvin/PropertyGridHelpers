@@ -7,11 +7,11 @@ namespace PropertyGridHelpers.ServiceProviders
     /// <summary>
     /// Custom Service Provider
     /// </summary>
-    /// <seealso cref="System.IServiceProvider" />
+    /// <seealso cref="IServiceProvider" />
     public class CustomServiceProvider : IServiceProvider
     {
 #if NET8_0_OR_GREATER
-        private readonly Dictionary<Type, object> _services = new();
+        private readonly Dictionary<Type, object> _services = [];
 #else
         private readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 #endif
@@ -30,7 +30,7 @@ namespace PropertyGridHelpers.ServiceProviders
         /// <returns></returns>
         public object GetService(Type serviceType)
         {
-            _services.TryGetValue(serviceType, out var service);
+            _ = _services.TryGetValue(serviceType, out var service);
             return service;
         }
     }

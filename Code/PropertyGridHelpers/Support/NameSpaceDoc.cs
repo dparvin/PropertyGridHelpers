@@ -7,7 +7,7 @@ namespace PropertyGridHelpers.Support
     /// support processes provided by PropertyGridHelpers.
     /// </summary>
     [CompilerGenerated]
-    internal class NamespaceDoc
+    public class NamespaceDoc
     {
     }
 }
