@@ -118,7 +118,8 @@ namespace PropertyGridHelpers.DocStub
             }
 
             insertLines.Add(""); // Ensure spacing before the table
-            insertLines.Add("| Namespace Name | description |");
+            insertLines.Add("## Namespaces");
+            insertLines.Add("| Name | description |");
             insertLines.Add("| --- | --- |");
             foreach (var nsDoc in namespaceDocs
                 .Where(n => !string.Equals(n.NamespaceName, DllName, StringComparison.OrdinalIgnoreCase))

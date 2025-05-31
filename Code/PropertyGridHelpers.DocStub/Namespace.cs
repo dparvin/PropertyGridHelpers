@@ -141,6 +141,7 @@ namespace PropertyGridHelpers.DocStub
                     }
 
                     insertLines.Add(""); // Ensure spacing before the table
+                    insertLines.Add("## Public Types");
 
                     // Insert new lines after header
                     lines.InsertRange(insertIndex, insertLines);
