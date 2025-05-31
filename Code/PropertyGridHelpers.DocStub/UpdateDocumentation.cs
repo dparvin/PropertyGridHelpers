@@ -66,6 +66,7 @@ namespace PropertyGridHelpers.DocStub
                         NamespaceName = ns,
                         Summary = m.Element("summary")?.Value.Trim(),
                         Remarks = m.Element("remarks")?.Value.Trim(),
+                        Examples = m.Element("example")?.ToString(),
                         DocumentationPath = OutputDir
                     };
                 })
@@ -78,6 +79,8 @@ namespace PropertyGridHelpers.DocStub
                 Console.WriteLine($"✔ Namespace: {nsDoc.NamespaceName}");
                 Console.WriteLine($"  Summary: {nsDoc.Summary}");
                 Console.WriteLine($"  Remarks: {nsDoc.Remarks}\n");
+                if (!string.IsNullOrWhiteSpace(nsDoc.Examples))
+                    Console.WriteLine($"  Examples: {nsDoc.Examples}");
                 if (!string.Equals(nsDoc.NamespaceName, DllName, StringComparison.OrdinalIgnoreCase))
                     nsDoc.UpdateNamespaceDocumentationFile();
                 else

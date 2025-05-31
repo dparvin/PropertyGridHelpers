@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace PropertyGridHelpers.DocStub
 {
@@ -66,6 +69,17 @@ namespace PropertyGridHelpers.DocStub
         }
 
         /// <summary>
+        /// Gets or sets the example.
+        /// </summary>
+        /// <value>
+        /// The example.
+        /// </value>
+        public string Examples
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Updates the documentation files.
         /// </summary>
         /// <returns></returns>
@@ -118,6 +132,14 @@ namespace PropertyGridHelpers.DocStub
                         insertLines.Add(Remarks.Trim());
                     }
 
+                    var example = ConvertExampleElementToMarkdown();
+                    if (!String.IsNullOrEmpty(example))
+                    {
+                        insertLines.Add("");
+                        insertLines.Add("## Examples");
+                        insertLines.Add(example.Trim());
+                    }
+
                     insertLines.Add(""); // Ensure spacing before the table
 
                     // Insert new lines after header
@@ -168,6 +190,82 @@ namespace PropertyGridHelpers.DocStub
                 result.Add(string.Join(" ", paragraphBuilder));
 
             return string.Join("\n", result);
+        }
+
+        /// <summary>
+        /// Converts the example element to markdown.
+        /// </summary>
+        /// <returns></returns>
+        public string ConvertExampleElementToMarkdown()
+        {
+            if (string.IsNullOrEmpty(Examples)) return string.Empty;
+
+            var sb = new StringBuilder();
+            var exampleElement = XElement.Parse(Examples);
+
+            foreach (var node in exampleElement.Nodes())
+            {
+                switch (node)
+                {
+                    case XText text:
+                        _ = sb.Append(text.Value.TrimEnd());
+                        break;
+
+                    case XElement el when el.Name == "c":
+#if NET8_0_OR_GREATER
+                        _ = sb.Append(CultureInfo.CurrentCulture, $"`{el.Value.Trim()}`");
+#else
+                        _ = sb.Append($"`{el.Value.Trim()}`");
+#endif
+                        break;
+
+                    case XElement el when el.Name == "code":
+                        _ = sb.AppendLine();
+                        _ = sb.AppendLine();
+
+                        var language = el.Attribute("language")?.Value ?? "csharp";
+
+                        // Normalize
+                        var lines = el.Value
+                            .Replace(Environment.NewLine, "\n")
+                            .Replace("\r", "\n")
+                            .Split('\n')
+                            .Select(line => line.TrimEnd())
+                            .ToList();
+
+                        while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0]))
+                            lines.RemoveAt(0);
+
+                        var minIndent = lines
+                            .Where(l => !string.IsNullOrWhiteSpace(l))
+                            .Select(l => l.TakeWhile(char.IsWhiteSpace).Count())
+                            .DefaultIfEmpty(0)
+                            .Min();
+
+#if NET8_0_OR_GREATER
+                        lines = [.. lines.Select(line => line.Length >= minIndent ? line[minIndent..] : line)];
+                        _ = sb.AppendLine(CultureInfo.CurrentCulture, $"```{language}");
+#else
+                        lines = lines.Select(line => line.Length >= minIndent ? line.Substring(minIndent) : line).ToList();
+                        _ = sb.AppendLine($"```{language}");
+#endif
+                        foreach (var line in lines)
+                            _ = sb.AppendLine(line);
+                        _ = sb.AppendLine("```");
+
+                        _ = sb.AppendLine();
+                        break;
+
+                    default:
+                        // Fallback for any unknown XML nodes
+                        sb.Append(((XElement)node)?.Value);
+                        break;
+                }
+
+                _ = sb.Append(' '); // space between nodes
+            }
+
+            return sb.ToString().Trim();
         }
 
         /// <summary>

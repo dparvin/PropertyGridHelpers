@@ -8,7 +8,6 @@ using System.Windows.Forms.Design;
 using PropertyGridHelpersTest.Support;
 using PropertyGridHelpers.Attributes;
 
-
 #if NET35
 using Xunit.Abstractions;
 using System;
