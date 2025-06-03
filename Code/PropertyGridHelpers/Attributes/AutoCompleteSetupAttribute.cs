@@ -120,7 +120,7 @@ namespace PropertyGridHelpers.Attributes
         /// <item><description><see cref="ComboBoxStyle.Simple"/> – Always visible list and editable text box.</description></item>
         /// </list>
         /// </remarks>
-        /// <seealso cref="System.Windows.Forms.ComboBoxStyle"/>
+        /// <seealso cref="ComboBoxStyle"/>
         public ComboBoxStyle DropDownStyle
         {
             get;
@@ -142,6 +142,25 @@ namespace PropertyGridHelpers.Attributes
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the initialization exception.
+        /// </summary>
+        /// <value>
+        /// The initialization exception.
+        /// </value>
+        public Exception InitializationException
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsValid => InitializationException == null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
@@ -168,14 +187,16 @@ namespace PropertyGridHelpers.Attributes
         /// <param name="autoCompleteSource">The automatic complete source.</param>
         /// <param name="dropDownStyle">The drop down style.</param>
         public AutoCompleteSetupAttribute(
-            AutoCompleteMode autoCompleteMode = AutoCompleteMode.SuggestAppend,
-            AutoCompleteSource autoCompleteSource = AutoCompleteSource.None,
-            ComboBoxStyle dropDownStyle = ComboBoxStyle.DropDown)
-        {
-            AutoCompleteMode = autoCompleteMode;
-            AutoCompleteSource = autoCompleteSource;
-            DropDownStyle = dropDownStyle;
-        }
+            AutoCompleteMode autoCompleteMode,
+            AutoCompleteSource autoCompleteSource,
+            ComboBoxStyle dropDownStyle)
+#if NET35 || NET452
+            : this(autoCompleteMode, autoCompleteSource, dropDownStyle, new string[0]) { }
+#elif NET5_0_OR_GREATER
+            : this(autoCompleteMode, autoCompleteSource, dropDownStyle, []) { }
+#else
+            : this(autoCompleteMode, autoCompleteSource, dropDownStyle, Array.Empty<string>()) { }
+#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
@@ -198,6 +219,18 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
+        /// <param name="autoCompleteSource">The automatic complete source.</param>
+        /// <param name="autoCompleteMode">The automatic complete mode.</param>
+        /// <param name="values">The values.</param>
+        public AutoCompleteSetupAttribute(
+            AutoCompleteSource autoCompleteSource,
+            AutoCompleteMode autoCompleteMode,
+            params string[] values)
+            : this(autoCompleteMode, autoCompleteSource, ComboBoxStyle.DropDown, values) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
+        /// </summary>
         /// <param name="autoCompleteMode">The automatic complete mode.</param>
         /// <param name="values">The values.</param>
         public AutoCompleteSetupAttribute(
@@ -211,16 +244,34 @@ namespace PropertyGridHelpers.Attributes
         /// <param name="autoCompleteMode">The automatic complete mode.</param>
         /// <param name="dropDownStyle">The drop down style.</param>
         /// <param name="values">The values.</param>
-        /// <exception cref="ArgumentException">At least one auto-complete value must be provided.</exception>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
             ComboBoxStyle dropDownStyle,
             params string[] values)
+            : this(autoCompleteMode, AutoCompleteSource.CustomSource, dropDownStyle, values) { }
+
+        /// <summary>
+        /// Initializes a new instance using a list of values and an optional mode.
+        /// </summary>
+        /// <param name="autoCompleteMode">The automatic complete mode.</param>
+        /// <param name="autoCompleteSource">The automatic complete source.</param>
+        /// <param name="dropDownStyle">The drop down style.</param>
+        /// <param name="values">The values.</param>
+        /// <exception cref="ArgumentException">At least one auto-complete value must be provided.</exception>
+        public AutoCompleteSetupAttribute(
+            AutoCompleteMode autoCompleteMode,
+            AutoCompleteSource autoCompleteSource,
+            ComboBoxStyle dropDownStyle,
+            params string[] values)
         {
+            Console.WriteLine("🚨 AutoCompleteSetupAttribute ctor called!");
             AutoCompleteMode = autoCompleteMode;
             DropDownStyle = dropDownStyle;
-            AutoCompleteSource = AutoCompleteSource.CustomSource;
-            Values = (values?.Length > 0) ? values : throw new ArgumentException("At least one auto-complete value must be provided.");
+            AutoCompleteSource = autoCompleteSource;
+            if (AutoCompleteSource == AutoCompleteSource.CustomSource && (values == null || values.Length == 0))
+                InitializationException = new ArgumentException("At least one auto-complete value must be provided.", nameof(values));
+            else
+                Values = values;
         }
 
         /// <summary>
@@ -276,30 +327,27 @@ namespace PropertyGridHelpers.Attributes
             DropDownStyle = dropDownStyle;
             AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-#if NET5_0_OR_GREATER
-            ArgumentNullException.ThrowIfNull(providerType);
-#else
-            if (providerType == null) throw new ArgumentNullException(nameof(providerType));
-#endif
-
-            if (providerType.IsEnum)
+            if (providerType == null)
+                InitializationException = new ArgumentNullException(nameof(providerType));
+            else if (providerType.IsEnum)
             {
                 Values = Enum.GetNames(providerType);
                 if (Values.Length == 0)
-                    throw new ArgumentException($"The enum '{providerType.Name}' does not define any members.");
+                    InitializationException = new ArgumentException($"The enum '{providerType.Name}' does not define any members.");
             }
             else
             {
                 const string requiredPropertyName = "Values";
-                var property = providerType.GetProperty(requiredPropertyName, BindingFlags.Public | BindingFlags.Static)
-                    ?? throw new ArgumentException($"The type '{providerType.FullName}' must define a public static property named '{requiredPropertyName}'.");
-                if (property.PropertyType != typeof(string[]))
-                    throw new ArgumentException($"The '{requiredPropertyName}' property on '{providerType.FullName}' must be of type string[].");
-
+                var property = providerType.GetProperty(requiredPropertyName, BindingFlags.Public | BindingFlags.Static);
+                if (property == null)
+                    InitializationException = new ArgumentException($"The type '{providerType.FullName}' must define a public static property named '{requiredPropertyName}'.");
+                else if (property.PropertyType != typeof(string[]))
+                    InitializationException = new ArgumentException($"The '{requiredPropertyName}' property on '{providerType.FullName}' must be of type string[].");
+                else
 #if NET35
-                Values = (string[])property.GetValue(null, null);
+                    Values = (string[])property.GetValue(null, null);
 #else
-                Values = (string[])property.GetValue(null);
+                    Values = (string[])property.GetValue(null);
 #endif
             }
         }

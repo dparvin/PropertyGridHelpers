@@ -69,19 +69,16 @@ namespace PropertyGridHelpers.UIEditors
 
                 if (sourceAttr != null)
                 {
+                    if (!sourceAttr.IsValid)
+                        throw new InvalidOperationException(
+                            $"The AutoCompleteSetupAttribute on property '{context.PropertyDescriptor.Name}' could not be initialized.",
+                            sourceAttr.InitializationException);
                     DropDownControl.AutoCompleteMode = sourceAttr.AutoCompleteMode;
                     DropDownControl.AutoCompleteSource = sourceAttr.AutoCompleteSource;
                     DropDownControl.DropDownStyle = sourceAttr.DropDownStyle;
 
                     if (sourceAttr.AutoCompleteSource == AutoCompleteSource.CustomSource)
                     {
-                        if (sourceAttr.Values == null || sourceAttr.Values.Length == 0)
-                        {
-                            throw new InvalidOperationException(
-                                $"Property '{context?.PropertyDescriptor?.Name}' is configured to use AutoCompleteSource.CustomSource, " +
-                                $"but no AutoCompleteValuesAttribute was found or it contained no values.");
-                        }
-
                         DropDownControl.AutoCompleteCustomSource.Clear();
                         DropDownControl.AutoCompleteCustomSource.AddRange(sourceAttr.Values);
                     }

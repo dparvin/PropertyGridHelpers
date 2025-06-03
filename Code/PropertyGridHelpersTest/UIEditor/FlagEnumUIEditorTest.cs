@@ -52,7 +52,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// Edits the value returns null with null entries test.
         /// </summary>
         [Fact]
-        public void EditValueReturnsNullWithNullEntriesTest()
+        public void EditValue_ReturnsNull_WithNullEntriesTest()
         {
 #if NET5_0_OR_GREATER
             using var editor = new FlagEnumUIEditor();
@@ -67,7 +67,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// Edits the value returns values test.
         /// </summary>
         [Fact]
-        public void EditValueReturnsValuesTest()
+        public void EditValue_ReturnsValuesTest()
         {
             var grid = new PropertyGrid
             {

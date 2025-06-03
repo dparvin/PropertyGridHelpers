@@ -9,7 +9,6 @@ using PropertyGridHelpersTest.Support;
 using PropertyGridHelpers.Attributes;
 
 #if NET35
-using Xunit.Abstractions;
 using System;
 #else
 using Xunit.Abstractions;
@@ -53,7 +52,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 
 #if NET35
         /// <summary>
-        /// Resource Path Editor Test
+        /// Initializes a new instance of the <see cref="ResourcePathEditorTest"/> class.
         /// </summary>
         public ResourcePathEditorTest()
         {
@@ -61,11 +60,11 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #elif NET8_0_OR_GREATER
 #else
         /// <summary>
-        /// Resource Path Editor Test
+        /// Initializes a new instance of the <see cref="ResourcePathEditorTest"/> class.
         /// </summary>
         /// <param name="output">xunit output implementation</param>
-        public ResourcePathEditorTest(ITestOutputHelper output) 
-            : base() => 
+        public ResourcePathEditorTest(ITestOutputHelper output)
+            : base() =>
             OutputHelper = output;
 #endif
 
