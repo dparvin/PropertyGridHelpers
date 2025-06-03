@@ -77,7 +77,7 @@ namespace PropertyGridHelpers.Controls
         protected override void OnSelectedValueChanged(EventArgs e)
         {
             base.OnSelectedValueChanged(e);
-            ValueCommitted?.Invoke(this, EventArgs.Empty);
+            ValueCommitted.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace PropertyGridHelpers.Controls
         protected override void OnLeave(EventArgs e)
         {
             base.OnLeave(e);
-            ValueCommitted?.Invoke(this, EventArgs.Empty);
+            ValueCommitted.Invoke(this, EventArgs.Empty);
         }
     }
 }

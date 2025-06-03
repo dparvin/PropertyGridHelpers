@@ -1,8 +1,10 @@
 ﻿using PropertyGridHelpers.Controls;
-using Xunit;
-using System.Reflection;
+using PropertyGridHelpersTest.Support;
 using System;
+using System.Reflection;
 using System.Threading;
+using System.Windows.Forms;
+using Xunit;
 
 #if NET35
 #else
@@ -69,7 +71,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #if NET35
                     Assert.Equal("Test", ctl.Value);
 #else
-            Assert.Equal("Test", ctl.Text);
+                    Assert.Equal("Test", ctl.Text);
 #endif
                 }
                 catch (Exception ex)
@@ -85,6 +87,52 @@ namespace PropertyGridHelpersTest.net90.Controls
             if (exception != null)
                 throw new TargetInvocationException(exception);
         }
+
+        /// <summary>
+        /// Called when selected value changed raises value committed.
+        /// </summary>
+        [Fact]
+        public void OnSelectedValueChanged_RaisesValueCommitted() =>
+            StaTestHelper.Run(() =>
+            {
+                var comboBox = new AutoCompleteComboBox();
+                var eventRaised = false;
+
+                comboBox.ValueCommitted += (s, e) => eventRaised = true;
+
+                // Simulate selecting a value
+                _ = comboBox.Items.Add("Test");
+                _ = comboBox.Items.Add("Test1");
+                comboBox.SelectedIndex = 1;
+
+                Output($"{nameof(eventRaised)} = {eventRaised}");
+                Assert.True(eventRaised, "ValueCommitted should be raised on SelectedValueChanged");
+            });
+
+        /// <summary>
+        /// Called when leave raises value committed.
+        /// </summary>
+        [Fact]
+        public void OnLeave_RaisesValueCommitted() =>
+            StaTestHelper.Run(() =>
+            {
+                var comboBox = new AutoCompleteComboBox();
+                var eventRaised = false;
+                comboBox.ValueCommitted += (s, e) => eventRaised = true;
+
+                // Directly invoke OnLeave
+                var eventArgs = EventArgs.Empty;
+                comboBox.GetType()
+                        .GetMethod("OnLeave", BindingFlags.NonPublic | BindingFlags.Instance)
+#if NET5_0_OR_GREATER
+                        .Invoke(comboBox, [eventArgs]);
+#else
+                        .Invoke(comboBox, new object[] { eventArgs });
+#endif
+
+                Output($"{nameof(eventRaised)} = {eventRaised}");
+                Assert.True(eventRaised, "ValueCommitted should be raised on Leave");
+            });
 
         /// <summary>
         /// Outputs the specified message.
