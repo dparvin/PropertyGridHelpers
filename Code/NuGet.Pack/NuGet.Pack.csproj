@@ -68,6 +68,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\Content.txt" />
+    <Content Include="Images\packageDefaultIcon-50x50.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-1024x1024.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-128x128.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-32x32.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-50x50.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-64x64.png" />
+    <Content Include="Images\PropertyGridHelpers-Icon-840x840.png" />
     <Content Include="lib\lib files.txt" />
     <Content Include="packageDefaultIcon-50x50.png" />
   </ItemGroup>
