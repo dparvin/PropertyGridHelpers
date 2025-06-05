@@ -6,6 +6,7 @@
     <title>Property Grid Helpers</title>
     <authors>David Parvin</authors>
     <owners>David Parvin</owners>
+    <readme>readme.md</readme>
     <description>
       PropertyGridHelpers are objects to help make a property grid work for you without a lot of work on your part.  The idea is to provide the programmer with the attributes, converters and editors needed to edit values for a class or set of classes with a PropertyGrid.  One place these can be used is for use with building controls.
     </description>
@@ -16,14 +17,23 @@
     </summary>
     <language>en-US</language>
     <projectUrl>https://github.com/dparvin/PropertyGridHelpers/</projectUrl>
-    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <icon>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
-    <copyright>Copyright © 2016-2024</copyright>
+    <copyright>Copyright © 2016-2025</copyright>
     <tags>PropertyGrid, Attribute, Editor, Converter</tags>
   </metadata>
   <files>
     <file src="lib\" target="lib" />
     <file src="tools\" target="tools" />
+    <file src="readme.md" target="" />
   </files>
+  <dependencies>
+    <group targetFramework=".NETFramework4.5.2">
+      <dependency id="System.ValueTuple" version="4.5.0" />
+    </group>
+    <group targetFramework=".NETFramework4.6.2">
+      <dependency id="System.ValueTuple" version="4.6.1" />
+    </group>
+  </dependencies>
 </package>
