@@ -36,6 +36,5 @@
     <file src="tools\" target="tools" />
     <file src="readme.md" target="" />
     <file src="Images\PropertyGridHelpers-Icon-50x50.png" target="" />
-    <file src="Images\PropertyGridHelpers-Icon-64x64.png" target="Images\" />
   </files>
 </package>
