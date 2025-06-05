@@ -3,6 +3,10 @@
 PropertyGridHelpers is a .NET library designed to enhance and extend the functionality of the `PropertyGrid` control, providing custom editors, attributes, 
 and utilities to facilitate property manipulation within Windows Forms applications.
 
+## Status
+[![Coverage](https://raw.githubusercontent.com/dparvin/PropertyGridHelpers.CodeCoverage/main/Badges/badge_combined.svg)](https://dparvin.github.io/PropertyGridHelpers/)
+
+
 ## Features
 
 - **Custom Attributes**: Define and apply custom attributes to properties for enhanced metadata representation.
