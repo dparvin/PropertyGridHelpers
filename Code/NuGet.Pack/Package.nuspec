@@ -19,7 +19,7 @@
     <projectUrl>https://github.com/dparvin/PropertyGridHelpers/</projectUrl>
     <icon>PropertyGridHelpers-Icon-50x50.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <license type="expression">Apache-2.0</license>
     <copyright>Copyright © 2016-2025</copyright>
     <tags>PropertyGrid, Attribute, Editor, Converter</tags>
     <dependencies>
