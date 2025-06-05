@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="content\Content.txt" />
     <Content Include="lib\lib files.txt" />
+    <Content Include="packageDefaultIcon-50x50.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

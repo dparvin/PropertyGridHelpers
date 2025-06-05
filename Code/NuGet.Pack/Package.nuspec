@@ -17,7 +17,7 @@
     </summary>
     <language>en-US</language>
     <projectUrl>https://github.com/dparvin/PropertyGridHelpers/</projectUrl>
-    <icon>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</icon>
+    <icon>packageDefaultIcon-50x50.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
     <copyright>Copyright © 2016-2025</copyright>
@@ -35,5 +35,6 @@
     <file src="lib\" target="lib" />
     <file src="tools\" target="tools" />
     <file src="readme.md" target="" />
+    <file src="packageDefaultIcon-50x50.png" target="" />
   </files>
 </package>
