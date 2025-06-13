@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -36,7 +37,6 @@ namespace PropertyGridHelpers.Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
     public class LocalizedEnumTextAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-    }
 #else
     /// <summary>
     /// Specifies a localized text representation for an Enum field,
@@ -72,6 +72,26 @@ namespace PropertyGridHelpers.Attributes
         public LocalizedEnumTextAttribute(string resourceKey) : base(resourceKey)
         {
         }
-    }
 #endif
+
+        /// <summary>
+        /// Gets the <see cref="LocalizedEnumTextAttribute"/> for the specified Enum value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static LocalizedEnumTextAttribute Get(Enum value) =>
+            value == null ? null
+                : Support.Support.GetFirstCustomAttribute<LocalizedEnumTextAttribute>(
+                    Support.Support.GetEnumField(value));
+
+        /// <summary>
+        /// Gets the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static new LocalizedEnumTextAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Get((Enum)context.PropertyDescriptor.GetValue(context.Instance));
+    }
 }

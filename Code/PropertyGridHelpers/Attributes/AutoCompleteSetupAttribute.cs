@@ -1,7 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Drawing.Design;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Drawing.Design;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -139,6 +140,17 @@ namespace PropertyGridHelpers.Attributes
         /// </list>
         /// </remarks>
         public string[] Values
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the type of the provider.
+        /// </summary>
+        /// <value>
+        /// The type of the provider.
+        /// </value>
+        public Type ProviderType
         {
             get;
         }
@@ -326,6 +338,7 @@ namespace PropertyGridHelpers.Attributes
             AutoCompleteMode = autoCompleteMode;
             DropDownStyle = dropDownStyle;
             AutoCompleteSource = AutoCompleteSource.CustomSource;
+            ProviderType = providerType;
 
             if (providerType == null)
                 InitializationException = new ArgumentNullException(nameof(providerType));
@@ -351,6 +364,17 @@ namespace PropertyGridHelpers.Attributes
 #endif
             }
         }
+
+        /// <summary>
+        /// Get the <see cref="AutoCompleteSetupAttribute"/> for the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static AutoCompleteSetupAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<AutoCompleteSetupAttribute>(
+                    Support.Support.GetPropertyInfo(context));
 
         /// <summary>
         /// Converts to string.

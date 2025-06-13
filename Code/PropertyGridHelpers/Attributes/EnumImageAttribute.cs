@@ -1,6 +1,7 @@
 ﻿using PropertyGridHelpers.Enums;
 using PropertyGridHelpers.UIEditors;
 using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -118,12 +119,19 @@ namespace PropertyGridHelpers.Attributes
         /// </summary>
         /// <param name="value">The Enum value.</param>
         /// <returns>The corresponding <see cref="EnumImageAttribute"/> instance, or <c>null</c> if none is found.</returns>
-        public static EnumImageAttribute Get(Enum value)
-        {
-            if (value == null)
-                return null;
-            var field = value.GetType().GetField(Enum.GetName(value.GetType(), value));
-            return (EnumImageAttribute)GetCustomAttribute(field, typeof(EnumImageAttribute));
-        }
+        public static EnumImageAttribute Get(Enum value) =>
+            value == null ? null
+                : Support.Support.GetFirstCustomAttribute<EnumImageAttribute>(
+                    Support.Support.GetEnumField(value));
+
+        /// <summary>
+        /// Gets the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static EnumImageAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Get((Enum)context.PropertyDescriptor.GetValue(context.Instance));
     }
 }

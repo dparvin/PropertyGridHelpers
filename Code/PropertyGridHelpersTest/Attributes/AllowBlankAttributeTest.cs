@@ -235,7 +235,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var context = new CustomTypeDescriptorContext(propDesc, this);
 
             // Act
-            var attr = AllowBlankAttribute.GetAllowBlankAttribute(context);
+            var attr = AllowBlankAttribute.Get(context);
 
             // Assert
             Assert.NotNull(attr);
@@ -260,7 +260,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var context = new CustomTypeDescriptorContext(propDesc, instance);
 
             // Act
-            var attr = AllowBlankAttribute.GetAllowBlankAttribute(context);
+            var attr = AllowBlankAttribute.Get(context);
 
             // Assert
             Assert.Null(attr);
@@ -276,7 +276,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             ITypeDescriptorContext context = null;
 
             // Act
-            var result = AllowBlankAttribute.GetAllowBlankAttribute(context);
+            var result = AllowBlankAttribute.Get(context);
 
             // Assert
             Assert.Null(result);

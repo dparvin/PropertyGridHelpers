@@ -1,6 +1,8 @@
 ﻿using PropertyGridHelpers.Attributes;
 using System.Linq;
 using Xunit;
+using System.ComponentModel;
+
 #if NET35
 using System.Diagnostics;
 #else
@@ -101,7 +103,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public void EnumImageWithNullTest()
         {
             // Retrieve the attributes from TestEnum.Test2
-            var attribute = EnumImageAttribute.Get(null);
+            var attribute = EnumImageAttribute.Get((ITypeDescriptorContext)null);
 
             // Cast to EnumImageAttribute and verify the EnumImage property
             Assert.Null(attribute);

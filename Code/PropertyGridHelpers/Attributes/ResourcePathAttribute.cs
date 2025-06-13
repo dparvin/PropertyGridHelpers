@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace PropertyGridHelpers.Attributes
@@ -104,5 +105,26 @@ namespace PropertyGridHelpers.Attributes
         public Assembly GetAssembly() => string.IsNullOrEmpty(ResourceAssembly) ?
                                          Assembly.GetCallingAssembly() :
                                          Assembly.Load(ResourceAssembly);
+
+        /// <summary>
+        /// Gets the <see cref="ResourcePathAttribute" /> for the specified Enum value.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static ResourcePathAttribute Get(ITypeDescriptorContext context)
+        {
+            if (context == null)
+                return null;
+
+            // 1. Look for attribute on the property
+            if (context.PropertyDescriptor != null)
+            {
+                if (context.PropertyDescriptor.Attributes[typeof(ResourcePathAttribute)] is ResourcePathAttribute attr)
+                    return attr;
+            }
+
+            // 3. Look for attribute on the class itself
+            return context.Instance == null ? null : Support.Support.GetFirstCustomAttribute<ResourcePathAttribute>(context.Instance.GetType());
+        }
     }
 }

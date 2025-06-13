@@ -1,6 +1,6 @@
 ﻿using PropertyGridHelpers.Attributes;
-using System.Linq;
 using Xunit;
+using System.ComponentModel;
 
 #if NET35
 using System.Diagnostics;
@@ -111,7 +111,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             // arrange
 
             // Act
-            var enumText = EnumTextAttribute.Get(null);
+            var enumText = EnumTextAttribute.Get((ITypeDescriptorContext)null);
 
             //Assert
             Assert.Null(enumText);

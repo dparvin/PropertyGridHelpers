@@ -1,6 +1,8 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
 using System;
+using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
 
 #if NET35
 using Xunit.Extensions;
@@ -53,6 +55,38 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public LocalizedCategoryAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
+        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Provides missing values for testing purposes.
+        /// </summary>
+        public class TestClass
+        {
+            /// <summary>
+            /// Gets or sets the resource item.
+            /// </summary>
+            /// <value>
+            /// The resource item.
+            /// </value>
+            [LocalizedCategory("SomeResourceKey")]
+            public string ResourceItem
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the item without attribute.
+            /// </summary>
+            /// <value>
+            /// The item without attribute.
+            /// </value>
+            public string ItemWithoutAttribute { get; set; } = "No attribute here";
+        }
+
+        #endregion
+
+        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Localized category attribute remembers resource key.
         /// </summary>
@@ -74,6 +108,66 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #endif
             Output($"The returned Category resource key is: {attribute.ResourceKey}");
         }
+
+        /// <summary>
+        /// Gets the localized category attribute returns attribute if present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedCategoryAttribute_ReturnsAttribute_IfPresent()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["ResourceItem"];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            // Act
+            var attr = LocalizedCategoryAttribute.Get(context);
+
+            // Assert
+            Output($"LocalizedCategoryAttribute.ResourceKey: {attr?.ResourceKey}");
+            Assert.NotNull(attr);
+            Assert.NotEmpty(attr.ResourceKey);
+        }
+
+        /// <summary>
+        /// Gets the localized category attribute returns null if not present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedCategoryAttribute_ReturnsNull_IfNotPresent()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["OtherItem"];
+            var context = new CustomTypeDescriptorContext(propDesc, null);
+
+            // Act
+            var attr = LocalizedCategoryAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedCategoryAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the localized category attribute returns null if no attribute.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedCategoryAttribute_ReturnsNull_IfNoAttribute()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["ItemWithoutAttribute"];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            // Act
+            var attr = LocalizedCategoryAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedCategoryAttribute.Get call.");
+        }
+
+        #endregion
 
         /// <summary>
         /// Outputs the specified message.

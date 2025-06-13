@@ -53,8 +53,30 @@ namespace PropertyGridHelpers.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public object Value
         {
-            get => Text;
-            set => Text = (string)value;
+            get
+            {
+                if (SelectedItem is ItemWrapper<object> wrapper)
+                    return wrapper.Value;
+                return Text; // fallback
+            }
+            set
+            {
+                if (value != null)
+                {
+                    // Try to find the matching item wrapper
+                    foreach (var item in Items)
+                    {
+                        if (item is ItemWrapper<object> wrapper && Equals(wrapper.Value, value))
+                        {
+                            SelectedItem = wrapper;
+                            return;
+                        }
+                    }
+
+                    // Fallback to setting raw text
+                    Text = value.ToString();
+                }
+            }
         }
 
         /// <summary>

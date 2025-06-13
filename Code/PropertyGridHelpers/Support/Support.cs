@@ -380,6 +380,56 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
+        /// Gets the first custom attribute.
+        /// </summary>
+        /// <typeparam name="T">The type of attribute to return</typeparam>
+        /// <param name="member">The member.</param>
+        /// <returns></returns>
+        public static T GetFirstCustomAttribute<T>(MemberInfo member) where T : Attribute
+        {
+#if NET35
+            var attrs = member.GetCustomAttributes(typeof(T), true);
+            return attrs.Length > 0 ? (T)attrs[0] : null;
+#else
+            return member.GetCustomAttribute<T>(true);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the enum field.
+        /// </summary>
+        /// <param name="value">The enum element value.</param>
+        /// <returns></returns>
+        public static FieldInfo GetEnumField(Enum value) =>
+            value.GetType().GetField(Enum.GetName(value.GetType(), value));
+
+        /// <summary>
+        /// Gets the property information.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">context</exception>
+        /// <exception cref="System.ArgumentException">Context does not contain a valid PropertyDescriptor. - context</exception>
+        /// <exception cref="System.InvalidOperationException">Property '{propertyName}' not found on type {componentType.FullName}.</exception>
+        public static PropertyInfo GetPropertyInfo(ITypeDescriptorContext context)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(context);
+#else
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+#endif
+            if (context.PropertyDescriptor == null)
+                throw new ArgumentException("Context does not contain a valid PropertyDescriptor.", nameof(context));
+
+            var componentType = context.PropertyDescriptor.ComponentType;
+            var propertyName = context.PropertyDescriptor.Name;
+            var propInfo = componentType.GetProperty(propertyName) ??
+                    throw new InvalidOperationException($"Property '{propertyName}' not found on type {componentType.FullName}.");
+            return propInfo;
+        }
+
+        /// <summary>
         /// Sets the language.
         /// </summary>
         /// <param name="language">The language.</param>

@@ -1,10 +1,12 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
-using System;
-using System.Threading;
+using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
+using PropertyGridHelpersTest.Enums;
 
 #if NET35
 using Xunit.Extensions;
+using System;
 using System.Diagnostics;
 #else
 using Xunit.Abstractions;
@@ -54,6 +56,52 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public LocalizedEnumTextAttributeTest(ITestOutputHelper output) => OutputHelper = output;
 #endif
 
+        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Provides missing values for testing purposes.
+        /// </summary>
+        public class TestClass
+        {
+            /// <summary>
+            /// Represents a test enumeration with localized text attributes.
+            /// </summary>
+            public enum TestEnum
+            {
+                /// <summary>
+                /// The one
+                /// </summary>
+                [LocalizedEnumText("SomeResourceKey")]
+                [Description("This is One")]
+                One,
+                /// <summary>
+                /// The two
+                /// </summary>
+                [Description("This is Two")]
+                Two
+            }
+
+            /// <summary>
+            /// Gets or sets the resource item.
+            /// </summary>
+            /// <value>
+            /// The resource item.
+            /// </value>
+            public TestEnum ResourceItem { get; set; } = TestEnum.One;
+
+            /// <summary>
+            /// Gets or sets the item without attribute.
+            /// </summary>
+            /// <value>
+            /// The item without attribute.
+            /// </value>
+            public TestEnum ItemWithoutAttribute { get; set; } = TestEnum.Two;
+        }
+
+        #endregion
+
+        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Localized category attribute remembers resource key.
         /// </summary>
@@ -73,8 +121,85 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #else
             Assert.Equal(Some_Resource_Key, attribute.ResourceKey); 
 #endif
-            Output($"The returned Category resource key is: {attribute.ResourceKey}");
+            Output($"The returned Enum Text resource key is: {attribute.ResourceKey}");
         }
+
+        /// <summary>
+        /// Gets the localized description attribute returns attribute if present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedEnumTextAttribute_ReturnsAttribute_IfPresent()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["ResourceItem"];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            // Act
+            var attr = LocalizedEnumTextAttribute.Get(context);
+
+            // Assert
+            Output($"LocalizedEnumTextAttribute.ResourceKey: {attr?.ResourceKey}");
+            Assert.NotNull(attr);
+            Assert.NotEmpty(attr.ResourceKey);
+        }
+
+        /// <summary>
+        /// Gets the localized description attribute returns null if not present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedEnumTextAttribute_ReturnsNull_IfNotPresent()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["OtherItem"];
+            var context = new CustomTypeDescriptorContext(propDesc, null);
+
+            // Act
+            var attr = LocalizedEnumTextAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedEnumTextAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the localized category attribute returns null if no attribute.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedEnumTextAttribute_ReturnsNull_IfNoAttribute()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)["ItemWithoutAttribute"];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            // Act
+            var attr = LocalizedEnumTextAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedEnumTextAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the localized enum text attribute returns null if null enum.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedEnumTextAttribute_ReturnsNull_IfNullEnum()
+        {
+            // Arrange
+            TestEnum? test = null;
+
+            // Act
+            var attr = LocalizedEnumTextAttribute.Get(test);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedEnumTextAttribute.Get call.");
+        }
+
+        #endregion
 
         /// <summary>
         /// Outputs the specified message.

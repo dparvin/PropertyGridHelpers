@@ -56,27 +56,24 @@ namespace PropertyGridHelpers.Attributes
         /// <param name="propertyName">Name of the property.</param>
         public FileExtensionAttribute(string propertyName) => PropertyName = propertyName;
 #endif
+
         /// <summary>
         /// Exists the specified value.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static bool Exists(ITypeDescriptorContext context) => Get(context) != null;
+        public static bool Exists(ITypeDescriptorContext context) =>
+            Get(context) != null;
 
         /// <summary>
-        /// Gets the File Extension Attribute from the enum value.
+        /// Gets the <see cref="FileExtensionAttribute"/> from the passed context.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static FileExtensionAttribute Get(ITypeDescriptorContext context)
-        {
-            if (context == null ||
-                context.Instance == null ||
-                context.PropertyDescriptor == null)
-                return null;
-            var propertyInfo = context.PropertyDescriptor.ComponentType.GetProperty(context.PropertyDescriptor.Name) ??
-                throw new InvalidOperationException($"Property '{context.PropertyDescriptor.Name}' not found on type '{context.PropertyDescriptor.ComponentType}'.");
-            return (FileExtensionAttribute)GetCustomAttribute(propertyInfo, typeof(FileExtensionAttribute));
-        }
+        public static FileExtensionAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<FileExtensionAttribute>(
+                    Support.Support.GetPropertyInfo(context));
     }
 }

@@ -19,3 +19,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>", Scope = "member", Target = "~F:PropertyGridHelpers.UIEditors.ImageTextUIEditor.TargetSizes.OffsetY")]
 [assembly: SuppressMessage("Members", "CRR0048:The type name does not correspond to the file name", Justification = "<Pending>", Scope = "type", Target = "~T:PropertyGridHelpers.UIEditors.FlagEnumUIEditor`1")]
 [assembly: SuppressMessage("Members", "CRR0048:The type name does not correspond to the file name", Justification = "<Pending>", Scope = "type", Target = "~T:PropertyGridHelpers.UIEditors.ImageTextUIEditor`1")]
+[assembly: SuppressMessage("Members", "CRR0048:The type name does not correspond to the file name", Justification = "<Pending>", Scope = "type", Target = "~T:PropertyGridHelpers.UIEditors.AutoCompleteEnumEditor`1")]
+[assembly: SuppressMessage("Members", "CRR0048:The type name does not correspond to the file name", Justification = "<Pending>", Scope = "type", Target = "~T:PropertyGridHelpers.Converters.EnumTextConverter`1")]

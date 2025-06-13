@@ -91,5 +91,18 @@ namespace PropertyGridHelpers.TypeDescriptors
         /// </summary>
         /// <returns></returns>
         public bool OnComponentChanging() => true;
+
+        /// <summary>
+        /// Creates the context.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        public static ITypeDescriptorContext Create(Type type, string propertyName)
+        {
+            var instance = Activator.CreateInstance(type);
+            var propertyDescriptor = TypeDescriptor.GetProperties(type)[propertyName];
+            return new CustomTypeDescriptorContext(propertyDescriptor, instance);
+        }
     }
 }

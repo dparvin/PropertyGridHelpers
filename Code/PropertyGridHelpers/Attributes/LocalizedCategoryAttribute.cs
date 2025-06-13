@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing.Design;
-using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -40,9 +38,9 @@ namespace PropertyGridHelpers.Attributes
     /// </example>
     /// <seealso cref="LocalizedTextAttribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
-    public class LocalizedCategoryAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
+    public class LocalizedCategoryAttribute(string resourceKey) : 
+        LocalizedTextAttribute(resourceKey)
     {
-    }
 #else
     /// <summary>
     /// Attribute for specifying a localized category name for a property or event.
@@ -54,7 +52,8 @@ namespace PropertyGridHelpers.Attributes
     /// </remarks>
     /// <seealso cref="LocalizedTextAttribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
-    public class LocalizedCategoryAttribute : LocalizedTextAttribute
+    public class LocalizedCategoryAttribute :
+        LocalizedTextAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute" /> class.
@@ -86,9 +85,21 @@ namespace PropertyGridHelpers.Attributes
         ///       }
         ///   </code>
         /// </example>
-        public LocalizedCategoryAttribute(string resourceKey) : base(resourceKey)
+        public LocalizedCategoryAttribute(string resourceKey) :
+            base(resourceKey)
         {
         }
-    }
 #endif
+
+        /// <summary>
+        /// Gets the <see cref="LocalizedCategoryAttribute"/> from the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static new LocalizedCategoryAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<LocalizedCategoryAttribute>(
+                    Support.Support.GetPropertyInfo(context));
+    }
 }

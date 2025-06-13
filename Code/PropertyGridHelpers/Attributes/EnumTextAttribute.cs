@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -101,12 +102,19 @@ namespace PropertyGridHelpers.Attributes
         /// <returns>
         /// The associated <see cref="EnumTextAttribute" />, or <c>null</c> if not found.
         /// </returns>
-        public static EnumTextAttribute Get(Enum value)
-        {
-            if (value == null)
-                return null;
-            var field = value.GetType().GetField(Enum.GetName(value.GetType(), value));
-            return (EnumTextAttribute)GetCustomAttribute(field, typeof(EnumTextAttribute));
-        }
+        public static EnumTextAttribute Get(Enum value) =>
+            value == null ? null
+                : Support.Support.GetFirstCustomAttribute<EnumTextAttribute>(
+                    Support.Support.GetEnumField(value));
+
+        /// <summary>
+        /// Gets the <see cref="EnumTextAttribute"/> based on the passed context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static EnumTextAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Get((Enum)context.PropertyDescriptor.GetValue(context.Instance));
     }
 }

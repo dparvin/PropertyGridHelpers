@@ -113,17 +113,6 @@ namespace PropertyGridHelpers.Attributes
 #endif
 
         /// <summary>
-        /// Gets the allow blank attribute.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public static AllowBlankAttribute GetAllowBlankAttribute(ITypeDescriptorContext context)
-        {
-            var prop = context?.PropertyDescriptor;
-            return prop?.Attributes.OfType<AllowBlankAttribute>().FirstOrDefault();
-        }
-
-        /// <summary>
         /// Determines whether blank is allowed in the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -132,7 +121,7 @@ namespace PropertyGridHelpers.Attributes
         /// </returns>
         public static bool IsBlankAllowed(ITypeDescriptorContext context)
         {
-            var prop = GetAllowBlankAttribute(context);
+            var prop = Get(context);
             return prop != null && prop.Allow;
         }
 
@@ -148,7 +137,7 @@ namespace PropertyGridHelpers.Attributes
                 return string.Empty;
 
             // Check for AllowBlankAttribute on the property
-            var allowBlankAttr = GetAllowBlankAttribute(context);
+            var allowBlankAttr = Get(context);
             if (allowBlankAttr == null || !allowBlankAttr.Allow)
                 return string.Empty;
 
@@ -185,6 +174,17 @@ namespace PropertyGridHelpers.Attributes
             // Default to "(none)" if no localized string is found or we aren't including the label
             return allowBlankAttr.IncludeItem ? "(none)" : string.Empty;
         }
+
+        /// <summary>
+        /// Gets the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static AllowBlankAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<AllowBlankAttribute>(
+                    Support.Support.GetPropertyInfo(context));
 
         /// <summary>
         /// Converts to string.

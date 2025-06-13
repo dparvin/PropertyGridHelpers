@@ -1,5 +1,7 @@
 ﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.TypeDescriptors;
 using System;
+using System.ComponentModel;
 using Xunit;
 #if NET35
 #else
@@ -51,7 +53,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #endif
 #endif
 
-        #region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
 
 #if NET8_0_OR_GREATER
         /// <summary>
@@ -143,6 +145,10 @@ namespace PropertyGridHelpersTest.net90.Attributes
             }
         }
 
+        #endregion
+
+        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Constructors the sets resource key.
         /// </summary>
@@ -210,6 +216,58 @@ namespace PropertyGridHelpersTest.net90.Attributes
                 attribute.GetLocalizedText(typeof(TestClassMissingResource)));
             Assert.Contains("Resource type", ex.Message);
             Assert.Contains("not found", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the localized description attribute returns attribute if present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedTextAttribute_ReturnsAttribute_IfPresent()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), "TestProperty");
+
+            // Act
+            var attr = LocalizedTextAttribute.Get(context);
+
+            // Assert
+            Output($"LocalizedTextAttribute.ResourceKey: {attr?.ResourceKey}");
+            Assert.NotNull(attr);
+            Assert.NotEmpty(attr.ResourceKey);
+        }
+
+        /// <summary>
+        /// Gets the localized description attribute returns null if not present.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedTextAttribute_ReturnsNull_IfNotPresent()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), "OtherItem");
+
+            // Act
+            var attr = LocalizedTextAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedTextAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the localized category attribute returns null if no attribute.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedTextAttribute_ReturnsNull_IfNoAttribute()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), "ItemWithoutAttribute");
+
+            // Act
+            var attr = LocalizedTextAttribute.Get(context);
+
+            // Assert
+            Assert.Null(attr);
+            Output("Null was returned by the LocalizedTextAttribute.Get call.");
         }
 
         #endregion

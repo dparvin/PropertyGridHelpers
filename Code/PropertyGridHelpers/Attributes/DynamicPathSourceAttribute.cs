@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -69,5 +70,16 @@ namespace PropertyGridHelpers.Attributes
         /// <param name="pathPropertyName">Name of the path property.</param>
         public DynamicPathSourceAttribute(string pathPropertyName) => PathPropertyName = pathPropertyName;
 #endif
+
+        /// <summary>
+        /// Gets the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static DynamicPathSourceAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<DynamicPathSourceAttribute>(
+                    Support.Support.GetPropertyInfo(context));
     }
 }

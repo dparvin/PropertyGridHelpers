@@ -69,7 +69,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #endif
             {
                 list.Add(new FlagCheckedListBoxItem(1, "Test"));
-                Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
+                Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).DisplayText);
                 Output("Caption set to 'Test' as expected");
             }
         }
@@ -87,7 +87,7 @@ namespace PropertyGridHelpersTest.net90.Controls
 #endif
             {
                 list.Add(1, "Test");
-                Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).Caption);
+                Assert.Equal("Test", ((FlagCheckedListBoxItem)list.Items[0]).DisplayText);
                 Output("Caption set to 'Test' as expected");
             }
         }
@@ -236,8 +236,8 @@ namespace PropertyGridHelpersTest.net90.Controls
                 list.Add(1, dup);
                 list.Add(2, dup);
                 Assert.Equal(2, list.Items.Count);
-                Assert.Equal(dup, ((FlagCheckedListBoxItem)list.Items[0]).Caption);
-                Assert.Equal(dup, ((FlagCheckedListBoxItem)list.Items[1]).Caption);
+                Assert.Equal(dup, ((FlagCheckedListBoxItem)list.Items[0]).DisplayText);
+                Assert.Equal(dup, ((FlagCheckedListBoxItem)list.Items[1]).DisplayText);
             }
         }
 

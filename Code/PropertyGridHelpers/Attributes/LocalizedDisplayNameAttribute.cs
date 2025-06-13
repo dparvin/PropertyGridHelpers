@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -38,7 +39,6 @@ namespace PropertyGridHelpers.Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
     public class LocalizedDisplayNameAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
-    }
 #else
     /// <summary>
     /// Specifies a localized display name for a property, event, or other
@@ -81,6 +81,17 @@ namespace PropertyGridHelpers.Attributes
         public LocalizedDisplayNameAttribute(string resourceKey) : base(resourceKey)
         {
         }
-    }
 #endif
+
+        /// <summary>
+        /// Gets the <see cref="LocalizedDisplayNameAttribute"/> from the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static new LocalizedDisplayNameAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<LocalizedDisplayNameAttribute>(
+                    Support.Support.GetPropertyInfo(context));
+    }
 }

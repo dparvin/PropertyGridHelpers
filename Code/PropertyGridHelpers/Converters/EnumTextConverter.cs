@@ -67,12 +67,19 @@ namespace PropertyGridHelpers.Converters
                 throw new ArgumentException($"value is expected to be of type {EnumType}.", nameof(value));
             if (destinationType == typeof(string))
             {
-                var fi = EnumType.GetField(Enum.GetName(EnumType, value));
-                var dna =
-                        (EnumTextAttribute)Attribute.GetCustomAttribute(
-                        fi, typeof(EnumTextAttribute));
+                string results;
+                Attribute dna = LocalizedEnumTextAttribute.Get((Enum)value);
+                if (dna == null)
+                {
+                    dna = EnumTextAttribute.Get((Enum)value);
+                    results = dna == null
+                        ? value.ToString()
+                        : ((EnumTextAttribute)dna).EnumText;
+                }
+                else
+                    results = ((LocalizedEnumTextAttribute)dna).GetLocalizedText(EnumType);
 
-                return dna == null ? value.ToString() : (object)dna.EnumText;
+                return results;
             }
             else if (destinationType == typeof(int))
                 return (int)value;

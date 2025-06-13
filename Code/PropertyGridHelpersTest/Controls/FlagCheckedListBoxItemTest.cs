@@ -46,7 +46,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void CaptionSetCorrectlyTest()
         {
             var item = new FlagCheckedListBoxItem(1, "Test");
-            Assert.Equal("Test", item.Caption);
+            Assert.Equal("Test", item.DisplayText);
             Output("Caption set to 'Test' as expected");
         }
 
@@ -68,7 +68,7 @@ namespace PropertyGridHelpersTest.net90.Controls
         public void NullParametersHandledCorrectlyTest()
         {
             var item = new FlagCheckedListBoxItem(0, null);
-            Assert.Null(item.Caption);
+            Assert.Null(item.DisplayText);
             Output("Caption set to null as expected");
         }
 

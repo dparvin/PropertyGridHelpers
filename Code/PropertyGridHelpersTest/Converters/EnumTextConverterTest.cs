@@ -492,6 +492,7 @@ namespace PropertyGridHelpersTest.net90.Converters
             // Assert
             Assert.NotNull(standardValues);
         }
+
         /// <summary>
         /// Gets or sets the test property.
         /// </summary>
@@ -538,10 +539,11 @@ namespace PropertyGridHelpersTest.net90.Converters
             /// All entries
             /// </summary>
             [EnumText("All Entries")]
+            [LocalizedEnumText("AllEntries_EnumText")]
             AllEntries = FirstEntry + SecondEntry,
             /// <summary>
             /// The no attribute
-            /// </summary>
+            /// </summary>            
             NoAttribute = 8, // Enum value without an EnumTextAttribute
         }
 

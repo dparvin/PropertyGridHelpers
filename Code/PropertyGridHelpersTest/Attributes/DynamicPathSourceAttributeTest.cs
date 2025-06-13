@@ -1,11 +1,11 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
-using System;
 using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
 
 #if NET35
 using System.Diagnostics;
+using Xunit.Extensions;
 #else
 using Xunit.Abstractions;
 #endif
@@ -26,34 +26,32 @@ namespace PropertyGridHelpersTest.net80.Attributes
 namespace PropertyGridHelpersTest.net90.Attributes
 #endif
 {
-#if NET35
+#if NET8_0_OR_GREATER
     /// <summary>
-    /// Test for the Localized Description Attribute
+    /// AutoCompleteSetupAttribute Tests
     /// </summary>
-    public class LocalizedDisplayNameAttributeTest
-    {
-#elif NET8_0_OR_GREATER
-    /// <summary>
-    /// Test for the Localized Description Attribute
-    /// </summary>
-    /// <param name="output">system to use to output information to test runner</param>
-    public class LocalizedDisplayNameAttributeTest(ITestOutputHelper output)
-    {
-        private readonly ITestOutputHelper OutputHelper = output;
+    /// <param name="output">The output from the unit test.</param>
+    public class DynamicPathSourceAttributeTest(ITestOutputHelper output)
 #else
     /// <summary>
-    /// Test for the Localized Description Attribute
+    /// AutoCompleteSetupAttribute Tests
     /// </summary>
-    public class LocalizedDisplayNameAttributeTest
-    {
-        private readonly ITestOutputHelper OutputHelper;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizedDisplayNameAttributeTest"/> class.
-        /// </summary>
-        /// <param name="output">system to use to output information to test runner</param>
-        public LocalizedDisplayNameAttributeTest(ITestOutputHelper output) => OutputHelper = output;
+    public class DynamicPathSourceAttributeTest
 #endif
-        private static readonly Type ResourceSource = typeof(Properties.Resources);
+    {
+#if NET35
+#elif NET8_0_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper = output;
+#elif NET40_OR_GREATER
+        private readonly ITestOutputHelper OutputHelper;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AllowBlankAttributeTest"/> class.
+        /// </summary>
+        /// <param name="output">The output from the unit test.</param>
+        public DynamicPathSourceAttributeTest(
+            ITestOutputHelper output) => OutputHelper = output;
+#endif
 
         #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -63,13 +61,33 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public class TestClass
         {
             /// <summary>
+            /// Gets or sets the resource path.
+            /// </summary>
+            /// <value>
+            /// The resource path.
+            /// </value>
+            public string ResourcePath { get; set; } = "MyNamespace.Resources";
+
+            /// <summary>
             /// Gets or sets the resource item.
             /// </summary>
             /// <value>
             /// The resource item.
             /// </value>
-            [LocalizedDisplayName("SomeResourceKey")]
+            [DynamicPathSource(nameof(ResourcePath))]
             public string ResourceItem
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the other item.
+            /// </summary>
+            /// <value>
+            /// The other item.
+            /// </value>
+            [DynamicPathSource("SomeplaceElse")]
+            public string OtherItem
             {
                 get; set;
             }
@@ -88,31 +106,10 @@ namespace PropertyGridHelpersTest.net90.Attributes
         #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
-        /// Localized category attribute remembers resource key.
+        /// Gets the dynamic path source attribute returns attribute if present.
         /// </summary>
         [Fact]
-        public void LocalizedDisplayNameAttribute_Remembers_ResourceKey()
-        {
-            // Arrange
-            const string Some_Resource_Key = "SOME_RESOURCE_KEY";
-
-            // Act
-            var attribute = new LocalizedDisplayNameAttribute(Some_Resource_Key);
-
-            // Assert
-            Assert.NotNull(attribute);
-#if NET35
-            Assert.Equal(0, string.Compare(Some_Resource_Key, attribute.ResourceKey));
-#else
-            Assert.Equal(Some_Resource_Key, attribute.ResourceKey); 
-#endif
-            Output($"The returned Category resource key is: {attribute.ResourceKey}");
-        }
-
-        /// <summary>
-        /// </summary>
-        [Fact]
-        public void GetLocalizedDisplayNameAttribute_ReturnsAttribute_IfPresent()
+        public void GetDynamicPathSourceAttribute_ReturnsAttribute_IfPresent()
         {
             // Arrange
             var instance = new TestClass();
@@ -120,19 +117,19 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var context = new CustomTypeDescriptorContext(propDesc, instance);
 
             // Act
-            var attr = LocalizedDisplayNameAttribute.Get(context);
+            var attr = DynamicPathSourceAttribute.Get(context);
 
             // Assert
-            Output($"LocalizedDisplayNameAttribute.ResourceKey: {attr?.ResourceKey}");
+            Output($"DynamicPathSourceAttribute.PathPropertyName: {attr?.PathPropertyName}");
             Assert.NotNull(attr);
-            Assert.NotEmpty(attr.ResourceKey);
+            Assert.NotEmpty(attr.PathPropertyName);
         }
 
         /// <summary>
-        /// Gets the localized description attribute returns null if not present.
+        /// Gets the dynamic path source attribute returns null if not present.
         /// </summary>
         [Fact]
-        public void GetLocalizedDisplayNameAttribute_ReturnsNull_IfNotPresent()
+        public void GetDynamicPathSourceAttribute_ReturnsNull_IfNotPresent()
         {
             // Arrange
             var instance = new TestClass();
@@ -140,18 +137,18 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var context = new CustomTypeDescriptorContext(propDesc, null);
 
             // Act
-            var attr = LocalizedDisplayNameAttribute.Get(context);
+            var attr = DynamicPathSourceAttribute.Get(context);
 
             // Assert
             Assert.Null(attr);
-            Output("Null was returned by the LocalizedDisplayNameAttribute.Get call.");
+            Output("Null was returned by the DynamicPathSourceAttribute.Get call.");
         }
 
         /// <summary>
-        /// Gets the localized category attribute returns null if no attribute.
+        /// Gets the dynamic path source attribute returns null if no attribute.
         /// </summary>
         [Fact]
-        public void GetLocalizedDisplayNameAttribute_ReturnsNull_IfNoAttribute()
+        public void GetDynamicPathSourceAttribute_ReturnsNull_IfNoAttribute()
         {
             // Arrange
             var instance = new TestClass();
@@ -159,11 +156,11 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var context = new CustomTypeDescriptorContext(propDesc, instance);
 
             // Act
-            var attr = LocalizedDisplayNameAttribute.Get(context);
+            var attr = DynamicPathSourceAttribute.Get(context);
 
             // Assert
             Assert.Null(attr);
-            Output("Null was returned by the LocalizedDisplayNameAttribute.Get call.");
+            Output("Null was returned by the DynamicPathSourceAttribute.Get call.");
         }
 
         #endregion
@@ -173,8 +170,8 @@ namespace PropertyGridHelpersTest.net90.Attributes
         /// </summary>
         /// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+        private void Output(string message) =>
+            Debug.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);

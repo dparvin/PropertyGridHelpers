@@ -3,6 +3,9 @@ using PropertyGridHelpers.Controls;
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
@@ -47,6 +50,17 @@ namespace PropertyGridHelpers.UIEditors
         : DropDownVisualizer<AutoCompleteComboBox>
     {
         /// <summary>
+        /// Gets or sets the converter.
+        /// </summary>
+        /// <value>
+        /// The converter.
+        /// </value>
+        public EnumConverter Converter
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Displays the editor control in a dropdown and returns the updated
         /// value after editing completes.
         /// </summary>
@@ -80,12 +94,88 @@ namespace PropertyGridHelpers.UIEditors
                     if (sourceAttr.AutoCompleteSource == AutoCompleteSource.CustomSource)
                     {
                         DropDownControl.AutoCompleteCustomSource.Clear();
-                        DropDownControl.AutoCompleteCustomSource.AddRange(sourceAttr.Values);
+                        DropDownControl.Items.Clear();
+
+                        object[] items;
+
+                        if (Converter != null && sourceAttr.ProviderType.IsEnum)
+                        {
+#if NET5_0_OR_GREATER
+                            items = [.. Enum.GetValues(sourceAttr.ProviderType)
+                                .Cast<object>()
+                                .Select(e => new ItemWrapper<object>(
+                                    Converter.ConvertToString(context, CultureInfo.CurrentCulture, e), e))];
+#else
+                            items = Enum.GetValues(sourceAttr.ProviderType)
+                                .Cast<object>()
+                                .Select(e => new ItemWrapper<object>(
+                                    Converter.ConvertToString(context, CultureInfo.CurrentCulture, e), e))
+                                .ToArray();
+#endif
+                        }
+                        else
+                        {
+                            items = ResolveValues(sourceAttr, context.PropertyDescriptor);
+                        }
+
+#if NET5_0_OR_GREATER
+                        if (items.Length > 0 && items[0] is ItemWrapper<object>)
+                            DropDownControl.AutoCompleteCustomSource.AddRange(
+                                [.. items.Cast<ItemWrapper<object>>().Select(i => i.DisplayText)]);
+                        else
+                            DropDownControl.AutoCompleteCustomSource.AddRange(
+                                [.. items.Select(i => i.ToString())]);
+#else
+                        if (items.Length > 0 && items[0] is ItemWrapper<object>)
+                            DropDownControl.AutoCompleteCustomSource.AddRange(
+                                items.Cast<ItemWrapper<object>>().Select(i => i.DisplayText).ToArray());
+                        else
+                            DropDownControl.AutoCompleteCustomSource.AddRange(
+                                items.Select(i => i.ToString()).ToArray());
+#endif
+                        DropDownControl.Items.AddRange(items);
                     }
                 }
             }
 
             return base.EditValue(context, provider, value);
+        }
+
+        private static string[] ResolveValues(AutoCompleteSetupAttribute setup, PropertyDescriptor propDesc)
+        {
+            // If the AutoCompleteSetupAttribute has Values set, use them directly
+            if (setup.Values?.Length > 0)
+                return setup.Values;
+
+            // If the ProviderType is set, try to get the static string[] Values property
+            var type = setup.ProviderType ?? propDesc?.PropertyType;
+            if (type == null)
+#if NET35 || NET452
+                return new string[0];
+#elif NET5_0_OR_GREATER
+                return [];
+#else
+                return Array.Empty<string>();
+#endif
+            // 
+            const string propName = "Values";
+            var prop = type.GetProperty(propName, BindingFlags.Public | BindingFlags.Static);
+            if (prop != null && prop.PropertyType == typeof(string[]))
+            {
+#if NET35
+                return (string[])prop.GetValue(null, null);
+#else
+                return (string[])prop.GetValue(null);
+#endif
+            }
+
+#if NET35 || NET452
+            return new string[0];
+#elif NET5_0_OR_GREATER
+            return [];
+#else
+                return Array.Empty<string>();
+#endif
         }
     }
 }

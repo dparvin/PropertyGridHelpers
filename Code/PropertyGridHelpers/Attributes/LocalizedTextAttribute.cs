@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -66,5 +67,16 @@ namespace PropertyGridHelpers.Attributes
             // Call your existing method to get the localized string
             return Support.Support.GetResourceString(ResourceKey, resourceSource);
         }
+
+        /// <summary>
+        /// Gets the <see cref="LocalizedTextAttribute"/> from the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public static LocalizedTextAttribute Get(ITypeDescriptorContext context) =>
+            context == null || context.Instance == null || context.PropertyDescriptor == null
+                ? null
+                : Support.Support.GetFirstCustomAttribute<LocalizedTextAttribute>(
+                    Support.Support.GetPropertyInfo(context));
     }
 }
