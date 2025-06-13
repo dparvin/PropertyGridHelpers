@@ -519,6 +519,7 @@ namespace PropertyGridHelpersTest.net90.Converters
         /// Enum to use in the tests to test flag
         /// </summary>
         [Flags]
+        [ResourcePath("Properties.Resources")]
         public enum TestEnums
         {
             /// <summary>
