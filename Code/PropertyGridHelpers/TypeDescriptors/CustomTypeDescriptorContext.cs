@@ -100,8 +100,8 @@ namespace PropertyGridHelpers.TypeDescriptors
         /// <returns></returns>
         public static ITypeDescriptorContext Create(Type type, string propertyName)
         {
-            var instance = Activator.CreateInstance(type);
-            var propertyDescriptor = TypeDescriptor.GetProperties(type)[propertyName];
+            var instance = type == null ? null : Activator.CreateInstance(type);
+            var propertyDescriptor = type == null || string.IsNullOrEmpty(propertyName) ? null : TypeDescriptor.GetProperties(type)[propertyName];
             return new CustomTypeDescriptorContext(propertyDescriptor, instance);
         }
     }

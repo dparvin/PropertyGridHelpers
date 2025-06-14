@@ -1,6 +1,7 @@
 ﻿using PropertyGridHelpers.Attributes;
 using Xunit;
 using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
 
 #if NET35
 using System.Diagnostics;
@@ -47,6 +48,8 @@ namespace PropertyGridHelpersTest.net90.Attributes
             ITestOutputHelper output) => OutputHelper = output;
 #endif
 
+        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Test Enum
         /// </summary>
@@ -62,6 +65,22 @@ namespace PropertyGridHelpersTest.net90.Attributes
             /// </summary>
             Test2
         }
+
+        /// <summary>
+        /// Provides missing values for testing purposes.
+        /// </summary>
+        public class TestClass
+        {
+            /// <summary>
+            /// Gets or sets the test enum property.
+            /// </summary>
+            /// <value>
+            /// The test enum property.
+            /// </value>
+            public TestEnum TestEnumProperty { get; set; } = TestEnum.Test1;
+        }
+
+        #endregion
 
         /// <summary>
         /// Enums the text get enum text test.
@@ -103,10 +122,10 @@ namespace PropertyGridHelpersTest.net90.Attributes
         }
 
         /// <summary>
-        /// Enums the text get enum text null test.
+        /// Enums the text get null context returns null test.
         /// </summary>
         [Fact]
-        public void EnumText_GetEnumTextNullTest()
+        public void EnumTextGet_NullContext_ReturnsNullTest()
         {
             // arrange
 
@@ -117,6 +136,81 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Null(enumText);
 
             Output("EnumText is null as expected");
+        }
+
+        /// <summary>
+        /// Enums the text get instance null returns null test.
+        /// </summary>
+        [Fact]
+        public void EnumTextGet_InstanceNull_ReturnsNullTest()
+        {
+            // arrange
+            var context = CustomTypeDescriptorContext.Create(null, null);
+
+            // Act
+            var enumText = EnumTextAttribute.Get(context);
+
+            //Assert
+            Assert.Null(enumText);
+
+            Output("EnumText is null as expected");
+        }
+
+        /// <summary>
+        /// Enums the text get enum text null property descriptor test.
+        /// </summary>
+        [Fact]
+        public void EnumText_PropertyDescriptorNull_ReturnsNullTest()
+        {
+            // arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), null);
+
+            // Act
+            var enumText = EnumTextAttribute.Get(context);
+
+            //Assert
+            Assert.Null(enumText);
+
+            Output("EnumTextAttribute is null as expected");
+        }
+
+        /// <summary>
+        /// Enums the text get enum text null instance but has property descriptor.
+        /// </summary>
+        [Fact]
+        public void EnumText_GetEnumText_NullInstance_ButHasPropertyDescriptor()
+        {
+            // Arrange
+            var pd = TypeDescriptor.GetProperties(typeof(TestClass))["TestEnumProperty"];
+            var context = new CustomTypeDescriptorContext(pd, null);
+
+            // Act
+            var result = EnumTextAttribute.Get(context);
+
+            // Assert
+            Assert.Null(result);
+            Output("Instance was null, so EnumTextAttribute is null as expected.");
+        }
+
+        /// <summary>
+        /// Enums the text get enum text happy path returns expected.
+        /// </summary>
+        [Fact]
+        public void EnumText_GetEnumText_HappyPath_ReturnsExpected()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), nameof(TestClass.TestEnumProperty));
+
+            // Act
+            var result = EnumTextAttribute.Get(context);
+
+            // Assert
+            Assert.NotNull(result);
+#if NET35
+            Assert.Equal(0, string.Compare("TestItem1", result.EnumText));
+#else
+            Assert.Equal("TestItem1", result.EnumText);
+#endif
         }
 
         /// <summary>

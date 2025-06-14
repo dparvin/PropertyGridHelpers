@@ -1,7 +1,7 @@
 ﻿using PropertyGridHelpers.Attributes;
-using System.Linq;
 using Xunit;
 using System.ComponentModel;
+using PropertyGridHelpers.TypeDescriptors;
 
 #if NET35
 using System.Diagnostics;
@@ -47,6 +47,8 @@ namespace PropertyGridHelpersTest.net90.Attributes
         public EnumImageAttributeTest(
             ITestOutputHelper output) => OutputHelper = output;
 #endif
+        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Test Enum
         /// </summary>
@@ -63,6 +65,22 @@ namespace PropertyGridHelpersTest.net90.Attributes
             [EnumImage]
             Test2
         }
+
+        /// <summary>
+        /// Provides missing values for testing purposes.
+        /// </summary>
+        public class TestClass
+        {
+            /// <summary>
+            /// Gets or sets the test enum property.
+            /// </summary>
+            /// <value>
+            /// The test enum property.
+            /// </value>
+            public TestEnum TestEnumProperty { get; set; } = TestEnum.Test1;
+        }
+
+        #endregion
 
         /// <summary>
         /// Get the attribute with a string test
@@ -100,7 +118,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
         /// Enums the image with null test.
         /// </summary>
         [Fact]
-        public void EnumImageWithNullTest()
+        public void EnumImageGet_ContextNull_ReturnsNullTest()
         {
             // Retrieve the attributes from TestEnum.Test2
             var attribute = EnumImageAttribute.Get((ITypeDescriptorContext)null);
@@ -108,6 +126,60 @@ namespace PropertyGridHelpersTest.net90.Attributes
             // Cast to EnumImageAttribute and verify the EnumImage property
             Assert.Null(attribute);
             Output("EnumImage set to null as expected");
+        }
+        /// <summary>
+        /// Enums the image get instance null returns null test.
+        /// </summary>
+        [Fact]
+        public void EnumImageGet_InstanceNull_ReturnsNullTest()
+        {
+            // arrange
+            var context = CustomTypeDescriptorContext.Create(null, null);
+
+            // Act
+            var attribute = EnumImageAttribute.Get(context);
+
+            //Assert
+            Assert.Null(attribute);
+            Output("EnumImage set to null as expected");
+        }
+
+        /// <summary>
+        /// Enums the image get property descriptor null returns null test.
+        /// </summary>
+        [Fact]
+        public void EnumImageGet_PropertyDescriptorNull_ReturnsNullTest()
+        {
+            // arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), null);
+
+            // Act
+            var attribute = EnumImageAttribute.Get(context);
+
+            //Assert
+            Assert.Null(attribute);
+            Output("EnumImage set to null as expected");
+        }
+
+        /// <summary>
+        /// Enums the image get get enum text happy path returns expected.
+        /// </summary>
+        [Fact]
+        public void EnumImageGet_GetEnumText_HappyPath_ReturnsExpected()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), nameof(TestClass.TestEnumProperty));
+
+            // Act
+            var attribute = EnumImageAttribute.Get(context);
+
+            // Assert
+            Assert.NotNull(attribute);
+#if NET35
+            Assert.Equal(0, string.Compare("TestItem1", attribute.EnumImage));
+#else
+            Assert.Equal("TestItem1", attribute.EnumImage);
+#endif
         }
 
         /// <summary>

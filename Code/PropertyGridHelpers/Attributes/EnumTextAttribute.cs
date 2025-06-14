@@ -113,8 +113,10 @@ namespace PropertyGridHelpers.Attributes
         /// <param name="context">The context.</param>
         /// <returns></returns>
         public static EnumTextAttribute Get(ITypeDescriptorContext context) =>
-            context == null || context.Instance == null || context.PropertyDescriptor == null
+            context == null
                 ? null
-                : Get((Enum)context.PropertyDescriptor.GetValue(context.Instance));
+                : context.Instance == null || context.PropertyDescriptor == null
+                    ? null
+                    : Get((Enum)context.PropertyDescriptor.GetValue(context.Instance));
     }
 }
