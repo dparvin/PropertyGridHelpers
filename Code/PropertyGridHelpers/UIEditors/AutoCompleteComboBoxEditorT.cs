@@ -8,13 +8,13 @@ namespace PropertyGridHelpers.UIEditors
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="AutoCompleteComboBoxEditor" />
-    public class AutoCompleteEnumEditor<T> : AutoCompleteComboBoxEditor
+    public class AutoCompleteComboBoxEditor<T> : AutoCompleteComboBoxEditor
         where T : EnumConverter, new()
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoCompleteEnumEditor{T}"/> class.
+        /// Initializes a new instance of the <see cref="AutoCompleteComboBoxEditor{T}"/> class.
         /// </summary>
-        public AutoCompleteEnumEditor() =>
+        public AutoCompleteComboBoxEditor() =>
             Converter = new T();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Converters;
 using PropertyGridHelpers.ServiceProviders;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpers.UIEditors;
@@ -69,6 +70,23 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #endif
 
         #region Test classes ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Test Enum
+        /// </summary>
+        public enum TestEnum
+        {
+            /// <summary>
+            /// The test1
+            /// </summary>
+            [EnumImage("TestItem1")]
+            Test1,
+            /// <summary>
+            /// The test2
+            /// </summary>
+            [EnumImage]
+            Test2
+        }
 
         /// <summary>
         /// Test class with attribute.
@@ -260,6 +278,26 @@ namespace PropertyGridHelpersTest.net90.UIEditor
                 if (ex.InnerException != null)
                     Output($"    With the inner exception of: {ex.InnerException.Message}");
                 Assert.Contains("The AutoCompleteSetupAttribute on property 'PropertyWithAttributeNullValues' could not be initialized.", ex.Message);
+            });
+
+        /// <summary>
+        /// Automatics the complete ComboBox editor generic assigns expected converter.
+        /// </summary>
+        [Fact]
+        public void AutoCompleteComboBoxEditor_Generic_AssignsExpectedConverter() =>
+            StaTestHelper.Run(() =>
+            {
+                // Arrange
+                var editor = new AutoCompleteComboBoxEditor<EnumTextConverter<TestEnum>>();
+
+                // Act
+                var converter = editor.Converter;
+
+                // Assert
+                Assert.NotNull(converter);
+                _ = Assert.IsType<EnumTextConverter<TestEnum>>(converter);
+
+                Output("AutoCompleteComboBoxEditor<T> assigns the correct EnumTextConverter<T>.");
             });
 
         #endregion
