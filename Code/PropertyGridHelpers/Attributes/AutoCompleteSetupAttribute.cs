@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Attributes
@@ -76,6 +75,21 @@ namespace PropertyGridHelpers.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class AutoCompleteSetupAttribute : Attribute
     {
+        /// <summary>
+        /// Defines the mode for auto-complete suggestions.
+        /// </summary>
+        public enum AutoCompleteSourceMode
+        {
+            /// <summary>
+            /// The values
+            /// </summary>
+            Values,
+            /// <summary>
+            /// The provider
+            /// </summary>
+            Provider
+        }
+
         /// <summary>
         /// Gets the source of auto-complete suggestions.
         /// </summary>
@@ -156,23 +170,15 @@ namespace PropertyGridHelpers.Attributes
         }
 
         /// <summary>
-        /// Gets the initialization exception.
+        /// Gets the mode that the attribute was created in.
         /// </summary>
         /// <value>
-        /// The initialization exception.
+        /// The mode.
         /// </value>
-        public Exception InitializationException
+        public AutoCompleteSourceMode Mode
         {
             get;
         }
-
-        /// <summary>
-        /// Returns true if ... is valid.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsValid => InitializationException == null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
@@ -280,10 +286,9 @@ namespace PropertyGridHelpers.Attributes
             AutoCompleteMode = autoCompleteMode;
             DropDownStyle = dropDownStyle;
             AutoCompleteSource = autoCompleteSource;
-            if (AutoCompleteSource == AutoCompleteSource.CustomSource && (values == null || values.Length == 0))
-                InitializationException = new ArgumentException("At least one auto-complete value must be provided.", nameof(values));
-            else
-                Values = values;
+            Values = values;
+
+            Mode = AutoCompleteSourceMode.Values;
         }
 
         /// <summary>
@@ -340,29 +345,7 @@ namespace PropertyGridHelpers.Attributes
             AutoCompleteSource = AutoCompleteSource.CustomSource;
             ProviderType = providerType;
 
-            if (providerType == null)
-                InitializationException = new ArgumentNullException(nameof(providerType));
-            else if (providerType.IsEnum)
-            {
-                Values = Enum.GetNames(providerType);
-                if (Values.Length == 0)
-                    InitializationException = new ArgumentException($"The enum '{providerType.Name}' does not define any members.");
-            }
-            else
-            {
-                const string requiredPropertyName = "Values";
-                var property = providerType.GetProperty(requiredPropertyName, BindingFlags.Public | BindingFlags.Static);
-                if (property == null)
-                    InitializationException = new ArgumentException($"The type '{providerType.FullName}' must define a public static property named '{requiredPropertyName}'.");
-                else if (property.PropertyType != typeof(string[]))
-                    InitializationException = new ArgumentException($"The '{requiredPropertyName}' property on '{providerType.FullName}' must be of type string[].");
-                else
-#if NET35
-                    Values = (string[])property.GetValue(null, null);
-#else
-                    Values = (string[])property.GetValue(null);
-#endif
-            }
+            Mode = AutoCompleteSourceMode.Provider;
         }
 
         /// <summary>
@@ -383,8 +366,10 @@ namespace PropertyGridHelpers.Attributes
         /// A <see cref="String" /> that represents this instance.
         /// </returns>
         public override string ToString() =>
-            AutoCompleteSource == AutoCompleteSource.CustomSource && Values != null
+            AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == AutoCompleteSourceMode.Values && Values != null)
                 ? $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}, {nameof(Values)}=[{string.Join(", ", Values)}]"
-                : $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}";
+                : AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == AutoCompleteSourceMode.Provider && ProviderType != null) ?
+                    $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}, {nameof(ProviderType)}={ProviderType.Name}" :
+                    $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}";
     }
 }

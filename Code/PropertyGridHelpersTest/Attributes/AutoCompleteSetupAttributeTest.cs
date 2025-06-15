@@ -140,14 +140,14 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.None, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
-            Assert.True(attribute.IsValid);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=None, DropDownStyle=DropDown";
 #if NET35
@@ -171,14 +171,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.FileSystem, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
-            Assert.True(attribute.IsValid);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -195,13 +196,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.FileSystem, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -224,14 +227,14 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
-            Assert.False(attribute.IsValid);
-            Assert.IsType<ArgumentException>(attribute.InitializationException);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -248,14 +251,16 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -272,14 +277,16 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDownList, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -296,15 +303,16 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.Append, mode);
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
-            Assert.True(attribute.IsValid);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -321,15 +329,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(values);
-            Assert.False(attribute.IsValid);
-            _ = Assert.IsType<ArgumentNullException>(attribute.InitializationException);
+            Assert.Null(providerType);
         }
 
         /// <summary>
@@ -346,17 +354,16 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
-            Assert.NotNull(values);
-            Assert.Equal(2, values.Length);
-            Assert.True(attribute.IsValid);
+            Assert.NotNull(providerType);
             Output($"Attribute.ToString = {attribute}");
-            var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, Values=[A, B]";
+            var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, ProviderType=SampleEnum";
 #if NET35
             Assert.Equal(0, string.Compare(expectedOutput, attribute.ToString()));
 #else
@@ -378,16 +385,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDownList, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
-            Assert.NotNull(values);
-            Assert.Empty(values);
-            Assert.False(attribute.IsValid);
-            _ = Assert.IsType<ArgumentException>(attribute.InitializationException);
+            Assert.Null(values);
+            Assert.NotNull(providerType);
         }
 
         /// <summary>
@@ -404,15 +410,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(values);
-            Assert.False(attribute.IsValid);
-            _ = Assert.IsType<ArgumentException>(attribute.InitializationException);
+            Assert.NotNull(providerType);
         }
 
         /// <summary>
@@ -429,15 +435,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(values);
-            Assert.False(attribute.IsValid);
-            _ = Assert.IsType<ArgumentException>(attribute.InitializationException);
+            Assert.NotNull(providerType);
         }
 
         /// <summary>
@@ -454,15 +460,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
-            Assert.NotNull(values);
-            Assert.Equal(2, values.Length);
-            Assert.True(attribute.IsValid);
+            Assert.Null(values);
+            Assert.NotNull(providerType);
         }
 
         /// <summary>
@@ -479,15 +485,14 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var style = attribute.DropDownStyle;
             var mode = attribute.AutoCompleteMode;
             var values = attribute.Values;
+            var providerType = attribute.ProviderType;
 
             // Assert
-            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}");
+            Output($"AutoCompleteSource: {source}\nDropDownStyle: {style}\nAutoCompleteMode: {mode}\nValues: {values}\nProviderType: {providerType}");
             Assert.Equal(AutoCompleteSource.CustomSource, source);
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.Append, mode);
-            Assert.NotNull(values);
-            Assert.Equal(2, values.Length);
-            Assert.True(attribute.IsValid);
+            Assert.NotNull(providerType);
         }
 
         #endregion

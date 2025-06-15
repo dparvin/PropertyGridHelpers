@@ -248,7 +248,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
                 Output($"Caught expected exception: {ex.Message}");
                 if (ex.InnerException != null)
                     Output($"    With the inner exception of: {ex.InnerException.Message}");
-                Assert.Contains("The AutoCompleteSetupAttribute on property 'PropertyWithAttributeMissingValues' could not be initialized.", ex.Message);
+                Assert.Contains("At least one value must be specified when using AutoCompleteSetupAttribute with a value list.", ex.Message);
             });
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
                 Output($"Caught expected exception: {ex.Message}");
                 if (ex.InnerException != null)
                     Output($"    With the inner exception of: {ex.InnerException.Message}");
-                Assert.Contains("The AutoCompleteSetupAttribute on property 'PropertyWithAttributeNullValues' could not be initialized.", ex.Message);
+                Assert.Contains("At least one value must be specified when using AutoCompleteSetupAttribute with a value list.", ex.Message);
             });
 
         /// <summary>

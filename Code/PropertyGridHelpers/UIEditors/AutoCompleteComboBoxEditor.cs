@@ -2,6 +2,7 @@
 using PropertyGridHelpers.Controls;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
@@ -83,10 +84,7 @@ namespace PropertyGridHelpers.UIEditors
 
                 if (sourceAttr != null)
                 {
-                    if (!sourceAttr.IsValid)
-                        throw new InvalidOperationException(
-                            $"The AutoCompleteSetupAttribute on property '{context.PropertyDescriptor.Name}' could not be initialized.",
-                            sourceAttr.InitializationException);
+                    ValidateSetup(sourceAttr, context);
                     DropDownControl.AutoCompleteMode = sourceAttr.AutoCompleteMode;
                     DropDownControl.AutoCompleteSource = sourceAttr.AutoCompleteSource;
                     DropDownControl.DropDownStyle = sourceAttr.DropDownStyle;
@@ -133,6 +131,10 @@ namespace PropertyGridHelpers.UIEditors
                             DropDownControl.AutoCompleteCustomSource.AddRange(
                                 items.Select(i => i.ToString()).ToArray());
 #endif
+                        if (items.Length == 0)
+                            // If no items are provided, throw an exception
+                            throw new DataException("At least one auto-complete value must be provided with an AutoCompleteSetupAttribute.");
+
                         DropDownControl.Items.AddRange(items);
                     }
                 }
@@ -174,8 +176,72 @@ namespace PropertyGridHelpers.UIEditors
 #elif NET5_0_OR_GREATER
             return [];
 #else
-                return Array.Empty<string>();
+            return Array.Empty<string>();
 #endif
+        }
+
+        /// <summary>
+        /// Validates the setup.
+        /// </summary>
+        /// <param name="setup">The setup.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="ArgumentNullException">setup - AutoCompleteSetupAttribute must be assigned to the property where AutoCompleteComboBoxEditor is used.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// At least one value must be specified when using AutoCompleteSourceMode.Values.
+        /// or
+        /// ProviderType could not be determined.
+        /// or
+        /// The enum '{providerType.Name}' does not define any members.
+        /// or
+        /// The type '{providerType.FullName}' must define a public static property named '{propName}'.
+        /// or
+        /// The '{propName}' property on '{providerType.FullName}' must be of type string[].
+        /// or
+        /// The '{propName}' property on '{providerType.FullName}' returned no items.
+        /// </exception>
+        private static void ValidateSetup(AutoCompleteSetupAttribute setup, ITypeDescriptorContext context)
+        {
+            if (setup == null)
+                throw new ArgumentNullException(nameof(setup), "AutoCompleteSetupAttribute must be assigned to the property where AutoCompleteComboBoxEditor is used.");
+
+            if (setup.AutoCompleteSource == AutoCompleteSource.CustomSource)
+                switch (setup.Mode)
+                {
+                    case AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values:
+                        if (setup.Values == null || setup.Values.Length == 0)
+                            throw new InvalidOperationException("At least one value must be specified when using AutoCompleteSetupAttribute with a value list.");
+                        break;
+
+                    case AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider:
+                        var providerType = setup.ProviderType ?? context?.PropertyDescriptor?.PropertyType
+                            ?? throw new InvalidOperationException("ProviderType could not be determined.");
+
+                        if (providerType.IsEnum)
+                        {
+                            var names = Enum.GetNames(providerType);
+                            if (names == null || names.Length == 0)
+                                throw new InvalidOperationException($"The enum '{providerType.Name}' does not define any members.");
+                        }
+                        else
+                        {
+                            const string propName = "Values";
+                            var prop = providerType.GetProperty(propName, BindingFlags.Public | BindingFlags.Static)
+                                ?? throw new InvalidOperationException($"The type '{providerType.FullName}' must define a public static property named '{propName}'.");
+
+                            if (prop.PropertyType != typeof(string[]))
+                                throw new InvalidOperationException($"The '{propName}' property on '{providerType.FullName}' must be of type string[].");
+
+#if NET35
+                            var values = (string[])prop.GetValue(null, null);
+#else
+                var values = (string[])prop.GetValue(null);
+#endif
+                            if (values == null || values.Length == 0)
+                                throw new InvalidOperationException($"The '{propName}' property on '{providerType.FullName}' returned no items.");
+                        }
+
+                        break;
+                }
         }
     }
 }
