@@ -282,7 +282,7 @@ namespace PropertyGridHelpers.Attributes
             ComboBoxStyle dropDownStyle,
             params string[] values)
         {
-            Console.WriteLine("🚨 AutoCompleteSetupAttribute ctor called!");
+            Console.WriteLine("🚨 AutoCompleteSetupAttribute values ctor called!");
             AutoCompleteMode = autoCompleteMode;
             DropDownStyle = dropDownStyle;
             AutoCompleteSource = autoCompleteSource;
@@ -340,6 +340,7 @@ namespace PropertyGridHelpers.Attributes
             ComboBoxStyle dropDownStyle,
             Type providerType)
         {
+            Console.WriteLine("🚨 AutoCompleteSetupAttribute providerType ctor called!");
             AutoCompleteMode = autoCompleteMode;
             DropDownStyle = dropDownStyle;
             AutoCompleteSource = AutoCompleteSource.CustomSource;
