@@ -55,6 +55,8 @@ namespace PropertyGridHelpersTest.net90.Controls
 #endif
 #endif
 
+        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         /// <summary>
         /// Should touch real code.
         /// </summary>
@@ -133,6 +135,31 @@ namespace PropertyGridHelpersTest.net90.Controls
                 Output($"{nameof(eventRaised)} = {eventRaised}");
                 Assert.True(eventRaised, "ValueCommitted should be raised on Leave");
             });
+
+        /// <summary>
+        /// Automatics the complete ComboBox value setter selects matching item wrapper.
+        /// </summary>
+        [Fact]
+        public void AutoCompleteComboBox_ValueSetter_SelectsMatchingItemWrapper() =>
+            StaTestHelper.Run(() =>
+            {
+                var combo = new AutoCompleteComboBox();
+                var item1 = new ItemWrapper<object>("One", 1);
+                var item2 = new ItemWrapper<object>("Two", 2);
+
+                _ = combo.Items.Add(item1);
+                _ = combo.Items.Add(item2);
+                combo.SelectedIndex = 0; // Select first item
+
+                Assert.Equal(1, combo.Value);
+                Assert.Equal(item1, combo.SelectedItem);
+
+                combo.Value = 2;
+
+                Assert.Equal(item2, combo.SelectedItem);
+            });
+
+        #endregion
 
         /// <summary>
         /// Outputs the specified message.

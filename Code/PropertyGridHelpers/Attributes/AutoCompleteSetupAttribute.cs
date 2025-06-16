@@ -78,7 +78,7 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Defines the mode for auto-complete suggestions.
         /// </summary>
-        public enum AutoCompleteSourceMode
+        public enum SourceMode
         {
             /// <summary>
             /// The values
@@ -175,7 +175,7 @@ namespace PropertyGridHelpers.Attributes
         /// <value>
         /// The mode.
         /// </value>
-        public AutoCompleteSourceMode Mode
+        public SourceMode Mode
         {
             get;
         }
@@ -288,7 +288,7 @@ namespace PropertyGridHelpers.Attributes
             AutoCompleteSource = autoCompleteSource;
             Values = values;
 
-            Mode = AutoCompleteSourceMode.Values;
+            Mode = SourceMode.Values;
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace PropertyGridHelpers.Attributes
             AutoCompleteSource = AutoCompleteSource.CustomSource;
             ProviderType = providerType;
 
-            Mode = AutoCompleteSourceMode.Provider;
+            Mode = SourceMode.Provider;
         }
 
         /// <summary>
@@ -367,9 +367,9 @@ namespace PropertyGridHelpers.Attributes
         /// A <see cref="String" /> that represents this instance.
         /// </returns>
         public override string ToString() =>
-            AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == AutoCompleteSourceMode.Values && Values != null)
+            AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == SourceMode.Values && Values != null)
                 ? $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}, {nameof(Values)}=[{string.Join(", ", Values)}]"
-                : AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == AutoCompleteSourceMode.Provider && ProviderType != null) ?
+                : AutoCompleteSource == AutoCompleteSource.CustomSource && (Mode == SourceMode.Provider && ProviderType != null) ?
                     $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}, {nameof(ProviderType)}={ProviderType.Name}" :
                     $"{nameof(AutoCompleteSetupAttribute)}: {nameof(AutoCompleteMode)}={AutoCompleteMode}, {nameof(AutoCompleteSource)}={AutoCompleteSource}, {nameof(DropDownStyle)}={DropDownStyle}";
     }

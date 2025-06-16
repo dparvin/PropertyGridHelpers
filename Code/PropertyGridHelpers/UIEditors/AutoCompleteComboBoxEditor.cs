@@ -207,12 +207,12 @@ namespace PropertyGridHelpers.UIEditors
             if (setup.AutoCompleteSource == AutoCompleteSource.CustomSource)
                 switch (setup.Mode)
                 {
-                    case AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values:
+                    case AutoCompleteSetupAttribute.SourceMode.Values:
                         if (setup.Values == null || setup.Values.Length == 0)
                             throw new InvalidOperationException("At least one value must be specified when using AutoCompleteSetupAttribute with a value list.");
                         break;
 
-                    case AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider:
+                    case AutoCompleteSetupAttribute.SourceMode.Provider:
                         var providerType = setup.ProviderType ?? context?.PropertyDescriptor?.PropertyType
                             ?? throw new InvalidOperationException("ProviderType could not be determined.");
 

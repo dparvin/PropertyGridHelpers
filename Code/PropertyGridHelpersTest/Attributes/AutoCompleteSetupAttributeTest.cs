@@ -182,7 +182,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=None, DropDownStyle=DropDown";
 #if NET35
@@ -216,7 +216,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=FileSystem, DropDownStyle=DropDown";
 #if NET35
@@ -250,7 +250,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Empty(values);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=FileSystem, DropDownStyle=DropDown";
 #if NET35
@@ -289,7 +289,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, Values=[]";
 #if NET35
@@ -324,7 +324,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, Values=[A, B, C]";
 #if NET35
@@ -359,7 +359,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDownList, Values=[A, B, C]";
 #if NET35
@@ -394,7 +394,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.NotNull(values);
             Assert.Equal(3, values.Length);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Values, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Values, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=Append, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, Values=[A, B, C]";
 #if NET35
@@ -428,7 +428,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(values);
             Assert.Null(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Provider, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDown";
 #if NET35
@@ -468,7 +468,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #else
                     Assert.Equal(expectedOutput, attribute.ToString());
 #endif
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Provider, sourceMode);
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(AutoCompleteMode.SuggestAppend, mode);
             Assert.Null(values);
             Assert.NotNull(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Provider, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=SuggestAppend, AutoCompleteSource=CustomSource, DropDownStyle=DropDownList, ProviderType=SampleEmptyEnum";
 #if NET35
@@ -528,7 +528,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(ComboBoxStyle.DropDown, style);
             Assert.Equal(AutoCompleteMode.Append, mode);
             Assert.NotNull(providerType);
-            Assert.Equal(AutoCompleteSetupAttribute.AutoCompleteSourceMode.Provider, sourceMode);
+            Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Provider, sourceMode);
             Output($"Attribute.ToString = {attribute}");
             var expectedOutput = "AutoCompleteSetupAttribute: AutoCompleteMode=Append, AutoCompleteSource=CustomSource, DropDownStyle=DropDown, ProviderType=SampleEnum";
 #if NET35
