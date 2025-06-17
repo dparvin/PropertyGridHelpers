@@ -160,7 +160,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             {
                 var editor = new AutoCompleteComboBoxEditor();
                 var result = editor.EditValue(null, null, "original");
-                Output($"result = '{result}'");
+                Output($"result = '{(result ?? "(null)")}'");
                 Assert.Null(result);
             });
 

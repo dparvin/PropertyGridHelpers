@@ -21,8 +21,8 @@ namespace PropertyGridHelpers.Support
         /// </summary>
         /// <param name="enumType">Type of the enum.</param>
         /// <returns>
-        /// Returns a string array containing the names of all resources in 
-        /// the assembly where the passed in enum type is located.
+        /// Returns a string array containing the names of all resources in  the assembly where the passed in enum type
+        /// is located.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when the parameter <paramref name="enumType"/> is null</exception>
         /// <exception cref="ArgumentException">Throw when the parameter <paramref name="enumType"/> is not an Enum type</exception>
@@ -50,41 +50,23 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Analyzes the resources embedded within a given assembly and prints details 
-        /// about their type and structure.
+        /// Analyzes the resources embedded within a given assembly and prints details  about their type and structure.
         /// </summary>
         /// <param name="assembly">The assembly to inspect for embedded resources.</param>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="assembly"/> is <c>null</c>.
         /// </exception>
         /// <remarks>
-        /// This method examines the specified <paramref name="assembly"/> and identifies:
-        /// <list type="bullet">
-        ///     <item><description>Embedded resources.</description></item>
-        ///     <item><description>Compiled resource files (<c>.resources</c> files).</description></item>
-        /// </list>
-        ///
-        /// The results are written to the standard output (console).
-        ///
-        /// <para><b>Example Output:</b></para>
-        /// <pre>
-        /// Checking resources in assembly:
-        ///
-        /// Embedded Resources:
-        /// - MyNamespace.MyResource.txt (Embedded Resource)
-        ///
-        /// Resource Files:
-        /// - MyNamespace.Strings.resources (Resource File)
-        ///   -> WelcomeMessage: System.String
-        ///   -> AppVersion: System.Int32
-        /// </pre>
-        ///
-        /// <para>If a compiled resource file (<c>.resources</c>) is found, this method also
-        /// attempts to deserialize its contents and print the key-value pairs along with
-        /// their data types.</para>
-        ///
-        /// <para><b>Note:</b> This method is intended primarily for debugging and inspection purposes.
-        /// It may not be suitable for use in production applications.</para>
+        /// This method examines the specified <paramref name="assembly"/> and identifies: <list
+        /// type="bullet"><item><description>Embedded resources.</description></item><item><description>Compiled
+        /// resource files (<c>.resources</c> files).</description></item></list>  The results are written to the
+        /// standard output (console).  <para><b>Example Output:</b></para> <pre> Checking resources in assembly: 
+        /// Embedded Resources: - MyNamespace.MyResource.txt (Embedded Resource)  Resource Files: -
+        /// MyNamespace.Strings.resources (Resource File) -> WelcomeMessage: System.String -> AppVersion:
+        /// System.Int32</pre>  <para>If a compiled resource file (<c>.resources</c>) is found, this method also
+        /// attempts to deserialize its contents and print the key-value pairs along with their data types.</para> 
+        /// <para><b>Note:</b> This method is intended primarily for debugging and inspection purposes. It may not be
+        /// suitable for use in production applications.</para>
         /// </remarks>
         public static void CheckResourceType(Assembly assembly)
         {
@@ -107,7 +89,8 @@ namespace PropertyGridHelpers.Support
 
             // Check for resource files (.resx compiled to .resources)
             Console.WriteLine("\nResource Files:");
-            foreach (var resourceName in embeddedResources.Where(r => r.EndsWith(".resources", StringComparison.InvariantCulture)))
+            foreach (var resourceName in embeddedResources.Where(
+                r => r.EndsWith(".resources", StringComparison.InvariantCulture)))
             {
                 Console.WriteLine($"- {resourceName} (Resource File)");
 #if NET5_0_OR_GREATER
@@ -119,6 +102,7 @@ namespace PropertyGridHelpers.Support
                         Console.WriteLine($"  -> {entry.Key}: {entry.Value.GetType().FullName}");
                 }
 #else
+
                 using (var stream = assembly.GetManifestResourceStream(resourceName))
                     if (stream != null)
                         using (var reader = new ResourceReader(stream))
@@ -134,22 +118,20 @@ namespace PropertyGridHelpers.Support
         /// <param name="resourceKey">The key identifying the resource string.</param>
         /// <param name="resourceSource">The type of the resource class that contains the resource file.</param>
         /// <returns>
-        /// The localized string corresponding to <paramref name="resourceKey" /> from the specified
-        /// <paramref name="resourceSource" /> for the current culture. If the key is not found,
-        /// the method returns the resource key itself.
+        /// The localized string corresponding to <paramref name="resourceKey"/> from the specified <paramref
+        /// name="resourceSource"/> for the current culture. If the key is not found, the method returns the resource
+        /// key itself.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey" /> or <paramref name="resourceSource" /> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.</exception>
         /// <remarks>
-        /// This method uses a <see cref="ResourceManager" /> to retrieve the localized string
-        /// based on the current culture. If the resource key does not exist in the specified resource file,
-        /// the method returns the key itself instead of throwing an exception.
+        /// This method uses a <see cref="ResourceManager"/> to retrieve the localized string based on the current
+        /// culture. If the resource key does not exist in the specified resource file, the method returns the key
+        /// itself instead of throwing an exception.
         /// </remarks>
         /// <example>
-        /// Example usage:
-        /// <code>
-        /// string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
-        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
-        /// </code></example>
+        /// Example usage: <code> string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
+        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found</code>
+        /// </example>
         public static string GetResourceString(string resourceKey, Type resourceSource)
         {
             if (string.IsNullOrEmpty(resourceKey))
@@ -157,6 +139,7 @@ namespace PropertyGridHelpers.Support
 #if NET8_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(resourceSource);
 #else
+
             if (resourceSource == null)
                 throw new ArgumentNullException(nameof(resourceSource));
 #endif
@@ -183,30 +166,21 @@ namespace PropertyGridHelpers.Support
         /// The data type associated with the resource, typically an enum or a property type.
         /// </param>
         /// <returns>
-        /// A string containing the resource path based on the provided property or type.
-        /// If no applicable attributes are found, the method returns the default resource path: 
-        /// <c>"Properties.Resources"</c>.
+        /// A string containing the resource path based on the provided property or type. If no applicable attributes
+        /// are found, the method returns the default resource path:  <c>"Properties.Resources"</c>.
         /// </returns>
         /// <remarks>
-        /// This method searches for the resource path using the following order of precedence:
-        /// <list type="number">
-        ///   <item>If the property has a <see cref="DynamicPathSourceAttribute"/>, it retrieves the path 
-        ///         from the referenced property specified in the attribute.</item>
-        ///   <item>If the property has a <see cref="ResourcePathAttribute"/>, it uses the specified path.</item>
-        ///   <item>If the type (or its underlying nullable type) is an enumeration and has a 
-        ///         <see cref="ResourcePathAttribute"/>, it uses the path defined by the attribute.</item>
-        ///   <item>If none of the above conditions are met, it defaults to <c>"Properties.Resources"</c>.</item>
-        /// </list>
+        /// This method searches for the resource path using the following order of precedence: <list
+        /// type="number"><item>If the property has a <see cref="DynamicPathSourceAttribute"/>, it retrieves the path 
+        /// from the referenced property specified in the attribute.</item><item>If the property has a <see
+        /// cref="ResourcePathAttribute"/>, it uses the specified path.</item><item>If the type (or its underlying
+        /// nullable type) is an enumeration and has a <see cref="ResourcePathAttribute"/>, it uses the path defined by
+        /// the attribute.</item><item>If none of the above conditions are met, it defaults to
+        /// <c>"Properties.Resources"</c>.</item></list>
         /// </remarks>
         /// <example>
-        /// Example usage:
-        /// <code>
-        /// [ResourcePath("Custom.Resources")]
-        /// public enum MyEnum { Value1, Value2 }
-        ///
-        /// string path = GetResourcePath(null, typeof(MyEnum));
-        /// Console.WriteLine(path); // Outputs: "Custom.Resources"
-        /// </code>
+        /// Example usage: <code> [ResourcePath("Custom.Resources")] public enum MyEnum { Value1, Value2 }  string path
+        /// = GetResourcePath(null, typeof(MyEnum)); Console.WriteLine(path); // Outputs: "Custom.Resources"</code>
         /// </example>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="type"/> is <c>null</c>.
@@ -242,8 +216,7 @@ namespace PropertyGridHelpers.Support
             }
 
             // Check if the type is an enum
-            if (type.IsEnum ||
-                (Nullable.GetUnderlyingType(type) is Type underlyingType && underlyingType.IsEnum))
+            if (type.IsEnum || (Nullable.GetUnderlyingType(type) is Type underlyingType && underlyingType.IsEnum))
             {
                 // Determine the actual enum type to inspect for the attribute.
                 var enumType = type.IsEnum ? type : Nullable.GetUnderlyingType(type);
@@ -263,45 +236,30 @@ namespace PropertyGridHelpers.Support
         /// The type descriptor context, which provides metadata about the property and its container.
         /// </param>
         /// <returns>
-        /// A string containing the file extension for the resource. 
-        /// If no valid extension is found, returns an empty string.
+        /// A string containing the file extension for the resource.  If no valid extension is found, returns an empty
+        /// string.
         /// </returns>
         /// <remarks>
-        /// This method determines the file extension based on the following order of precedence:
-        /// <list type="number">
-        ///   <item>Checks if the property has a <see cref="FileExtensionAttribute"/> and retrieves the value 
-        ///         of the property it references.</item>
-        ///   <item>If the referenced property is a string, its value is returned.</item>
-        ///   <item>If the referenced property is an enumeration:
-        ///     <list type="bullet">
-        ///       <item>Returns the enum's string representation, unless it is <c>None</c>, in which case an empty string is returned.</item>
-        ///       <item>If the enum field has an <see cref="EnumTextAttribute"/>, returns its custom text value.</item>
-        ///       <item>If the enum field has a <see cref="LocalizedEnumTextAttribute"/>, returns its localized text value.</item>
-        ///     </list>
-        ///   </item>
-        ///   <item>If no matching attributes are found, the method returns an empty string.</item>
-        /// </list>
-        /// 
-        /// Normally a user would not call this method directly, but it is 
-        /// used by the UIEditors to load values into the <see cref="PropertyGrid" />.
+        /// This method determines the file extension based on the following order of precedence: <list
+        /// type="number"><item>Checks if the property has a <see cref="FileExtensionAttribute"/> and retrieves the
+        /// value  of the property it references.</item><item>If the referenced property is a string, its value is
+        /// returned.</item><item>If the referenced property is an enumeration:<list type="bullet"><item>Returns the
+        /// enum's string representation, unless it is <c>None</c>, in which case an empty string is
+        /// returned.</item><item>If the enum field has an <see cref="EnumTextAttribute"/>, returns its custom text
+        /// value.</item><item>If the enum field has a <see cref="LocalizedEnumTextAttribute"/>, returns its localized
+        /// text value.</item></list></item><item>If no matching attributes are found, the method returns an empty
+        /// string.</item></list>  Normally a user would not call this method directly, but it is  used by the UIEditors
+        /// to load values into the <see cref="PropertyGrid"/>.
         /// </remarks>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the referenced property is not found or is not public.
         /// </exception>
         /// <example>
-        /// Example usage:
-        /// <code>
-        /// [FileExtension(nameof(FileType))]
-        /// public string FileName { get; set; } = "example";
-        /// 
-        /// public string FileType { get; set; } = "xml";
-        ///
-        /// var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(FileName)];
-        /// var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-        /// 
-        /// string extension = GetFileExtension(context);
-        /// Console.WriteLine(extension); // Outputs: "xml"
-        /// </code>
+        /// Example usage: <code> [FileExtension(nameof(FileType))] public string FileName { get; set; } = "example"; 
+        /// public string FileType { get; set; } = "xml";  var PropertyDescriptor =
+        /// TypeDescriptor.GetProperties(this)[nameof(FileName)]; var context = new
+        /// CustomTypeDescriptorContext(PropertyDescriptor, this);  string extension = GetFileExtension(context);
+        /// Console.WriteLine(extension); // Outputs: "xml"</code>
         /// </example>
         public static string GetFileExtension(ITypeDescriptorContext context)
         {
@@ -318,7 +276,8 @@ namespace PropertyGridHelpers.Support
                         return fileExtensionProperty.GetValue(context.Instance, null) as string;
                     }
                     else if (fileExtensionProperty.PropertyType.IsEnum ||
-                             (Nullable.GetUnderlyingType(fileExtensionProperty.PropertyType) is Type underlyingType && underlyingType.IsEnum))
+                        (Nullable.GetUnderlyingType(fileExtensionProperty.PropertyType) is Type underlyingType &&
+                            underlyingType.IsEnum))
                     {
                         // Get the property value.
                         var rawValue = fileExtensionProperty.GetValue(context.Instance, null);
@@ -360,10 +319,9 @@ namespace PropertyGridHelpers.Support
         /// </exception>
         private static PropertyInfo GetRequiredProperty(object instance, string propertyName)
         {
-            var property = instance.GetType().GetProperty(propertyName, BindingFlags.Instance |
-                                                                        BindingFlags.Public |
-                                                                        BindingFlags.NonPublic) ??
-                           throw new InvalidOperationException(
+            var property = instance.GetType()
+                    .GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) ??
+                throw new InvalidOperationException(
                     $"Property '{propertyName}' not found on type '{instance.GetType()}'.");
 
 #if NET35
@@ -371,6 +329,7 @@ namespace PropertyGridHelpers.Support
 #else
             if (!property.GetMethod.IsPublic)
 #endif
+
             {
                 throw new InvalidOperationException(
                     $"Property '{propertyName}' on type '{instance.GetType()}' must be public.");
@@ -379,14 +338,76 @@ namespace PropertyGridHelpers.Support
             return property;
         }
 
+#if NET35
         /// <summary>
-        /// Gets the first custom attribute.
+        /// Retrieves the first custom attribute of the specified type applied to the given <see cref="MemberInfo"/>.
         /// </summary>
-        /// <typeparam name="T">The type of attribute to return</typeparam>
-        /// <param name="member">The member.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">
+        /// The type of attribute to retrieve. Must derive from <see cref="Attribute"/>.
+        /// </typeparam>
+        /// <param name="member">
+        /// The member (e.g., property, method, field, type) to inspect for the attribute.
+        /// </param>
+        /// <returns>
+        /// An instance of the attribute type <typeparamref name="T"/> if one is defined on the member; otherwise, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// this uses <see cref="MemberInfo.GetCustomAttributes(Type, bool)"/> internally.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="member"/> is <c>null</c>.
+        /// </exception>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// var property = typeof(MyClass).GetProperty("MyProperty");
+        /// var attr = Support.GetFirstCustomAttribute&lt;AutoCompleteSetupAttribute&gt;(property);
+        /// if (attr != null)
+        /// {
+        ///     // Attribute was found
+        /// }
+        /// </code>
+        /// </example>
+#else
+        /// <summary>
+        /// Retrieves the first custom attribute of the specified type applied to the given <see cref="MemberInfo"/>.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of attribute to retrieve. Must derive from <see cref="Attribute"/>.
+        /// </typeparam>
+        /// <param name="member">
+        /// The member (e.g., property, method, field, type) to inspect for the attribute.
+        /// </param>
+        /// <returns>
+        /// An instance of the attribute type <typeparamref name="T"/> if one is defined on the member; otherwise, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// On .NET Framework 3.5, this uses <see cref="MemberInfo.GetCustomAttributes(Type, bool)"/> internally;
+        /// on later versions, it uses <see cref="CustomAttributeExtensions.GetCustomAttribute{T}(MemberInfo, bool)"/>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="member"/> is <c>null</c>.
+        /// </exception>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// var property = typeof(MyClass).GetProperty("MyProperty");
+        /// var attr = Support.GetFirstCustomAttribute&lt;AutoCompleteSetupAttribute&gt;(property);
+        /// if (attr != null)
+        /// {
+        ///     // Attribute was found
+        /// }
+        /// </code>
+        /// </example>
+#endif
         public static T GetFirstCustomAttribute<T>(MemberInfo member) where T : Attribute
         {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(member);
+#else
+            if (member == null)
+                throw new ArgumentNullException(nameof(member));
+#endif
 #if NET35
             var attrs = member.GetCustomAttributes(typeof(T), true);
             return attrs.Length > 0 ? (T)attrs[0] : null;
@@ -400,17 +421,33 @@ namespace PropertyGridHelpers.Support
         /// </summary>
         /// <param name="value">The enum element value.</param>
         /// <returns></returns>
-        public static FieldInfo GetEnumField(Enum value) =>
-            value.GetType().GetField(Enum.GetName(value.GetType(), value));
+        public static FieldInfo GetEnumField(Enum value) => value.GetType()
+            .GetField(Enum.GetName(value.GetType(), value));
 
         /// <summary>
-        /// Gets the property information.
+        /// Retrieves the <see cref="PropertyInfo"/> for the property described by the specified <see
+        /// cref="ITypeDescriptorContext"/>.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">context</exception>
-        /// <exception cref="System.ArgumentException">Context does not contain a valid PropertyDescriptor. - context</exception>
-        /// <exception cref="System.InvalidOperationException">Property '{propertyName}' not found on type {componentType.FullName}.</exception>
+        /// <param name="context">
+        /// The type descriptor context containing metadata about the property, including its name and declaring
+        /// component type.
+        /// </param>
+        /// <returns>
+        /// A <see cref="PropertyInfo"/> object representing the property described by <paramref name="context"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="context"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="context"/> does not contain a valid <see cref="PropertyDescriptor"/>.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the property described by the context could not be found on the component type.
+        /// </exception>
+        /// <example>
+        /// Example usage: <code> var context = TypeDescriptorContext.Create(typeof(MyClass), "MyProperty");
+        /// PropertyInfo info = Support.GetPropertyInfo(context);</code>
+        /// </example>
         public static PropertyInfo GetPropertyInfo(ITypeDescriptorContext context)
         {
 #if NET5_0_OR_GREATER
@@ -425,7 +462,8 @@ namespace PropertyGridHelpers.Support
             var componentType = context.PropertyDescriptor.ComponentType;
             var propertyName = context.PropertyDescriptor.Name;
             var propInfo = componentType.GetProperty(propertyName) ??
-                    throw new InvalidOperationException($"Property '{propertyName}' not found on type {componentType.FullName}.");
+                throw new InvalidOperationException(
+                    $"Property '{propertyName}' not found on type {componentType.FullName}.");
             return propInfo;
         }
 
