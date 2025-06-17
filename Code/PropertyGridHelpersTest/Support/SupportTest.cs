@@ -541,7 +541,75 @@ namespace PropertyGridHelpersTest.net90.Support
 
         #endregion
 
+        #region GetPropertyInfo Tests ^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the property information throws argument null when context is null.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsArgumentNull_WhenContextIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(null));
+
+        /// <summary>
+        /// Gets the property information throws argument exception when property descriptor is null.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsArgumentException_WhenPropertyDescriptorIsNull()
+        {
+            var context = new CustomTypeDescriptorContext(null, new TestClass());
+
+            var ex = Assert.Throws<ArgumentException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
+            Assert.Contains("PropertyDescriptor", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the property information throws invalid operation when property not found.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsInvalidOperation_WhenPropertyNotFound()
+        {
+            var fakeDescriptor = TypeDescriptor.CreateProperty(typeof(TestClass), "MissingProperty", typeof(string));
+            var context = new CustomTypeDescriptorContext(fakeDescriptor, new TestClass());
+
+            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
+            Assert.Contains("Property 'MissingProperty' not found", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the property information returns property information when property exists.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ReturnsPropertyInfo_WhenPropertyExists()
+        {
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), nameof(TestClass.TestEnum));
+
+            var propInfo = PropertyGridHelpers.Support.Support.GetPropertyInfo(context);
+
+            Assert.NotNull(propInfo);
+#if NET35
+            Assert.Equal(0, string.Compare(nameof(TestClass.TestEnum), propInfo.Name));
+#else
+            Assert.Equal(nameof(TestClass.TestEnum), propInfo.Name);
+#endif
+        }
+
+        #endregion
+
         #region Test objects ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Test class for testing purposes.
+        /// </summary>
+        public class TestClass
+        {
+            /// <summary>
+            /// Gets or sets the test enum.
+            /// </summary>
+            /// <value>
+            /// The test enum.
+            /// </value>
+            public TestEnum TestEnum { get; set; } = TestEnum.ItemWithImage;
+        }
 
         /// <summary>
         /// Gets or sets the test enum.
