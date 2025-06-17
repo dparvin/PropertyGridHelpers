@@ -1,5 +1,6 @@
 ﻿// Ignore Spelling: Nullable
 
+using PropertyGridHelpers;
 using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpersTest.Enums;
@@ -68,6 +69,318 @@ namespace PropertyGridHelpersTest.net90.Support
             : base() =>
             OutputHelper = output;
 #endif
+
+        #region GetEnumField Tests ^^^^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the enum field returns correct field information for valid enum value.
+        /// </summary>
+        [Fact]
+        public void GetEnumField_ReturnsCorrectFieldInfo_ForValidEnumValue()
+        {
+            var field = PropertyGridHelpers.Support.Support.GetEnumField(TestEnum.confetti);
+
+            Assert.NotNull(field);
+#if NET35
+            Assert.Equal(0, string.Compare(nameof(TestEnum.confetti), field.Name));
+#else
+            Assert.Equal(nameof(TestEnum.confetti), field.Name);
+#endif
+            Assert.Equal(typeof(TestEnum), field.DeclaringType);
+        }
+
+        /// <summary>
+        /// Gets the enum field returns null for undefined enum value.
+        /// </summary>
+        [Fact]
+        public void GetEnumField_ReturnsNull_ForUndefinedEnumValue()
+        {
+            var value = (TestEnum)999;
+
+            var results = PropertyGridHelpers.Support.Support.GetEnumField(value);
+
+            Assert.Null(results);
+        }
+
+        /// <summary>
+        /// Gets the enum field throws when value is null.
+        /// </summary>
+        [Fact]
+        public void GetEnumField_Throws_WhenValueIsNull() =>
+            _ = Assert.Throws<ArgumentNullException>(() => PropertyGridHelpers.Support.Support.GetEnumField(null));
+
+        #endregion
+
+        #region GetFileExtension Tests ^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithImage)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare("jpg - jpeg file", fileExtension));
+#else
+            Assert.Equal("jpg - jpeg file", fileExtension);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension int property should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_IntProperty_ShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithInt)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(string.Empty, fileExtension));
+#else
+            Assert.Equal(string.Empty, fileExtension);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_StringPropertyShouldReturnFileExtension()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithBitmapImage)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare("jpg", fileExtension));
+#else
+            Assert.Equal("jpg", fileExtension);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ExceptionForPropertyReferencingInvalidProperty()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithResource)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetFileExtension(context));
+            // Assert
+
+            Assert.Contains("Property 'invalidPropertName' not found on type 'PropertyGridHelpersTest.", ex.Message);
+            Output(ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the file extension should return file extension.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ExceptionForPropertyReferencingPrivateProperty()
+        {
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithPrivateProperty)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetFileExtension(context));
+            // Assert
+            Assert.Contains("Property 'PrivateImageFileExtension' on type 'PropertyGridHelpersTest.", ex.Message);
+            Output(ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the file extension enum with custom enum text should return enum text.
+        /// </summary>
+        /// <param name="testExtension">The test extension.</param>
+        /// <param name="expectedValue">The expected value.</param>
+        [Theory]
+        [InlineData(ImageFileExtension.jpg, "jpg - jpeg file")]
+        [InlineData(ImageFileExtension.png, "png")]
+        [InlineData(ImageFileExtension.None, "")]
+        public void GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(
+            ImageFileExtension testExtension,
+            string expectedValue)
+        {
+            // Arrange
+            ImageFileExtension = testExtension;
+
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(expectedValue, fileExtension));
+#else
+            Assert.Equal(expectedValue, fileExtension);
+#endif
+            Output(fileExtension);
+        }
+
+        /// <summary>
+        /// Gets the file extension should return empty string when enum property is not enum instance.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNotEnumInstance()
+        {
+            // Arrange
+            ImageFileExtension = ImageFileExtension.png;
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(ImageFileExtension.ToString(), result));
+#else
+            Assert.Equal(ImageFileExtension.ToString(), result);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the file extension should return empty string when enum property is null.
+        /// </summary>
+        [Fact]
+        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNull()
+        {
+            // Arrange
+            NullableImageFileExtension = null;
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(NullableTestItemWithEnum)];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Act
+            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
+
+            // Assert
+#if NET35
+            Assert.Equal(0, string.Compare(String.Empty, result));
+#else
+            Assert.Equal(String.Empty, result);
+#endif
+        }
+
+        #endregion
+
+        #region GetFirstCustomAttribute ^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the first custom attribute throws argument null exception when member is null.
+        /// </summary>
+        [Fact]
+        public void GetFirstCustomAttribute_ThrowsArgumentNullException_WhenMemberIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => PropertyGridHelpers.Support.Support.GetFirstCustomAttribute<AutoCompleteSetupAttribute>(null));
+
+        /// <summary>
+        /// Gets the first custom attribute returns attribute when present.
+        /// </summary>
+        [Fact]
+        public void GetFirstCustomAttribute_ReturnsAttribute_WhenPresent()
+        {
+            var member = typeof(TestAttributeTarget).GetProperty(nameof(TestAttributeTarget.WithAttribute));
+
+            var result = PropertyGridHelpers.Support.Support.GetFirstCustomAttribute<AutoCompleteSetupAttribute>(member);
+
+            Assert.NotNull(result);
+            Assert.Equal(PropertyGridHelpers.Attributes.AutoCompleteSetupAttribute.SourceMode.Values, result.Mode);
+#if NET5_0_OR_GREATER
+            Assert.Equal(["A", "B"], result.Values);
+#else
+            Assert.Equal(new[] { "A", "B" }, result.Values);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the first custom attribute returns null when attribute not present.
+        /// </summary>
+        [Fact]
+        public void GetFirstCustomAttribute_ReturnsNull_WhenAttributeNotPresent()
+        {
+            var member = typeof(TestAttributeTarget).GetProperty(nameof(TestAttributeTarget.WithoutAttribute));
+
+            var result = PropertyGridHelpers.Support.Support.GetFirstCustomAttribute<AutoCompleteSetupAttribute>(member);
+
+            Assert.Null(result);
+        }
+
+        #endregion
+
+        #region GetPropertyInfo Tests ^^^^^^^^^^^^^^^^^^^^^
+
+        /// <summary>
+        /// Gets the property information throws argument null when context is null.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsArgumentNull_WhenContextIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(null));
+
+        /// <summary>
+        /// Gets the property information throws argument exception when property descriptor is null.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsArgumentException_WhenPropertyDescriptorIsNull()
+        {
+            var context = new CustomTypeDescriptorContext(null, new TestClass());
+
+            var ex = Assert.Throws<ArgumentException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
+            Assert.Contains("PropertyDescriptor", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the property information throws invalid operation when property not found.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ThrowsInvalidOperation_WhenPropertyNotFound()
+        {
+            var fakeDescriptor = TypeDescriptor.CreateProperty(typeof(TestClass), "MissingProperty", typeof(string));
+            var context = new CustomTypeDescriptorContext(fakeDescriptor, new TestClass());
+
+            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
+            Assert.Contains("Property 'MissingProperty' not found", ex.Message);
+        }
+
+        /// <summary>
+        /// Gets the property information returns property information when property exists.
+        /// </summary>
+        [Fact]
+        public void GetPropertyInfo_ReturnsPropertyInfo_WhenPropertyExists()
+        {
+            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), nameof(TestClass.TestEnum));
+
+            var propInfo = PropertyGridHelpers.Support.Support.GetPropertyInfo(context);
+
+            Assert.NotNull(propInfo);
+#if NET35
+            Assert.Equal(0, string.Compare(nameof(TestClass.TestEnum), propInfo.Name));
+#else
+            Assert.Equal(nameof(TestClass.TestEnum), propInfo.Name);
+#endif
+        }
+
+        #endregion
 
         #region GetResourcesNames Tests ^^^^^^^^^^^^^^^^^^^
 
@@ -281,180 +594,6 @@ namespace PropertyGridHelpersTest.net90.Support
 
         #endregion
 
-        #region GetFileExtension Tests ^^^^^^^^^^^^^^^^^^^^
-
-        /// <summary>
-        /// Gets the file extension should return file extension.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_ShouldReturnFileExtension()
-        {
-            // Arrange
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithImage)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare("jpg - jpeg file", fileExtension));
-#else
-            Assert.Equal("jpg - jpeg file", fileExtension);
-#endif
-        }
-
-        /// <summary>
-        /// Gets the file extension int property should return file extension.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_IntProperty_ShouldReturnFileExtension()
-        {
-            // Arrange
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithInt)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare(string.Empty, fileExtension));
-#else
-            Assert.Equal(string.Empty, fileExtension);
-#endif
-        }
-
-        /// <summary>
-        /// Gets the file extension should return file extension.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_StringPropertyShouldReturnFileExtension()
-        {
-            // Arrange
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithBitmapImage)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare("jpg", fileExtension));
-#else
-            Assert.Equal("jpg", fileExtension);
-#endif
-        }
-
-        /// <summary>
-        /// Gets the file extension should return file extension.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_ExceptionForPropertyReferencingInvalidProperty()
-        {
-            // Arrange
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithResource)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetFileExtension(context));
-            // Assert
-
-            Assert.Contains("Property 'invalidPropertName' not found on type 'PropertyGridHelpersTest.", ex.Message);
-            Output(ex.Message);
-        }
-
-        /// <summary>
-        /// Gets the file extension should return file extension.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_ExceptionForPropertyReferencingPrivateProperty()
-        {
-            // Arrange
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithPrivateProperty)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetFileExtension(context));
-            // Assert
-            Assert.Contains("Property 'PrivateImageFileExtension' on type 'PropertyGridHelpersTest.", ex.Message);
-            Output(ex.Message);
-        }
-
-        /// <summary>
-        /// Gets the file extension enum with custom enum text should return enum text.
-        /// </summary>
-        /// <param name="testExtension">The test extension.</param>
-        /// <param name="expectedValue">The expected value.</param>
-        [Theory]
-        [InlineData(ImageFileExtension.jpg, "jpg - jpeg file")]
-        [InlineData(ImageFileExtension.png, "png")]
-        [InlineData(ImageFileExtension.None, "")]
-        public void GetFileExtension_EnumWithCustomEnumText_ShouldReturnEnumText(
-            ImageFileExtension testExtension,
-            string expectedValue)
-        {
-            // Arrange
-            ImageFileExtension = testExtension;
-
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var fileExtension = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare(expectedValue, fileExtension));
-#else
-            Assert.Equal(expectedValue, fileExtension);
-#endif
-            Output(fileExtension);
-        }
-
-        /// <summary>
-        /// Gets the file extension should return empty string when enum property is not enum instance.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNotEnumInstance()
-        {
-            // Arrange
-            ImageFileExtension = ImageFileExtension.png;
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(TestItemWithEnum)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare(ImageFileExtension.ToString(), result));
-#else
-            Assert.Equal(ImageFileExtension.ToString(), result);
-#endif
-        }
-
-        /// <summary>
-        /// Gets the file extension should return empty string when enum property is null.
-        /// </summary>
-        [Fact]
-        public void GetFileExtension_ShouldReturnEmptyString_WhenEnumPropertyIsNull()
-        {
-            // Arrange
-            NullableImageFileExtension = null;
-            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(NullableTestItemWithEnum)];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
-
-            // Act
-            var result = PropertyGridHelpers.Support.Support.GetFileExtension(context);
-
-            // Assert
-#if NET35
-            Assert.Equal(0, string.Compare(String.Empty, result));
-#else
-            Assert.Equal(String.Empty, result);
-#endif
-        }
-
-        #endregion
-
         #region GetResourceString Tests ^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
@@ -541,60 +680,6 @@ namespace PropertyGridHelpersTest.net90.Support
 
         #endregion
 
-        #region GetPropertyInfo Tests ^^^^^^^^^^^^^^^^^^^^^
-
-        /// <summary>
-        /// Gets the property information throws argument null when context is null.
-        /// </summary>
-        [Fact]
-        public void GetPropertyInfo_ThrowsArgumentNull_WhenContextIsNull() =>
-            Assert.Throws<ArgumentNullException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(null));
-
-        /// <summary>
-        /// Gets the property information throws argument exception when property descriptor is null.
-        /// </summary>
-        [Fact]
-        public void GetPropertyInfo_ThrowsArgumentException_WhenPropertyDescriptorIsNull()
-        {
-            var context = new CustomTypeDescriptorContext(null, new TestClass());
-
-            var ex = Assert.Throws<ArgumentException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
-            Assert.Contains("PropertyDescriptor", ex.Message);
-        }
-
-        /// <summary>
-        /// Gets the property information throws invalid operation when property not found.
-        /// </summary>
-        [Fact]
-        public void GetPropertyInfo_ThrowsInvalidOperation_WhenPropertyNotFound()
-        {
-            var fakeDescriptor = TypeDescriptor.CreateProperty(typeof(TestClass), "MissingProperty", typeof(string));
-            var context = new CustomTypeDescriptorContext(fakeDescriptor, new TestClass());
-
-            var ex = Assert.Throws<InvalidOperationException>(() => PropertyGridHelpers.Support.Support.GetPropertyInfo(context));
-            Assert.Contains("Property 'MissingProperty' not found", ex.Message);
-        }
-
-        /// <summary>
-        /// Gets the property information returns property information when property exists.
-        /// </summary>
-        [Fact]
-        public void GetPropertyInfo_ReturnsPropertyInfo_WhenPropertyExists()
-        {
-            var context = CustomTypeDescriptorContext.Create(typeof(TestClass), nameof(TestClass.TestEnum));
-
-            var propInfo = PropertyGridHelpers.Support.Support.GetPropertyInfo(context);
-
-            Assert.NotNull(propInfo);
-#if NET35
-            Assert.Equal(0, string.Compare(nameof(TestClass.TestEnum), propInfo.Name));
-#else
-            Assert.Equal(nameof(TestClass.TestEnum), propInfo.Name);
-#endif
-        }
-
-        #endregion
-
         #region Test objects ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
@@ -609,6 +694,35 @@ namespace PropertyGridHelpersTest.net90.Support
             /// The test enum.
             /// </value>
             public TestEnum TestEnum { get; set; } = TestEnum.ItemWithImage;
+        }
+
+        /// <summary>
+        /// Test attribute target class for testing
+        /// </summary>
+        private class TestAttributeTarget
+        {
+            /// <summary>
+            /// Gets or sets the with attribute.
+            /// </summary>
+            /// <value>
+            /// The with attribute.
+            /// </value>
+            [AutoCompleteSetup("A", "B")]
+            public string WithAttribute
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the without attribute.
+            /// </summary>
+            /// <value>
+            /// The without attribute.
+            /// </value>
+            public string WithoutAttribute
+            {
+                get; set;
+            }
         }
 
         /// <summary>

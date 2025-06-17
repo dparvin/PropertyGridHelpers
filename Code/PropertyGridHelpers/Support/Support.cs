@@ -417,12 +417,29 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Gets the enum field.
+        /// Retrieves the <see cref="FieldInfo"/> for a specific enum value.
         /// </summary>
-        /// <param name="value">The enum element value.</param>
-        /// <returns></returns>
-        public static FieldInfo GetEnumField(Enum value) => value.GetType()
-            .GetField(Enum.GetName(value.GetType(), value));
+        /// <param name="value">The enum value to inspect.</param>
+        /// <returns>
+        /// The <see cref="FieldInfo"/> corresponding to the specified enum value, or <c>null</c>
+        /// if the value does not match a defined member of the enum type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="value"/> is <c>null</c>.
+        /// </exception>
+        public static FieldInfo GetEnumField(Enum value)
+        {
+#if NET5_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(value);
+#else
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+#endif
+
+            var type = value.GetType();
+            var name = Enum.GetName(type, value);
+            return name == null ? null : type.GetField(name);
+        }
 
         /// <summary>
         /// Retrieves the <see cref="PropertyInfo"/> for the property described by the specified <see
