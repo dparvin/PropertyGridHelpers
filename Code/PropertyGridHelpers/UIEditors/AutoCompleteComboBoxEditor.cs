@@ -96,15 +96,17 @@ namespace PropertyGridHelpers.UIEditors
 
                         object[] items;
 
-                        if (Converter != null && sourceAttr.ProviderType.IsEnum)
+                        var providerType = sourceAttr.ProviderType ?? context.PropertyDescriptor.PropertyType;
+
+                        if (Converter != null && providerType.IsEnum)
                         {
 #if NET5_0_OR_GREATER
-                            items = [.. Enum.GetValues(sourceAttr.ProviderType)
+                            items = [.. Enum.GetValues(providerType)
                                 .Cast<object>()
                                 .Select(e => new ItemWrapper<object>(
                                     Converter.ConvertToString(context, CultureInfo.CurrentCulture, e), e))];
 #else
-                            items = Enum.GetValues(sourceAttr.ProviderType)
+                            items = Enum.GetValues(providerType)
                                 .Cast<object>()
                                 .Select(e => new ItemWrapper<object>(
                                     Converter.ConvertToString(context, CultureInfo.CurrentCulture, e), e))
@@ -112,9 +114,7 @@ namespace PropertyGridHelpers.UIEditors
 #endif
                         }
                         else
-                        {
                             items = ResolveValues(sourceAttr, context.PropertyDescriptor);
-                        }
 
 #if NET5_0_OR_GREATER
                         if (items.Length > 0 && items[0] is ItemWrapper<object>)
@@ -143,6 +143,12 @@ namespace PropertyGridHelpers.UIEditors
             return base.EditValue(context, provider, value);
         }
 
+        /// <summary>
+        /// Resolves the values.
+        /// </summary>
+        /// <param name="setup">The setup.</param>
+        /// <param name="propDesc">The property desc.</param>
+        /// <returns></returns>
         private static string[] ResolveValues(AutoCompleteSetupAttribute setup, PropertyDescriptor propDesc)
         {
             // If the AutoCompleteSetupAttribute has Values set, use them directly
@@ -150,7 +156,7 @@ namespace PropertyGridHelpers.UIEditors
                 return setup.Values;
 
             // If the ProviderType is set, try to get the static string[] Values property
-            var type = setup.ProviderType ?? propDesc?.PropertyType;
+            var type = setup.ProviderType ?? propDesc.PropertyType;
             if (type == null)
 #if NET35 || NET452
                 return new string[0];
@@ -159,7 +165,10 @@ namespace PropertyGridHelpers.UIEditors
 #else
                 return Array.Empty<string>();
 #endif
-            // 
+
+            if (type.IsEnum)
+                return Enum.GetNames(type);
+
             const string propName = "Values";
             var prop = type.GetProperty(propName, BindingFlags.Public | BindingFlags.Static);
             if (prop != null && prop.PropertyType == typeof(string[]))
@@ -201,9 +210,8 @@ namespace PropertyGridHelpers.UIEditors
         /// </exception>
         private static void ValidateSetup(AutoCompleteSetupAttribute setup, ITypeDescriptorContext context)
         {
-            if (setup == null)
-                throw new ArgumentNullException(nameof(setup), "AutoCompleteSetupAttribute must be assigned to the property where AutoCompleteComboBoxEditor is used.");
-
+            // If somehow setup is null, add the code in here to throw an exception.  Currently this routine 
+            // is called after a check to see if the setup is null, so this should never happen.
             if (setup.AutoCompleteSource == AutoCompleteSource.CustomSource)
                 switch (setup.Mode)
                 {
@@ -213,13 +221,11 @@ namespace PropertyGridHelpers.UIEditors
                         break;
 
                     case AutoCompleteSetupAttribute.SourceMode.Provider:
-                        var providerType = setup.ProviderType ?? context?.PropertyDescriptor?.PropertyType
-                            ?? throw new InvalidOperationException("ProviderType could not be determined.");
-
+                        var providerType = setup.ProviderType ?? context.PropertyDescriptor.PropertyType;
                         if (providerType.IsEnum)
                         {
                             var names = Enum.GetNames(providerType);
-                            if (names == null || names.Length == 0)
+                            if (names.Length == 0)
                                 throw new InvalidOperationException($"The enum '{providerType.Name}' does not define any members.");
                         }
                         else
@@ -234,7 +240,7 @@ namespace PropertyGridHelpers.UIEditors
 #if NET35
                             var values = (string[])prop.GetValue(null, null);
 #else
-                var values = (string[])prop.GetValue(null);
+                            var values = (string[])prop.GetValue(null);
 #endif
                             if (values == null || values.Length == 0)
                                 throw new InvalidOperationException($"The '{propName}' property on '{providerType.FullName}' returned no items.");

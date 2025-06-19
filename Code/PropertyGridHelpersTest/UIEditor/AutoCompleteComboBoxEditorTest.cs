@@ -12,6 +12,7 @@ using System.Windows.Forms.Design;
 using Xunit;
 
 #if NET35
+using Xunit.Extensions;
 #else
 using Xunit.Abstractions;
 #endif
@@ -72,6 +73,13 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         #region Test classes ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
+        /// Test Enum with no values.
+        /// </summary>
+        public enum EmptyEnum
+        {
+        }
+
+        /// <summary>
         /// Test Enum
         /// </summary>
         public enum TestEnum
@@ -86,6 +94,82 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             /// </summary>
             [EnumImage]
             Test2
+        }
+
+        /// <summary>
+        /// Test class with no attribute.
+        /// </summary>
+        public class NoValuesProperty
+        {
+        }
+
+        /// <summary>
+        /// Test class with no attribute.
+        /// </summary>
+        public class InvalidValuesType
+        {
+            /// <summary>
+            /// Gets the values.
+            /// </summary>
+            /// <value>
+            /// The values.
+            /// </value>
+            public static int[] Values =>
+#if NET5_0_OR_GREATER
+                [1, 2, 3];
+#else
+                new[] { 1, 2, 3 };
+#endif
+        }
+
+        /// <summary>
+        /// Test class with no attribute that returns null values.
+        /// </summary>
+        public class ValuesReturnsNull
+        {
+            /// <summary>
+            /// Gets the values.
+            /// </summary>
+            /// <value>
+            /// The values.
+            /// </value>
+            public static string[] Values => null;
+        }
+
+        /// <summary>
+        /// Test class with values provider.
+        /// </summary>
+        public class ProviderWithValues
+        {
+            /// <summary>
+            /// Gets the values.
+            /// </summary>
+            /// <value>
+            /// The values.
+            /// </value>
+#if NET5_0_OR_GREATER
+            public static string[] Values => ["Red", "Green", "Blue"];
+#else
+            public static string[] Values => new[] { "Red", "Green", "Blue" };
+#endif
+        }
+
+        /// <summary>
+        /// Test class with no values provider.
+        /// </summary>
+        public class ProviderWithNoValues
+        {
+            /// <summary>
+            /// Gets the values.
+            /// </summary>
+            /// <value>
+            /// The values.
+            /// </value>
+#if NET5_0_OR_GREATER
+            public static string[] Values => [];
+#else
+            public static string[] Values => new string[0];
+#endif
         }
 
         /// <summary>
@@ -142,6 +226,104 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
             [AutoCompleteSetup(AutoCompleteSource.CustomSource, AutoCompleteMode.SuggestAppend, null)]
             public string PropertyWithAttributeNullValues
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the provider type null cannot infer.
+            /// </summary>
+            /// <value>
+            /// The provider type null cannot infer.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(providerType: null)]
+            public object ProviderTypeNullCannotInfer
+            {
+                get; set;
+            }
+
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(providerType: null)] // sets Mode = Provider, and ProviderType = null
+            public TestEnum PropertyUsingInferredProvider
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the empty type of the enum.
+            /// </summary>
+            /// <value>
+            /// The empty type of the enum.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(typeof(EmptyEnum))]
+            public EmptyEnum EmptyEnumType
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the provider missing values property.
+            /// </summary>
+            /// <value>
+            /// The provider missing values property.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(typeof(NoValuesProperty))]
+            public string ProviderMissingValuesProperty
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the type of the provider with invalid values.
+            /// </summary>
+            /// <value>
+            /// The type of the provider with invalid values.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(providerType: typeof(InvalidValuesType))]
+            public string ProviderWithInvalidValuesType
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the provider values returns null.
+            /// </summary>
+            /// <value>
+            /// The provider values returns null.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(providerType: typeof(ValuesReturnsNull))]
+            public string ProviderValuesReturnsNull
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the property with empty values.
+            /// </summary>
+            /// <value>
+            /// The property with empty values.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(typeof(ProviderWithNoValues))]
+            public string PropertyWithEmptyValues
+            {
+                get; set;
+            }
+
+            /// <summary>
+            /// Gets or sets the property with valid provider values.
+            /// </summary>
+            /// <value>
+            /// The property with valid provider values.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
+            [AutoCompleteSetup(typeof(ProviderWithValues))]
+            public string PropertyWithValidProviderValues
             {
                 get; set;
             }
@@ -298,6 +480,106 @@ namespace PropertyGridHelpersTest.net90.UIEditor
                 _ = Assert.IsType<EnumTextConverter<TestEnum>>(converter);
 
                 Output("AutoCompleteComboBoxEditor<T> assigns the correct EnumTextConverter<T>.");
+            });
+
+        /// <summary>
+        /// Edits the value throws when setup attribute is missing.
+        /// </summary>
+        [Theory]
+        [InlineData(nameof(TestClassWithAttribute.EmptyEnumType), "does not define any members")]
+        [InlineData(nameof(TestClassWithAttribute.ProviderMissingValuesProperty), "must define a public static property named")]
+        [InlineData(nameof(TestClassWithAttribute.ProviderWithInvalidValuesType), "must be of type string[]")]
+        [InlineData(nameof(TestClassWithAttribute.ProviderValuesReturnsNull), "returned no items")]
+        public void EditValue_Throws_ProviderSetupErrors(string propertyName, string expectedMessage) =>
+            StaTestHelper.Run(() =>
+            {
+                var context = CustomTypeDescriptorContext.Create(typeof(TestClassWithAttribute), propertyName);
+                var editor = new AutoCompleteComboBoxEditor();
+
+                var ex = Assert.Throws<InvalidOperationException>(() =>
+                    editor.EditValue(context, new CustomServiceProvider(), null));
+
+                Output($"Exception Message Received: {ex.Message}");
+                Assert.Contains(expectedMessage, ex.Message);
+            });
+
+        /// <summary>
+        /// Edits the value uses property type when provider type is null.
+        /// </summary>
+        [Fact]
+        public void EditValue_UsesPropertyType_WhenProviderTypeIsNull() =>
+            StaTestHelper.Run(() =>
+            {
+                var context = CustomTypeDescriptorContext.Create(
+                    typeof(TestClassWithAttribute),
+                    nameof(TestClassWithAttribute.PropertyUsingInferredProvider));
+
+                var editor = new AutoCompleteComboBoxEditor();
+                var provider = new CustomServiceProvider(); // attribute comes from the property, so nothing to inject
+                provider.AddService(typeof(IWindowsFormsEditorService), new FakeEditorService());
+                var result = editor.EditValue(context, provider, TestEnum.Test1);
+
+                Assert.NotNull(result); // Success path proves fallback is used
+            });
+
+        /// <summary>
+        /// Edits the value throws when provider values returns null or empty.
+        /// </summary>
+        [Fact]
+        public void EditValue_Throws_WhenProviderValuesReturnsNull() =>
+            StaTestHelper.Run(() =>
+            {
+                var context = CustomTypeDescriptorContext.Create(
+                    typeof(TestClassWithAttribute),
+                    nameof(TestClassWithAttribute.ProviderValuesReturnsNull));
+
+                var editor = new AutoCompleteComboBoxEditor();
+                var provider = new CustomServiceProvider();
+
+                var ex = Assert.Throws<InvalidOperationException>(() =>
+                    editor.EditValue(context, provider, null));
+
+                Assert.Contains("returned no items", ex.Message);
+            });
+
+        /// <summary>
+        /// Edits the value throws when provider values returns empty.
+        /// </summary>
+        [Fact]
+        public void EditValue_Throws_WhenProviderValuesReturnsEmpty() =>
+            StaTestHelper.Run(() =>
+            {
+                var context = CustomTypeDescriptorContext.Create(
+                    typeof(TestClassWithAttribute),
+                    nameof(TestClassWithAttribute.PropertyWithEmptyValues));
+
+                var editor = new AutoCompleteComboBoxEditor();
+                var provider = new CustomServiceProvider();
+
+                var ex = Assert.Throws<InvalidOperationException>(() =>
+                    editor.EditValue(context, provider, null));
+
+                Assert.Contains("returned no items", ex.Message);
+            });
+
+        /// <summary>
+        /// Edits the value uses values when provider returns non empty array.
+        /// </summary>
+        [Fact]
+        public void EditValue_UsesValues_WhenProviderReturnsNonEmptyArray() =>
+            StaTestHelper.Run(() =>
+            {
+                var context = CustomTypeDescriptorContext.Create(
+                    typeof(TestClassWithAttribute),
+                    nameof(TestClassWithAttribute.PropertyWithValidProviderValues));
+
+                var editor = new AutoCompleteComboBoxEditor();
+                var provider = new CustomServiceProvider();
+                provider.AddService(typeof(IWindowsFormsEditorService), new FakeEditorService());
+
+                var result = editor.EditValue(context, provider, null);
+
+                Assert.NotNull(result);
             });
 
         #endregion
