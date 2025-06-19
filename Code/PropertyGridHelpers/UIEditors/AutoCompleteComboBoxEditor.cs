@@ -157,14 +157,6 @@ namespace PropertyGridHelpers.UIEditors
 
             // If the ProviderType is set, try to get the static string[] Values property
             var type = setup.ProviderType ?? propDesc.PropertyType;
-            if (type == null)
-#if NET35 || NET452
-                return new string[0];
-#elif NET5_0_OR_GREATER
-                return [];
-#else
-                return Array.Empty<string>();
-#endif
 
             if (type.IsEnum)
                 return Enum.GetNames(type);
