@@ -163,21 +163,10 @@ namespace PropertyGridHelpers.UIEditors
 
             const string propName = "Values";
             var prop = type.GetProperty(propName, BindingFlags.Public | BindingFlags.Static);
-            if (prop != null && prop.PropertyType == typeof(string[]))
-            {
 #if NET35
-                return (string[])prop.GetValue(null, null);
+            return (string[])prop.GetValue(null, null);
 #else
-                return (string[])prop.GetValue(null);
-#endif
-            }
-
-#if NET35 || NET452
-            return new string[0];
-#elif NET5_0_OR_GREATER
-            return [];
-#else
-            return Array.Empty<string>();
+            return (string[])prop.GetValue(null);
 #endif
         }
 
