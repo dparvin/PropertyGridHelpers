@@ -327,6 +327,19 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             {
                 get; set;
             }
+
+            /// <summary>
+            /// Gets or sets the enum with converter.
+            /// </summary>
+            /// <value>
+            /// The enum with converter.
+            /// </value>
+            [Editor(typeof(AutoCompleteComboBoxEditor<EnumTextConverter<TestEnum>>), typeof(UITypeEditor))]
+            [AutoCompleteSetup(typeof(TestEnum))]
+            public TestEnum EnumWithConverter
+            {
+                get; set;
+            }
         }
 
         #endregion
@@ -471,13 +484,21 @@ namespace PropertyGridHelpersTest.net90.UIEditor
             {
                 // Arrange
                 var editor = new AutoCompleteComboBoxEditor<EnumTextConverter<TestEnum>>();
+                var context = CustomTypeDescriptorContext.Create(
+                        typeof(TestClassWithAttribute),
+                        nameof(TestClassWithAttribute.EnumWithConverter)); // <-- Add this property
+
+                var provider = new CustomServiceProvider();
+                provider.AddService(typeof(IWindowsFormsEditorService), new FakeEditorService());
 
                 // Act
                 var converter = editor.Converter;
+                var result = editor.EditValue(context, provider, TestEnum.Test1);
 
                 // Assert
                 Assert.NotNull(converter);
                 _ = Assert.IsType<EnumTextConverter<TestEnum>>(converter);
+                Assert.NotNull(result); // covers the return path from EditValue
 
                 Output("AutoCompleteComboBoxEditor<T> assigns the correct EnumTextConverter<T>.");
             });

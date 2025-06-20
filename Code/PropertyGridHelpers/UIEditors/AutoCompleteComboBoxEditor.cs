@@ -117,23 +117,20 @@ namespace PropertyGridHelpers.UIEditors
                             items = ResolveValues(sourceAttr, context.PropertyDescriptor);
 
 #if NET5_0_OR_GREATER
-                        if (items.Length > 0 && items[0] is ItemWrapper<object>)
+                        if (items[0] is ItemWrapper<object>)
                             DropDownControl.AutoCompleteCustomSource.AddRange(
                                 [.. items.Cast<ItemWrapper<object>>().Select(i => i.DisplayText)]);
                         else
                             DropDownControl.AutoCompleteCustomSource.AddRange(
                                 [.. items.Select(i => i.ToString())]);
 #else
-                        if (items.Length > 0 && items[0] is ItemWrapper<object>)
+                        if (items[0] is ItemWrapper<object>)
                             DropDownControl.AutoCompleteCustomSource.AddRange(
                                 items.Cast<ItemWrapper<object>>().Select(i => i.DisplayText).ToArray());
                         else
                             DropDownControl.AutoCompleteCustomSource.AddRange(
                                 items.Select(i => i.ToString()).ToArray());
 #endif
-                        if (items.Length == 0)
-                            // If no items are provided, throw an exception
-                            throw new DataException("At least one auto-complete value must be provided with an AutoCompleteSetupAttribute.");
 
                         DropDownControl.Items.AddRange(items);
                     }
