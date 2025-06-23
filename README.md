@@ -5,7 +5,7 @@ and utilities to facilitate property manipulation within Windows Forms applicati
 
 ## Status
 [![Coverage](https://raw.githubusercontent.com/dparvin/PropertyGridHelpers.CodeCoverage/main/Badges/badge_combined.svg)](https://dparvin.github.io/PropertyGridHelpers/)
-
+[![Build status](https://dev.azure.com/addtracker/Projects/_apis/build/status/PropertyGridHelpers%20Build)](https://dev.azure.com/addtracker/Projects/_build/latest?definitionId=1)
 
 ## Features
 
