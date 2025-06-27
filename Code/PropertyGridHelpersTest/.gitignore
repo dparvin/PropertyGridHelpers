@@ -2,7 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/bin
+/obj
+/*.user
+/.cr
 /.vs
-*.user
-/Code/Sandcastle/*.log
-/docs-md
+/packages
+/bin
+/obj

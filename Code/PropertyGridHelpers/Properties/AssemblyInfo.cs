@@ -16,16 +16,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Property Grid Helper objects")]
 [assembly: AssemblyProduct("Property Grid Helpers")]
 [assembly: AssemblyTitle("PropertyGridHelpers")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
-[assembly: AssemblyVersion("1.0.0.1")]
 [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 #if NET8_0_OR_GREATER
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
-#endif
-
-// Conditionally set AssemblyInformationalVersion for .NET versions that support it
-#if !NET35
-[assembly: AssemblyInformationalVersion("1.0.0+fbf3d0b3a24694ca8a461a71c6045e2d0cee3558")]
 #endif
 
 // Setting ComVisible to false makes the types in this assembly not visible

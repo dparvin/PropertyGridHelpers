@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\SharedFrameworks.targets" />
+  <Import Project="..\SharedFrameworks.props" />
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -17,8 +17,6 @@
     <Title>PropertyGridHelpers</Title>
     <Description>Property Grid Helper objects</Description>
     <Product>Property Grid Helpers</Product>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -142,5 +140,9 @@
 
   <ItemGroup>
     <None Include="C:\Projects\Repos\dparvin\PropertyGridHelpers\Code\coverlet.runsettings" Link="coverlet.runsettings" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Versioning.Common" Version="1.0.15" />
   </ItemGroup>
 </Project>

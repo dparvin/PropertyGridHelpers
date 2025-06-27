@@ -1,0 +1,41 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Define shared frameworks -->
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(UseReducedFrameworks)' != 'true'">net35;net452;net462;net472;net481;net8.0-windows10.0.17763.0;net9.0-windows10.0.17763.0;</TargetFrameworks>
+    <TargetFrameworks Condition="'$(UseReducedFrameworks)' == 'true'">net452;net462;net472;net481;net8.0-windows10.0.17763.0;net9.0-windows10.0.17763.0;</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Fallback values for local development only; CI can override via /p:BaseVersion /p:BuildMetadata -->
+  <PropertyGroup Condition="'$(BaseVersion)' == ''">
+    <BaseVersion>1.0.1</BaseVersion>
+    <!-- fallback default -->
+  </PropertyGroup>
+
+  <!-- Set BuildMetadata if not already defined -->
+  <PropertyGroup Condition="'$(BuildMetadata)' == ''">
+    <BuildMetadata>local</BuildMetadata>
+  </PropertyGroup>
+
+  <!-- Set BuildIdentifier if not already defined -->
+  <PropertyGroup Condition="'$(BuildIdentifier)' == ''">
+    <BuildIdentifier></BuildIdentifier>
+  </PropertyGroup>
+
+  <!-- Set VersionRevision if not already defined -->
+  <PropertyGroup>
+    <VersionRevision Condition="'$(VersionRevision)' == ''"></VersionRevision>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LogVersionInfo Condition="'$(LogVersionInfo)' == ''">true</LogVersionInfo>
+  </PropertyGroup>
+
+  <!-- Define a custom target that logs from the SharedFrameworks.props file -->
+  <Target Name="SharedFrameworks-LogFromSharedFrameworks" BeforeTargets="PrepareForBuild" Condition="'$(LogVersionInfo)' == 'true'">
+    <Message Importance="High" Text="📦 SharedFrameworks.props has been imported and evaluated." />
+    <Message Importance="High" Text="  ➤ BaseVersion: $(BaseVersion)" />
+    <Message Importance="High" Text="  ➤ BuildMetadata: $(BuildMetadata)" Condition="'$(BuildMetadata)' != ''" />
+    <Message Importance="High" Text="  ➤ BuildIdentifier: $(BuildIdentifier)" Condition="'$(BuildIdentifier)' != ''" />
+  </Target>
+
+</Project>

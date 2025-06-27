@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\SharedFrameworks.targets" />
+  <Import Project="..\SharedFrameworks.props" />
 
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -14,8 +14,6 @@
     <IsPackable>false</IsPackable>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
@@ -52,6 +50,7 @@
     <PackageReference Include="EWSoftware.SHFB.NETCore" Version="4.5.1.2" />
     <PackageReference Include="EWSoftware.SHFB.NETFramework" Version="4.8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Versioning.Common" Version="1.0.15" />
     <PackageReference Include="xunit.analyzers" Version="1.21.0" />
   </ItemGroup>
 
@@ -201,7 +200,6 @@
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
-    <PackageReference Include="ReportGenerator.Core" Version="5.4.7" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -241,7 +239,6 @@
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
-    <PackageReference Include="ReportGenerator.Core" Version="5.4.7" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

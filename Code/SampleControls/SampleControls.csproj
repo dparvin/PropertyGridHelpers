@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\SharedFrameworks.targets" />
-  <Import Project="..\CopyLocalAllDependencies.targets"/>
+  <Import Project="..\SharedFrameworks.props" />
+  <Import Project="..\CopyLocalAllDependencies.targets" />
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
@@ -22,8 +22,6 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
@@ -76,6 +74,10 @@
     <EmbeddedResource Include="Resources\Sad.gif" />
     <EmbeddedResource Include="Resources\Sad.jpg" />
     <EmbeddedResource Include="Resources\Sad.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Versioning.Common" Version="1.0.15" />
   </ItemGroup>
 
   <ItemGroup>

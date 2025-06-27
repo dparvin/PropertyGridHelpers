@@ -2,7 +2,7 @@
   <PropertyGroup>
     <UseReducedFrameworks>true</UseReducedFrameworks>
   </PropertyGroup>
-  <Import Project="..\SharedFrameworks.targets" />
+  <Import Project="..\SharedFrameworks.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -21,8 +21,6 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
@@ -52,6 +50,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Versioning.Common" Version="1.0.15" />
     <PackageReference Include="XmlDocMarkdown" Version="2.9.0" />
   </ItemGroup>
 
@@ -82,5 +81,5 @@
   <Import Project="..\CopyLocalAllDependencies.targets"/>
   <Import Project="..\CopyEverythingUseful.targets"/>
 -->
-  <Import Project="..\CopyRuntimeDependencies.targets"/>
+  <Import Project="..\CopyRuntimeDependencies.targets" />
 </Project>

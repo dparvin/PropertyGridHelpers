@@ -14,8 +14,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PropertyGridHelpers.DocStub")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
-[assembly: AssemblyVersion("1.0.0.1")]
 [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 #if NET8_0_OR_GREATER
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]

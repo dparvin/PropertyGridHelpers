@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\SharedFrameworks.targets" />
-  <Import Project="..\CopyLocalAllDependencies.targets"/>
+  <Import Project="..\SharedFrameworks.props" />
+  <Import Project="..\CopyLocalAllDependencies.targets" />
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
@@ -21,8 +21,6 @@
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <ApplicationIcon>testtube.ico</ApplicationIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
@@ -60,6 +58,10 @@
 
   <ItemGroup>
     <Content Include="testtube.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Versioning.Common" Version="1.0.15" />
   </ItemGroup>
 
   <ItemGroup>
