@@ -51,7 +51,7 @@
     <PackageReference Include="EWSoftware.SHFB.NETFramework" Version="4.8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Versioning.Common" Version="1.0.15" />
-    <PackageReference Include="xunit.analyzers" Version="1.21.0" />
+    <PackageReference Include="xunit.analyzers" Version="1.22.0" />
   </ItemGroup>
 
   <ItemGroup Condition="!('$(TargetFramework)'=='net8.0-windows10.0.17763.0' OR '$(TargetFramework)'=='net9.0-windows10.0.17763.0')">
@@ -106,15 +106,15 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <PackageReference Include="EWSoftware.SandcastleBuilder.Utils" Version="2025.3.22" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.5" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Metadata" Version="9.0.5" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.6" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -136,15 +136,15 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <PackageReference Include="EWSoftware.SandcastleBuilder.Utils" Version="2025.3.22" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.5" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Metadata" Version="9.0.5" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.6" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -158,7 +158,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit.runner.utility" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -166,15 +166,15 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net481'">
     <PackageReference Include="EWSoftware.SandcastleBuilder.Utils" Version="2025.3.22" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.5" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Metadata" Version="9.0.5" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.6" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -188,7 +188,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit.runner.utility" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -196,9 +196,9 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.17763.0'">
     <PackageReference Include="EWSoftware.SandcastleBuilder.Utils" Version="2025.3.22" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
@@ -209,10 +209,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.5" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Metadata" Version="9.0.5" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.6" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -226,8 +226,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit.runner.utility" Version="2.9.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -235,9 +235,9 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.17763.0'">
     <PackageReference Include="EWSoftware.SandcastleBuilder.Utils" Version="2025.3.22" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.13.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.13.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.14.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
@@ -248,10 +248,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.5" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
     <PackageReference Include="System.Memory" Version="4.6.3" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Metadata" Version="9.0.5" />
+    <PackageReference Include="System.Reflection.Metadata" Version="9.0.6" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -265,8 +265,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit.runner.utility" Version="2.9.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
