@@ -49,10 +49,12 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagCheckedListBox" /> class.
         /// </summary>
-        public FlagCheckedListBox() => InitializeComponent();
+        public FlagCheckedListBox() =>
+            InitializeComponent();
 
         /// <summary>
-        /// Event raised when the user indicates they are done editing.
+        /// Occurs when the user has finished editing the selection
+        /// and commits the current value.
         /// </summary>
         public event EventHandler ValueCommitted = delegate { };
 
@@ -67,33 +69,39 @@ namespace PropertyGridHelpers.Controls
         /// <summary>
         /// Initializes the component.
         /// </summary>
-        private void InitializeComponent() => CheckOnClick = true;
+        private void InitializeComponent() =>
+            CheckOnClick = true;
 
         #endregion
 
         /// <summary>
-        /// Adds the specified value.
+        /// Adds a new item to the checklist with the specified bitwise value and display caption.
         /// </summary>
-        /// <param name="v">The value.</param>
-        /// <param name="c">The caption.</param>
-        /// <returns></returns>
-        public FlagCheckedListBoxItem Add(int v, string c)
+        /// <param name="value">The bitwise integer value representing a flag.</param>
+        /// <param name="caption">The display text for the item.</param>
+        /// <returns>
+        /// A <see cref="FlagCheckedListBoxItem"/> representing the added item.
+        /// </returns>
+        public FlagCheckedListBoxItem Add(int value, string caption)
         {
-            var item = new FlagCheckedListBoxItem(v, c);
+            var item = new FlagCheckedListBoxItem(value, caption);
             _ = Items.Add(item);
             return item;
         }
 
         /// <summary>
-        /// Clears this instance.
+        /// Removes all items from the checklist and resets its state.
         /// </summary>
-        public void Clear() => Items.Clear();
+        public void Clear() =>
+            Items.Clear();
 
         /// <summary>
-        /// Adds the specified item.
+        /// Adds an existing <see cref="FlagCheckedListBoxItem"/> to the checklist.
         /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns></returns>
+        /// <param name="item">The item to add.</param>
+        /// <returns>
+        /// The added <see cref="FlagCheckedListBoxItem"/>.
+        /// </returns>
         public FlagCheckedListBoxItem Add(FlagCheckedListBoxItem item)
         {
             _ = Items.Add(item);
@@ -120,9 +128,11 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Checks/Unchecks items depending on the give bit value
+        /// Updates the check state of all items based on the provided bitwise value.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="value">
+        /// A bitwise integer representing the currently active flags.
+        /// </param>
         protected internal void UpdateCheckedItems(int value)
         {
             isUpdatingCheckStates = true;
@@ -148,10 +158,11 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Updates items in the CheckListBox
+        /// Updates the check states of items in response to a change in one item,
+        /// maintaining the consistency of the composite flag value.
         /// </summary>
-        /// <param name="composite">The item that was checked/unchecked</param>
-        /// <param name="cs">The check state of that item</param>
+        /// <param name="composite">The item that changed.</param>
+        /// <param name="cs">The new check state of that item.</param>
         protected internal void UpdateCheckedItems(
             FlagCheckedListBoxItem composite,
             CheckState cs)
@@ -188,11 +199,12 @@ namespace PropertyGridHelpers.Controls
 
         private bool isUpdatingCheckStates;
 
-        // Gets the current bit value corresponding to all checked items
         /// <summary>
-        /// Gets the current value.
+        /// Gets the composite integer value representing all currently checked flags.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// An <see cref="int"/> value encoding the combined flags of checked items.
+        /// </returns>
         public int GetCurrentValue()
         {
             var sum = 0;
@@ -208,11 +220,17 @@ namespace PropertyGridHelpers.Controls
             return sum;
         }
 
+        /// <summary>
+        /// The type of the enum currently bound to this control.
+        /// </summary>
         private Type enumType;
+        /// <summary>
+        /// The current enum value represented by the checked items.
+        /// </summary>
         private Enum enumValue;
 
         /// <summary>
-        /// Adds items to the CheckListBox based on the members of the enum
+        /// Populates the checklist with entries corresponding to each member of the bound enum type.
         /// </summary>
         private void FillEnumMembers()
         {
@@ -226,10 +244,12 @@ namespace PropertyGridHelpers.Controls
             }
         }
 
-        // Checks/unchecks items based on the current value of the enum variable
         /// <summary>
-        /// Applies the enum value.
+        /// Synchronizes the check state of items in the list to reflect the current <see cref="EnumValue"/>.
         /// </summary>
+        /// <remarks>
+        /// This ensures the visual checklist matches the current bitwise value.
+        /// </remarks>
         private void ApplyEnumValue()
         {
             var intVal = (int)Convert.ChangeType(enumValue, typeof(int), CultureInfo.CurrentCulture);
@@ -338,7 +358,8 @@ namespace PropertyGridHelpers.Controls
         }
 
         /// <summary>
-        /// Gets or sets the value to be edited.
+        /// Gets or sets the composite enum value represented by the checked items,
+        /// in a non-generic interface-friendly way.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public object Value

@@ -2,7 +2,6 @@
 using PropertyGridHelpers.Controls;
 using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
@@ -13,8 +12,8 @@ using System.Windows.Forms.Design;
 namespace PropertyGridHelpers.UIEditors
 {
     /// <summary>
-    /// Provides a <see cref="UITypeEditor"/> that displays an <see cref="AutoCompleteComboBox"/>
-    /// in a drop-down editor within the <see cref="PropertyGrid"/>.
+    /// Provides a <see cref="UITypeEditor"/> that shows an auto-complete-enabled drop-down list using an 
+    /// <see cref="AutoCompleteComboBox"/>, allowing quick selection of string values within a <see cref="PropertyGrid"/>.
     /// </summary>
     /// <remarks>
     /// This editor supports auto-complete behavior based on a configurable
@@ -27,6 +26,9 @@ namespace PropertyGridHelpers.UIEditors
     /// <item><description>From an enum's names</description></item>
     /// <item><description>From a public static <c>string[] Values</c> property on a class</description></item>
     /// </list>
+    /// 
+    /// When configured with an enum type, the editor displays the enum's names, and returns the
+    /// selected enum value rather than a string. Otherwise, the selected string is returned.
     /// </remarks>
     /// <example>
     /// Apply this editor to a string property like this:
@@ -51,26 +53,30 @@ namespace PropertyGridHelpers.UIEditors
         : DropDownVisualizer<AutoCompleteComboBox>
     {
         /// <summary>
-        /// Gets or sets the converter.
+        /// Gets or sets the <see cref="EnumConverter"/> used to convert between
+        /// the displayed text in the combo box and the corresponding enum value.
         /// </summary>
-        /// <value>
-        /// The converter.
-        /// </value>
+        /// <remarks>
+        /// This converter supports mapping from the display name to the actual enum constant,
+        /// ensuring that the editor returns the correct enum value even when the display text differs.
+        /// </remarks>
         public EnumConverter Converter
         {
             get; set;
         }
 
         /// <summary>
-        /// Displays the editor control in a dropdown and returns the updated
-        /// value after editing completes.
+        /// Displays an <see cref="AutoCompleteComboBox"/> editor in a dropdown and returns the
+        /// updated value after editing completes. Supports dynamic item lists and
+        /// enum mapping when configured.
         /// </summary>
         /// <param name="context">Provides context information about the design-time environment.</param>
         /// <param name="provider">A service provider that can provide an <see cref="IWindowsFormsEditorService"/>.</param>
         /// <param name="value">The current value of the property being edited.</param>
         /// <returns>
-        /// The edited value as returned by the control, or the original value
-        /// if editing is canceled or fails.
+        /// The edited value as returned by the control. This is typically a string,
+        /// but may be the corresponding enum value if the editor is configured with
+        /// an enum type. If editing is canceled or fails, returns the original value.
         /// </returns>
         public override object EditValue(
             ITypeDescriptorContext context,

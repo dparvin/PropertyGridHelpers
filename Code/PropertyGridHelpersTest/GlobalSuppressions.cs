@@ -90,6 +90,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.TypeDescriptionProviders")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.PropertyDescriptors")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:PropertyGridHelpersTest.net80.TypeDescriptors")]
+[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:PropertyGridHelpersTest.net80.Converters.TypeConverterTest.NoDefaultCtor.#ctor(System.String)")]
 #endif
 
 #if NET9_0

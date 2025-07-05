@@ -5,54 +5,57 @@ namespace PropertyGridHelpers.Attributes
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Specifies a localized text representation for an Enum field,
-    /// retrieving the display text from a resource file.
+    /// Specifies a localized text representation for an enum field or property,
+    /// retrieving its display text from a resource file at runtime.
     /// </summary>
-    /// <seealso cref="LocalizedTextAttribute" />
+    /// <param name="resourceKey">
+    /// The key identifying the localized text in the resource file.
+    /// </param>
+    /// <seealso cref="LocalizedTextAttribute"/>
     /// <example>
     /// <code>
     /// public enum Status
     /// {
     ///     [LocalizedEnumText("PendingApproval")]
     ///     Pending,
-    ///     
+    ///
     ///     [LocalizedEnumText("Approved")]
     ///     Approved,
-    ///     
+    ///
     ///     [LocalizedEnumText("Rejected")]
     ///     Rejected
     /// }
     /// </code>
     /// </example>
     /// <remarks>
-    /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute" /> class.
+    /// Use this attribute to replace raw enum field names with user-friendly,
+    /// localized display text based on a resource key.
     /// </remarks>
-    /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
-    /// <example>
-    ///   <code>
-    /// [LocalizedEnumText("PropertyName_EnumText")]
-    /// public int PropertyName { get; set; }
-    ///   </code>
-    /// </example>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
     public class LocalizedEnumTextAttribute(string resourceKey) : LocalizedTextAttribute(resourceKey)
     {
 #else
     /// <summary>
-    /// Specifies a localized text representation for an Enum field,
-    /// retrieving the display text from a resource file.
+    /// Specifies a localized text representation for an enum field or property,
+    /// retrieving its display text from a resource file at runtime.
     /// </summary>
-    /// <seealso cref="LocalizedTextAttribute" />
+    /// <seealso cref="LocalizedTextAttribute"/>
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute"/> class
+    /// to link an enum field or property to a resource string key.
+    /// </remarks>
     /// <example>
-    ///   <code>
+    /// <code>
     /// public enum Status
     /// {
-    /// [LocalizedEnumText("PendingApproval")]
-    /// Pending,
-    /// [LocalizedEnumText("Approved")]
-    /// Approved,
-    /// [LocalizedEnumText("Rejected")]
-    /// Rejected
+    ///     [LocalizedEnumText("PendingApproval")]
+    ///     Pending,
+    ///
+    ///     [LocalizedEnumText("Approved")]
+    ///     Approved,
+    ///
+    ///     [LocalizedEnumText("Rejected")]
+    ///     Rejected
     /// }
     /// </code>
     /// </example>
@@ -60,9 +63,11 @@ namespace PropertyGridHelpers.Attributes
     public class LocalizedEnumTextAttribute : LocalizedTextAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute" /> class.
+        /// Initializes a new instance of the <see cref="LocalizedEnumTextAttribute"/> class.
         /// </summary>
-        /// <param name="resourceKey">The key identifying the localized text in the resource file.</param>
+        /// <param name="resourceKey">
+        /// The key identifying the localized text in the resource file.
+        /// </param>
         /// <example>
         ///   <code>
         /// [LocalizedEnumText("PropertyName_EnumText")]
@@ -75,20 +80,26 @@ namespace PropertyGridHelpers.Attributes
 #endif
 
         /// <summary>
-        /// Gets the <see cref="LocalizedEnumTextAttribute"/> for the specified Enum value.
+        /// Retrieves the <see cref="LocalizedEnumTextAttribute"/> applied to the given
+        /// <paramref name="value"/>, if present.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <param name="value">The enum value to look up.</param>
+        /// <returns>
+        /// The associated <see cref="LocalizedEnumTextAttribute"/>, or <c>null</c> if no attribute is applied.
+        /// </returns>
         public static LocalizedEnumTextAttribute Get(Enum value) =>
             value == null ? null
                 : Support.Support.GetFirstCustomAttribute<LocalizedEnumTextAttribute>(
                     Support.Support.GetEnumField(value));
 
         /// <summary>
-        /// Gets the specified context.
+        /// Retrieves the <see cref="LocalizedEnumTextAttribute"/> from the given
+        /// <see cref="ITypeDescriptorContext"/>, if present.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">The type descriptor context.</param>
+        /// <returns>
+        /// The <see cref="LocalizedEnumTextAttribute"/>, or <c>null</c> if not found.
+        /// </returns>
         public static new LocalizedEnumTextAttribute Get(ITypeDescriptorContext context) =>
             context == null || context.Instance == null || context.PropertyDescriptor == null
                 ? null

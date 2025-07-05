@@ -52,8 +52,8 @@ namespace PropertyGridHelpers.Attributes
     /// </remarks>
     /// <seealso cref="LocalizedTextAttribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
-    public class LocalizedCategoryAttribute :
-        LocalizedTextAttribute
+    public class LocalizedCategoryAttribute
+        : LocalizedTextAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedCategoryAttribute" /> class.
@@ -85,8 +85,8 @@ namespace PropertyGridHelpers.Attributes
         ///       }
         ///   </code>
         /// </example>
-        public LocalizedCategoryAttribute(string resourceKey) :
-            base(resourceKey)
+        public LocalizedCategoryAttribute(string resourceKey)
+            : base(resourceKey)
         {
         }
 #endif

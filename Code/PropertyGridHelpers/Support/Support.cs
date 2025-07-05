@@ -57,14 +57,26 @@ namespace PropertyGridHelpers.Support
         /// Thrown if <paramref name="assembly"/> is <c>null</c>.
         /// </exception>
         /// <remarks>
-        /// This method examines the specified <paramref name="assembly"/> and identifies: <list
-        /// type="bullet"><item><description>Embedded resources.</description></item><item><description>Compiled
-        /// resource files (<c>.resources</c> files).</description></item></list>  The results are written to the
-        /// standard output (console).  <para><b>Example Output:</b></para> <pre> Checking resources in assembly: 
-        /// Embedded Resources: - MyNamespace.MyResource.txt (Embedded Resource)  Resource Files: -
-        /// MyNamespace.Strings.resources (Resource File) -> WelcomeMessage: System.String -> AppVersion:
-        /// System.Int32</pre>  <para>If a compiled resource file (<c>.resources</c>) is found, this method also
+        /// This method examines the specified <paramref name="assembly"/> and identifies: 
+        /// <list type="bullet">
+        /// <item><description>Embedded resources.</description></item>
+        /// <item><description>Compiled resource files (<c>.resources</c> files).</description></item>
+        /// </list>  
+        /// The results are written to the standard output (console).  
+        /// <para><b>Example Output:</b></para> 
+        /// <pre>
+        /// Checking resources in assembly: 
+        ///   Embedded Resources: - MyNamespace.MyResource.txt (Embedded Resource)  
+        ///   
+        /// Resource Files: 
+        /// - MyNamespace.Strings.resources (Resource File) 
+        /// -> WelcomeMessage: System.String 
+        /// -> AppVersion: System.Int32
+        /// </pre>  
+        /// 
+        /// <para>If a compiled resource file (<c>.resources</c>) is found, this method also
         /// attempts to deserialize its contents and print the key-value pairs along with their data types.</para> 
+        /// 
         /// <para><b>Note:</b> This method is intended primarily for debugging and inspection purposes. It may not be
         /// suitable for use in production applications.</para>
         /// </remarks>
@@ -122,7 +134,9 @@ namespace PropertyGridHelpers.Support
         /// name="resourceSource"/> for the current culture. If the key is not found, the method returns the resource
         /// key itself.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.
+        /// </exception>
         /// <remarks>
         /// This method uses a <see cref="ResourceManager"/> to retrieve the localized string based on the current
         /// culture. If the resource key does not exist in the specified resource file, the method returns the key
@@ -240,26 +254,40 @@ namespace PropertyGridHelpers.Support
         /// string.
         /// </returns>
         /// <remarks>
-        /// This method determines the file extension based on the following order of precedence: <list
-        /// type="number"><item>Checks if the property has a <see cref="FileExtensionAttribute"/> and retrieves the
-        /// value  of the property it references.</item><item>If the referenced property is a string, its value is
-        /// returned.</item><item>If the referenced property is an enumeration:<list type="bullet"><item>Returns the
-        /// enum's string representation, unless it is <c>None</c>, in which case an empty string is
-        /// returned.</item><item>If the enum field has an <see cref="EnumTextAttribute"/>, returns its custom text
-        /// value.</item><item>If the enum field has a <see cref="LocalizedEnumTextAttribute"/>, returns its localized
-        /// text value.</item></list></item><item>If no matching attributes are found, the method returns an empty
-        /// string.</item></list>  Normally a user would not call this method directly, but it is  used by the UIEditors
+        /// This method determines the file extension based on the following order of precedence: 
+        /// <list type="number">
+        /// <item>Checks if the property has a <see cref="FileExtensionAttribute"/> and retrieves the
+        /// value of the property it references.</item>
+        /// <item>If the referenced property is a string, its value is returned.</item>
+        /// <item>If the referenced property is an enumeration:
+        /// <list type="bullet">
+        /// <item>Returns the enum's string representation, unless it is <c>None</c>, in which case an empty string is
+        /// returned.</item>
+        /// <item>If the enum field has an <see cref="EnumTextAttribute"/>, returns its custom text value.</item>
+        /// <item>If the enum field has a <see cref="LocalizedEnumTextAttribute"/>, returns its localized
+        /// text value.</item>
+        /// </list>
+        /// </item>
+        /// <item>If no matching attributes are found, the method returns an empty string.</item>
+        /// </list>
+        /// 
+        /// Normally a user would not call this method directly, but it is  used by the UIEditors
         /// to load values into the <see cref="PropertyGrid"/>.
         /// </remarks>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the referenced property is not found or is not public.
         /// </exception>
         /// <example>
-        /// Example usage: <code> [FileExtension(nameof(FileType))] public string FileName { get; set; } = "example"; 
-        /// public string FileType { get; set; } = "xml";  var PropertyDescriptor =
-        /// TypeDescriptor.GetProperties(this)[nameof(FileName)]; var context = new
-        /// CustomTypeDescriptorContext(PropertyDescriptor, this);  string extension = GetFileExtension(context);
-        /// Console.WriteLine(extension); // Outputs: "xml"</code>
+        /// Example usage: 
+        /// <code>
+        /// [FileExtension(nameof(FileType))] public string FileName { get; set; } = "example"; 
+        /// public string FileType { get; set; } = "xml";  
+        /// 
+        /// var PropertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(FileName)]; 
+        /// var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);  
+        /// string extension = GetFileExtension(context);
+        /// Console.WriteLine(extension); // Outputs: "xml"
+        /// </code>
         /// </example>
         public static string GetFileExtension(ITypeDescriptorContext context)
         {
@@ -307,16 +335,27 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Gets the required public property.
+        /// Retrieves a required public instance property from the specified object by name.
         /// </summary>
-        /// <param name="instance">The instance.</param>
-        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="instance">
+        /// The object instance whose property should be retrieved. Must not be <c>null</c>.
+        /// </param>
+        /// <param name="propertyName">
+        /// The name of the property to look up. Case-sensitive.
+        /// </param>
         /// <returns>
-        /// The <see cref="PropertyInfo"/> of the property if it exists and is public.
+        /// The <see cref="PropertyInfo"/> representing the requested public property if it exists.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if the property is not found or is not public.
+        /// Thrown if the specified property does not exist on the type of <paramref name="instance"/>,
+        /// or if the property exists but is not publicly accessible.
         /// </exception>
+        /// <remarks>
+        /// This method uses reflection to locate a property by name, including non-public declarations,
+        /// but enforces that the property has a public getter.
+        /// If the property cannot be found or fails the public visibility requirement,
+        /// an <see cref="InvalidOperationException"/> is thrown.
+        /// </remarks>
         private static PropertyInfo GetRequiredProperty(object instance, string propertyName)
         {
             var property = instance.GetType()
@@ -485,9 +524,16 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Sets the language.
+        /// Sets the current thread's culture and UI culture to the specified language identifier.
         /// </summary>
-        /// <param name="language">The language.</param>
+        /// <param name="language">
+        /// The language code (e.g., <c>"en-US"</c>, <c>"fr-FR"</c>, <c>"de-DE"</c>) to apply to
+        /// <see cref="Thread.CurrentCulture"/> and <see cref="Thread.CurrentUICulture"/>.
+        /// </param>
+        /// <remarks>
+        /// This method is intended primarily for testing and debugging localization or globalization scenarios,
+        /// allowing the current thread to simulate running under a specific culture.
+        /// </remarks>
         public static void SetLanguage(string language)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);

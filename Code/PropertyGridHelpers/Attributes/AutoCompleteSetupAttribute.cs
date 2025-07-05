@@ -76,29 +76,30 @@ namespace PropertyGridHelpers.Attributes
     public class AutoCompleteSetupAttribute : Attribute
     {
         /// <summary>
-        /// Defines the mode for auto-complete suggestions.
+        /// Defines the mode that determines how auto-complete suggestions are provided.
         /// </summary>
         public enum SourceMode
         {
             /// <summary>
-            /// The values
+            /// Indicates that the auto-complete suggestions are supplied directly via a values array.
             /// </summary>
             Values,
             /// <summary>
-            /// The provider
+            /// Indicates that the auto-complete suggestions are retrieved from a provider type,
+            /// such as an enum or a class with a static string array property.
             /// </summary>
             Provider
         }
 
         /// <summary>
-        /// Gets the source of auto-complete suggestions.
+        /// Gets the source from which auto-complete suggestions are retrieved.
         /// </summary>
         /// <remarks>
-        /// This determines where the combo box will look to find suggestions, such as:
+        /// Controls where the combo box obtains its suggestions:
         /// <list type="bullet">
-        /// <item><description><see cref="AutoCompleteSource.FileSystem"/> – File and directory paths.</description></item>
-        /// <item><description><see cref="AutoCompleteSource.HistoryList"/> – URL history.</description></item>
-        /// <item><description><see cref="AutoCompleteSource.CustomSource"/> – Values provided via <see cref="Values"/>.</description></item>
+        ///   <item><description><see cref="AutoCompleteSource.FileSystem"/> – File and directory paths.</description></item>
+        ///   <item><description><see cref="AutoCompleteSource.HistoryList"/> – URL history.</description></item>
+        ///   <item><description><see cref="AutoCompleteSource.CustomSource"/> – User-supplied values via <see cref="Values"/>.</description></item>
         /// </list>
         /// </remarks>
         /// <seealso cref="System.Windows.Forms.AutoCompleteSource"/>
@@ -108,14 +109,14 @@ namespace PropertyGridHelpers.Attributes
         }
 
         /// <summary>
-        /// Gets the mode that controls how suggestions are shown in the UI.
+        /// Gets the mode that determines how suggestions appear in the UI as the user types.
         /// </summary>
         /// <remarks>
-        /// This controls how suggestions are presented as the user types:
+        /// Controls the behavior of suggestion display:
         /// <list type="bullet">
-        /// <item><description><see cref="AutoCompleteMode.Suggest"/> – Shows a dropdown of matches.</description></item>
-        /// <item><description><see cref="AutoCompleteMode.Append"/> – Appends the closest match to the typed value.</description></item>
-        /// <item><description><see cref="AutoCompleteMode.SuggestAppend"/> – Combines both behaviors.</description></item>
+        ///   <item><description><see cref="AutoCompleteMode.Suggest"/> – Shows a list of matches.</description></item>
+        ///   <item><description><see cref="AutoCompleteMode.Append"/> – Auto-completes the typed text with the closest match.</description></item>
+        ///   <item><description><see cref="AutoCompleteMode.SuggestAppend"/> – Combines suggest and append modes.</description></item>
         /// </list>
         /// </remarks>
         /// <seealso cref="System.Windows.Forms.AutoCompleteMode"/>
@@ -125,14 +126,14 @@ namespace PropertyGridHelpers.Attributes
         }
 
         /// <summary>
-        /// Gets the style of the drop-down editor.
+        /// Gets the style of the drop-down editor used in the UI.
         /// </summary>
         /// <remarks>
-        /// Controls how the user can interact with the drop-down:
+        /// Controls how the user can edit and interact with the drop-down:
         /// <list type="bullet">
-        /// <item><description><see cref="ComboBoxStyle.DropDown"/> – Editable text box with drop-down list.</description></item>
-        /// <item><description><see cref="ComboBoxStyle.DropDownList"/> – Drop-down list only (no free-form input).</description></item>
-        /// <item><description><see cref="ComboBoxStyle.Simple"/> – Always visible list and editable text box.</description></item>
+        ///   <item><description><see cref="ComboBoxStyle.DropDown"/> – Editable text box with a drop-down list.</description></item>
+        ///   <item><description><see cref="ComboBoxStyle.DropDownList"/> – Drop-down list only, no free-form input allowed.</description></item>
+        ///   <item><description><see cref="ComboBoxStyle.Simple"/> – Always visible list with an editable text box.</description></item>
         /// </list>
         /// </remarks>
         /// <seealso cref="ComboBoxStyle"/>
@@ -142,27 +143,31 @@ namespace PropertyGridHelpers.Attributes
         }
 
         /// <summary>
-        /// Gets the set of custom string values used for auto-complete suggestions.
+        /// Gets the set of custom string values used for auto-complete suggestions
+        /// when <see cref="AutoCompleteSource"/> is set to <c>CustomSource</c>.
         /// </summary>
         /// <remarks>
-        /// This is only used when <see cref="AutoCompleteSource"/> is set to <c>CustomSource</c>.
-        /// The values can be supplied:
+        /// These values can be specified:
         /// <list type="bullet">
-        /// <item><description>Directly via the attribute constructor.</description></item>
-        /// <item><description>From an <c>enum</c> (uses enum names).</description></item>
-        /// <item><description>From a <c>public static string[] Values</c> property on a provider type.</description></item>
+        ///   <item><description>Directly via the attribute constructor.</description></item>
+        ///   <item><description>Derived from an <c>enum</c> type (using its names).</description></item>
+        ///   <item><description>Loaded from a class with a public static <c>string[] Values</c> property.</description></item>
         /// </list>
         /// </remarks>
+
         public string[] Values
         {
             get;
         }
 
         /// <summary>
-        /// Gets the type of the provider.
+        /// Gets the type that provides the source of auto-complete values when
+        /// <see cref="AutoCompleteSource"/> is set to <c>CustomSource</c>.
+        /// Typically, this can be an enum type or a class with a static <c>string[] Values</c> property.
         /// </summary>
         /// <value>
-        /// The type of the provider.
+        /// A <see cref="Type"/> representing the provider of suggestions for the editor,
+        /// or <c>null</c> if not specified.
         /// </value>
         public Type ProviderType
         {
@@ -170,10 +175,12 @@ namespace PropertyGridHelpers.Attributes
         }
 
         /// <summary>
-        /// Gets the mode that the attribute was created in.
+        /// Gets the source mode used to determine how auto-complete values were initialized
+        /// for this attribute.
         /// </summary>
         /// <value>
-        /// The mode.
+        /// A <see cref="SourceMode"/> enumeration value indicating how the values
+        /// were resolved (e.g., via direct array, enum, or provider type).
         /// </value>
         public SourceMode Mode
         {
@@ -183,7 +190,7 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteSource">The automatic complete source.</param>
+        /// <param name="autoCompleteSource">Sets <see cref="AutoCompleteSource"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteSource autoCompleteSource = AutoCompleteSource.None)
             : this(AutoCompleteMode.SuggestAppend, autoCompleteSource, ComboBoxStyle.DropDown) { }
@@ -191,19 +198,19 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteSource">The automatic complete source.</param>
-        /// <param name="dropDownStyle">The drop down style.</param>
+        /// <param name="autoCompleteSource">Sets <see cref="AutoCompleteSource"/>.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteSource autoCompleteSource,
             ComboBoxStyle dropDownStyle)
             : this(AutoCompleteMode.SuggestAppend, autoCompleteSource, dropDownStyle) { }
 
         /// <summary>
-        /// Initializes a new instance using a predefined source and mode.
+        /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="autoCompleteSource">The automatic complete source.</param>
-        /// <param name="dropDownStyle">The drop down style.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="autoCompleteSource">Sets <see cref="AutoCompleteSource"/>.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
             AutoCompleteSource autoCompleteSource,
@@ -219,7 +226,7 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="values">The values.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         public AutoCompleteSetupAttribute(
             params string[] values)
             : this(AutoCompleteMode.SuggestAppend, ComboBoxStyle.DropDown, values) { }
@@ -227,8 +234,8 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="dropDownStyle">The drop down style.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         public AutoCompleteSetupAttribute(
             ComboBoxStyle dropDownStyle,
             params string[] values)
@@ -237,9 +244,9 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteSource">The automatic complete source.</param>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="autoCompleteSource">Sets <see cref="AutoCompleteSource"/>.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteSource autoCompleteSource,
             AutoCompleteMode autoCompleteMode,
@@ -249,19 +256,19 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
             params string[] values)
             : this(autoCompleteMode, ComboBoxStyle.DropDown, values) { }
 
         /// <summary>
-        /// Initializes a new instance using a list of values and an optional mode.
+        /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="dropDownStyle">The drop down style.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
             ComboBoxStyle dropDownStyle,
@@ -269,12 +276,12 @@ namespace PropertyGridHelpers.Attributes
             : this(autoCompleteMode, AutoCompleteSource.CustomSource, dropDownStyle, values) { }
 
         /// <summary>
-        /// Initializes a new instance using a list of values and an optional mode.
+        /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="autoCompleteSource">The automatic complete source.</param>
-        /// <param name="dropDownStyle">The drop down style.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="autoCompleteSource">Sets <see cref="AutoCompleteSource"/>.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
+        /// <param name="values">Sets <see cref="Values"/>.</param>
         /// <exception cref="ArgumentException">At least one auto-complete value must be provided.</exception>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
@@ -294,16 +301,16 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute"/> class.
         /// </summary>
-        /// <param name="providerType">Type of the provider.</param>
+        /// <param name="providerType">Sets <see cref="ProviderType"/>.</param>
         public AutoCompleteSetupAttribute(
-            Type providerType)
+        Type providerType)
             : this(AutoCompleteMode.SuggestAppend, ComboBoxStyle.DropDown, providerType) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The automatic complete mode.</param>
-        /// <param name="providerType">Type of the provider.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="providerType">Sets <see cref="ProviderType"/>.</param>
         public AutoCompleteSetupAttribute(
             AutoCompleteMode autoCompleteMode,
             Type providerType)
@@ -312,19 +319,19 @@ namespace PropertyGridHelpers.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="dropDownStyle">The drop down style.</param>
-        /// <param name="providerType">Type of the provider.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
+        /// <param name="providerType">Sets <see cref="ProviderType"/>.</param>
         public AutoCompleteSetupAttribute(
             ComboBoxStyle dropDownStyle,
             Type providerType)
             : this(AutoCompleteMode.SuggestAppend, dropDownStyle, providerType) { }
 
         /// <summary>
-        /// Initializes a new instance using a type provider.
+        /// Initializes a new instance of the <see cref="AutoCompleteSetupAttribute" /> class.
         /// </summary>
-        /// <param name="autoCompleteMode">The mode.</param>
-        /// <param name="dropDownStyle">The drop down style.</param>
-        /// <param name="providerType">Type of the provider.</param>
+        /// <param name="autoCompleteMode">Sets <see cref="AutoCompleteMode"/>.</param>
+        /// <param name="dropDownStyle">Sets <see cref="DropDownStyle"/>.</param>
+        /// <param name="providerType">Sets <see cref="ProviderType"/>.</param>
         /// <exception cref="ArgumentNullException">providerType</exception>
         /// <exception cref="ArgumentException">
         /// The type '{providerType.FullName}' must define a public static property named '{requiredPropertyName}'.

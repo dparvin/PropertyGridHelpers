@@ -6,46 +6,49 @@ namespace PropertyGridHelpers.TypeDescriptors
 {
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Type Descriptor used to localize property names, categories and descriptions.
+    /// A type descriptor that provides localization for property names, categories, and descriptions.
     /// </summary>
-    /// <seealso cref="CustomTypeDescriptor" />
-    /// <remarks>
-    /// Initializes a new instance of the <see cref="LocalizedTypeDescriptor"/> class.
-    /// </remarks>
-    /// <param name="parent">The parent.</param>
+    /// <param name="parent">
+    /// The parent <see cref="ICustomTypeDescriptor"/> to wrap.
+    /// </param>
+    /// <seealso cref="CustomTypeDescriptor"/>
     public class LocalizedTypeDescriptor(ICustomTypeDescriptor parent) : CustomTypeDescriptor(parent)
     {
 #else
     /// <summary>
-    /// Type Descriptor used to localize property names, categories and descriptions.
+    /// A type descriptor that provides localization for property names, categories, and descriptions.
     /// </summary>
-    /// <seealso cref="CustomTypeDescriptor" />
+    /// <seealso cref="CustomTypeDescriptor"/>
     public class LocalizedTypeDescriptor : CustomTypeDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedTypeDescriptor"/> class.
         /// </summary>
-        /// <param name="parent">The parent.</param>
+        /// <param name="parent">
+        /// The parent <see cref="ICustomTypeDescriptor"/> to wrap.
+        /// </param>
         public LocalizedTypeDescriptor(ICustomTypeDescriptor parent)
             : base(parent) { }
 #endif
 
         /// <summary>
-        /// Gets the properties of the referenced class.
+        /// Returns the collection of properties for the current object, using the default attributes.
         /// </summary>
         /// <returns>
-        /// a <see cref="PropertyDescriptorCollection" /> with the properties of the object.
+        /// A <see cref="PropertyDescriptorCollection"/> containing the localized properties.
         /// </returns>
         public override PropertyDescriptorCollection GetProperties() => GetProperties(null);
 
         /// <summary>
-        /// Gets the properties.
+        /// Returns the collection of properties for the current object that match the specified attributes,
+        /// with each property descriptor decorated to support localization.
         /// </summary>
         /// <param name="attributes">
-        /// The array of attributes used to find the properties that use one or more of them.
+        /// An array of attributes to use as a filter. Only properties marked with one or more of these
+        /// attributes will be included in the result.
         /// </param>
         /// <returns>
-        /// a <see cref="PropertyDescriptorCollection" /> with the properties of the object.
+        /// A <see cref="PropertyDescriptorCollection"/> containing the filtered and localized properties.
         /// </returns>
         public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {

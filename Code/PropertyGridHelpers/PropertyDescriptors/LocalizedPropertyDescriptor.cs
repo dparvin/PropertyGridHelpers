@@ -7,20 +7,38 @@ using System.Reflection;
 
 namespace PropertyGridHelpers.PropertyDescriptors
 {
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
     /// <summary>
-    /// Localized Property Descriptor
+    /// A specialized <see cref="PropertyDescriptor"/> that supports localizing
+    /// the category, description, and display name of a property based on
+    /// resource attributes.
     /// </summary>
-    /// <param name="baseProperty">The base property.</param>
-    /// <seealso cref="PropertyDescriptor" />
+    /// <param name="baseProperty">The wrapped base property descriptor to decorate.</param>
+    /// <remarks>
+    /// This class is intended to wrap a standard property descriptor
+    /// and provide localized versions of its metadata (category, description,
+    /// display name) using associated <see cref="LocalizedTextAttribute"/>-derived
+    /// attributes. At runtime, it retrieves localized strings from the
+    /// appropriate resource files configured through the <see cref="ResourcePathAttribute"/>.
+    /// </remarks>
+    /// <seealso cref="PropertyDescriptor"/>
     public class LocalizedPropertyDescriptor(PropertyDescriptor baseProperty) : PropertyDescriptor(baseProperty)
     {
         private readonly PropertyDescriptor baseProperty = baseProperty;
 #else
     /// <summary>
-    /// Localized Property Descriptor
+    /// A specialized <see cref="PropertyDescriptor"/> that supports localizing
+    /// the category, description, and display name of a property based on
+    /// resource attributes.
     /// </summary>
-    /// <seealso cref="PropertyDescriptor" />
+    /// <remarks>
+    /// This class is intended to wrap a standard property descriptor
+    /// and provide localized versions of its metadata (category, description,
+    /// display name) using associated <see cref="LocalizedTextAttribute"/>-derived
+    /// attributes. At runtime, it retrieves localized strings from the
+    /// appropriate resource files configured through the <see cref="ResourcePathAttribute"/>.
+    /// </remarks>
+    /// <seealso cref="PropertyDescriptor"/>
     public class LocalizedPropertyDescriptor : PropertyDescriptor
     {
         private readonly PropertyDescriptor baseProperty;
@@ -28,44 +46,40 @@ namespace PropertyGridHelpers.PropertyDescriptors
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalizedPropertyDescriptor"/> class.
         /// </summary>
-        /// <param name="baseProperty">The base property.</param>
+        /// <param name="baseProperty">The wrapped base property descriptor to decorate.</param>
         public LocalizedPropertyDescriptor(PropertyDescriptor baseProperty)
             : base(baseProperty) =>
             this.baseProperty = baseProperty;
 #endif
         /// <summary>
-        /// Gets the category.
+        /// Gets the localized category name for this property.
         /// </summary>
-        /// <value>
-        /// The category.
-        /// </value>
         public override string Category =>
             GetLocalizedString<LocalizedCategoryAttribute>(baseProperty.Category);
 
         /// <summary>
-        /// Gets the description.
+        /// Gets the localized description for this property.
         /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
         public override string Description =>
             GetLocalizedString<LocalizedDescriptionAttribute>(baseProperty.Description);
 
         /// <summary>
-        /// Gets the display name.
+        /// Gets the localized display name for this property.
         /// </summary>
-        /// <value>
-        /// The display name.
-        /// </value>
         public override string DisplayName =>
             GetLocalizedString<LocalizedDisplayNameAttribute>(baseProperty.DisplayName);
 
         /// <summary>
-        /// Gets the localized string.
+        /// Retrieves a localized string from the specified attribute type, or
+        /// returns the default string if no localization can be resolved.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="defaultValue">The default value.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">
+        /// The type of <see cref="LocalizedTextAttribute"/> to look for.
+        /// </typeparam>
+        /// <param name="defaultValue">The fallback value if localization fails.</param>
+        /// <returns>
+        /// The localized string if found; otherwise the default value.
+        /// </returns>
         internal string GetLocalizedString<T>(string defaultValue) where T : LocalizedTextAttribute
         {
             if (baseProperty.Attributes[typeof(T)] is T localizedAttribute)
@@ -91,10 +105,15 @@ namespace PropertyGridHelpers.PropertyDescriptors
         }
 
         /// <summary>
-        /// Gets the resource type from property.
+        /// Determines the resource assembly and fully qualified resource path
+        /// used to resolve localized strings for this property.
         /// </summary>
-        /// <param name="resourcePath">The resource path.</param>
-        /// <returns></returns>
+        /// <param name="resourcePath">
+        /// Outputs the computed resource path to the relevant resource file.
+        /// </param>
+        /// <returns>
+        /// The assembly containing the resource type if found; otherwise null.
+        /// </returns>
         internal Assembly GetResourceTypeFromProperty(ref string resourcePath)
         {
             ResourcePathAttribute resourcePathAttribute = null;
@@ -114,64 +133,36 @@ namespace PropertyGridHelpers.PropertyDescriptors
                    baseProperty.ComponentType.Assembly;
         }
 
-        /// <summary>
-        /// Determines whether the specified component can reset its value.
-        /// </summary>
-        /// <param name="component">The component.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified component can reset its value; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool CanResetValue(object component) => baseProperty.CanResetValue(component);
+        /// <inheritdoc/>
+        public override bool CanResetValue(object component) =>
+            baseProperty.CanResetValue(component);
 
-        /// <summary>
-        /// Gets the type of the component.
-        /// </summary>
-        /// <value>
-        /// The type of the component.
-        /// </value>
-        public override Type ComponentType => baseProperty.ComponentType;
+        /// <inheritdoc/>
+        public override Type ComponentType =>
+            baseProperty.ComponentType;
 
-        /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <param name="component">The component.</param>
-        /// <returns></returns>
-        public override object GetValue(object component) => baseProperty.GetValue(component);
+        /// <inheritdoc/>
+        public override object GetValue(object component) =>
+            baseProperty.GetValue(component);
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is read only.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is read only; otherwise, <c>false</c>.
-        /// </value>
-        public override bool IsReadOnly => baseProperty.IsReadOnly;
+        /// <inheritdoc/>
+        public override bool IsReadOnly =>
+            baseProperty.IsReadOnly;
 
-        /// <summary>
-        /// Gets the type of the property.
-        /// </summary>
-        /// <value>
-        /// The type of the property.
-        /// </value>
-        public override Type PropertyType => baseProperty.PropertyType;
+        /// <inheritdoc/>
+        public override Type PropertyType =>
+            baseProperty.PropertyType;
 
-        /// <summary>
-        /// Resets the value.
-        /// </summary>
-        /// <param name="component">The component.</param>
-        public override void ResetValue(object component) => baseProperty.ResetValue(component);
+        /// <inheritdoc/>
+        public override void ResetValue(object component) =>
+            baseProperty.ResetValue(component);
 
-        /// <summary>
-        /// Sets the value.
-        /// </summary>
-        /// <param name="component">The component.</param>
-        /// <param name="value">The value.</param>
-        public override void SetValue(object component, object value) => baseProperty.SetValue(component, value);
+        /// <inheritdoc/>
+        public override void SetValue(object component, object value) =>
+            baseProperty.SetValue(component, value);
 
-        /// <summary>
-        /// Determines whether the value of the specified component should be serialized.
-        /// </summary>
-        /// <param name="component">The component.</param>
-        /// <returns></returns>
-        public override bool ShouldSerializeValue(object component) => baseProperty.ShouldSerializeValue(component);
+        /// <inheritdoc/>
+        public override bool ShouldSerializeValue(object component) =>
+            baseProperty.ShouldSerializeValue(component);
     }
 }

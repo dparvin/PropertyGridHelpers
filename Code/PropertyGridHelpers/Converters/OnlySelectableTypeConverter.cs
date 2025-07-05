@@ -3,7 +3,6 @@ using PropertyGridHelpers.UIEditors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
 
@@ -35,13 +34,13 @@ namespace PropertyGridHelpers.Converters
     public class OnlySelectableTypeConverter : StringConverter
     {
         /// <summary>
-        /// Converts from.
+        /// Converts from a string to a element in an Enum.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="culture">The culture.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="context">Context information from the property grid.</param>
+        /// <param name="culture">Culture info to use for parsing.</param>
+        /// <param name="value">The string to convert from.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentException">Value cannot be blank and no valid options are available.</exception>
+        /// <exception cref="ArgumentException">Value cannot be blank and no valid options are available.</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             // If the incoming value is an empty string, or just white space
@@ -64,25 +63,30 @@ namespace PropertyGridHelpers.Converters
             return base.ConvertFrom(context, culture, value);
         }
 
-        /// <summary>
-        /// Gets the standard values supported.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context) => true;
 
-        /// <summary>
-        /// Gets the standard values exclusive.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override bool GetStandardValuesExclusive(ITypeDescriptorContext context) => true;
 
         /// <summary>
-        /// Gets a list of resource paths.
+        /// Returns a list of resource paths found in the current instance’s assembly,
+        /// suitable for selection in a property grid editor or a dropdown.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">
+        /// Provides contextual information, including the instance whose assembly will be inspected.
+        /// </param>
+        /// <returns>
+        /// A <see cref="TypeConverter.StandardValuesCollection"/> containing the names of resources
+        /// (without the assembly prefix and without the <c>.resources</c> extension) that are embedded
+        /// in the same assembly as the edited object. If no assembly is available in the context, an 
+        /// empty collection is returned.
+        /// </returns>
+        /// <remarks>
+        /// This is used to present a list of available resource names (for example, localization resources or
+        /// embedded files) that a user might select from in the property grid.
+        /// </remarks>
+
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             var assembly = context?.Instance?.GetType().Assembly;

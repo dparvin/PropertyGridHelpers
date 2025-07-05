@@ -3,43 +3,52 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using static System.ComponentModel.TypeConverter;
 
 namespace PropertyGridHelpers.Converters
 {
     /// <summary>
-    /// Enum Text Converter
+    /// Provides a type converter for enums that supports displaying custom user-friendly
+    /// text for enum fields using the <see cref="EnumTextAttribute"/> or
+    /// <see cref="LocalizedEnumTextAttribute"/>.
     /// </summary>
     /// <remarks>
-    /// This converter is used to display specialized text in the PropertyGrid
-    /// where the text is tied to the elements of an Enum.  Use the
-    /// <see cref="EnumTextAttribute" /> to attach the text to the Enum
-    /// elements.
+    /// This converter allows enum values to be shown in a property grid or dropdown list
+    /// with more readable labels instead of their default names. For localization or
+    /// specialized labeling, decorate the enum fields with <see cref="EnumTextAttribute"/>
+    /// or <see cref="LocalizedEnumTextAttribute"/>.
     /// </remarks>
-    /// <seealso cref="EnumConverter" />
-    /// <seealso cref="IDisposable" />
-    public partial class EnumTextConverter : EnumConverter, IDisposable
+    /// <example>
+    /// <code>
+    /// public enum Status
+    /// {
+    ///     [EnumText("Pending Approval")]
+    ///     Pending,
+    ///     [EnumText("Approved")]
+    ///     Approved,
+    ///     [EnumText("Rejected")]
+    ///     Rejected
+    /// }
+    /// 
+    /// [TypeConverter(typeof(EnumTextConverter))]
+    /// public Status Status { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="EnumConverter"/>
+    public partial class EnumTextConverter : EnumConverter
     {
-        private bool disposedValue;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumTextConverter" /> class.
+        /// Initializes a new instance of the <see cref="EnumTextConverter"/> class
+        /// for the given enum type.
         /// </summary>
-        /// <param name="type">The type.</param>
+        /// <param name="type">The target enum type to convert.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="type"/> is null.</exception>
         public EnumTextConverter(Type type) : base(type) { }
 
-        /// <summary>
-        /// Determines whether this instance can convert to the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="destinationType">Type of the destination.</param>
-        /// <returns>
-        ///   <c>true</c> if this instance can convert to the specified context; otherwise, <c>false</c>.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// context
-        /// or
-        /// destinationType
-        /// </exception>
+        /// <inheritdoc/>
+        /// <remarks>
+        /// Supports conversion to <see cref="string"/> or <see cref="int"/> representations.
+        /// </remarks>
         public override bool CanConvertTo(
             ITypeDescriptorContext context,
             Type destinationType) =>
@@ -48,14 +57,18 @@ namespace PropertyGridHelpers.Converters
                 : destinationType == typeof(string) || destinationType == typeof(int);
 
         /// <summary>
-        /// Converts to an int or string from an enum.
+        /// Converts the specified enum value to a <see cref="string"/> or <see cref="int"/>
+        /// based on the requested destination type.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="culture">The culture.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="destinationType">Type of the destination.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">value is expected to be of type {_enumType}. - value</exception>
+        /// <param name="context">An optional format context.</param>
+        /// <param name="culture">Culture information for the conversion.</param>
+        /// <param name="value">The value to convert, expected to be an enum of the specified type.</param>
+        /// <param name="destinationType">The target type for conversion (string or int).</param>
+        /// <returns>The converted value, or <c>null</c> if the input is <c>null</c>.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if <paramref name="value"/> is not of the expected enum type, or
+        /// if the destination type is unsupported.
+        /// </exception>
         public override object ConvertTo(
             ITypeDescriptorContext context,
             CultureInfo culture,
@@ -86,25 +99,23 @@ namespace PropertyGridHelpers.Converters
             return null;
         }
 
-        /// <summary>
-        /// Determines whether this instance can convert from the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="sourceType">Type of the source.</param>
-        /// <returns>
-        ///   <c>true</c> if this instance can convert from the specified context; otherwise, <c>false</c>.
-        /// </returns>
+        /// <inheritdoc/>
+        /// <remarks>
+        /// Supports conversion from <see cref="string"/> or <see cref="int"/> to the target enum.
+        /// </remarks>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) =>
             sourceType == typeof(string) || sourceType == typeof(int);
 
         /// <summary>
-        /// Converts from String or int to Enum.
+        /// Converts from a string or integer to the corresponding enum value.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="culture">The culture.</param>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">The value is expected to be a string or an int. - value</exception>
+        /// <param name="context">An optional format context.</param>
+        /// <param name="culture">Culture information for the conversion.</param>
+        /// <param name="value">The string or integer to convert.</param>
+        /// <returns>The parsed enum value.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if <paramref name="value"/> is neither a string nor an int, or cannot be parsed.
+        /// </exception>
         public override object ConvertFrom(
             ITypeDescriptorContext context,
             CultureInfo culture,
@@ -142,10 +153,13 @@ namespace PropertyGridHelpers.Converters
         #region GetStandardValues ^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
-        /// Gets the standard values.
+        /// Returns a collection of standard enum values for the associated type.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">A type descriptor context providing information about the component.</param>
+        /// <returns>
+        /// A <see cref="StandardValuesCollection"/> containing the enum values, or the base
+        /// implementation if no enum type is detected.
+        /// </returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             // Return all enum values for the property
@@ -162,41 +176,5 @@ namespace PropertyGridHelpers.Converters
         }
 
         #endregion
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~EnumTextConverter()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

@@ -72,10 +72,10 @@ namespace PropertyGridHelpers.Attributes
 #endif
 
         /// <summary>
-        /// Gets the custom text associated with the Enum field.
+        /// Gets the custom text associated with the enum field.
         /// </summary>
         /// <value>
-        /// The custom text associated with the Enum field.
+        /// A user-friendly string to display instead of the enum's raw name.
         /// </value>
         public string EnumText
         {
@@ -87,20 +87,21 @@ namespace PropertyGridHelpers.Attributes
 #endif
 
         /// <summary>
-        /// Determines whether the specified Enum value has an associated <see cref="EnumTextAttribute" />.
+        /// Determines whether the specified enum value has an associated
+        /// <see cref="EnumTextAttribute"/>.
         /// </summary>
-        /// <param name="value">The Enum value to check.</param>
+        /// <param name="value">The enum value to check.</param>
         /// <returns>
-        ///   <c>true</c> if the attribute is applied to the Enum field; otherwise, <c>false</c>.
+        /// <c>true</c> if the attribute is applied to the enum field; otherwise, <c>false</c>.
         /// </returns>
         public static bool Exists(Enum value) => Get(value) != null;
 
         /// <summary>
-        /// Retrieves the <see cref="EnumTextAttribute" /> applied to the specified Enum field.
+        /// Retrieves the <see cref="EnumTextAttribute"/> applied to the specified enum value.
         /// </summary>
-        /// <param name="value">The Enum value to retrieve the attribute for.</param>
+        /// <param name="value">The enum value to retrieve the attribute from.</param>
         /// <returns>
-        /// The associated <see cref="EnumTextAttribute" />, or <c>null</c> if not found.
+        /// The <see cref="EnumTextAttribute"/> instance, or <c>null</c> if not found.
         /// </returns>
         public static EnumTextAttribute Get(Enum value) =>
             value == null ? null
@@ -108,10 +109,14 @@ namespace PropertyGridHelpers.Attributes
                     Support.Support.GetEnumField(value));
 
         /// <summary>
-        /// Gets the <see cref="EnumTextAttribute"/> based on the passed context.
+        /// Retrieves the <see cref="EnumTextAttribute"/> using the supplied type descriptor context.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">
+        /// The context providing information about the component and its property.
+        /// </param>
+        /// <returns>
+        /// The <see cref="EnumTextAttribute"/> if found, or <c>null</c> if not available.
+        /// </returns>
         public static EnumTextAttribute Get(ITypeDescriptorContext context) =>
             context == null
                 ? null

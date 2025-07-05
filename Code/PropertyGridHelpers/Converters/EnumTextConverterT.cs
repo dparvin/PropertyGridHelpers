@@ -1,23 +1,43 @@
 using PropertyGridHelpers.Attributes;
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Converters
 {
     /// <summary>
-    /// Generic version of Enum Text Converter
+    /// A strongly-typed generic version of <see cref="EnumTextConverter"/> for handling enums with
+    /// display text annotations in a <see cref="PropertyGrid"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <seealso cref="EnumConverter" />
-    /// <seealso cref="IDisposable" />
+    /// <typeparam name="T">
+    /// The enumeration type whose members are decorated with <see cref="EnumTextAttribute"/>.
+    /// </typeparam>
     /// <remarks>
-    /// This converter is used to display specialized text in the PropertyGrid
-    /// where the text is tied to the elements of an Enum.  Use the
-    /// <see cref="EnumTextAttribute" /> to attach the text to the Enum
-    /// elements.
-    /// It uses the specified enum type set as a generic type for the class.
+    /// This converter simplifies using <see cref="EnumTextAttribute"/> on enum members
+    /// by automatically associating the generic parameter <typeparamref name="T"/> as
+    /// the enum to convert. This enables the property grid to display friendly
+    /// names for enum values without requiring manual type configuration.
     /// </remarks>
-    /// <seealso cref="EnumConverter" />
+    /// <example>
+    /// <code>
+    /// public enum Status
+    /// {
+    ///     [EnumText("Pending Approval")]
+    ///     Pending,
+    ///
+    ///     [EnumText("Approved")]
+    ///     Approved,
+    ///
+    ///     [EnumText("Rejected")]
+    ///     Rejected
+    /// }
+    ///
+    /// [TypeConverter(typeof(EnumTextConverter&lt;Status&gt;))]
+    /// public Status CurrentStatus { get; set; }
+    /// </code>
+    /// </example>
+    /// <seealso cref="EnumTextAttribute"/>
+    /// <seealso cref="EnumConverter"/>
     public partial class EnumTextConverter<T> : EnumTextConverter where T : Enum
     {
         /// <summary>

@@ -39,7 +39,8 @@ namespace PropertyGridHelpers.UIEditors
         private readonly IResourceBaseNameExtractor _extractor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourcePathEditor"/> class.
+        /// Initializes a new instance of the <see cref="ResourcePathEditor"/> class,
+        /// using the appropriate resource base name extractor for the current target framework.
         /// </summary>
         public ResourcePathEditor() : this(
 #if NET8_0_OR_GREATER
@@ -52,20 +53,34 @@ namespace PropertyGridHelpers.UIEditors
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourcePathEditor"/> class.
+        /// Initializes a new instance of the <see cref="ResourcePathEditor"/> class with a custom 
+        /// resource base name extractor.
         /// </summary>
-        /// <param name="extractor">The extractor.</param>
-        /// <exception cref="System.ArgumentNullException">extractor</exception>
+        /// <param name="extractor">
+        /// The extractor used to identify resource base names in the assembly. Must not be <c>null</c>.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="extractor"/> is <c>null</c>.
+        /// </exception>
         private ResourcePathEditor(IResourceBaseNameExtractor extractor) =>
             _extractor = extractor;
 
         /// <summary>
-        /// Edits the value.
+        /// Edits the specified value using a dropdown list of resource base names.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="provider">The provider.</param>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <param name="context">
+        /// The editing context, typically provided by the PropertyGrid. May be <c>null</c>.
+        /// </param>
+        /// <param name="provider">
+        /// A service provider that can supply an <see cref="IWindowsFormsEditorService"/> for managing
+        /// the dropdown UI. May be <c>null</c>.
+        /// </param>
+        /// <param name="value">
+        /// The current property value. May be updated by the user’s selection.
+        /// </param>
+        /// <returns>
+        /// The edited value, or the original value if editing was canceled or no selection was made.
+        /// </returns>
         public override object EditValue(
             ITypeDescriptorContext context,
             IServiceProvider provider,
@@ -104,37 +119,51 @@ namespace PropertyGridHelpers.UIEditors
         }
 
         /// <summary>
-        /// Gets the edit style.
+        /// Returns the editing style of the editor, which is <see cref="UITypeEditorEditStyle.DropDown"/>.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">The editing context.</param>
+        /// <returns>
+        /// Always <see cref="UITypeEditorEditStyle.DropDown"/>.
+        /// </returns>
         public override UITypeEditorEditStyle GetEditStyle(
             ITypeDescriptorContext context) => UITypeEditorEditStyle.DropDown;
 
         /// <summary>
-        /// Gets the paint value supported.
+        /// Indicates whether this editor supports painting a visual representation of a value.
         /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <param name="context">The editing context.</param>
+        /// <returns>
+        /// Always <c>false</c>, since this editor does not support paint previews.
+        /// </returns>
         public override bool GetPaintValueSupported(
             ITypeDescriptorContext context) => false;
 
         /// <summary>
-        /// Gets a value indicating whether this instance is drop down resizable.
+        /// Gets a value indicating whether the dropdown UI is resizable.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is drop down resizable; otherwise, <c>false</c>.
+        /// Always <c>false</c>.
         /// </value>
         public override bool IsDropDownResizable => false;
 
         /// <summary>
-        /// Creates the ListBox.
+        /// Creates the list box control that displays resource base names for selection.
         /// </summary>
-        /// <param name="baseNames">The base names.</param>
-        /// <param name="allowBlank">if set to <c>true</c> [allow blank].</param>
-        /// <param name="blankLabel">The blank label.</param>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <param name="baseNames">
+        /// The list of resource base names to display.
+        /// </param>
+        /// <param name="allowBlank">
+        /// If <c>true</c>, includes a blank option at the top of the list.
+        /// </param>
+        /// <param name="blankLabel">
+        /// The label text to use for the blank selection.
+        /// </param>
+        /// <param name="value">
+        /// The currently selected value, which will be preselected in the list if present.
+        /// </param>
+        /// <returns>
+        /// A configured <see cref="ListBox"/> control containing the resource names.
+        /// </returns>
         private static ListBox CreateListBox(
             IList<string> baseNames,
             bool allowBlank,

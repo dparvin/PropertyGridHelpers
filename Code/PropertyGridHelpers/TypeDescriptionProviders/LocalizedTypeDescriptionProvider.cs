@@ -95,12 +95,27 @@ namespace PropertyGridHelpers.TypeDescriptionProviders
 #endif
 
         /// <summary>
-        /// Gets the type descriptor.
+        /// Returns a custom type descriptor for the specified type and instance, enabling localization or
+        /// other metadata customization.
         /// </summary>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="instance">The instance.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">objectType</exception>
+        /// <param name="objectType">
+        /// The <see cref="Type"/> of the object for which to retrieve the type descriptor.
+        /// Cannot be <c>null</c>.
+        /// </param>
+        /// <param name="instance">
+        /// An optional instance of the object whose type descriptor is being requested. May be <c>null</c>.
+        /// </param>
+        /// <returns>
+        /// A custom <see cref="ICustomTypeDescriptor"/> for the specified type, wrapping the base descriptor
+        /// to provide additional metadata support.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="objectType"/> is <c>null</c>.
+        /// </exception>
+        /// <remarks>
+        /// This override decorates the standard type descriptor returned by the base provider
+        /// with a <see cref="LocalizedTypeDescriptor"/> to enable localization of property and event metadata.
+        /// </remarks>
         public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
         {
 #if NET8_0_OR_GREATER
