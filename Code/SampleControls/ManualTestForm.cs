@@ -65,6 +65,21 @@ namespace SampleControls
         }
 
         /// <summary>
+        /// Displays the editor form as a modal dialog, allowing the user to edit the value
+        /// and return the result of the operation.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="DialogResult" /> indicating how the user closed the editor, such as
+        /// <see cref="DialogResult.OK" /> if the edit was confirmed.
+        /// </returns>
+        /// <remarks>
+        /// This method is intended to be called by the property editor to show the editing interface.
+        /// In production implementations, it should display the form using <c>ShowDialog()</c>, while
+        /// in unit tests, it can be overridden to simulate user interaction without displaying a window.
+        /// </remarks>
+        public DialogResult ShowEditor() => this.ShowDialog();
+
+        /// <summary>
         /// The text box
         /// </summary>
         private readonly TextBox _textBox;

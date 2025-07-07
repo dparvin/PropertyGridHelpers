@@ -60,7 +60,7 @@ namespace PropertyGridHelpers.UIEditors
 #endif
             {
                 form.EditedValue = value; // push initial value
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowEditor() == DialogResult.OK)
                     return form.EditedValue; // get updated value
 
                 return value; // no change

@@ -19,21 +19,24 @@ namespace PropertyGridHelpersTest.Support
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FakeEditorCancelForm"/> class.
+        /// Displays the editor form as a modal dialog, allowing the user to edit the value
+        /// and return the result of the operation.
         /// </summary>
-        public FakeEditorCancelForm()
+        /// <returns>
+        /// A <see cref="DialogResult" /> indicating how the user closed the editor, such as
+        /// <see cref="DialogResult.OK" /> if the edit was confirmed.
+        /// </returns>
+        /// <remarks>
+        /// This method is intended to be called by the property editor to show the editing interface.
+        /// In production implementations, it should display the form using <c>ShowDialog()</c>, while
+        /// in unit tests, it can be overridden to simulate user interaction without displaying a window.
+        /// </remarks>
+        public DialogResult ShowEditor()
         {
-            // avoid any window ever appearing
-            ShowInTaskbar = false;
-            Opacity = 0;
-            StartPosition = FormStartPosition.Manual;
-            Size = new System.Drawing.Size(0, 0);
-            Load += (s, e) =>
-            {
-                EditedValue = "NewTestValue";
-                DialogResult = DialogResult.Cancel;
-                Close();
-            };
+            // This method is not used in this test, but must be implemented
+            // to satisfy the IValueEditorForm interface.
+            EditedValue = "NewTestValue";
+            return DialogResult.Cancel;
         }
     }
 }
