@@ -55,11 +55,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <value>The drop-down control instance.</value>
         public TControl DropDownControl { get; private set; } = new TControl();
 
-        /// <summary>
-        /// Gets the edit style.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) =>
             UITypeEditorEditStyle.DropDown;
 

@@ -135,6 +135,9 @@
   <data name="Description_ImageToDisplay" xml:space="preserve">
     <value>Image to add to control.</value>
   </data>
+  <data name="Description_ModalTestValue" xml:space="preserve">
+    <value>Property to test the ModalVisualizer manually</value>
+  </data>
   <data name="Description_Scrollbar" xml:space="preserve">
     <value>Scrollbars to show for the user.</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="DisplayName_ImageToDisplay" xml:space="preserve">
     <value>Image To Display</value>
+  </data>
+  <data name="DisplayName_ModalTestValue" xml:space="preserve">
+    <value>Modal Test Value</value>
   </data>
   <data name="DisplayName_Scrollbar" xml:space="preserve">
     <value>Scroll Bars</value>

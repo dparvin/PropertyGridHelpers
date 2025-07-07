@@ -4,6 +4,7 @@ using PropertyGridHelpers.UIEditors;
 using PropertyGridHelpersTest.Controls;
 using PropertyGridHelpersTest.Support;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Windows.Forms.Design;
 using Xunit;
 
@@ -31,15 +32,15 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 {
 #if NET5_0_OR_GREATER
     /// <summary>
-    /// Tests for the <see cref="DropDownVisualizer{TControl}" />
+    /// Tests for the <see cref="ModalVisualizer{TForm}" />
     /// </summary>
     /// <param name="output">xunit output implementation</param>
-    public class DropDownVisualizerTest(ITestOutputHelper output)
+    public class ModalVisualizerTest(ITestOutputHelper output)
 #else
     /// <summary>
-    /// Tests for the <see cref="DropDownVisualizer{TControl}" />
+    /// Tests for the <see cref="ModalVisualizer{TForm}" />
     /// </summary>
-    public class DropDownVisualizerTest
+    public class ModalVisualizerTest
 #endif
     {
 #if NET35
@@ -52,61 +53,52 @@ namespace PropertyGridHelpersTest.net90.UIEditor
         /// Initializes a new instance of the <see cref="DropDownVisualizerTest"/> class.
         /// </summary>
         /// <param name="output">xunit output implementation</param>
-        public DropDownVisualizerTest(ITestOutputHelper output) =>
+        public ModalVisualizerTest(ITestOutputHelper output) =>
             OutputHelper = output;
 #endif
-
-        #region Test Support Objects ^^^^^^^^^^^^^^^^^^^^^^
-
-        /// <summary>
-        /// Test class with attribute.
-        /// </summary>
-        public class TestClassWithAttribute
-        {
-            /// <summary>
-            /// Gets or sets some item.
-            /// </summary>
-            /// <value>
-            /// Some item.
-            /// </value>
-            public string PropertyWithoutAttribute
-            {
-                get; set;
-            }
-        }
-
-        #endregion
 
         #region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         /// <summary>
-        /// Edits the value closes drop down when value committed is raised.
+        /// Modal visualizer should return edited value.
         /// </summary>
         [Fact]
-        public void EditValue_SetsValueAndClosesDropDown_WhenValueCommittedIsRaised()
+        public void ModalVisualizer_ShouldReturnEditedValue()
         {
             // Arrange
-            var instance = new TestClassWithAttribute();
-
-            var propDesc = TypeDescriptor.GetProperties(instance)["PropertyWithoutAttribute"];
-            var context = new CustomTypeDescriptorContext(propDesc, instance);
-
-            var editor = new DropDownVisualizer<FakeEditorControl>();
-            var serviceProvider = new CustomServiceProvider();
-            var fakeEditorService = new FakeEditorService();
-            serviceProvider.AddService(typeof(IWindowsFormsEditorService), fakeEditorService);
+            var editor = new ModalVisualizer<FakeEditorForm>();
+            var initialValue = "InitialValue";
 
             // Act
-            var result = editor.EditValue(context, serviceProvider, "(none)");
+            var result = editor.EditValue(null, null, initialValue);
+            var Style = editor.GetEditStyle(null);
 
             // Assert
-            Output($"Results = '{result}'");
-#if NET5_0_OR_GREATER
-            Assert.Equal("EmptyResourceFile", result);
-#else
-            Assert.Equal(0, string.Compare("EmptyResourceFile", (string)result));
-#endif
-            Assert.True(fakeEditorService.DropDownClosed, "Expected the drop-down to be closed when ValueCommitted was raised.");
+            Assert.Equal("NewTestValue", result);
+            Assert.Equal(UITypeEditorEditStyle.Modal, Style);
+
+            Output($"ModalVisualizer returned: {result}");
+        }
+
+        /// <summary>
+        /// Modal visualizer should return original value when canceled.
+        /// </summary>
+        [Fact]
+        public void ModalVisualizer_ShouldReturnOriginalValue_WhenCanceled()
+        {
+            // Arrange
+            var editor = new ModalVisualizer<FakeEditorCancelForm>();
+            var initialValue = "InitialValue";
+
+            // Act
+            var result = editor.EditValue(null, null, initialValue);
+            var Style = editor.GetEditStyle(null);
+
+            // Assert
+            Assert.Equal("InitialValue", result);
+            Assert.Equal(UITypeEditorEditStyle.Modal, Style);
+
+            Output($"ModalVisualizer returned: {result}");
         }
 
         #endregion

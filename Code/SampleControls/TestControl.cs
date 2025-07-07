@@ -17,6 +17,7 @@ namespace SampleControls
     /// <summary>
     /// Control used to test the functionality of the PropertyGridHelpers Library
     /// </summary>
+    /// <seealso cref="System.Windows.Forms.UserControl" />
     /// <seealso cref="UserControl" />
     [ResourcePath(nameof(TestControl))]
     [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
@@ -304,6 +305,19 @@ namespace SampleControls
         {
             get; set;
         }
+
+        /// <summary>
+        /// Gets or sets the modal test value.
+        /// </summary>
+        /// <value>
+        /// The modal test value.
+        /// </value>
+        [Editor(typeof(ModalVisualizer<ManualTestForm>), typeof(UITypeEditor))]
+        [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_ModalTestValue")]
+        [LocalizedDisplayName("DisplayName_ModalTestValue")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public string ModalTestValue { get; set; } = "InitialValue";
 
         #region Support Code ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

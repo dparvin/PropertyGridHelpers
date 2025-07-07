@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -112,69 +112,9 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category_Layout" xml:space="preserve">
-    <value>Mise en page</value>
-  </data>
-  <data name="Category_TestItems" xml:space="preserve">
-    <value>Éléments d'essai</value>
-  </data>
-  <data name="Description_DateTime" xml:space="preserve">
-    <value>Un test avec un champ de date et heure.</value>
-  </data>
-  <data name="Description_Decimals" xml:space="preserve">
-    <value>Un test pour traiter une liste de décimales.</value>
-  </data>
-  <data name="Description_FileExtension" xml:space="preserve">
-    <value>Extension de l'image à ajouter au contrôle.</value>
-  </data>
-  <data name="Description_ImageToDisplay" xml:space="preserve">
-    <value>Image à ajouter au contrôle.</value>
-  </data>
-  <data name="Description_ModalTestValue" xml:space="preserve">
-    <value>Propriété pour tester le ModalVisualizer manuellement</value>
-  </data>
-  <data name="Description_Scrollbar" xml:space="preserve">
-    <value>Barres de défilement pour l’utilisateur.</value>
-  </data>
-  <data name="Description_Sizes" xml:space="preserve">
-    <value>Un test pour traiter une liste de tailles.</value>
-  </data>
-  <data name="Discription_Strings" xml:space="preserve">
-    <value>Un test pour traiter une liste de chaînes.</value>
-  </data>
-  <data name="DisplayName_DateTime" xml:space="preserve">
-    <value>Date d'essai</value>
-  </data>
-  <data name="DisplayName_Decimals" xml:space="preserve">
-    <value>Liste de décimales d'essai</value>
-  </data>
-  <data name="DisplayName_FileExtension" xml:space="preserve">
-    <value>Extension de l'image de ressource</value>
-  </data>
-  <data name="DisplayName_ImageToDisplay" xml:space="preserve">
-    <value>Image à afficher</value>
-  </data>
-  <data name="DisplayName_ModalTestValue" xml:space="preserve">
-    <value>Valeur de test modale</value>
-  </data>
-  <data name="DisplayName_Scrollbar" xml:space="preserve">
-    <value>Barres de défilement</value>
-  </data>
-  <data name="DisplayName_Sizes" xml:space="preserve">
-    <value>Liste de tailles d'essai</value>
-  </data>
-  <data name="DisplayName_Strings" xml:space="preserve">
-    <value>Liste de chaînes d'essai</value>
-  </data>
-  <data name="Horizontal_Scrollbar" xml:space="preserve">
-    <value>Barre de défilement horizontale</value>
-  </data>
-  <data name="Vertical_Scrollbar" xml:space="preserve">
-    <value>Barre de défilement verticale</value>
-  </data>
 </root>
