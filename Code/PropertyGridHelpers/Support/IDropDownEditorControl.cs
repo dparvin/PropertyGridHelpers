@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace PropertyGridHelpers.Support
 {
@@ -20,6 +22,22 @@ namespace PropertyGridHelpers.Support
         /// The value to edit or the value resulting from the edit operation.
         /// </value>
         object Value
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        ITypeDescriptorContext Context
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        CultureInfo Culture
         {
             get; set;
         }

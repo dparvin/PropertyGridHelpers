@@ -17,7 +17,6 @@ namespace SampleControls
     /// <summary>
     /// Control used to test the functionality of the PropertyGridHelpers Library
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.UserControl" />
     /// <seealso cref="UserControl" />
     [ResourcePath(nameof(TestControl))]
     [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
@@ -29,8 +28,9 @@ namespace SampleControls
         public TestControl()
         {
             InitializeComponent();
-            Scrollbars = ScrollBars.Both;
-            Scrollbars = ScrollBars.None;
+            var sbTemp = Scrollbars;
+            Scrollbars = sbTemp == ScrollBars.Both ? ScrollBars.None : ScrollBars.Both;
+            Scrollbars = sbTemp;
             lbl.Text = $"The main property to test here is the ScrollBars Property. There are other properties in the that use features of the PropertyGridHelpers in the Test Items group.\n{Assembly.GetAssembly(typeof(TestControl)).Location} - {Assembly.GetAssembly(typeof(TestControl)).ImageRuntimeVersion}";
             lbl.TextAlign = ContentAlignment.MiddleCenter;
         }
@@ -169,7 +169,7 @@ namespace SampleControls
         [LocalizedCategory("Category_TestItems")]
         [LocalizedDescription("Description_DateTime")]
         [LocalizedDisplayName("DisplayName_DateTime")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public DateTime TestDate
         {
             get; set;
@@ -220,7 +220,7 @@ namespace SampleControls
         [LocalizedDescription("Description_Decimal")]
         [LocalizedDisplayName("DisplayName_Decimal")]
         [Editor(typeof(DropDownVisualizer<CalculatorControl>), typeof(UITypeEditor))]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public decimal DecimalValue { get; set; } = 0;
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace SampleControls
         [LocalizedDisplayName("DisplayName_ResourcePath")]
         [Editor(typeof(ResourcePathEditor), typeof(UITypeEditor))]
         [TypeConverter(typeof(OnlySelectableTypeConverter))]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string ResourcePath
         {
             get; set;
@@ -283,9 +283,11 @@ namespace SampleControls
         /// The drive path.
         /// </value>
         [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_FileSystemPath")]
+        [LocalizedDisplayName("DisplayName_FileSystemPath")]
         [AutoCompleteSetup(AutoCompleteSource.FileSystem)]
         [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string FileSystemPath
         {
             get; set;
@@ -298,9 +300,11 @@ namespace SampleControls
         /// The name of the custom color.
         /// </value>
         [LocalizedCategory("Category_TestItems")]
+        [LocalizedDescription("Description_CustomColorName")]
+        [LocalizedDisplayName("DisplayName_CustomColorName")]
         [AutoCompleteSetup("Red", "Green", "Blue", "Yellow")]
         [Editor(typeof(AutoCompleteComboBoxEditor), typeof(UITypeEditor))]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string CustomColorName
         {
             get; set;
@@ -316,7 +320,7 @@ namespace SampleControls
         [LocalizedCategory("Category_TestItems")]
         [LocalizedDescription("Description_ModalTestValue")]
         [LocalizedDisplayName("DisplayName_ModalTestValue")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string ModalTestValue { get; set; } = "InitialValue";
 
         #region Support Code ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -36,44 +38,47 @@ namespace PropertyGridHelpers.Attributes
 #else
         }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LocalizedTextAttribute"/> class.
-    /// </summary>
-    /// <param name="resourceKey">
-    /// The key used to look up the localized string in the resource file.
-    /// </param>
-    protected LocalizedTextAttribute(string resourceKey) =>
-            ResourceKey = resourceKey;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocalizedTextAttribute"/> class.
+        /// </summary>
+        /// <param name="resourceKey">
+        /// The key used to look up the localized string in the resource file.
+        /// </param>
+        protected LocalizedTextAttribute(string resourceKey) =>
+                ResourceKey = resourceKey;
 #endif
 
         /// <summary>
         /// Resolves and retrieves the localized text for this attribute using
-        /// the provided target type's associated <see cref="ResourcePathAttribute"/>.
+        /// the provided target type's associated <see cref="ResourcePathAttribute" />.
         /// </summary>
-        /// <param name="targetType">
-        /// The type whose resource path is used to locate the resource class.
-        /// </param>
+        /// <param name="context">The context.</param>
+        /// <param name="culture">The culture.</param>
+        /// <param name="targetType">The type whose resource path is used to locate the resource class.</param>
         /// <returns>
-        /// The resolved localized string based on the <see cref="ResourceKey"/> and the
+        /// The resolved localized string based on the <see cref="ResourceKey" /> and the
         /// target type's resource path.
         /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if the <see cref="ResourcePathAttribute"/> is missing or if the
-        /// resource type cannot be located in the assembly.
+        /// <exception cref="System.InvalidOperationException">
+        /// ResourcePathAttribute not found on {targetType.FullName}
+        /// or
+        /// Resource type '{fullResourcePath}' not found in assembly '{rootNamespace}'
         /// </exception>
-        public string GetLocalizedText(Type targetType)
+        /// <exception cref="InvalidOperationException">Thrown if the <see cref="ResourcePathAttribute" /> is missing or if the
+        /// resource type cannot be located in the assembly.</exception>
+        public string GetLocalizedText(ITypeDescriptorContext context, CultureInfo culture, Type targetType)
         {
             // Retrieve the ResourcePathAttribute from the target type
-            var resourcePathAttr = (ResourcePathAttribute)GetCustomAttribute(targetType, typeof(ResourcePathAttribute)) ?? throw new InvalidOperationException($"ResourcePathAttribute not found on {targetType.FullName}");
+            var resourcePath = Support.Support.GetResourcePath(context, targetType);
 
-            Console.WriteLine($"ResourcePath: {resourcePathAttr.ResourcePath}");
+            Debug.WriteLine($"ResourcePath: {resourcePath}");
 
             // Get the namespace of the target type itself
             // Extract the root namespace (first segment of the namespace)
             var rootNamespace = targetType.Namespace.Split('.')[0];
 
             // Combine the assembly namespace with the resource path
-            var fullResourcePath = $"{rootNamespace}.{resourcePathAttr.ResourcePath}";
+            var fullResourcePath = $"{rootNamespace}.{resourcePath}";
             Console.WriteLine($"Computed ResourcePath: {fullResourcePath}");
 
             // Determine the resource source type dynamically
@@ -81,7 +86,7 @@ namespace PropertyGridHelpers.Attributes
                  ?? throw new InvalidOperationException($"Resource type '{fullResourcePath}' not found in assembly '{rootNamespace}'");
 
             // Call your existing method to get the localized string
-            return Support.Support.GetResourceString(ResourceKey, resourceSource);
+            return Support.Support.GetResourceString(ResourceKey, culture, resourceSource);
         }
 
         /// <summary>

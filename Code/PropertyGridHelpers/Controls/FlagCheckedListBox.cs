@@ -237,7 +237,7 @@ namespace PropertyGridHelpers.Controls
             foreach (var name in Enum.GetNames(enumType))
             {
                 var val = Enum.Parse(enumType, name);
-                var caption = Converter == null ? name : (string)Converter.ConvertTo(val, typeof(string));
+                var caption = Converter == null ? name : (string)Converter.ConvertTo(Context, Culture, val, typeof(string));
                 var intVal = (int)Convert.ChangeType(val, typeof(int), CultureInfo.CurrentCulture);
 
                 _ = Add(intVal, caption);
@@ -366,6 +366,26 @@ namespace PropertyGridHelpers.Controls
         {
             get => EnumValue;
             set => EnumValue = value is Enum e ? e : throw new ArgumentException("Value must be an enum");
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ITypeDescriptorContext Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public CultureInfo Culture
+        {
+            get;
+            set;
         }
     }
 }

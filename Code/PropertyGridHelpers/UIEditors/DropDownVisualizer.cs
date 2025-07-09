@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
@@ -85,6 +86,8 @@ namespace PropertyGridHelpers.UIEditors
             {
                 if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService edSvc)
                 {
+                    DropDownControl.Context = context;
+                    DropDownControl.Culture = CultureInfo.CurrentCulture;
                     DropDownControl.Value = value;
 
                     void OnValueCommitted(object s, EventArgs e) => edSvc.CloseDropDown();

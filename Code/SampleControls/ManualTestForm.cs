@@ -1,6 +1,7 @@
 ﻿using PropertyGridHelpers.Support;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace SampleControls
@@ -19,6 +20,26 @@ namespace SampleControls
         public object EditedValue
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ITypeDescriptorContext Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public CultureInfo Culture
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -77,7 +98,7 @@ namespace SampleControls
         /// In production implementations, it should display the form using <c>ShowDialog()</c>, while
         /// in unit tests, it can be overridden to simulate user interaction without displaying a window.
         /// </remarks>
-        public DialogResult ShowEditor() => this.ShowDialog();
+        public DialogResult ShowEditor() => ShowDialog();
 
         /// <summary>
         /// The text box

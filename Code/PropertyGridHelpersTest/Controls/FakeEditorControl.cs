@@ -1,6 +1,7 @@
 ﻿using PropertyGridHelpers.Support;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpersTest.Controls
@@ -19,6 +20,26 @@ namespace PropertyGridHelpersTest.Controls
         public object Value
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ITypeDescriptorContext Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public CultureInfo Culture
+        {
+            get;
+            set;
         }
 
         /// <summary>

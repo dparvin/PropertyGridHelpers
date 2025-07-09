@@ -607,7 +607,7 @@ namespace PropertyGridHelpersTest.net90.Support
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() =>
-                PropertyGridHelpers.Support.Support.GetResourceString(key, null));
+                PropertyGridHelpers.Support.Support.GetResourceString(key, null, null));
 
 #if NET8_0_OR_GREATER
             Assert.Equal("resourceSource", ex.ParamName);
@@ -626,7 +626,7 @@ namespace PropertyGridHelpersTest.net90.Support
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() =>
-                PropertyGridHelpers.Support.Support.GetResourceString("", null));
+                PropertyGridHelpers.Support.Support.GetResourceString("", null, null));
 
 #if NET8_0_OR_GREATER
             Assert.Equal("resourceKey", ex.ParamName);
@@ -646,7 +646,7 @@ namespace PropertyGridHelpersTest.net90.Support
             var resourceSource = typeof(Properties.Resources); // replace with your known .resx class
 
             // Act
-            var result = PropertyGridHelpers.Support.Support.GetResourceString(missingKey, resourceSource);
+            var result = PropertyGridHelpers.Support.Support.GetResourceString(missingKey, null, resourceSource);
 
             // Assert
 #if NET8_0_OR_GREATER
@@ -668,7 +668,7 @@ namespace PropertyGridHelpersTest.net90.Support
             PropertyGridHelpers.Support.Support.SetLanguage("es");
 
             // Act
-            var result = PropertyGridHelpers.Support.Support.GetResourceString(key, fakeResourceSource);
+            var result = PropertyGridHelpers.Support.Support.GetResourceString(key, null, fakeResourceSource);
 
             // Assert
 #if NET8_0_OR_GREATER

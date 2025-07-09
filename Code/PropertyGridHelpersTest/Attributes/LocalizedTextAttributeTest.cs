@@ -105,26 +105,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
         }
 
         /// <summary>
-        /// Test Class No Resource
-        /// </summary>
-        /// <remarks>
-        /// Test class with NO ResourcePathAttribute
-        /// </remarks>
-        private class TestClassNoResource
-        {
-            /// <summary>
-            /// Gets or sets the test property.
-            /// </summary>
-            /// <value>
-            /// The test property.
-            /// </value>
-            public string TestProperty
-            {
-                get; set;
-            }
-        }
-
-        /// <summary>
         /// Test Class Missing Resource
         /// </summary>
         /// <remarks>
@@ -176,7 +156,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
             var attribute = new TestLocalizedTextAttribute("TestKey");
 
             // Act
-            var result = attribute.GetLocalizedText(typeof(TestClass));
+            var result = attribute.GetLocalizedText(null, null, typeof(TestClass));
 
             // Assert
             Output($"result = {result}");
@@ -185,37 +165,6 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #else
             Assert.Equal("LocalizedValue", result);
 #endif
-        }
-
-        /// <summary>
-        /// Gets the localized text throws exception when resource path attribute missing.
-        /// </summary>
-        [Fact]
-        public void GetLocalizedText_ThrowsException_WhenResourcePathAttributeMissing()
-        {
-            // Arrange: Create an attribute instance.
-            var attribute = new TestLocalizedTextAttribute("TestKey");
-
-            // Act & Assert: Expect an exception because TestClassNoResource doesn't have ResourcePathAttribute.
-            var ex = Assert.Throws<InvalidOperationException>(() =>
-                attribute.GetLocalizedText(typeof(TestClassNoResource)));
-            Assert.Contains("ResourcePathAttribute not found", ex.Message);
-        }
-
-        /// <summary>
-        /// Gets the localized text throws exception when resource type not found.
-        /// </summary>
-        [Fact]
-        public void GetLocalizedText_ThrowsException_WhenResourceTypeNotFound()
-        {
-            // Arrange: Use a test class whose ResourcePath is invalid.
-            var attribute = new TestLocalizedTextAttribute("TestKey");
-
-            // Act & Assert: Expect an exception because the computed resource type won't be found.
-            var ex = Assert.Throws<InvalidOperationException>(() =>
-                attribute.GetLocalizedText(typeof(TestClassMissingResource)));
-            Assert.Contains("Resource type", ex.Message);
-            Assert.Contains("not found", ex.Message);
         }
 
         /// <summary>
@@ -268,6 +217,27 @@ namespace PropertyGridHelpersTest.net90.Attributes
             // Assert
             Assert.Null(attr);
             Output("Null was returned by the LocalizedTextAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the localized text throws when resource type not found with context.
+        /// </summary>
+        [Fact]
+        public void GetLocalizedText_Throws_WhenResourceTypeNotFound_WithContext()
+        {
+            // Arrange
+            var instance = new TestClassMissingResource();
+            var propDesc = TypeDescriptor.GetProperties(instance)[nameof(TestClassMissingResource.TestProperty)];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            var attr = new TestLocalizedTextAttribute("TestKey");
+
+            // Act & Assert
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+                attr.GetLocalizedText(context, null, typeof(TestClassMissingResource)));
+
+            Assert.Contains("Resource type", ex.Message);
+            Assert.Contains("not found", ex.Message);
         }
 
         #endregion

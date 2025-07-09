@@ -90,7 +90,9 @@ namespace PropertyGridHelpers.Converters
                         : ((EnumTextAttribute)dna).EnumText;
                 }
                 else
-                    results = ((LocalizedEnumTextAttribute)dna).GetLocalizedText(EnumType);
+                {
+                    results = ((LocalizedEnumTextAttribute)dna).GetLocalizedText(context, culture, EnumType);
+                }
 
                 return results;
             }

@@ -3,6 +3,7 @@ using PropertyGridHelpers.UIEditors;
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Controls
@@ -77,6 +78,26 @@ namespace PropertyGridHelpers.Controls
                     Text = value.ToString();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ITypeDescriptorContext Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public CultureInfo Culture
+        {
+            get;
+            set;
         }
 
         /// <summary>

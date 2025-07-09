@@ -12,7 +12,7 @@ namespace SampleControls
         /// <summary>
         /// The none
         /// </summary>
-        [EnumText("None")]
+        [LocalizedEnumText("None_Scrollbar")]
         None = 0,
         /// <summary>
         /// The Vertical Scrollbar
@@ -27,7 +27,7 @@ namespace SampleControls
         /// <summary>
         /// Both a horizontal scrollbar and a vertical scrollbar
         /// </summary>
-        [EnumText("Both")]
+        [LocalizedEnumText("Both_Scrollbar")]
         Both = Vertical + Horizontal,
     }
 }

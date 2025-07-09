@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -128,25 +129,27 @@ namespace PropertyGridHelpers.Support
         /// Retrieves a localized string from a resource file based on the specified resource key.
         /// </summary>
         /// <param name="resourceKey">The key identifying the resource string.</param>
+        /// <param name="culture">The culture.</param>
         /// <param name="resourceSource">The type of the resource class that contains the resource file.</param>
         /// <returns>
-        /// The localized string corresponding to <paramref name="resourceKey"/> from the specified <paramref
-        /// name="resourceSource"/> for the current culture. If the key is not found, the method returns the resource
+        /// The localized string corresponding to <paramref name="resourceKey" /> from the specified <paramref name="resourceSource" /> for the current culture. If the key is not found, the method returns the resource
         /// key itself.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="resourceKey"/> or <paramref name="resourceSource"/> is <c>null</c>.
+        /// <exception cref="System.ArgumentNullException">
+        /// resourceKey
+        /// or
+        /// resourceSource
         /// </exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey" /> or <paramref name="resourceSource" /> is <c>null</c>.</exception>
         /// <remarks>
-        /// This method uses a <see cref="ResourceManager"/> to retrieve the localized string based on the current
+        /// This method uses a <see cref="ResourceManager" /> to retrieve the localized string based on the current
         /// culture. If the resource key does not exist in the specified resource file, the method returns the key
         /// itself instead of throwing an exception.
         /// </remarks>
         /// <example>
         /// Example usage: <code> string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
-        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found</code>
-        /// </example>
-        public static string GetResourceString(string resourceKey, Type resourceSource)
+        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found</code></example>
+        public static string GetResourceString(string resourceKey, CultureInfo culture, Type resourceSource)
         {
             if (string.IsNullOrEmpty(resourceKey))
                 throw new ArgumentNullException(nameof(resourceKey));
@@ -162,7 +165,11 @@ namespace PropertyGridHelpers.Support
 
             try
             {
-                return resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
+                var result = resourceManager.GetString(resourceKey, culture ?? CultureInfo.CurrentCulture);
+                if (result == null)
+                    Debug.WriteLine($"[Localization] Missing resource key: '{resourceKey}' in {resourceSource.FullName}");
+
+                return result ?? resourceKey;
             }
             catch (MissingManifestResourceException)
             {
@@ -227,6 +234,14 @@ namespace PropertyGridHelpers.Support
                     if (propertyAttributes.FirstOrDefault() is ResourcePathAttribute directPropertyAttribute)
                         return directPropertyAttribute.ResourcePath;
                 }
+            }
+
+            // Check for ResourcePathAttribute on the class itself (the instance's type)
+            if (context?.Instance != null)
+            {
+                var classAttr = Attribute.GetCustomAttribute(context.Instance.GetType(), typeof(ResourcePathAttribute)) as ResourcePathAttribute;
+                if (classAttr != null)
+                    return classAttr.ResourcePath;
             }
 
             // Check if the type is an enum

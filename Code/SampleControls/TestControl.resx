@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Both_Scrollbar" xml:space="preserve">
+    <value>Both</value>
+  </data>
   <data name="Category_Layout" xml:space="preserve">
     <value>Layout</value>
   </data>
   <data name="Category_TestItems" xml:space="preserve">
     <value>Test Items</value>
+  </data>
+  <data name="Description_CustomColorName" xml:space="preserve">
+    <value>Select the color you want from the possible available.</value>
   </data>
   <data name="Description_DateTime" xml:space="preserve">
     <value>A test of having a DateTime field.</value>
@@ -132,11 +138,17 @@
   <data name="Description_FileExtension" xml:space="preserve">
     <value>Extension of the Image to add to control.</value>
   </data>
+  <data name="Description_FileSystemPath" xml:space="preserve">
+    <value>Select a path from your hard drive.</value>
+  </data>
   <data name="Description_ImageToDisplay" xml:space="preserve">
     <value>Image to add to control.</value>
   </data>
   <data name="Description_ModalTestValue" xml:space="preserve">
     <value>Property to test the ModalVisualizer manually</value>
+  </data>
+  <data name="Description_ResourcePath" xml:space="preserve">
+    <value>Select the path to the resource you want to use.</value>
   </data>
   <data name="Description_Scrollbar" xml:space="preserve">
     <value>Scrollbars to show for the user.</value>
@@ -147,6 +159,9 @@
   <data name="Discription_Strings" xml:space="preserve">
     <value>A test of processing a list of strings.</value>
   </data>
+  <data name="DisplayName_CustomColorName" xml:space="preserve">
+    <value>Custom Color Name</value>
+  </data>
   <data name="DisplayName_DateTime" xml:space="preserve">
     <value>Test Date</value>
   </data>
@@ -156,11 +171,17 @@
   <data name="DisplayName_FileExtension" xml:space="preserve">
     <value>Resource image extension</value>
   </data>
+  <data name="DisplayName_FileSystemPath" xml:space="preserve">
+    <value>File System Path</value>
+  </data>
   <data name="DisplayName_ImageToDisplay" xml:space="preserve">
     <value>Image To Display</value>
   </data>
   <data name="DisplayName_ModalTestValue" xml:space="preserve">
     <value>Modal Test Value</value>
+  </data>
+  <data name="DisplayName_ResourcePath" xml:space="preserve">
+    <value>Resource Path</value>
   </data>
   <data name="DisplayName_Scrollbar" xml:space="preserve">
     <value>Scroll Bars</value>
@@ -173,6 +194,9 @@
   </data>
   <data name="Horizontal_Scrollbar" xml:space="preserve">
     <value>Horizontal Scrollbar</value>
+  </data>
+  <data name="None_Scrollbar" xml:space="preserve">
+    <value>None</value>
   </data>
   <data name="Vertical_Scrollbar" xml:space="preserve">
     <value>Vertical Scrollbar</value>

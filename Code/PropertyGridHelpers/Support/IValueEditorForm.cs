@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Forms;
 
 namespace PropertyGridHelpers.Support
 {
@@ -16,6 +18,22 @@ namespace PropertyGridHelpers.Support
         /// Gets or sets the value being edited in the form.
         /// </summary>
         object EditedValue
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type descriptor context in which the control is being used.
+        /// </summary>
+        ITypeDescriptorContext Context
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the culture to use for localization or formatting.
+        /// </summary>
+        CultureInfo Culture
         {
             get; set;
         }

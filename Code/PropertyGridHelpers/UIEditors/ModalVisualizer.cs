@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace PropertyGridHelpers.UIEditors
@@ -60,6 +61,8 @@ namespace PropertyGridHelpers.UIEditors
 #endif
             {
                 form.EditedValue = value; // push initial value
+                form.Context = context; // set context for the form
+                form.Culture = CultureInfo.CurrentCulture; // set culture if available
                 if (form.ShowEditor() == DialogResult.OK)
                     return form.EditedValue; // get updated value
 
