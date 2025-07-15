@@ -1,0 +1,23 @@
+name: Enforce Issue Number in Commit Messages
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for issue references in commit messages
+        run: |
+          COMMITS=$(git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%s")
+          echo "Checking commits:"
+          echo "$COMMITS"
+          echo "$COMMITS" | grep -Eq '#[0-9]+' || {
+            echo "::error::❌ Commit messages must reference an issue (e.g., '#123')"
+            exit 1
+          }
