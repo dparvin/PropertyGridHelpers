@@ -80,6 +80,11 @@ namespace PropertyGridHelpersTest.net90.Attributes
             /// The test enum property.
             /// </value>
             public TestEnum TestEnumProperty { get; set; } = TestEnum.Test1;
+
+            /// <summary>
+            /// The not an enum
+            /// </summary>
+            public const int NotAnEnum = 999;
         }
 
         #endregion
@@ -282,7 +287,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
         [Fact]
         public void Get_ReturnsNull_WhenEnumParseFails()
         {
-            var fakeField = typeof(TestEnum).GetField("Empty"); // Field that is not part of an enum
+            var fakeField = typeof(TestClass).GetField(nameof(TestClass.NotAnEnum)); // Field that is not part of an enum
             var result2 = EnumTextAttribute.Get(fakeField);
 
             Assert.Null(result2);
