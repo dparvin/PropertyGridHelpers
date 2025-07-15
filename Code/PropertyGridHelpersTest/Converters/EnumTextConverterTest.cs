@@ -257,6 +257,18 @@ namespace PropertyGridHelpersTest.net90.Converters
         }
 
         /// <summary>
+        /// Converts from string returns enum name test.
+        /// </summary>
+        [Fact]
+        public void ConvertFromStringReturnsEnumNameTest()
+        {
+            var converter = new EnumTextConverter<TestEnums>();
+            var result = converter.ConvertFrom("All Entries");
+            Assert.Equal(TestEnums.AllEntries, result);
+            Output("ConvertTo returned the enum name as expected when no attribute is present");
+        }
+
+        /// <summary>
         /// Converts to string returns enum name when no attribute test.
         /// </summary>
         [Fact]

@@ -1,5 +1,6 @@
 ﻿using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Converters;
+using PropertyGridHelpers.Enums;
 using PropertyGridHelpers.Support;
 using PropertyGridHelpers.TypeDescriptionProviders;
 using PropertyGridHelpers.TypeDescriptors;
@@ -18,7 +19,7 @@ namespace SampleControls
     /// Control used to test the functionality of the PropertyGridHelpers Library
     /// </summary>
     /// <seealso cref="UserControl" />
-    [ResourcePath(nameof(TestControl))]
+    [ResourcePath(nameof(TestControl), resourceUsage: ResourceUsage.Strings)]
     [TypeDescriptionProvider(typeof(LocalizedTypeDescriptionProvider))]
     public partial class TestControl : UserControl
     {
@@ -117,7 +118,7 @@ namespace SampleControls
         [LocalizedDescription("Description_ImageToDisplay")]
         [LocalizedDisplayName("DisplayName_ImageToDisplay")]
         [Editor(typeof(ImageTextUIEditor<ImageTypes>), typeof(UITypeEditor))]
-        [ResourcePath("Properties.Resources")]
+        [ResourcePath("Properties.Resources", resourceUsage: ResourceUsage.Images)]
         [TypeConverter(typeof(EnumTextConverter<ImageTypes>))]
         [FileExtension(nameof(FileExtension))]
         [DefaultValue(ImageTypes.None)]
@@ -339,7 +340,7 @@ namespace SampleControls
 
             var propertyDescriptor = TypeDescriptor.GetProperties(this)[nameof(ImageTypes)];
             var context = new CustomTypeDescriptorContext(propertyDescriptor, this);
-            var resourcePath = Support.GetResourcePath(context, ImageTypes.GetType());
+            var resourcePath = Support.GetResourcePath(context, ImageTypes.GetType(), ResourceUsage.Images);
             var bounds = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
 
             pictureBox1.Image = ImageTextUIEditor.GetImageFromResource(

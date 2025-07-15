@@ -75,7 +75,7 @@ namespace PropertyGridHelpers.UIEditors
         public ImageTextUIEditor(Type type)
         {
             EnumType = type;
-            ResourcePath = Support.Support.GetResourcePath(null, type);
+            ResourcePath = Support.Support.GetResourcePath(null, type, ResourceUsage.Images);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace PropertyGridHelpers.UIEditors
         /// <param name="context">The Type Descriptor Context</param>
         public override bool GetPaintValueSupported(ITypeDescriptorContext context)
         {
-            ResourcePath = Support.Support.GetResourcePath(context, EnumType);
+            ResourcePath = Support.Support.GetResourcePath(context, EnumType, ResourceUsage.Images);
             FileExtension = Support.Support.GetFileExtension(context);
             return true;
         }

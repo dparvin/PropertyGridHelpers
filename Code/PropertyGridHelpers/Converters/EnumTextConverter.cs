@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using static System.ComponentModel.TypeConverter;
 
 namespace PropertyGridHelpers.Converters
@@ -90,9 +91,7 @@ namespace PropertyGridHelpers.Converters
                         : ((EnumTextAttribute)dna).EnumText;
                 }
                 else
-                {
                     results = ((LocalizedEnumTextAttribute)dna).GetLocalizedText(context, culture, EnumType);
-                }
 
                 return results;
             }
@@ -124,11 +123,21 @@ namespace PropertyGridHelpers.Converters
             object value)
         {
             if (value == null) return null;
-            if (value.GetType() == typeof(string))
+            if (value is string stringValue)
             {
-                foreach (var fi in EnumType.GetFields())
+                foreach (var fi in EnumType.GetFields(BindingFlags.Public | BindingFlags.Static))
                 {
-                    var dna = (EnumTextAttribute)Attribute.GetCustomAttribute(fi, typeof(EnumTextAttribute));
+                    // 1. Check LocalizedEnumTextAttribute
+                    var localized = LocalizedEnumTextAttribute.Get(fi);
+                    if (localized != null)
+                    {
+                        var localizedText = localized.GetLocalizedText(context, culture, EnumType);
+                        if (string.Equals(stringValue, localizedText, StringComparison.Ordinal))
+                            return Enum.Parse(EnumType, fi.Name);
+                    }
+
+                    // 2. Check EnumTextAttribute
+                    var dna = EnumTextAttribute.Get(fi);
 
                     if ((dna != null) && (string.Equals((string)value, dna.EnumText, StringComparison.Ordinal)))
                         return Enum.Parse(EnumType, fi.Name);
@@ -142,9 +151,9 @@ namespace PropertyGridHelpers.Converters
                     return enums.GetValue(0);
                 }
             }
-            else if (value.GetType() == typeof(int))
+            else if (value is int intValue)
             {
-                var s = Enum.GetName(EnumType, (int)value);
+                var s = Enum.GetName(EnumType, intValue);
                 var e = Enum.Parse(EnumType, s);
                 return e;
             }
@@ -169,9 +178,7 @@ namespace PropertyGridHelpers.Converters
             {
                 var enumType = context.PropertyDescriptor.PropertyType;
                 if (enumType.IsEnum)
-                {
                     return new StandardValuesCollection(Enum.GetValues(enumType));
-                }
             }
 
             return base.GetStandardValues(context);

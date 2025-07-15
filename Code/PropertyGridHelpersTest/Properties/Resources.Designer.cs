@@ -61,6 +61,15 @@ namespace PropertyGridHelpersTest.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Entries.
+        /// </summary>
+        internal static string AllEntries_EnumText {
+            get {
+                return ResourceManager.GetString("AllEntries_EnumText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to -- None --.
         /// </summary>
         internal static string Blank_Entry {

@@ -2,6 +2,8 @@
 using Xunit;
 using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
+using System;
+using PropertyGridHelpers.Enums;
 
 #if NET35
 using System.Diagnostics;
@@ -113,7 +115,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
         {
             // Arrange
             var instance = new TestClass();
-            var propDesc = TypeDescriptor.GetProperties(instance)["ResourceItem"];
+            var propDesc = TypeDescriptor.GetProperties(instance)[nameof(TestClass.ResourceItem)];
             var context = new CustomTypeDescriptorContext(propDesc, instance);
 
             // Act
@@ -123,6 +125,31 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Output($"DynamicPathSourceAttribute.PathPropertyName: {attr?.PathPropertyName}");
             Assert.NotNull(attr);
             Assert.NotEmpty(attr.PathPropertyName);
+        }
+
+        /// <summary>
+        /// Gets the throws exception when resource usage is none.
+        /// </summary>
+        [Fact]
+        public void Get_ThrowsException_WhenResourceUsageIsNone()
+        {
+            // Arrange
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)[nameof(TestClass.ResourceItem)];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            // Act & Assert: Should throw if ResourceUsage.None is passed (invalid)
+            var ex = Assert.Throws<ArgumentException>(() =>
+                DynamicPathSourceAttribute.Get(context, ResourceUsage.None));
+
+            // Assert
+            Output($"Returned Exception Message: {ex.Message}");
+            Assert.Contains("resourceUsage must not be None", ex.Message);
+#if NET35
+            Assert.Equal(0, string.Compare("resourceUsage", ex.ParamName));
+#else
+            Assert.Equal("resourceUsage", ex.ParamName);
+#endif
         }
 
         /// <summary>

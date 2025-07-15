@@ -195,7 +195,16 @@
   <data name="Horizontal_Scrollbar" xml:space="preserve">
     <value>Barra de desplazamiento horizontal</value>
   </data>
-  <data name="None_Scrollbar" xml:space="preserve">
+  <data name="ImageTypes_Happy" xml:space="preserve">
+    <value>Una imagen feliz</value>
+  </data>
+  <data name="ImageTypes_Neutral" xml:space="preserve">
+    <value>Una imagen neutral</value>
+  </data>
+  <data name="ImageTypes_Sad" xml:space="preserve">
+    <value>Una imagen triste</value>
+  </data>
+  <data name="None" xml:space="preserve">
     <value>Ambos</value>
   </data>
   <data name="Vertical_Scrollbar" xml:space="preserve">

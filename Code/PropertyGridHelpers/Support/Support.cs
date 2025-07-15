@@ -1,4 +1,5 @@
 ﻿using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Enums;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -135,11 +136,6 @@ namespace PropertyGridHelpers.Support
         /// The localized string corresponding to <paramref name="resourceKey" /> from the specified <paramref name="resourceSource" /> for the current culture. If the key is not found, the method returns the resource
         /// key itself.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// resourceKey
-        /// or
-        /// resourceSource
-        /// </exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="resourceKey" /> or <paramref name="resourceSource" /> is <c>null</c>.</exception>
         /// <remarks>
         /// This method uses a <see cref="ResourceManager" /> to retrieve the localized string based on the current
@@ -147,8 +143,12 @@ namespace PropertyGridHelpers.Support
         /// itself instead of throwing an exception.
         /// </remarks>
         /// <example>
-        /// Example usage: <code> string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
-        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found</code></example>
+        /// Example usage: 
+        /// <code> 
+        /// string message = GetResourceString("WelcomeMessage", typeof(Resources.Messages));
+        /// Console.WriteLine(message); // Outputs localized message or "WelcomeMessage" if not found
+        /// </code>
+        /// </example>
         public static string GetResourceString(string resourceKey, CultureInfo culture, Type resourceSource)
         {
             if (string.IsNullOrEmpty(resourceKey))
@@ -178,7 +178,8 @@ namespace PropertyGridHelpers.Support
         }
 
         /// <summary>
-        /// Determines the resource path based on the specified property or related data type.
+        /// Determines the resource path based on the specified property or related data type,
+        /// filtered by the specified <see cref="ResourceUsage" />.
         /// </summary>
         /// <param name="context">
         /// The type descriptor context, which provides metadata about the property and its container.
@@ -186,75 +187,98 @@ namespace PropertyGridHelpers.Support
         /// <param name="type">
         /// The data type associated with the resource, typically an enum or a property type.
         /// </param>
+        /// <param name="resourceUsage">
+        /// The kind of resource to resolve (e.g., <see cref="ResourceUsage.Strings"/>, 
+        /// <see cref="ResourceUsage.Images"/>). This helps determine the most appropriate resource path
+        /// when multiple paths are defined.
+        /// </param>
         /// <returns>
-        /// A string containing the resource path based on the provided property or type. If no applicable attributes
-        /// are found, the method returns the default resource path:  <c>"Properties.Resources"</c>.
+        /// A string containing the resource path based on the provided property or type.
+        /// If no applicable attributes are found, the method returns the default resource path: 
+        /// <c>"Properties.Resources"</c>.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="type" /> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if <paramref name="resourceUsage" /> is <see cref="ResourceUsage.None"/>.
+        /// </exception>
         /// <remarks>
-        /// This method searches for the resource path using the following order of precedence: <list
-        /// type="number"><item>If the property has a <see cref="DynamicPathSourceAttribute"/>, it retrieves the path 
-        /// from the referenced property specified in the attribute.</item><item>If the property has a <see
-        /// cref="ResourcePathAttribute"/>, it uses the specified path.</item><item>If the type (or its underlying
-        /// nullable type) is an enumeration and has a <see cref="ResourcePathAttribute"/>, it uses the path defined by
-        /// the attribute.</item><item>If none of the above conditions are met, it defaults to
-        /// <c>"Properties.Resources"</c>.</item></list>
+        /// This method searches for the resource path using the following order of precedence:
+        /// <list type="number">
+        /// <item>
+        /// If the property has a <see cref="DynamicPathSourceAttribute"/> matching the given 
+        /// <paramref name="resourceUsage"/>, it retrieves the path from the referenced property.
+        /// </item>
+        /// <item>
+        /// If the property or its type has a <see cref="ResourcePathAttribute"/> matching the specified 
+        /// <paramref name="resourceUsage"/>, it uses the defined path.
+        /// </item>
+        /// <item>
+        /// If the type (or its underlying nullable type) is an enumeration and has a matching 
+        /// <see cref="ResourcePathAttribute"/>, it uses the associated path.
+        /// </item>
+        /// <item>
+        /// If none of the above conditions are met, it defaults to <c>"Properties.Resources"</c>.
+        /// </item>
+        /// </list>
         /// </remarks>
         /// <example>
-        /// Example usage: <code> [ResourcePath("Custom.Resources")] public enum MyEnum { Value1, Value2 }  string path
-        /// = GetResourcePath(null, typeof(MyEnum)); Console.WriteLine(path); // Outputs: "Custom.Resources"</code>
+        /// Example usage with static path:
+        /// <code>
+        /// [ResourcePath("Custom.Resources", resourceUsage: ResourceUsage.Strings)]
+        /// public enum MyEnum 
+        /// { 
+        ///     Value1, 
+        ///     Value2 
+        /// }
+        /// 
+        /// string path = GetResourcePath(null, typeof(MyEnum), ResourceUsage.Strings);
+        /// Console.WriteLine(path); // Outputs: "Custom.Resources"
+        /// </code>
+        ///
+        /// Example usage with dynamic path:
+        /// <code>
+        /// [DynamicPathSource(nameof(MyResourcePath), ResourceUsage.Images)]
+        /// public MyEnum ImageSelector { get; set; }
+        ///
+        /// public string MyResourcePath => "Dynamic.Image.Resources";
+        /// </code>
         /// </example>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="type"/> is <c>null</c>.
-        /// </exception>
-        public static string GetResourcePath(ITypeDescriptorContext context, Type type)
+        public static string GetResourcePath(ITypeDescriptorContext context, Type type, ResourceUsage resourceUsage = ResourceUsage.All)
         {
             // Check the context for a dynamic path
             if (context?.Instance != null && context.PropertyDescriptor != null)
             {
-                // Check if the property has the DynamicPathSourceAttribute
-                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
-                if (Attribute.GetCustomAttribute(propertyInfo, typeof(DynamicPathSourceAttribute)) is DynamicPathSourceAttribute dynamicPathAttr)
+                // 1. Check for DynamicPathSourceAttribute for the given usage
+                var dynamicAttr = DynamicPathSourceAttribute.Get(context, resourceUsage);
+                if (dynamicAttr != null)
                 {
-                    // Find the referenced property
-                    var pathProperty = context.Instance.GetType().GetProperty(dynamicPathAttr.PathPropertyName);
-                    if (pathProperty.PropertyType == typeof(string))
-                        // Return the value of the referenced property
-                        return pathProperty.GetValue(context.Instance, null) as string;
+                    var sourceProp = context.Instance.GetType().GetProperty(dynamicAttr.PathPropertyName);
+                    if (sourceProp?.PropertyType == typeof(string))
+                        return sourceProp.GetValue(context.Instance, null) as string;
+                }
+                // 2. Check for ResourcePathAttribute for the given usage
+                var pathAttr = ResourcePathAttribute.Get(context, resourceUsage);
+                if (pathAttr != null)
+                    return pathAttr.ResourcePath;
+            }
+
+            // 3. Check for ResourcePathAttribute on the enum type (if applicable)
+            if (type != null)
+            {
+                var enumType = Nullable.GetUnderlyingType(type) ?? type;
+                if (enumType.IsEnum)
+                {
+                    var enumAttrs = enumType.GetCustomAttributes(typeof(ResourcePathAttribute), true)
+                                            .OfType<ResourcePathAttribute>();
+                    var enumAttr = enumAttrs.FirstOrDefault(attr => (attr.ResourceUsage & resourceUsage) != 0);
+                    if (enumAttr != null)
+                        return enumAttr.ResourcePath;
                 }
             }
 
-            // Check PropertyDescriptor for ResourcePathAttribute (only directly applied attributes)
-            if (context?.Instance != null && context.PropertyDescriptor != null)
-            {
-                var propertyInfo = context.Instance.GetType().GetProperty(context.PropertyDescriptor.Name);
-                if (propertyInfo != null)
-                {
-                    // Get attributes directly applied to the property
-                    var propertyAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ResourcePathAttribute));
-                    if (propertyAttributes.FirstOrDefault() is ResourcePathAttribute directPropertyAttribute)
-                        return directPropertyAttribute.ResourcePath;
-                }
-            }
-
-            // Check for ResourcePathAttribute on the class itself (the instance's type)
-            if (context?.Instance != null)
-            {
-                var classAttr = Attribute.GetCustomAttribute(context.Instance.GetType(), typeof(ResourcePathAttribute)) as ResourcePathAttribute;
-                if (classAttr != null)
-                    return classAttr.ResourcePath;
-            }
-
-            // Check if the type is an enum
-            if (type.IsEnum || (Nullable.GetUnderlyingType(type) is Type underlyingType && underlyingType.IsEnum))
-            {
-                // Determine the actual enum type to inspect for the attribute.
-                var enumType = type.IsEnum ? type : Nullable.GetUnderlyingType(type);
-
-                // Check for ResourcePathAttribute on the enum type
-                if (Attribute.GetCustomAttribute(enumType, typeof(ResourcePathAttribute)) is ResourcePathAttribute enumAttribute)
-                    return enumAttribute.ResourcePath;
-            }
-            // Default resource path
+            // 4. Fallback default
             return "Properties.Resources";
         }
 

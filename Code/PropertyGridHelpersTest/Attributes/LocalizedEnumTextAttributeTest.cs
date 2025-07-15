@@ -3,6 +3,7 @@ using Xunit;
 using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpersTest.Enums;
+using System.Reflection;
 
 #if NET35
 using Xunit.Extensions;
@@ -96,6 +97,11 @@ namespace PropertyGridHelpersTest.net90.Attributes
             /// The item without attribute.
             /// </value>
             public TestEnum ItemWithoutAttribute { get; set; } = TestEnum.Two;
+
+            /// <summary>
+            /// The not enum field
+            /// </summary>
+            public string NotEnumField;
         }
 
         #endregion
@@ -197,6 +203,28 @@ namespace PropertyGridHelpersTest.net90.Attributes
             // Assert
             Assert.Null(attr);
             Output("Null was returned by the LocalizedEnumTextAttribute.Get call.");
+        }
+
+        /// <summary>
+        /// Gets the returns null when field information is null.
+        /// </summary>
+        [Fact]
+        public void Get_ReturnsNull_WhenFieldInfoIsNull()
+        {
+            var result = LocalizedEnumTextAttribute.Get((FieldInfo)null);
+            Assert.Null(result);
+        }
+
+        /// <summary>
+        /// Gets the returns null when enum parse fails.
+        /// </summary>
+        [Fact]
+        public void Get_ReturnsNull_WhenEnumParseFails()
+        {
+            var fakeField = typeof(TestEnum).GetField(nameof(TestClass.NotEnumField)); // Field that is not part of an enum
+            var result1 = LocalizedEnumTextAttribute.Get(fakeField);
+
+            Assert.Null(result1);
         }
 
         #endregion

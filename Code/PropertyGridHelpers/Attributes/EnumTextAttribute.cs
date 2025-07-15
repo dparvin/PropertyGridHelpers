@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace PropertyGridHelpers.Attributes
 {
@@ -107,6 +108,27 @@ namespace PropertyGridHelpers.Attributes
             value == null ? null
                 : Support.Support.GetFirstCustomAttribute<EnumTextAttribute>(
                     Support.Support.GetEnumField(value));
+
+        /// <summary>
+        /// Gets the specified FieldInfo.
+        /// </summary>
+        /// <param name="fi">The FieldInfo.</param>
+        /// <returns></returns>
+        public static EnumTextAttribute Get(FieldInfo fi)
+        {
+            if (fi == null || !fi.IsLiteral || !fi.IsStatic)
+                return null;
+
+            try
+            {
+                var enumValue = (Enum)Enum.Parse(fi.FieldType, fi.Name);
+                return Get(enumValue);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// Retrieves the <see cref="EnumTextAttribute"/> using the supplied type descriptor context.

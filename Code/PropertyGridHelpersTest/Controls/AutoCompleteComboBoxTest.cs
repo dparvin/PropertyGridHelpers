@@ -72,8 +72,12 @@ namespace PropertyGridHelpersTest.net90.Controls
                     var ctl = new AutoCompleteComboBox() { Text = "Test" };
 #if NET35
                     Assert.Equal("Test", ctl.Value);
+                    Assert.Null(ctl.Culture);
+                    Assert.Null(ctl.Context);
 #else
                     Assert.Equal("Test", ctl.Text);
+                    Assert.Null(ctl.Culture);
+                    Assert.Null(ctl.Context);
 #endif
                 }
                 catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Enums;
 using PropertyGridHelpers.TypeDescriptors;
 using System;
 using System.ComponentModel;
@@ -261,6 +262,29 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.Equal(0, string.Compare("FromClass", result.ResourcePath));
 #else
             Assert.Equal("FromClass", result.ResourcePath);
+#endif
+        }
+
+        /// <summary>
+        /// Gets the throws exception when resource usage is none.
+        /// </summary>
+        [Fact]
+        public void Get_ThrowsException_WhenResourceUsageIsNone()
+        {
+            // Arrange
+            var context = CustomTypeDescriptorContext.Create(typeof(AnnotatedClass), nameof(AnnotatedClass.Property));
+
+            // Act & Assert: Should throw if ResourceUsage.None is passed (invalid)
+            var ex = Assert.Throws<ArgumentException>(() =>
+                ResourcePathAttribute.Get(context, ResourceUsage.None));
+
+            // Assert
+            Output($"Returned Exception Message: {ex.Message}");
+            Assert.Contains("resourceUsage must not be None", ex.Message);
+#if NET35
+            Assert.Equal(0, string.Compare("resourceUsage", ex.ParamName));
+#else
+            Assert.Equal("resourceUsage", ex.ParamName);
 #endif
         }
 

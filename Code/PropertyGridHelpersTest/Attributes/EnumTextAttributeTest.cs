@@ -2,6 +2,8 @@
 using Xunit;
 using System.ComponentModel;
 using PropertyGridHelpers.TypeDescriptors;
+using System.Reflection;
+
 
 #if NET35
 using System.Diagnostics;
@@ -262,6 +264,28 @@ namespace PropertyGridHelpersTest.net90.Attributes
             Assert.False(enumText);
 
             Output("EnumText does not exist when a null is passed as expected");
+        }
+
+        /// <summary>
+        /// Gets the returns null when field information is null.
+        /// </summary>
+        [Fact]
+        public void Get_ReturnsNull_WhenFieldInfoIsNull()
+        {
+            var result = EnumTextAttribute.Get((FieldInfo)null);
+            Assert.Null(result);
+        }
+
+        /// <summary>
+        /// Gets the returns null when enum parse fails.
+        /// </summary>
+        [Fact]
+        public void Get_ReturnsNull_WhenEnumParseFails()
+        {
+            var fakeField = typeof(TestEnum).GetField("Empty"); // Field that is not part of an enum
+            var result2 = EnumTextAttribute.Get(fakeField);
+
+            Assert.Null(result2);
         }
 
         /// <summary>

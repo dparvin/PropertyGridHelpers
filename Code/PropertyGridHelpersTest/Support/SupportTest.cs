@@ -2,6 +2,7 @@
 
 using PropertyGridHelpers;
 using PropertyGridHelpers.Attributes;
+using PropertyGridHelpers.Enums;
 using PropertyGridHelpers.TypeDescriptors;
 using PropertyGridHelpersTest.Enums;
 using System;
@@ -32,7 +33,7 @@ namespace PropertyGridHelpersTest.net80.Support
 namespace PropertyGridHelpersTest.net90.Support
 #endif
 {
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
     /// <summary>
     /// Class for testing the ImageTextUIEditor class
     /// </summary>
@@ -46,7 +47,7 @@ namespace PropertyGridHelpersTest.net90.Support
 #endif
     {
 #if NET35
-#elif NET8_0_OR_GREATER
+#elif NET5_0_OR_GREATER
         private readonly ITestOutputHelper OutputHelper = output;
 #else
         private readonly ITestOutputHelper OutputHelper;
@@ -59,7 +60,7 @@ namespace PropertyGridHelpersTest.net90.Support
         public SupportTest()
         {
         }
-#elif NET8_0_OR_GREATER
+#elif NET5_0_OR_GREATER
 #else
         /// <summary>
         /// Enum Text Converter Test
@@ -470,6 +471,7 @@ namespace PropertyGridHelpersTest.net90.Support
         [InlineData(nameof(TestItemWithBitmapImage), "TestItemWithBitmapImage.Resources", "Test with a fixed Resource Path")]
         [InlineData(nameof(TestItemWithImage), "TestResourcePath.Resources", "Test a DynamicResourcePath option")]
         [InlineData(nameof(TestItemWithResource), "Images", "Test with the Resource Path on the Enum")]
+        [InlineData(nameof(TestPropertyPointingToMissingProperty), "Properties.Resources", "Test that has a dynamic path source that is pointing to an invalid property reference")]
         public void GetResourcePath_ShouldReturnResourcePath(
             string PropertyName,
             string ExpectedPath,
@@ -744,6 +746,18 @@ namespace PropertyGridHelpersTest.net90.Support
         [DynamicPathSource(nameof(TestResourcePathInt))]
         [FileExtension(nameof(ImageFileExtension))]
         public TestEnum TestItemNonString { get; set; } = TestEnum.ItemWithImage;
+
+        /// <summary>
+        /// Gets or sets the test property pointing to missing property.
+        /// </summary>
+        /// <value>
+        /// The test property pointing to missing property.
+        /// </value>
+        [DynamicPathSource("MissingProperty", ResourceUsage.Strings)]
+        public string TestPropertyPointingToMissingProperty
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the test item with bitmap image.

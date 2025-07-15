@@ -12,7 +12,7 @@ namespace SampleControls
         /// <summary>
         /// The none
         /// </summary>
-        [LocalizedEnumText("None_Scrollbar")]
+        [LocalizedEnumText("None")]
         None = 0,
         /// <summary>
         /// The Vertical Scrollbar

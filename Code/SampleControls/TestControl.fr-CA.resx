@@ -195,7 +195,16 @@
   <data name="Horizontal_Scrollbar" xml:space="preserve">
     <value>Barre de défilement horizontale</value>
   </data>
-  <data name="None_Scrollbar" xml:space="preserve">
+  <data name="ImageTypes_Happy" xml:space="preserve">
+    <value>Une image joyeuse</value>
+  </data>
+  <data name="ImageTypes_Neutral" xml:space="preserve">
+    <value>Une image neutre</value>
+  </data>
+  <data name="ImageTypes_Sad" xml:space="preserve">
+    <value>Une image triste</value>
+  </data>
+  <data name="None" xml:space="preserve">
     <value>Les deux</value>
   </data>
   <data name="Vertical_Scrollbar" xml:space="preserve">

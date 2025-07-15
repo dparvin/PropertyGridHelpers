@@ -69,7 +69,7 @@ namespace PropertyGridHelpers.Attributes
         public string GetLocalizedText(ITypeDescriptorContext context, CultureInfo culture, Type targetType)
         {
             // Retrieve the ResourcePathAttribute from the target type
-            var resourcePath = Support.Support.GetResourcePath(context, targetType);
+            var resourcePath = Support.Support.GetResourcePath(context, targetType, Enums.ResourceUsage.Strings);
 
             Debug.WriteLine($"ResourcePath: {resourcePath}");
 
