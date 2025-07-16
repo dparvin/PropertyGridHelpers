@@ -594,6 +594,25 @@ namespace PropertyGridHelpersTest.net90.Support
 #endif
         }
 
+        /// <summary>
+        /// Gets the resource path returns null when dynamic path source points to missing property.
+        /// </summary>
+        [Fact]
+        public void GetResourcePath_ReturnsNull_WhenDynamicPathSourcePointsToMissingProperty()
+        {
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)[nameof(TestClass.TestPropertyPointingToMissingProperty)];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            var result = PropertyGridHelpers.Support.Support.GetResourcePath(context, typeof(string), ResourceUsage.Strings);
+
+#if NET35
+            Assert.Equal(0, string.Compare("Properties.Resources", result)); // Falls back to default
+#else
+            Assert.Equal("Properties.Resources", result); // Falls back to default
+#endif
+        }
+
         #endregion
 
         #region GetResourceString Tests ^^^^^^^^^^^^^^^^^^^
@@ -696,6 +715,18 @@ namespace PropertyGridHelpersTest.net90.Support
             /// The test enum.
             /// </value>
             public TestEnum TestEnum { get; set; } = TestEnum.ItemWithImage;
+
+            /// <summary>
+            /// Gets or sets the test property pointing to missing property.
+            /// </summary>
+            /// <value>
+            /// The test property pointing to missing property.
+            /// </value>
+            [DynamicPathSource("MissingProperty", ResourceUsage.Strings)]
+            public string TestPropertyPointingToMissingProperty
+            {
+                get; set;
+            }
         }
 
         /// <summary>
