@@ -21,6 +21,8 @@ namespace PropertyGridHelpersTest.net481.TypeDescriptionProviders
 namespace PropertyGridHelpersTest.net80.TypeDescriptionProviders
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.TypeDescriptionProviders
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.TypeDescriptionProviders
 #endif
 {
 #if NET8_0_OR_GREATER

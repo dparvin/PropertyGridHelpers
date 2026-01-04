@@ -1,6 +1,5 @@
 ﻿// Ignore Spelling: Nullable
 
-using PropertyGridHelpers;
 using PropertyGridHelpers.Attributes;
 using PropertyGridHelpers.Enums;
 using PropertyGridHelpers.TypeDescriptors;
@@ -31,6 +30,8 @@ namespace PropertyGridHelpersTest.net481.Support
 namespace PropertyGridHelpersTest.net80.Support
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Support
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Support
 #endif
 {
 #if NET5_0_OR_GREATER

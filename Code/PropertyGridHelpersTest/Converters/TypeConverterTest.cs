@@ -24,8 +24,9 @@ namespace PropertyGridHelpersTest.net481.Converters
 namespace PropertyGridHelpersTest.net80.Converters
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Converters
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Converters
 #endif
-
 {
     /// <summary>
     /// Tests for the type converter

@@ -22,6 +22,8 @@ namespace PropertyGridHelpersTest.net481.TypeDescriptors
 namespace PropertyGridHelpersTest.net80.TypeDescriptors
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.TypeDescriptors
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.TypeDescriptors
 #endif
 {
 #if NET8_0_OR_GREATER

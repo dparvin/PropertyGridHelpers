@@ -25,6 +25,8 @@ namespace PropertyGridHelpersTest.net481.PropertyDescriptors
 namespace PropertyGridHelpersTest.net80.PropertyDescriptors
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.PropertyDescriptors
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.PropertyDescriptors
 #endif
 {
     /// <summary>

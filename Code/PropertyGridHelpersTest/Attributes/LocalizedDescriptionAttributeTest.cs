@@ -24,6 +24,8 @@ namespace PropertyGridHelpersTest.net481.Attributes
 namespace PropertyGridHelpersTest.net80.Attributes
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Attributes
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 {
 #if NET35
@@ -103,7 +105,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #if NET35
             Assert.Equal(0, string.Compare(Some_Resource_Key, attribute.ResourceKey));
 #else
-            Assert.Equal(Some_Resource_Key, attribute.ResourceKey); 
+            Assert.Equal(Some_Resource_Key, attribute.ResourceKey);
 #endif
             Output($"The returned Category resource key is: {attribute.ResourceKey}");
         }

@@ -188,35 +188,38 @@ namespace PropertyGridHelpers.Support
         /// The data type associated with the resource, typically an enum or a property type.
         /// </param>
         /// <param name="resourceUsage">
-        /// The kind of resource to resolve (e.g., <see cref="ResourceUsage.Strings"/>, 
-        /// <see cref="ResourceUsage.Images"/>). This helps determine the most appropriate resource path
+        /// The kind of resource to resolve (e.g., <see cref="ResourceUsage.Strings" />,
+        /// <see cref="ResourceUsage.Images" />). This helps determine the most appropriate resource path
         /// when multiple paths are defined.
+        /// </param>
+        /// <param name="throwOnError">
+        /// if set to <c>true</c> throw on error when the Dynamic Path Attribute is not setup correctly.
         /// </param>
         /// <returns>
         /// A string containing the resource path based on the provided property or type.
-        /// If no applicable attributes are found, the method returns the default resource path: 
+        /// If no applicable attributes are found, the method returns the default resource path:
         /// <c>"Properties.Resources"</c>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="type" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="resourceUsage" /> is <see cref="ResourceUsage.None"/>.
+        /// Thrown if <paramref name="resourceUsage" /> is <see cref="ResourceUsage.None" />.
         /// </exception>
         /// <remarks>
         /// This method searches for the resource path using the following order of precedence:
         /// <list type="number">
         /// <item>
-        /// If the property has a <see cref="DynamicPathSourceAttribute"/> matching the given 
-        /// <paramref name="resourceUsage"/>, it retrieves the path from the referenced property.
+        /// If the property has a <see cref="DynamicPathSourceAttribute" /> matching the given
+        /// <paramref name="resourceUsage" />, it retrieves the path from the referenced property.
         /// </item>
         /// <item>
-        /// If the property or its type has a <see cref="ResourcePathAttribute"/> matching the specified 
-        /// <paramref name="resourceUsage"/>, it uses the defined path.
+        /// If the property or its type has a <see cref="ResourcePathAttribute" /> matching the specified
+        /// <paramref name="resourceUsage" />, it uses the defined path.
         /// </item>
         /// <item>
-        /// If the type (or its underlying nullable type) is an enumeration and has a matching 
-        /// <see cref="ResourcePathAttribute"/>, it uses the associated path.
+        /// If the type (or its underlying nullable type) is an enumeration and has a matching
+        /// <see cref="ResourcePathAttribute" />, it uses the associated path.
         /// </item>
         /// <item>
         /// If none of the above conditions are met, it defaults to <c>"Properties.Resources"</c>.
@@ -226,37 +229,53 @@ namespace PropertyGridHelpers.Support
         /// <example>
         /// Example usage with static path:
         /// <code>
-        /// [ResourcePath("Custom.Resources", resourceUsage: ResourceUsage.Strings)]
-        /// public enum MyEnum 
-        /// { 
-        ///     Value1, 
-        ///     Value2 
-        /// }
-        /// 
-        /// string path = GetResourcePath(null, typeof(MyEnum), ResourceUsage.Strings);
-        /// Console.WriteLine(path); // Outputs: "Custom.Resources"
+        ///     [ResourcePath("Custom.Resources", resourceUsage: ResourceUsage.Strings)]
+        ///     public enum MyEnum
+        ///     {
+        ///         Value1,
+        ///         Value2
+        ///     }
+        ///     
+        ///     string path = GetResourcePath(null, typeof(MyEnum), ResourceUsage.Strings);
+        ///     Console.WriteLine(path); // Outputs: "Custom.Resources"
         /// </code>
-        ///
+        /// 
         /// Example usage with dynamic path:
         /// <code>
-        /// [DynamicPathSource(nameof(MyResourcePath), ResourceUsage.Images)]
-        /// public MyEnum ImageSelector { get; set; }
-        ///
-        /// public string MyResourcePath => "Dynamic.Image.Resources";
+        ///     [DynamicPathSource(nameof(MyResourcePath), ResourceUsage.Images)]
+        ///     public MyEnum ImageSelector { get; set; }
+        ///     
+        ///     public string MyResourcePath =&gt; "Dynamic.Image.Resources";
         /// </code>
         /// </example>
-        public static string GetResourcePath(ITypeDescriptorContext context, Type type, ResourceUsage resourceUsage = ResourceUsage.All)
+        public static string GetResourcePath(
+            ITypeDescriptorContext context,
+            Type type,
+            ResourceUsage resourceUsage = ResourceUsage.All,
+            bool throwOnError = false)
         {
             // Check the context for a dynamic path
-            if (context?.Instance != null && context.PropertyDescriptor != null)
+            if (context?.Instance != null &&
+                context.PropertyDescriptor != null)
             {
                 // 1. Check for DynamicPathSourceAttribute for the given usage
                 var dynamicAttr = DynamicPathSourceAttribute.Get(context, resourceUsage);
                 if (dynamicAttr != null)
                 {
                     var sourceProp = context.Instance.GetType().GetProperty(dynamicAttr.PathPropertyName);
-                    if (sourceProp?.PropertyType == typeof(string))
-                        return sourceProp.GetValue(context.Instance, null) as string;
+                    if (sourceProp == null)
+                    {
+                        if (throwOnError)
+                            throw new MissingMemberException($"The '{dynamicAttr.PathPropertyName}' property is not defined in the '{context.Instance.GetType()}' class.");
+                    }
+                    else
+                    {
+                        if (sourceProp.PropertyType == typeof(string))
+                            return sourceProp.GetValue(context.Instance, null) as string;
+                        else if (throwOnError)
+                            throw new InvalidOperationException($"The property '{dynamicAttr.PathPropertyName}' on type '{context.Instance.GetType()}' must be of type string.");
+                    }
+
                 }
                 // 2. Check for ResourcePathAttribute for the given usage
                 var pathAttr = ResourcePathAttribute.Get(context, resourceUsage);

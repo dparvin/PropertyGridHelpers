@@ -20,6 +20,8 @@ namespace PropertyGridHelpersTest.net481.Controls
 namespace PropertyGridHelpersTest.net80.Controls
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Controls
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Controls
 #endif
 {
     /// <summary>

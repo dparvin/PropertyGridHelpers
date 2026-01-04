@@ -38,6 +38,14 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.17763.0|AnyCPU'">
+    <WarningLevel>5</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.17763.0|AnyCPU'">
+    <WarningLevel>5</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.17763.0|AnyCPU'">
     <WarningLevel>5</WarningLevel>
   </PropertyGroup>
@@ -94,6 +102,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows10.0.17763.0'">
+    <PackageReference Include="System.ValueTuple" Version="4.6.1" />
+    <Reference Remove="WindowsBase" />
+    <Reference Remove="WindowsFormsIntegration" />
+    <Reference Remove="PresentationCore" />
+    <Reference Remove="PresentationFramework" />
+    <Reference Remove="ReachFramework" />
+    <Reference Remove="System.Printing" />
+    <Reference Remove="UIAutomationProvider" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.17763.0'">
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
     <Reference Remove="WindowsBase" />
@@ -143,6 +162,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Versioning.Common" Version="1.0.15" />
+    <PackageReference Include="EventLogHelper" Version="2025.11.16.1" />
+    <PackageReference Include="Versioning.Common" Version="1.0.17" />
   </ItemGroup>
 </Project>

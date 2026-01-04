@@ -26,6 +26,8 @@ namespace PropertyGridHelpersTest.net481.Attributes
 namespace PropertyGridHelpersTest.net80.Attributes
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Attributes
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 {
 #if NET8_0_OR_GREATER
@@ -270,7 +272,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #if NET35 || NET452
             var attribute = new AutoCompleteSetupAttribute(new string[0]);
 #elif NET5_0_OR_GREATER
-                    var attribute = new AutoCompleteSetupAttribute([]);
+            var attribute = new AutoCompleteSetupAttribute([]);
 #else
                     var attribute = new AutoCompleteSetupAttribute(Array.Empty<string>());
 #endif
@@ -466,7 +468,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #if NET35
             Assert.Equal(0, string.Compare(expectedOutput, attribute.ToString()));
 #else
-                    Assert.Equal(expectedOutput, attribute.ToString());
+            Assert.Equal(expectedOutput, attribute.ToString());
 #endif
             Assert.Equal(AutoCompleteSetupAttribute.SourceMode.Provider, sourceMode);
         }

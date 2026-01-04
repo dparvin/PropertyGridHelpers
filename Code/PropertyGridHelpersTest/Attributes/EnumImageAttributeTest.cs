@@ -23,6 +23,8 @@ namespace PropertyGridHelpersTest.net481.Attributes
 namespace PropertyGridHelpersTest.net80.Attributes
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Attributes
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 {
     /// <summary>
@@ -226,7 +228,7 @@ namespace PropertyGridHelpersTest.net90.Attributes
 #if NET35
             Assert.Equal(0, string.Compare("TestItem1", enumImage));
 #else
-            Assert.Equal("TestItem1",enumImage);
+            Assert.Equal("TestItem1", enumImage);
 #endif
 
             Output("EnumImage exists as expected");

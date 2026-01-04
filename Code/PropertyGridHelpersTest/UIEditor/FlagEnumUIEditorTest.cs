@@ -30,6 +30,8 @@ namespace PropertyGridHelpersTest.net481.UIEditor
 namespace PropertyGridHelpersTest.net80.UIEditor
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.UIEditor
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.UIEditor
 #endif
 {
     /// <summary>
@@ -59,7 +61,7 @@ namespace PropertyGridHelpersTest.net90.UIEditor
 #else
             using (var editor = new FlagEnumUIEditor())
 #endif
-                Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
+            Assert.Null(editor.EditValue(null, null, TestEnums.FirstEntry));
             Output(Resources.EditValueNull);
         }
 

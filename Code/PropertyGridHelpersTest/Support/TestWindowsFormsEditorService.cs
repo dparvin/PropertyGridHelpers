@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms.Design;
+﻿using PropertyGridHelpers.Controls;
 using System.Windows.Forms;
-using PropertyGridHelpers.Controls;
+using System.Windows.Forms.Design;
 #if NET35
 using PropertyGridHelpersTest.net35.UIEditor;
 #elif NET452
@@ -19,14 +15,16 @@ using PropertyGridHelpersTest.net481.UIEditor;
 using PropertyGridHelpersTest.net80.UIEditor;
 #elif NET9_0
 using PropertyGridHelpersTest.net90.UIEditor;
+#elif NET10_0
+using PropertyGridHelpersTest.net100.UIEditor;
 #endif
 
 namespace PropertyGridHelpersTest.Support
 {
     /// <summary>
-    /// 
+    /// Test implementation of <see cref="IWindowsFormsEditorService"/>
     /// </summary>
-    /// <seealso cref="System.Windows.Forms.Design.IWindowsFormsEditorService" />
+    /// <seealso cref="IWindowsFormsEditorService" />
     public class TestWindowsFormsEditorService : IWindowsFormsEditorService
     {
         /// <summary>
@@ -49,10 +47,8 @@ namespace PropertyGridHelpersTest.Support
             LastShownControl = control;
 
             if (control is FlagCheckedListBox flagListBox)
-            {
                 // Simulate user selection in FlagCheckedListBox
                 flagListBox.EnumValue = FlagEnumUIEditorTest.TestEnums.SecondEntry;
-            }
         }
 
         /// <summary>
@@ -69,6 +65,8 @@ namespace PropertyGridHelpersTest.Support
         /// <param name="dialog">The dialog.</param>
         public void ShowDialog(Form dialog)
         {
+            if (dialog == null)
+                return;
             // Simulate showing a dialog if necessary
         }
 

@@ -28,6 +28,8 @@ namespace PropertyGridHelpersTest.net481.UIEditor
 namespace PropertyGridHelpersTest.net80.UIEditor
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.UIEditor
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.UIEditor
 #endif
 {
 #if NET8_0_OR_GREATER

@@ -22,6 +22,8 @@ namespace PropertyGridHelpersTest.net481.Attributes
 namespace PropertyGridHelpersTest.net80.Attributes
 #elif NET9_0
 namespace PropertyGridHelpersTest.net90.Attributes
+#elif NET10_0
+namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 {
 #if NET8_0_OR_GREATER
