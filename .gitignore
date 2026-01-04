@@ -6,5 +6,5 @@
 *.user
 /Code/Sandcastle/*.log
 /docs-md
-/PropertyGridHelpersTest/CoverageReport
-/PropertyGridHelpersTest/coverage
+/Code/PropertyGridHelpersTest/coverage/
+/Code/PropertyGridHelpersTest/CoverageReport/
