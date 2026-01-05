@@ -614,6 +614,55 @@ namespace PropertyGridHelpersTest.net100.Support
 #endif
         }
 
+        /// <summary>
+        /// Gets the resource path returns and exception when dynamic path source points to missing property.
+        /// </summary>
+        [Fact]
+        public void GetResourcePath_ThrowsMissingMemberException_WhenDynamicPathSourcePointsToMissingProperty()
+        {
+            var instance = new TestClass();
+            var propDesc = TypeDescriptor.GetProperties(instance)[nameof(TestClass.TestPropertyPointingToMissingProperty)];
+            var context = new CustomTypeDescriptorContext(propDesc, instance);
+
+            var ex = Assert.Throws<MissingMemberException>(() =>
+                PropertyGridHelpers.Support.Support.GetResourcePath(
+                    context,
+                    typeof(string),
+                    ResourceUsage.Strings,
+                    throwOnError: true));
+
+            Output(ex.Message);
+            Assert.Contains("property is not defined", ex.Message); // Falls back to default
+        }
+
+        /// <summary>
+        /// Gets the resource path should invalid operation exception.
+        /// </summary>
+        [Fact]
+        public void GetResourcePath_ShouldInvalidOperationException()
+        {
+            string PropertyName = nameof(TestItemNonString);
+            // Arrange
+            var PropertyDescriptor = TypeDescriptor.GetProperties(this)[PropertyName];
+            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+
+            // Get the type of the property
+            var propertyType = PropertyDescriptor.PropertyType;
+
+            // Act
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+                PropertyGridHelpers.Support.Support.GetResourcePath(context,
+                                                                    propertyType,
+                                                                    resourceUsage: ResourceUsage.All,
+                                                                    throwOnError: true)
+                );
+
+            // Assert
+            Output(ex.Message);
+
+            Assert.Contains("The property 'TestResourcePathInt' on type", ex.Message);
+        }
+
         #endregion
 
         #region GetResourceString Tests ^^^^^^^^^^^^^^^^^^^
