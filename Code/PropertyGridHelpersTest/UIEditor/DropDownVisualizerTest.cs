@@ -21,6 +21,8 @@ namespace PropertyGridHelpersTest.net452.UIEditor
 namespace PropertyGridHelpersTest.net462.UIEditor
 #elif NET472
 namespace PropertyGridHelpersTest.net472.UIEditor
+#elif NET48
+namespace PropertyGridHelpersTest.net480.UIEditor
 #elif NET481
 namespace PropertyGridHelpersTest.net481.UIEditor
 #elif NET8_0
@@ -38,12 +40,12 @@ namespace PropertyGridHelpersTest.net100.UIEditor
     /// <param name="output">xunit output implementation</param>
     public class DropDownVisualizerTest(ITestOutputHelper output)
 #else
-    /// <summary>
-    /// Tests for the <see cref="DropDownVisualizer{TControl}" />
-    /// </summary>
-    public class DropDownVisualizerTest
+	/// <summary>
+	/// Tests for the <see cref="DropDownVisualizer{TControl}" />
+	/// </summary>
+	public class DropDownVisualizerTest
 #endif
-    {
+	{
 #if NET35
 #elif NET5_0_OR_GREATER
         private readonly ITestOutputHelper OutputHelper = output;
@@ -58,71 +60,71 @@ namespace PropertyGridHelpersTest.net100.UIEditor
             OutputHelper = output;
 #endif
 
-        #region Test Support Objects ^^^^^^^^^^^^^^^^^^^^^^
+		#region Test Support Objects ^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Test class with attribute.
-        /// </summary>
-        public class TestClassWithAttribute
-        {
-            /// <summary>
-            /// Gets or sets some item.
-            /// </summary>
-            /// <value>
-            /// Some item.
-            /// </value>
-            public string PropertyWithoutAttribute
-            {
-                get; set;
-            }
-        }
+		/// <summary>
+		/// Test class with attribute.
+		/// </summary>
+		public class TestClassWithAttribute
+		{
+			/// <summary>
+			/// Gets or sets some item.
+			/// </summary>
+			/// <value>
+			/// Some item.
+			/// </value>
+			public string PropertyWithoutAttribute
+			{
+				get; set;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		#region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Edits the value closes drop down when value committed is raised.
-        /// </summary>
-        [Fact]
-        public void EditValue_SetsValueAndClosesDropDown_WhenValueCommittedIsRaised()
-        {
-            // Arrange
-            var instance = new TestClassWithAttribute();
+		/// <summary>
+		/// Edits the value closes drop down when value committed is raised.
+		/// </summary>
+		[Fact]
+		public void EditValue_SetsValueAndClosesDropDown_WhenValueCommittedIsRaised()
+		{
+			// Arrange
+			var instance = new TestClassWithAttribute();
 
-            var propDesc = TypeDescriptor.GetProperties(instance)["PropertyWithoutAttribute"];
-            var context = new CustomTypeDescriptorContext(propDesc, instance);
+			var propDesc = TypeDescriptor.GetProperties(instance)["PropertyWithoutAttribute"];
+			var context = new CustomTypeDescriptorContext(propDesc, instance);
 
-            var editor = new DropDownVisualizer<FakeEditorControl>();
-            var serviceProvider = new CustomServiceProvider();
-            var fakeEditorService = new FakeEditorService();
-            serviceProvider.AddService(typeof(IWindowsFormsEditorService), fakeEditorService);
+			var editor = new DropDownVisualizer<FakeEditorControl>();
+			var serviceProvider = new CustomServiceProvider();
+			var fakeEditorService = new FakeEditorService();
+			serviceProvider.AddService(typeof(IWindowsFormsEditorService), fakeEditorService);
 
-            // Act
-            var result = editor.EditValue(context, serviceProvider, "(none)");
+			// Act
+			var result = editor.EditValue(context, serviceProvider, "(none)");
 
-            // Assert
-            Output($"Results = '{result}'");
+			// Assert
+			Output($"Results = '{result}'");
 #if NET5_0_OR_GREATER
             Assert.Equal("EmptyResourceFile", result);
 #else
-            Assert.Equal(0, string.Compare("EmptyResourceFile", (string)result));
+			Assert.Equal(0, string.Compare("EmptyResourceFile", (string)result));
 #endif
-            Assert.True(fakeEditorService.DropDownClosed, "Expected the drop-down to be closed when ValueCommitted was raised.");
-        }
+			Assert.True(fakeEditorService.DropDownClosed, "Expected the drop-down to be closed when ValueCommitted was raised.");
+		}
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Outputs the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+		/// <summary>
+		/// Outputs the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+		private static void Output(string message) =>
+			Console.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-    }
+	}
 }

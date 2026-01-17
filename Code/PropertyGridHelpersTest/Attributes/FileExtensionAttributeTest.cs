@@ -18,6 +18,8 @@ namespace PropertyGridHelpersTest.net452.Attributes
 namespace PropertyGridHelpersTest.net462.Attributes
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Attributes
+#elif NET48
+namespace PropertyGridHelpersTest.net480.Attributes
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Attributes
 #elif NET8_0
@@ -28,15 +30,15 @@ namespace PropertyGridHelpersTest.net90.Attributes
 namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 {
-    /// <summary>
-    /// File Extension Attribute Test
-    /// </summary>
+	/// <summary>
+	/// File Extension Attribute Test
+	/// </summary>
 #if NET8_0_OR_GREATER
     public class FileExtensionAttributeTest(ITestOutputHelper output)
     {
 #else
-    public class FileExtensionAttributeTest
-    {
+	public class FileExtensionAttributeTest
+	{
 #endif
 #if NET35
 #elif NET8_0_OR_GREATER
@@ -52,108 +54,108 @@ namespace PropertyGridHelpersTest.net100.Attributes
             ITestOutputHelper output) => OutputHelper = output;
 #endif
 
-        private class TestClass
-        {
-            [FileExtension("TestProperty")]
-            public string MyProperty
-            {
-                get; set;
-            }
-        }
+		private class TestClass
+		{
+			[FileExtension("TestProperty")]
+			public string MyProperty
+			{
+				get; set;
+			}
+		}
 
-        /// <summary>
-        /// Attributes the should apply to properties.
-        /// </summary>
-        [Fact]
-        public void Attribute_ShouldApplyToProperties()
-        {
-            // Arrange
-            var property = typeof(TestClass).GetProperty("MyProperty");
-            Assert.NotNull(property); // Property must exist
+		/// <summary>
+		/// Attributes the should apply to properties.
+		/// </summary>
+		[Fact]
+		public void Attribute_ShouldApplyToProperties()
+		{
+			// Arrange
+			var property = typeof(TestClass).GetProperty("MyProperty");
+			Assert.NotNull(property); // Property must exist
 
-            // Act
-            var attribute = property.GetCustomAttributes(typeof(FileExtensionAttribute), false);
+			// Act
+			var attribute = property.GetCustomAttributes(typeof(FileExtensionAttribute), false);
 
-            // Assert
-            Assert.NotNull(attribute); // Attribute should be applied in NET8
-        }
+			// Assert
+			Assert.NotNull(attribute); // Attribute should be applied in NET8
+		}
 
-        /// <summary>
-        /// Constructors the name of the should set property.
-        /// </summary>
-        [Fact]
-        public void Constructor_ShouldSetPropertyName()
-        {
-            const string propertyName = "TestProperty";
-            // Arrange
-            var attribute = new FileExtensionAttribute(propertyName);
+		/// <summary>
+		/// Constructors the name of the should set property.
+		/// </summary>
+		[Fact]
+		public void Constructor_ShouldSetPropertyName()
+		{
+			const string propertyName = "TestProperty";
+			// Arrange
+			var attribute = new FileExtensionAttribute(propertyName);
 
-            // Act
-            var pn = attribute.PropertyName;
+			// Act
+			var pn = attribute.PropertyName;
 
-            // Assert
-            Assert.Equal(0, string.Compare(propertyName, pn)); // Verify the property name
-            Output("The Property name matched as expected");
-        }
+			// Assert
+			Assert.Equal(0, string.Compare(propertyName, pn)); // Verify the property name
+			Output("The Property name matched as expected");
+		}
 
-        /// <summary>
-        /// Exists - the property exists.
-        /// </summary>
-        [Fact]
-        public void Exists_PropertyExists()
-        {
-            var tc = new TestClass();
-            var PropertyDescriptor = TypeDescriptor.GetProperties(tc)["MyProperty"];
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+		/// <summary>
+		/// Exists - the property exists.
+		/// </summary>
+		[Fact]
+		public void Exists_PropertyExists()
+		{
+			var tc = new TestClass();
+			var PropertyDescriptor = TypeDescriptor.GetProperties(tc)["MyProperty"];
+			var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
 
-            Assert.True(FileExtensionAttribute.Exists(context));
-            Output("The property was found and had the attribute on it.");
-        }
+			Assert.True(FileExtensionAttribute.Exists(context));
+			Output("The property was found and had the attribute on it.");
+		}
 
-        /// <summary>
-        /// Exists - the property exists.
-        /// </summary>
-        [Fact]
-        public void Exists_PropertyDoesNotExists()
-        {
-            Assert.False(FileExtensionAttribute.Exists(null));
-            Output("The property was not found as expected.");
-        }
+		/// <summary>
+		/// Exists - the property exists.
+		/// </summary>
+		[Fact]
+		public void Exists_PropertyDoesNotExists()
+		{
+			Assert.False(FileExtensionAttribute.Exists(null));
+			Output("The property was not found as expected.");
+		}
 
-        /// <summary>
-        /// Get should throw when property does not exist.
-        /// </summary>
-        [Fact]
-        public void Get_ShouldThrow_WhenPropertyDoesNotExist()
-        {
-            //Arrange
-            const string MissingPropertyName = "MyProperty2";
-            var PropertyDescriptor = new FakePropertyDescriptor(MissingPropertyName, typeof(TestClass), typeof(string));
-            var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
+		/// <summary>
+		/// Get should throw when property does not exist.
+		/// </summary>
+		[Fact]
+		public void Get_ShouldThrow_WhenPropertyDoesNotExist()
+		{
+			//Arrange
+			const string MissingPropertyName = "MyProperty2";
+			var PropertyDescriptor = new FakePropertyDescriptor(MissingPropertyName, typeof(TestClass), typeof(string));
+			var context = new CustomTypeDescriptorContext(PropertyDescriptor, this);
 
-            // Act and Assert
-            var ex = Assert.Throws<InvalidOperationException>(() => FileExtensionAttribute.Get(context));
+			// Act and Assert
+			var ex = Assert.Throws<InvalidOperationException>(() => FileExtensionAttribute.Get(context));
 
-            // Verify the exception message contains the expected details
+			// Verify the exception message contains the expected details
 #if NET35
-            Assert.True(ex.Message.StartsWith($"Property '{MissingPropertyName}' not found on type"));
+			Assert.True(ex.Message.StartsWith($"Property '{MissingPropertyName}' not found on type"));
 #else
             Assert.StartsWith($"Property '{MissingPropertyName}' not found on type", ex.Message);
 #endif
-            Output($"Exception thrown as expected: {ex.Message}");
-        }
+			Output($"Exception thrown as expected: {ex.Message}");
+		}
 
-        /// <summary>
-        /// Outputs the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+		/// <summary>
+		/// Outputs the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+		private static void Output(string message) =>
+			Console.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
 
-    }
+	}
 }

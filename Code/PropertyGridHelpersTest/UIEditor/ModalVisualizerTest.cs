@@ -22,6 +22,8 @@ namespace PropertyGridHelpersTest.net452.UIEditor
 namespace PropertyGridHelpersTest.net462.UIEditor
 #elif NET472
 namespace PropertyGridHelpersTest.net472.UIEditor
+#elif NET48
+namespace PropertyGridHelpersTest.net480.UIEditor
 #elif NET481
 namespace PropertyGridHelpersTest.net481.UIEditor
 #elif NET8_0
@@ -39,12 +41,12 @@ namespace PropertyGridHelpersTest.net100.UIEditor
     /// <param name="output">xunit output implementation</param>
     public class ModalVisualizerTest(ITestOutputHelper output)
 #else
-    /// <summary>
-    /// Tests for the <see cref="ModalVisualizer{TForm}" />
-    /// </summary>
-    public class ModalVisualizerTest
+	/// <summary>
+	/// Tests for the <see cref="ModalVisualizer{TForm}" />
+	/// </summary>
+	public class ModalVisualizerTest
 #endif
-    {
+	{
 #if NET35
 #elif NET5_0_OR_GREATER
         private readonly ITestOutputHelper OutputHelper = output;
@@ -59,62 +61,62 @@ namespace PropertyGridHelpersTest.net100.UIEditor
             OutputHelper = output;
 #endif
 
-        #region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		#region Test Methods ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Modal visualizer should return edited value.
-        /// </summary>
-        [Fact]
-        public void ModalVisualizer_ShouldReturnEditedValue()
-        {
-            // Arrange
-            var editor = new ModalVisualizer<FakeEditorForm>();
-            var initialValue = "InitialValue";
+		/// <summary>
+		/// Modal visualizer should return edited value.
+		/// </summary>
+		[Fact]
+		public void ModalVisualizer_ShouldReturnEditedValue()
+		{
+			// Arrange
+			var editor = new ModalVisualizer<FakeEditorForm>();
+			var initialValue = "InitialValue";
 
-            // Act
-            var result = editor.EditValue(null, null, initialValue);
-            var Style = editor.GetEditStyle(null);
+			// Act
+			var result = editor.EditValue(null, null, initialValue);
+			var Style = editor.GetEditStyle(null);
 
-            // Assert
-            Assert.Equal("NewTestValue", result);
-            Assert.Equal(UITypeEditorEditStyle.Modal, Style);
+			// Assert
+			Assert.Equal("NewTestValue", result);
+			Assert.Equal(UITypeEditorEditStyle.Modal, Style);
 
-            Output($"ModalVisualizer returned: {result}");
-        }
+			Output($"ModalVisualizer returned: {result}");
+		}
 
-        /// <summary>
-        /// Modal visualizer should return original value when canceled.
-        /// </summary>
-        [Fact]
-        public void ModalVisualizer_ShouldReturnOriginalValue_WhenCanceled()
-        {
-            // Arrange
-            var editor = new ModalVisualizer<FakeEditorCancelForm>();
-            var initialValue = "InitialValue";
+		/// <summary>
+		/// Modal visualizer should return original value when canceled.
+		/// </summary>
+		[Fact]
+		public void ModalVisualizer_ShouldReturnOriginalValue_WhenCanceled()
+		{
+			// Arrange
+			var editor = new ModalVisualizer<FakeEditorCancelForm>();
+			var initialValue = "InitialValue";
 
-            // Act
-            var result = editor.EditValue(null, null, initialValue);
-            var Style = editor.GetEditStyle(null);
+			// Act
+			var result = editor.EditValue(null, null, initialValue);
+			var Style = editor.GetEditStyle(null);
 
-            // Assert
-            Assert.Equal("InitialValue", result);
-            Assert.Equal(UITypeEditorEditStyle.Modal, Style);
+			// Assert
+			Assert.Equal("InitialValue", result);
+			Assert.Equal(UITypeEditorEditStyle.Modal, Style);
 
-            Output($"ModalVisualizer returned: {result}");
-        }
+			Output($"ModalVisualizer returned: {result}");
+		}
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Outputs the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+		/// <summary>
+		/// Outputs the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+		private static void Output(string message) =>
+			Console.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-    }
+	}
 }
