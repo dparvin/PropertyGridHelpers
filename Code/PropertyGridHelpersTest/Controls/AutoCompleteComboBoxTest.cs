@@ -19,6 +19,8 @@ namespace PropertyGridHelpersTest.net452.Controls
 namespace PropertyGridHelpersTest.net462.Controls
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Controls
+#elif NET48
+namespace PropertyGridHelpersTest.net480.Controls
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Controls
 #elif NET8_0
@@ -35,12 +37,12 @@ namespace PropertyGridHelpersTest.net100.Controls
     /// </summary>
     public class AutoCompleteComboBoxTest(ITestOutputHelper output)
 #else
-    /// <summary>
-    /// Test class for <see cref="AutoCompleteComboBox"/>.
-    /// </summary>
-    public class AutoCompleteComboBoxTest
+	/// <summary>
+	/// Test class for <see cref="AutoCompleteComboBox"/>.
+	/// </summary>
+	public class AutoCompleteComboBoxTest
 #endif
-    {
+	{
 #if NET35
 #else
 #if NET5_0_OR_GREATER
@@ -57,126 +59,126 @@ namespace PropertyGridHelpersTest.net100.Controls
 #endif
 #endif
 
-        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		#region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Should touch real code.
-        /// </summary>
-        [Fact]
-        public void ShouldTouchRealCode()
-        {
-            Exception exception = null;
+		/// <summary>
+		/// Should touch real code.
+		/// </summary>
+		[Fact]
+		public void ShouldTouchRealCode()
+		{
+			Exception exception = null;
 
-            var thread = new Thread(() =>
-            {
-                try
-                {
-                    var ctl = new AutoCompleteComboBox() { Text = "Test" };
+			var thread = new Thread(() =>
+			{
+				try
+				{
+					var ctl = new AutoCompleteComboBox() { Text = "Test" };
 #if NET35
-                    Assert.Equal("Test", ctl.Value);
-                    Assert.Null(ctl.Culture);
-                    Assert.Null(ctl.Context);
+					Assert.Equal("Test", ctl.Value);
+					Assert.Null(ctl.Culture);
+					Assert.Null(ctl.Context);
 #else
                     Assert.Equal("Test", ctl.Text);
                     Assert.Null(ctl.Culture);
                     Assert.Null(ctl.Context);
 #endif
-                }
-                catch (Exception ex)
-                {
-                    exception = ex;
-                }
-            });
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			});
 
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+			thread.SetApartmentState(ApartmentState.STA);
+			thread.Start();
+			thread.Join();
 
-            if (exception != null)
-                throw new TargetInvocationException(exception);
-        }
+			if (exception != null)
+				throw new TargetInvocationException(exception);
+		}
 
-        /// <summary>
-        /// Called when selected value changed raises value committed.
-        /// </summary>
-        [Fact]
-        public void OnSelectedValueChanged_RaisesValueCommitted() =>
-            StaTestHelper.Run(() =>
-            {
-                var comboBox = new AutoCompleteComboBox();
-                var eventRaised = false;
+		/// <summary>
+		/// Called when selected value changed raises value committed.
+		/// </summary>
+		[Fact]
+		public void OnSelectedValueChanged_RaisesValueCommitted() =>
+			StaTestHelper.Run(() =>
+			{
+				var comboBox = new AutoCompleteComboBox();
+				var eventRaised = false;
 
-                comboBox.ValueCommitted += (s, e) => eventRaised = true;
+				comboBox.ValueCommitted += (s, e) => eventRaised = true;
 
-                // Simulate selecting a value
-                _ = comboBox.Items.Add("Test");
-                _ = comboBox.Items.Add("Test1");
-                comboBox.SelectedIndex = 1;
+				// Simulate selecting a value
+				_ = comboBox.Items.Add("Test");
+				_ = comboBox.Items.Add("Test1");
+				comboBox.SelectedIndex = 1;
 
-                Output($"{nameof(eventRaised)} = {eventRaised}");
-                Assert.True(eventRaised, "ValueCommitted should be raised on SelectedValueChanged");
-            });
+				Output($"{nameof(eventRaised)} = {eventRaised}");
+				Assert.True(eventRaised, "ValueCommitted should be raised on SelectedValueChanged");
+			});
 
-        /// <summary>
-        /// Called when leave raises value committed.
-        /// </summary>
-        [Fact]
-        public void OnLeave_RaisesValueCommitted() =>
-            StaTestHelper.Run(() =>
-            {
-                var comboBox = new AutoCompleteComboBox();
-                var eventRaised = false;
-                comboBox.ValueCommitted += (s, e) => eventRaised = true;
+		/// <summary>
+		/// Called when leave raises value committed.
+		/// </summary>
+		[Fact]
+		public void OnLeave_RaisesValueCommitted() =>
+			StaTestHelper.Run(() =>
+			{
+				var comboBox = new AutoCompleteComboBox();
+				var eventRaised = false;
+				comboBox.ValueCommitted += (s, e) => eventRaised = true;
 
-                // Directly invoke OnLeave
-                var eventArgs = EventArgs.Empty;
-                comboBox.GetType()
-                        .GetMethod("OnLeave", BindingFlags.NonPublic | BindingFlags.Instance)
+				// Directly invoke OnLeave
+				var eventArgs = EventArgs.Empty;
+				comboBox.GetType()
+						.GetMethod("OnLeave", BindingFlags.NonPublic | BindingFlags.Instance)
 #if NET5_0_OR_GREATER
                         .Invoke(comboBox, [eventArgs]);
 #else
-                        .Invoke(comboBox, new object[] { eventArgs });
+						.Invoke(comboBox, new object[] { eventArgs });
 #endif
 
-                Output($"{nameof(eventRaised)} = {eventRaised}");
-                Assert.True(eventRaised, "ValueCommitted should be raised on Leave");
-            });
+				Output($"{nameof(eventRaised)} = {eventRaised}");
+				Assert.True(eventRaised, "ValueCommitted should be raised on Leave");
+			});
 
-        /// <summary>
-        /// Automatics the complete ComboBox value setter selects matching item wrapper.
-        /// </summary>
-        [Fact]
-        public void AutoCompleteComboBox_ValueSetter_SelectsMatchingItemWrapper() =>
-            StaTestHelper.Run(() =>
-            {
-                var combo = new AutoCompleteComboBox();
-                var item1 = new ItemWrapper<object>("One", 1);
-                var item2 = new ItemWrapper<object>("Two", 2);
+		/// <summary>
+		/// Automatics the complete ComboBox value setter selects matching item wrapper.
+		/// </summary>
+		[Fact]
+		public void AutoCompleteComboBox_ValueSetter_SelectsMatchingItemWrapper() =>
+			StaTestHelper.Run(() =>
+			{
+				var combo = new AutoCompleteComboBox();
+				var item1 = new ItemWrapper<object>("One", 1);
+				var item2 = new ItemWrapper<object>("Two", 2);
 
-                _ = combo.Items.Add(item1);
-                _ = combo.Items.Add(item2);
-                combo.SelectedIndex = 0; // Select first item
+				_ = combo.Items.Add(item1);
+				_ = combo.Items.Add(item2);
+				combo.SelectedIndex = 0; // Select first item
 
-                Assert.Equal(1, combo.Value);
-                Assert.Equal(item1, combo.SelectedItem);
+				Assert.Equal(1, combo.Value);
+				Assert.Equal(item1, combo.SelectedItem);
 
-                combo.Value = 2;
+				combo.Value = 2;
 
-                Assert.Equal(item2, combo.SelectedItem);
-            });
+				Assert.Equal(item2, combo.SelectedItem);
+			});
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Outputs the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+		/// <summary>
+		/// Outputs the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+		private static void Output(string message) =>
+			Console.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
-    }
+	}
 }

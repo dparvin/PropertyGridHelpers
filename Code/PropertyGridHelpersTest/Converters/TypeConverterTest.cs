@@ -18,6 +18,8 @@ namespace PropertyGridHelpersTest.net452.Converters
 namespace PropertyGridHelpersTest.net462.Converters
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Converters
+#elif NET48
+namespace PropertyGridHelpersTest.net480.Converters
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Converters
 #elif NET8_0
@@ -168,6 +170,7 @@ namespace PropertyGridHelpersTest.net100.Converters
                 new NoDefaultCtor("test");
 #endif
         }
+
         #endregion
 
         #region Unit Tests ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

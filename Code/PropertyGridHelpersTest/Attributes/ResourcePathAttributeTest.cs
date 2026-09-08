@@ -20,6 +20,8 @@ namespace PropertyGridHelpersTest.net452.Attributes
 namespace PropertyGridHelpersTest.net462.Attributes
 #elif NET472
 namespace PropertyGridHelpersTest.net472.Attributes
+#elif NET48
+namespace PropertyGridHelpersTest.net480.Attributes
 #elif NET481
 namespace PropertyGridHelpersTest.net481.Attributes
 #elif NET8_0
@@ -38,11 +40,11 @@ namespace PropertyGridHelpersTest.net100.Attributes
     public class ResourcePathAttributeTest(ITestOutputHelper output)
     {
 #else
-    /// <summary>
-    /// Resource Path Attribute Test
-    /// </summary>
-    public class ResourcePathAttributeTest
-    {
+	/// <summary>
+	/// Resource Path Attribute Test
+	/// </summary>
+	public class ResourcePathAttributeTest
+	{
 #endif
 #if NET35
 #else
@@ -59,279 +61,279 @@ namespace PropertyGridHelpersTest.net100.Attributes
 #endif
 #endif
 
-        #region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
+		#region Test Support objects ^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Test enum to use for testing the ResourcePathAttribute.
-        /// </summary>
-        [ResourcePath("FromEnum")]
-        public enum AnnotatedEnum
-        {
-            /// <summary>
-            /// The a
-            /// </summary>
-            A,
-            /// <summary>
-            /// The b
-            /// </summary>
-            B
-        }
+		/// <summary>
+		/// Test enum to use for testing the ResourcePathAttribute.
+		/// </summary>
+		[ResourcePath("FromEnum")]
+		public enum AnnotatedEnum
+		{
+			/// <summary>
+			/// The a
+			/// </summary>
+			A,
+			/// <summary>
+			/// The b
+			/// </summary>
+			B
+		}
 
-        /// <summary>
-        /// Test class to use for testing the ResourcePathAttribute.
-        /// </summary>
-        private class PropertyWithAttribute
-        {
-            /// <summary>
-            /// Gets or sets the property.
-            /// </summary>
-            /// <value>
-            /// The property.
-            /// </value>
-            [ResourcePath("FromProperty")]
-            public string Property
-            {
-                get; set;
-            }
+		/// <summary>
+		/// Test class to use for testing the ResourcePathAttribute.
+		/// </summary>
+		private class PropertyWithAttribute
+		{
+			/// <summary>
+			/// Gets or sets the property.
+			/// </summary>
+			/// <value>
+			/// The property.
+			/// </value>
+			[ResourcePath("FromProperty")]
+			public string Property
+			{
+				get; set;
+			}
 
-            /// <summary>
-            /// Gets or sets the enum property.
-            /// </summary>
-            /// <value>
-            /// The enum property.
-            /// </value>
-            public AnnotatedEnum EnumProperty
-            {
-                get; set;
-            }
-        }
+			/// <summary>
+			/// Gets or sets the enum property.
+			/// </summary>
+			/// <value>
+			/// The enum property.
+			/// </value>
+			public AnnotatedEnum EnumProperty
+			{
+				get; set;
+			}
+		}
 
-        /// <summary>
-        /// Test class to use for testing the ResourcePathAttribute.
-        /// </summary>
-        [ResourcePath("FromClass")]
-        private class AnnotatedClass
-        {
-            /// <summary>
-            /// Gets or sets the property.
-            /// </summary>
-            /// <value>
-            /// The property.
-            /// </value>
-            public string Property
-            {
-                get; set;
-            }
+		/// <summary>
+		/// Test class to use for testing the ResourcePathAttribute.
+		/// </summary>
+		[ResourcePath("FromClass")]
+		private class AnnotatedClass
+		{
+			/// <summary>
+			/// Gets or sets the property.
+			/// </summary>
+			/// <value>
+			/// The property.
+			/// </value>
+			public string Property
+			{
+				get; set;
+			}
 
-            /// <summary>
-            /// Gets or sets the enum property.
-            /// </summary>
-            /// <value>
-            /// The enum property.
-            /// </value>
-            public AnnotatedEnum EnumProperty
-            {
-                get; set;
-            }
-        }
+			/// <summary>
+			/// Gets or sets the enum property.
+			/// </summary>
+			/// <value>
+			/// The enum property.
+			/// </value>
+			public AnnotatedEnum EnumProperty
+			{
+				get; set;
+			}
+		}
 
-        /// <summary>
-        /// Test class with no attributes anywhere.
-        /// </summary>
-        private class NoAttributeAnywhere
-        {
-            /// <summary>
-            /// Gets or sets some property.
-            /// </summary>
-            /// <value>
-            /// Some property.
-            /// </value>
-            public string SomeProperty
-            {
-                get; set;
-            }
-        }
+		/// <summary>
+		/// Test class with no attributes anywhere.
+		/// </summary>
+		private class NoAttributeAnywhere
+		{
+			/// <summary>
+			/// Gets or sets some property.
+			/// </summary>
+			/// <value>
+			/// Some property.
+			/// </value>
+			public string SomeProperty
+			{
+				get; set;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		#region Test routines ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        /// <summary>
-        /// Gets the assembly returns executing assembly when resource assembly is null or empty.
-        /// </summary>
-        [Fact]
-        public void GetAssembly_ReturnsExecutingAssembly_WhenResourceAssemblyIsNullOrEmpty()
-        {
-            // Arrange
-            var attr = new ResourcePathAttribute("Some.Path"); // resourceAssembly is not provided
+		/// <summary>
+		/// Gets the assembly returns executing assembly when resource assembly is null or empty.
+		/// </summary>
+		[Fact]
+		public void GetAssembly_ReturnsExecutingAssembly_WhenResourceAssemblyIsNullOrEmpty()
+		{
+			// Arrange
+			var attr = new ResourcePathAttribute("Some.Path"); // resourceAssembly is not provided
 
-            // Act
-            var result = attr.GetAssembly();
+			// Act
+			var result = attr.GetAssembly();
 
-            // Assert
-            Output($"Test Results: {result}");
-            Assert.Equal(Assembly.GetExecutingAssembly(), result);
-        }
+			// Assert
+			Output($"Test Results: {result}");
+			Assert.Equal(Assembly.GetExecutingAssembly(), result);
+		}
 
-        /// <summary>
-        /// Gets the assembly loads specified assembly when resource assembly is provided.
-        /// </summary>
-        [Fact]
-        public void GetAssembly_LoadsSpecifiedAssembly_WhenResourceAssemblyIsProvided()
-        {
-            // Arrange
-            var currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-            var attr = new ResourcePathAttribute("Some.Path", currentAssemblyName);
+		/// <summary>
+		/// Gets the assembly loads specified assembly when resource assembly is provided.
+		/// </summary>
+		[Fact]
+		public void GetAssembly_LoadsSpecifiedAssembly_WhenResourceAssemblyIsProvided()
+		{
+			// Arrange
+			var currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+			var attr = new ResourcePathAttribute("Some.Path", currentAssemblyName);
 
-            // Act
-            var result = attr.GetAssembly();
+			// Act
+			var result = attr.GetAssembly();
 
-            // Assert
+			// Assert
 #if NET8_0_OR_GREATER
             Assert.Equal(Assembly.GetExecutingAssembly().FullName, result.FullName);
 #else
-            Assert.Equal(0, string.Compare(Assembly.GetExecutingAssembly().FullName, result.FullName, StringComparison.OrdinalIgnoreCase));
+			Assert.Equal(0, string.Compare(Assembly.GetExecutingAssembly().FullName, result.FullName, StringComparison.OrdinalIgnoreCase));
 #endif
-        }
+		}
 
-        /// <summary>
-        /// Gets the returns null when context is null.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsNull_WhenContextIsNull()
-        {
-            var result = ResourcePathAttribute.Get(null);
-            Assert.Null(result);
-        }
+		/// <summary>
+		/// Gets the returns null when context is null.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsNull_WhenContextIsNull()
+		{
+			var result = ResourcePathAttribute.Get(null);
+			Assert.Null(result);
+		}
 
-        /// <summary>
-        /// Gets the returns resource path attribute when defined on property.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsResourcePathAttribute_WhenDefinedOnProperty()
-        {
-            // Arrange
-            var context = CustomTypeDescriptorContext.Create(typeof(PropertyWithAttribute), nameof(PropertyWithAttribute.Property));
+		/// <summary>
+		/// Gets the returns resource path attribute when defined on property.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsResourcePathAttribute_WhenDefinedOnProperty()
+		{
+			// Arrange
+			var context = CustomTypeDescriptorContext.Create(typeof(PropertyWithAttribute), nameof(PropertyWithAttribute.Property));
 
-            // Act
-            var result = ResourcePathAttribute.Get(context);
+			// Act
+			var result = ResourcePathAttribute.Get(context);
 
-            // Assert
-            Assert.NotNull(result);
+			// Assert
+			Assert.NotNull(result);
 #if NET35
-            Assert.Equal(0, string.Compare("FromProperty", result.ResourcePath));
+			Assert.Equal(0, string.Compare("FromProperty", result.ResourcePath));
 #else
             Assert.Equal("FromProperty", result.ResourcePath);
 #endif
-        }
+		}
 
-        /// <summary>
-        /// Gets the type of the returns attribute when on enum.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsAttribute_WhenOnEnumType()
-        {
-            // Arrange
-            var context = CustomTypeDescriptorContext.Create(typeof(PropertyWithAttribute), nameof(PropertyWithAttribute.EnumProperty));
+		/// <summary>
+		/// Gets the type of the returns attribute when on enum.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsAttribute_WhenOnEnumType()
+		{
+			// Arrange
+			var context = CustomTypeDescriptorContext.Create(typeof(PropertyWithAttribute), nameof(PropertyWithAttribute.EnumProperty));
 
-            // Act
-            var result = ResourcePathAttribute.Get(context);
+			// Act
+			var result = ResourcePathAttribute.Get(context);
 
-            // Assert
-            Assert.NotNull(result);
+			// Assert
+			Assert.NotNull(result);
 #if NET35
-            Assert.Equal(0, string.Compare("FromEnum", result.ResourcePath));
+			Assert.Equal(0, string.Compare("FromEnum", result.ResourcePath));
 #else
             Assert.Equal("FromEnum", result.ResourcePath);
 #endif
-        }
+		}
 
-        /// <summary>
-        /// Gets the returns attribute when on class.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsAttribute_WhenOnClass()
-        {
-            // Arrange
-            var context = CustomTypeDescriptorContext.Create(typeof(AnnotatedClass), nameof(AnnotatedClass.Property));
+		/// <summary>
+		/// Gets the returns attribute when on class.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsAttribute_WhenOnClass()
+		{
+			// Arrange
+			var context = CustomTypeDescriptorContext.Create(typeof(AnnotatedClass), nameof(AnnotatedClass.Property));
 
-            // Act
-            var result = ResourcePathAttribute.Get(context);
+			// Act
+			var result = ResourcePathAttribute.Get(context);
 
-            // Assert
-            Assert.NotNull(result);
+			// Assert
+			Assert.NotNull(result);
 #if NET35
-            Assert.Equal(0, string.Compare("FromClass", result.ResourcePath));
+			Assert.Equal(0, string.Compare("FromClass", result.ResourcePath));
 #else
             Assert.Equal("FromClass", result.ResourcePath);
 #endif
-        }
+		}
 
-        /// <summary>
-        /// Gets the throws exception when resource usage is none.
-        /// </summary>
-        [Fact]
-        public void Get_ThrowsException_WhenResourceUsageIsNone()
-        {
-            // Arrange
-            var context = CustomTypeDescriptorContext.Create(typeof(AnnotatedClass), nameof(AnnotatedClass.Property));
+		/// <summary>
+		/// Gets the throws exception when resource usage is none.
+		/// </summary>
+		[Fact]
+		public void Get_ThrowsException_WhenResourceUsageIsNone()
+		{
+			// Arrange
+			var context = CustomTypeDescriptorContext.Create(typeof(AnnotatedClass), nameof(AnnotatedClass.Property));
 
-            // Act & Assert: Should throw if ResourceUsage.None is passed (invalid)
-            var ex = Assert.Throws<ArgumentException>(() =>
-                ResourcePathAttribute.Get(context, ResourceUsage.None));
+			// Act & Assert: Should throw if ResourceUsage.None is passed (invalid)
+			var ex = Assert.Throws<ArgumentException>(() =>
+				ResourcePathAttribute.Get(context, ResourceUsage.None));
 
-            // Assert
-            Output($"Returned Exception Message: {ex.Message}");
-            Assert.Contains("resourceUsage must not be None", ex.Message);
+			// Assert
+			Output($"Returned Exception Message: {ex.Message}");
+			Assert.Contains("resourceUsage must not be None", ex.Message);
 #if NET35
-            Assert.Equal(0, string.Compare("resourceUsage", ex.ParamName));
+			Assert.Equal(0, string.Compare("resourceUsage", ex.ParamName));
 #else
             Assert.Equal("resourceUsage", ex.ParamName);
 #endif
-        }
+		}
 
-        /// <summary>
-        /// Gets the returns null when no attribute exists.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsNull_WhenNoAttributeExists()
-        {
-            // Arrange
-            var context = CustomTypeDescriptorContext.Create(typeof(NoAttributeAnywhere), nameof(NoAttributeAnywhere.SomeProperty));
-            // Act
-            var result = ResourcePathAttribute.Get(context);
+		/// <summary>
+		/// Gets the returns null when no attribute exists.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsNull_WhenNoAttributeExists()
+		{
+			// Arrange
+			var context = CustomTypeDescriptorContext.Create(typeof(NoAttributeAnywhere), nameof(NoAttributeAnywhere.SomeProperty));
+			// Act
+			var result = ResourcePathAttribute.Get(context);
 
-            // Assert
-            Assert.Null(result);
-        }
+			// Assert
+			Assert.Null(result);
+		}
 
-        /// <summary>
-        /// Gets the returns null when instance is null.
-        /// </summary>
-        [Fact]
-        public void Get_ReturnsNull_WhenInstanceIsNull()
-        {
-            var descriptor = TypeDescriptor.GetProperties(typeof(AnnotatedClass))[nameof(AnnotatedClass.Property)];
-            var context = new CustomTypeDescriptorContext(descriptor, null); // Pass null instance
+		/// <summary>
+		/// Gets the returns null when instance is null.
+		/// </summary>
+		[Fact]
+		public void Get_ReturnsNull_WhenInstanceIsNull()
+		{
+			var descriptor = TypeDescriptor.GetProperties(typeof(AnnotatedClass))[nameof(AnnotatedClass.Property)];
+			var context = new CustomTypeDescriptorContext(descriptor, null); // Pass null instance
 
-            var result = ResourcePathAttribute.Get(context);
+			var result = ResourcePathAttribute.Get(context);
 
-            Assert.Null(result);
-        }
+			Assert.Null(result);
+		}
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Outputs the specified message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+		/// <summary>
+		/// Outputs the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
 #if NET35
-        private static void Output(string message) =>
-            Console.WriteLine(message);
+		private static void Output(string message) =>
+			Console.WriteLine(message);
 #else
         private void Output(string message) =>
             OutputHelper.WriteLine(message);
 #endif
 
-    }
+	}
 }
